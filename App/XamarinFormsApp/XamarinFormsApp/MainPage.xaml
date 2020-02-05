@@ -8,9 +8,23 @@
 
     <StackLayout>
         <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+        <Label  Text="Notes" 
+                HorizontalOptions="Center"
+                VerticalOptions="CenterAndExpand" 
+                FontAttributes="Bold"/>
+        <Editor x:Name="Editor"
+                Placeholder="Please enter your note"
+                HeightRequest="100"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Text="Save"
+                    Clicked="SaveButton_OnClicked"/>
+            <Button Grid.Column="1"
+                    Text="Delete"
+                    Clicked="DeleteButton_OnClicked"/>
+        </Grid>
     </StackLayout>
-
 </ContentPage>
