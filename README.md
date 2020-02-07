@@ -1,13 +1,16 @@
 # UCLDreamTeam
 UCL 4. Semester Dreamteam Repository
 
-1 sprint: 3/2 - 7/2
+1 sprint:
 
-2 sprint: 10/2 - 14/2
 
-3 sprint: 17/2 - 21/2
+Iteration1: 3/2 - 7/2
 
-Teams for 1-3 Sprint er:
+Iteration 2: 17/2 - 21/2
+
+Iteration 3: 24/2 - 28/2
+
+Teams for de første 3 iterationer 1 Sprint er:
 
 App - @Alex Holm, @Christoffer Kragh Pedersen, @Ricardo Enrique Dollerup og @Simon Hansen 
 
