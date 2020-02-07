@@ -16,8 +16,8 @@ App - @Alex Holm, @Christoffer Kragh Pedersen, @Ricardo Enrique Dollerup og @Sim
 
 Web Service & Signal R - @Frederik Hegnet Petersen, @Henrik Langer Hallemberg Schou, @Tobias Lauritzen og @Sebastian Søberg
 
-Database - @Caspar, @Jacob Skov Madsen, @Simone og @Steffen Juhl 
+Database - @Caspar, @Christian Jørgensen, @Jacob Skov Madsen, @Simone og @Steffen Juhl 
 
-Dokumentation - @Anders Østergaard Laursen, @Andreas G Hede og @Jonas 
+Dokumentation - @Anders, @Anders Østergaard Laursen, @Andreas G Hede og @Jonas 
 
 Mock-ups - @Frederik Knudsen og @Oleksii 
