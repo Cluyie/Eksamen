@@ -11,7 +11,7 @@ namespace Rest_API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class UserController : ControllerBase, IUserService
+    public class UserController : ControllerBase
     {
         [HttpPut("{id}")]
         public IActionResult UpdateUser(Guid id, [FromBody] UserData userData)
