@@ -11,7 +11,7 @@ namespace Rest_API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase, IAuthService
+    public class AuthController : ControllerBase
     {
         [HttpPost("[Login]")]
         public IActionResult Login([FromBody] LoginDTO loginDTO)
