@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Rest_ApiTest
 {
     [TestClass]
-    public class ControlerTest
+    public class AuthController
     {
         [TestMethod]
         public void TestMethod1()
