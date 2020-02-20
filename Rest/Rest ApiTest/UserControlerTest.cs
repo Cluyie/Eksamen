@@ -6,11 +6,11 @@ namespace Rest_ApiTest
     public class UserControlerTest
     {
         [TestMethod]
-        public void PutUser_OpretUser()
+        public void UpdateUser_OpretUser()
         {
             
         }
-        public void PutUser_NotEnothUserInfo()
+        public void UpdateUser_NotEnothUserInfo()
         {
             
         }
