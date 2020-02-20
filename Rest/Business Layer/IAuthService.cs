@@ -7,7 +7,7 @@ namespace Business_Layer
 {
     public interface IAuthService
     {
-        void Login(LoginDTO loginDTO);
-        void Register(RegisterDTO registerDTO);
+        ApiResponse<string> Login(LoginDTO loginDTO);
+        ApiResponse<string> Register(RegisterDTO registerDTO);
     }
 }
