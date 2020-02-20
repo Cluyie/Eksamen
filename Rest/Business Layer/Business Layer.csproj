@@ -6,13 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Implementering\" />
+    <Folder Include="Implementation\" />
     <Folder Include="Mock\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Data Access Layer\Data Access Layer.csproj" />
   </ItemGroup>
 
 </Project>

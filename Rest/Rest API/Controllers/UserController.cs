@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Data_Access_Layer;
+using Microsoft.AspNetCore.Mvc;
+using Business_Layer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +11,12 @@ namespace Rest_API.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : ControllerBase, IUserService
     {
         [HttpPut("{id}")]
-        public IActionResult UpdateUser(Guid id, [FromBody] User user)
+        public IActionResult UpdateUser(Guid id, [FromBody] UserData userData)
         {
-            return Ok(user);
+            throw new NotImplementedException();
         }
     }
 }
