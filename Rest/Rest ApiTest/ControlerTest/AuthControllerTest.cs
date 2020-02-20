@@ -3,6 +3,7 @@ using Rest_API.Controllers;
 using System;
 using System.Reflection;
 using Business_Layer.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Rest_ApiTest
 {
@@ -10,24 +11,28 @@ namespace Rest_ApiTest
     public class AuthControllerTest
     {
         [TestMethod]
-        [DataRow(new LoginDTO() {, Password = ""})]
-        public void Login_LoginWithUserNameAndEnail()
+        [DataRow("Hallo@test.com", "Pasword")]
+        [DataRow("Bruger","Pasword")]
+        public void Login_LoginWithUserNameAndEnail(string UsernameOrEmail, string Psaward)
         {
             string path = AppDomain.CurrentDomain.BaseDirectory + "\\" + MethodBase.GetCurrentMethod().Name + "\\";
             AuthController authController = new AuthController();
-            LoginDTO TestSubjekt = new LoginDTO() { };
-            
-            authController.Login();
+            LoginDTO TestSubjekt = new LoginDTO() {UsernameOrMail = UsernameOrEmail, Password = Psaward };
+            IActionResult returnObj = authController.Login(TestSubjekt);
+
         }
         [TestMethod]
-        public void Login_LoginWithEmael()
+        [DataRow("Hallotest.com", "Pasword")]
+        [DataRow("Hallo@test.com", "Pasword")]
+        [DataRow("Hallo@test.com", "Pasword.e")]
+        [DataRow("Brugere", "Pasword")]
+        public void Login_WornLoginInformation(string UsernameOrEmail, string Psaward)
         {
-            
-        }
-        [TestMethod]
-        public void Login_LoginWithUserName()
-        {
-            
+            string path = AppDomain.CurrentDomain.BaseDirectory + "\\" + MethodBase.GetCurrentMethod().Name + "\\";
+            AuthController authController = new AuthController();
+            LoginDTO TestSubjekt = new LoginDTO() { UsernameOrMail = UsernameOrEmail, Password = Psaward };
+            IActionResult returnObj = authController.Login(TestSubjekt);
+
         }
     }
 }
