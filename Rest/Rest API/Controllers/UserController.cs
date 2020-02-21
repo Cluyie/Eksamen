@@ -15,9 +15,9 @@ namespace Rest_API.Controllers
     public class UserController : ControllerBase
     {
         [HttpPut("{id}")]
-        public IActionResult UpdateUser(Guid id, [FromBody] UserData userData)
+        public ApiResponse<UserData> UpdateUser(Guid id, [FromBody] UserData userData)
         {
-            return Ok(new ApiResponse<UserData>(ApiResponseCode.Success, userData));
+            return new ApiResponse<UserData>(ApiResponseCode.Success, userData);
         }
     }
 }
