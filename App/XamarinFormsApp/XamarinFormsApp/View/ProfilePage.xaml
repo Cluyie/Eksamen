@@ -1,14 +1,44 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="XamarinFormsApp.View.ProfilePage">
-  <ContentView.Content>
-      <StackLayout>
-          <Label Text="Hello Xamarin.Form!" />
-          <Label Text="Virker det her?" />
+    <ContentPage.Content>
+        <StackLayout Margin="20,35,20,20">
+            <Label Text="Profil"
+                VerticalOptions="Start" 
+                HorizontalOptions="Center" 
+                FontSize="Title"  
+                TextColor="Black"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="1" Grid.Column="0" Text="Fornavn" FontSize="Body" TextColor="Black" VerticalTextAlignment="Center"></Label>
+                <Entry Grid.Row="1" Grid.Column="1" Text="{Binding}"  TextColor="Black" FontSize="Body" Placeholder="Indtast Fornavn"></Entry>
+
+                <Label Grid.Row="2" Grid.Column="0" Text="Efternavn" FontSize="Body" TextColor="Black" VerticalTextAlignment="Center"></Label>
+                <Entry Grid.Row="2" Grid.Column="1" Text="{Binding}" TextColor="Black" FontSize="Body" Placeholder="Indtast Efternavn"></Entry>
+
+                <Label Grid.Row="3" Grid.Column="0" Text="By" FontSize="Body" TextColor="Black" VerticalTextAlignment="Center"></Label>
+                <Entry Grid.Row="3" Grid.Column="1" Text="{Binding}" TextColor="Black" FontSize="Body" Placeholder="Indtast By"></Entry>
+
+                <Label Grid.Row="4" Grid.Column="0" Text="Post Nr." FontSize="Body" TextColor="Black" VerticalTextAlignment="Center"></Label>
+                <Entry Grid.Row="4" Grid.Column="1" Text="{Binding}" TextColor="Black" FontSize="Body" Placeholder="Indtast Postnummer"></Entry>
+
+                <Label Grid.Row="5" Grid.Column="0" Text="Land" FontSize="Body" TextColor="Black" VerticalTextAlignment="Center"></Label>
+                <Entry Grid.Row="5" Grid.Column="1" Text="{Binding}" TextColor="Black" FontSize="Body" Placeholder="Indtast Land"></Entry>
+
+                <Button Clicked="UpdateButton_Clicked"  Grid.Row="8" Grid.ColumnSpan="2" Text="Opdater profil" FontSize="Large" TextColor="Black"></Button>
+                <Button Clicked="LoginSettingsButton_Clicked" Grid.Row="9" Grid.ColumnSpan="2" Text="Ændre Loginoplysninger" FontSize="Large" TextColor="Black"></Button>
+            </Grid>
         </StackLayout>
-  </ContentView.Content>
-</ContentView>
+    </ContentPage.Content>
+</ContentPage>
