@@ -11,14 +11,15 @@ namespace Rest_ApiTest
     public class AuthControllerTest
     {
         [TestMethod]
+        //Login with Email
         [DataRow("Hallo@test.com", "Pasword")]
+        //Login wiht UserName
         [DataRow("Bruger","Pasword")]
         public void Login_LoginWithUserNameAndEnail(string UsernameOrEmail, string Psaward)
         {
-            string path = AppDomain.CurrentDomain.BaseDirectory + "\\" + MethodBase.GetCurrentMethod().Name + "\\";
             AuthController authController = new AuthController();
             LoginDTO TestSubjekt = new LoginDTO() {UsernameOrMail = UsernameOrEmail, Password = Psaward };
-            IActionResult returnObj = authController.Login(TestSubjekt);
+            ApiResponse<string> returnObj = authController.Login(TestSubjekt);
 
         }
         [TestMethod]
@@ -31,7 +32,7 @@ namespace Rest_ApiTest
             string path = AppDomain.CurrentDomain.BaseDirectory + "\\" + MethodBase.GetCurrentMethod().Name + "\\";
             AuthController authController = new AuthController();
             LoginDTO TestSubjekt = new LoginDTO() { UsernameOrMail = UsernameOrEmail, Password = Psaward };
-            IActionResult returnObj = authController.Login(TestSubjekt);
+            //string returnObj = authController.Login(TestSubjekt);
 
         }
     }

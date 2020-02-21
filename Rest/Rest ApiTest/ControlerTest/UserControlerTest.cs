@@ -16,22 +16,23 @@ namespace Rest_ApiTest
             string path = AppDomain.CurrentDomain.BaseDirectory + "\\" + MethodBase.GetCurrentMethod().Name + "\\";
             
             UserController controler = new UserController();
-            UserData TestSubjekt = LoadObjekt.Json<UserData>(path + "User");
-            
-            IActionResult TestObj = controler.UpdateUser(TestSubjekt.Id, TestSubjekt);
-            IActionResult resultat = LoadObjekt.Json<OkResult>(path + "Result");
-            Assert.AreEqual(resultat, TestObj);
+            UserData TestSubjekt = new UserData() { Id = Guid.NewGuid(), Username = "UserName", Email = "Hallo@test.com", Address = "Adventre st. 15", City = "New York", Country = "USA", FirstName = "Tony", LastName = "Stark", ZipCode = "10041" };
+
+
+            var TestObj = controler.UpdateUser(TestSubjekt.Id, TestSubjekt);
+            //IActionResult resultat = LoadObjekt.Json<OkResult>(path + "Result");
+            Assert.AreEqual(TestSubjekt, TestObj.Value);
         }
         [TestMethod]
         public void UpdateUser_NotEnothUserInfo()
         {
             string path = AppDomain.CurrentDomain.BaseDirectory + "\\" + MethodBase.GetCurrentMethod().Name + "\\";
             UserController controler = new UserController();
-            UserData TestSubjekt = LoadObjekt.Json<UserData>(path + "User");
+            UserData TestSubjekt = new UserData() { Id = Guid.NewGuid(), Username = "UserName", Email = "Hallo@test.com", Address = "Adventre st. 15", City = "New York", Country = "USA", FirstName = "Tony", LastName = "Stark", ZipCode = "10041" };
 
-            IActionResult TestObj = controler.UpdateUser(TestSubjekt.Id, TestSubjekt);
-            IActionResult resultat = LoadObjekt.Json<OkResult>(path + "Result");
-            Assert.AreEqual(resultat, TestObj);
+            var TestObj = controler.UpdateUser(TestSubjekt.Id, TestSubjekt);
+            //IActionResult resultat = LoadObjekt.Json<OkResult>(path + "Result");
+            Assert.AreEqual(TestSubjekt, TestObj.Value);
         }
     }
 }
