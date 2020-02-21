@@ -14,15 +14,15 @@ namespace Rest_API.Controllers
     public class AuthController : ControllerBase
     {
         [HttpPost("[Login]")]
-        public IActionResult Login([FromBody] LoginDTO loginDTO)
+        public ApiResponse<string> Login([FromBody] LoginDTO loginDTO)
         {
-            throw new NotImplementedException();
+            return new ApiResponse<string>(ApiResponseCode.Success, "TestToken");
         }
 
         [HttpPost("[Register]")]
-        public IActionResult Register([FromBody] RegisterDTO registerDTO)
+        public ApiResponse<string> Register([FromBody] RegisterDTO registerDTO)
         {
-            throw new NotImplementedException();
+            return new ApiResponse<string>(ApiResponseCode.Success, "TestToken");
         }
     }
 }
