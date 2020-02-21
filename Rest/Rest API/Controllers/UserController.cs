@@ -17,7 +17,7 @@ namespace Rest_API.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateUser(Guid id, [FromBody] UserData userData)
         {
-            return Ok(new ApiResponse<UserData>(ApiResponseCode.Success,userData));
+            return Ok(new ApiResponse<UserData>(ApiResponseCode.Success, userData));
         }
     }
 }
