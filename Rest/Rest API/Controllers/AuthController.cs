@@ -13,13 +13,13 @@ namespace Rest_API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        [HttpPost("[Login]")]
+        [HttpPost("Login")]
         public ApiResponse<string> Login([FromBody] LoginDTO loginDTO)
         {
             return new ApiResponse<string>(ApiResponseCode.Success, "TestToken");
         }
 
-        [HttpPost("[Register]")]
+        [HttpPost("Register")]
         public ApiResponse<string> Register([FromBody] RegisterDTO registerDTO)
         {
             return new ApiResponse<string>(ApiResponseCode.Success, "TestToken");
