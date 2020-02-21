@@ -10,7 +10,7 @@ namespace Business_Layer.Models
 
     public class ApiResponse<T>
     {
-        public int Code
+        public ApiResponseCode Code
         {
             get; private set;
         }
@@ -20,7 +20,7 @@ namespace Business_Layer.Models
             get; private set;
         }
 
-        public ApiResponse(int code, T value)
+        public ApiResponse(ApiResponseCode code, T value)
         {
             Code = code;
             Value = value;
