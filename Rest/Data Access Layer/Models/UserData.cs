@@ -16,7 +16,7 @@ namespace Data_Access_Layer
 
         public string City { get; set; }
 
-        public string ZipCode { get; set; }
+        public int ZipCode { get; set; }
 
         public string Country { get; set; }
     }
