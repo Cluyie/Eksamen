@@ -18,7 +18,7 @@ namespace Rest_ApiTest
             UserController controler = new UserController();
             UserData TestSubjekt = LoadObjekt.Json<UserData>(path + "User");
             
-            IActionResult TestObj = controler.UpdateUser(TestSubjekt., TestSubjekt);
+            IActionResult TestObj = controler.UpdateUser(TestSubjekt.Id, TestSubjekt);
             IActionResult resultat = LoadObjekt.Json<OkResult>(path + "Result");
             Assert.AreEqual(resultat, TestObj);
         }
@@ -29,7 +29,7 @@ namespace Rest_ApiTest
             UserController controler = new UserController();
             UserData TestSubjekt = LoadObjekt.Json<UserData>(path + "User");
 
-            IActionResult TestObj = controler.UpdateUser(TestSubjekt.ID, TestSubjekt);
+            IActionResult TestObj = controler.UpdateUser(TestSubjekt.Id, TestSubjekt);
             IActionResult resultat = LoadObjekt.Json<OkResult>(path + "Result");
             Assert.AreEqual(resultat, TestObj);
         }

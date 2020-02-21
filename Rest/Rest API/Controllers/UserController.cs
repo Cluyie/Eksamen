@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Business_Layer.Models;
 
 namespace Rest_API.Controllers
 {
@@ -16,7 +17,7 @@ namespace Rest_API.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateUser(Guid id, [FromBody] UserData userData)
         {
-            throw new NotImplementedException();
+            return Ok(new ApiResponse<UserData>(ApiResponseCode.Success,));
         }
     }
 }
