@@ -7,7 +7,8 @@
              x:Class="XamarinFormsApp.View.ProfilePage">
   <ContentView.Content>
       <StackLayout>
-          <Label Text="Hello Xamarin.Forms!" />
-      </StackLayout>
+          <Label Text="Hello Xamarin.Form!" />
+          <Label Text="Virker det her?" />
+        </StackLayout>
   </ContentView.Content>
 </ContentView>
