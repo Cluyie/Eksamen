@@ -16,13 +16,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="View\Register.xaml.cs">
-      <DependentUpon>Register.xaml</DependentUpon>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="View\LoginSettingsPage.xaml.cs">
+      <DependentUpon>LoginSettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\RegisterPage.xaml.cs">
+      <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="View\Register.xaml">
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="View\RegisterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

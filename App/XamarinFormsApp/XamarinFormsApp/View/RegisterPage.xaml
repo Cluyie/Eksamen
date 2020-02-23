@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="XamarinFormsApp.View.RegisterPage">
+             x:Class="XamarinFormsApp.View.RegisterPage" BackgroundImageSource="db68d5b97d69e194ba6200863eae8395.png">
     <ContentPage.Content>
         <StackLayout Margin="20,35,20,20">
 
@@ -34,7 +34,6 @@
                        VerticalTextAlignment="Center"
                        Text="Brugernavn"
                        FontSize="Body"
-                       VerticalOptions="Start"
                        HorizontalOptions="Start" />
                 <Entry Grid.Row="1" 
                        Grid.Column="1" 
@@ -46,7 +45,6 @@
                        VerticalTextAlignment="Center"
                        Text="Email"
                        FontSize="Body"
-                       VerticalOptions="Start"
                        HorizontalOptions="Start" />
                 <Entry Grid.Row="2" 
                        Grid.Column="1" 
@@ -58,7 +56,6 @@
                        VerticalTextAlignment="Center"
                        Text="Bekræft email"
                        FontSize="Body"
-                       VerticalOptions="Start"
                        HorizontalOptions="Start" />
                 <Entry Grid.Row="3" 
                        Grid.Column="1" 
@@ -70,7 +67,6 @@
                        VerticalTextAlignment="Center"
                        Text="Kodeord"
                        FontSize="Body"
-                       VerticalOptions="Start"
                        HorizontalOptions="Start" />
                 <Entry Grid.Row="4" 
                        Grid.Column="1" 
@@ -83,7 +79,6 @@
                        VerticalTextAlignment="Center"
                        Text="Bekræft kodeord"
                        FontSize="Body"
-                       VerticalOptions="Start"
                        HorizontalOptions="Start" />
                 <Entry Grid.Row="5" Grid.Column="1" 
                        x:Name="confirmPassword"
