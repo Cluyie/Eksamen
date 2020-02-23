@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business_Layer.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Rest_API.Controllers
 {
@@ -15,9 +16,24 @@ namespace Rest_API.Controllers
     public class UserController : ControllerBase
     {
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status304NotModified)]
         public ApiResponse<UserData> UpdateUser(Guid id, [FromBody] UserData userData)
         {
-            return new ApiResponse<UserData>(ApiResponseCode.Success, userData);
+            if (userData == null)
+                return new ApiResponse<UserData>(ApiResponseCode.BadRequest, userData, "Intet data modtaget");
+
+            try
+            {
+                //Call DAL user update method
+            }
+            catch (Exception)
+            {
+                return new ApiResponse<UserData>(ApiResponseCode.NotModified, userData, "Det var ikke muligt at opdatere brugeren på databasen");
+            }
+
+            return new ApiResponse<UserData>(ApiResponseCode.OK, userData);
         }
     }
 }
