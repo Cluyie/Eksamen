@@ -40,6 +40,7 @@
                        Grid.Column="1" 
                        x:Name="username"
                        FontSize="Body"
+                       Text="{Binding Username}"
                    />
                 <Label Grid.Row="2" 
                        Grid.Column="0" 
@@ -51,6 +52,7 @@
                        Grid.Column="1" 
                        x:Name="email"
                        FontSize="Body"
+                       Text="{Binding Email}"
                    />
                 <Label Grid.Row="3" 
                        Grid.Column="0" 
@@ -74,6 +76,7 @@
                        x:Name="password"
                        FontSize="Body"
                        IsPassword="True"
+                       Text="{Binding Password}"
                    />
                 <Label Grid.Row="5" 
                        Grid.Column="0" 

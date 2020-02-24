@@ -6,23 +6,26 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XamarinFormsApp.Model;
+using XamarinFormsApp.ViewModel;
 
 namespace XamarinFormsApp.View
 {
   [XamlCompilation(XamlCompilationOptions.Compile)]
   public partial class LoginSettingsPage : ContentPage
   {
+    private LoginSettingsViewModel _loginSettingsViewModel;
+
     private ApiClientProxy _proxy { get; set; }
-    public LoginSettingsPage(ApiClientProxy proxy)
+    public LoginSettingsPage()
     {
       InitializeComponent();
-      _proxy = proxy;
+      _proxy = DependencyService.Get<ApiClientProxy>();
+      BindingContext = _loginSettingsViewModel = new LoginSettingsViewModel();
     }
 
     private async void SaveButton_Clicked(object sender, EventArgs e)
     {
-      var account = new Account { Email = "Hej", Username="Test", Password="ole12345"};
-      await _proxy.PostAsync("Register", account);
+      _loginSettingsViewModel.UpdateLogin();
       await Navigation.PushAsync(new MainPage());
     }
   }

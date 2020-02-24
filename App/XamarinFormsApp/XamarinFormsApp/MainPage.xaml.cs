@@ -24,5 +24,15 @@ namespace XamarinFormsApp
     {
       Navigation.PushAsync(new RegisterPage());
     }
+
+    private void LoginButton_Clicked(object sender, EventArgs e)
+    {
+      Navigation.PushAsync(new LoginPage());
+    }
+
+    private void ProfileButton_Clicked(object sender, EventArgs e)
+    {
+      Navigation.PushAsync(new ProfilePage());
+    }
   }
 }
