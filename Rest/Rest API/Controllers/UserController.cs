@@ -1,4 +1,4 @@
-﻿using Data_Access_Layer;
+﻿using Data_Access_Layer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Business_Layer;
 using System;
@@ -14,7 +14,7 @@ namespace Rest_API.Controllers
     public class UserController : ControllerBase, IUserService
     {
         [HttpPut("{id}")]
-        public IActionResult UpdateUser(Guid id, [FromBody] UserData userData)
+        public IActionResult UpdateUser(Guid id, [FromBody] User user)
         {
             throw new NotImplementedException();
         }
