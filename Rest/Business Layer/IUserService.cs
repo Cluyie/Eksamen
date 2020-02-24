@@ -1,13 +1,17 @@
-﻿using Data_Access_Layer.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Data_Access_Layer;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Business_Layer.Models;
 
 namespace Business_Layer
 {
     public interface IUserService
     {
-        IActionResult UpdateUser(Guid id, [FromBody] User user);
+        UserData GetUserFromToken(string token);
+
+        void UpdateUser(Guid id, UserData userData);
+
+        ApiResponse<string> Login(LoginDTO credentials);
     }
 }

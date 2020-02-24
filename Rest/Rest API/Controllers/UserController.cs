@@ -1,4 +1,4 @@
-﻿using Data_Access_Layer.Models;
+﻿using Data_Access_Layer;
 using Microsoft.AspNetCore.Mvc;
 using Business_Layer;
 using System;
@@ -15,9 +15,9 @@ namespace Rest_API.Controllers
     public class UserController : ControllerBase
     {
         [HttpPut("{id}")]
-        public IActionResult UpdateUser(Guid id, [FromBody] User user)
+        public ApiResponse<UserData> UpdateUser(Guid id, [FromBody] UserData userData)
         {
-            return Ok(new ApiResponse<UserData>(ApiResponseCode.Success, userData));
+            return new ApiResponse<UserData>(ApiResponseCode.Success, userData);
         }
     }
 }
