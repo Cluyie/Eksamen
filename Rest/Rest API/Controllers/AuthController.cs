@@ -29,7 +29,7 @@ namespace Rest_API.Controllers
             }
             catch (Exception)
             {
-                return new ApiResponse<string>(ApiResponseCode.NotAuthenticated, "");
+                return new ApiResponse<string>(ApiResponseCode.UnAuthenticated, "");
             }
 
             return new ApiResponse<string>(ApiResponseCode.OK, "TestToken");

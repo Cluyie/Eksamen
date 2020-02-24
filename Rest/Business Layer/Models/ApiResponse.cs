@@ -29,11 +29,5 @@ namespace Business_Layer.Models
             Code = code;
             Value = value;
         }
-
-        public ApiResponse(ApiResponseCode code, T value)
-        {
-            Code = code;
-            Value = value;
-        }
     }
 }
