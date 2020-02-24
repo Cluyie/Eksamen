@@ -4,12 +4,15 @@ namespace Business_Layer.Models
 {
     public enum ApiResponseCode : int
     {
-        UnAuthenticated = 401,
         OK = 200,
-        BadRequest = 400,
-        NotModified = 304,
         Created = 201,
-        InternalServerError = 500
+        NoContent = 204,
+        NotModified = 304,
+        BadRequest = 400,
+        UnAuthenticated = 401,
+        InternalServerError = 500,
+        EmailAlreadyTaken = 1001,
+        UsernameAlreadyTaken = 1002
     }
 
     public class ApiResponse<T>

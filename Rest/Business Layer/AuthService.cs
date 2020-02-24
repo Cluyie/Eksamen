@@ -12,13 +12,15 @@ namespace Business_Layer
     /// </summary>
     public class AuthService
     {
+        private UserData _user;
+
         /// <summary>
         /// Authenticate the specified user
         /// </summary>
         /// <param name="user"></param>
-        void Authenticate(UserData user)
+        public void Authenticate(UserData user)
         {
-
+            _user = user;
         }
 
         /// <summary>
@@ -26,9 +28,9 @@ namespace Business_Layer
         /// is not authenticated.
         /// </summary>
         /// <returns></returns>
-        UserData GetUser()
+        public UserData GetUser()
         {
-
+            return _user;
         }
 
         /// <summary>
@@ -36,9 +38,10 @@ namespace Business_Layer
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        string GenerateAuthToken(UserData user)
+        public string GetAuthToken(UserData user)
         {
-
+            // TODO: CHANGE to a real token
+            return user.UserName;
         }
     }
 }
