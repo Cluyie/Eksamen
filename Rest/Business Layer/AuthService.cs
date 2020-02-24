@@ -12,6 +12,9 @@ namespace Business_Layer
     /// </summary>
     public class AuthService
     {
+        /// <summary>
+        /// The currently authenticated user
+        /// </summary>
         private UserData _user;
 
         /// <summary>
@@ -34,7 +37,7 @@ namespace Business_Layer
         }
 
         /// <summary>
-        /// Generates (DOESN'T STORE) a auth token for the specified user
+        /// Gets the auth token for the specified user
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>

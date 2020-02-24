@@ -14,25 +14,23 @@ namespace Rest_API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        UserService _userService;
+
+        public AuthController(UserService userService)
+        {
+            _userService = userService;
+        }
+
         [HttpPost("Login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<string> Login([FromBody] LoginDTO loginDTO)
         {
-            if (loginDTO == null)
+            if (loginDTO == null || !ModelState.IsValid)
                 return new ApiResponse<string>(ApiResponseCode.BadRequest, "");
 
-            try
-            {
-                //Call BL Login method
-            }
-            catch (Exception)
-            {
-                return new ApiResponse<string>(ApiResponseCode.UnAuthenticated, "");
-            }
-
-            return new ApiResponse<string>(ApiResponseCode.OK, "TestToken");
+            return _userService.Login(loginDTO);
         }
 
         [HttpPost("Register")]
@@ -44,16 +42,7 @@ namespace Rest_API.Controllers
             if (registerDTO == null)
                 return new ApiResponse<string>(ApiResponseCode.BadRequest, "");
 
-            try
-            {
-                //Call BL Register method
-            }
-            catch (Exception)
-            {
-                return new ApiResponse<string>(ApiResponseCode.InternalServerError, "");
-            }
-
-            return new ApiResponse<string>(ApiResponseCode.Created, "TestToken");
+            return _userService.Register(registerDTO);
         }
     }
 }

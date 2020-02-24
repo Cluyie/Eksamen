@@ -22,11 +22,13 @@ namespace Business_Layer
 
         public ApiResponse<string> Register(RegisterDTO registerDTO)
         {
+            // The email is already in use
             if (GetFromEmail(registerDTO.Email) != null)
             {
                 return new ApiResponse<string>(ApiResponseCode.EmailAlreadyTaken, "");
             }
 
+            // Username is already in use
             if(GetFromUsername(registerDTO.Username) != null)
             {
                 return new ApiResponse<string>(ApiResponseCode.UsernameAlreadyTaken, "");

@@ -15,25 +15,23 @@ namespace Rest_API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        UserService _userService;
+
+        public UserController(UserService userService)
+        {
+            _userService = userService;
+        }
+
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status304NotModified)]
         public ApiResponse<UserData> UpdateUser(Guid id, [FromBody] UserData userData)
         {
-            if (userData == null)
+            if (userData == null || !ModelState.IsValid)
                 return new ApiResponse<UserData>(ApiResponseCode.BadRequest, userData);
 
-            try
-            {
-                //Call DAL user update method
-            }
-            catch (Exception)
-            {
-                return new ApiResponse<UserData>(ApiResponseCode.NotModified, userData);
-            }
-
-            return new ApiResponse<UserData>(ApiResponseCode.OK, userData);
+            return _userService.Update(id, userData);
         }
     }
 }
