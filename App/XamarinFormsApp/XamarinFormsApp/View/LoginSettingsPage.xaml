@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="XamarinFormsApp.View.LoginSettingsPage" 
+             BackgroundColor="{StaticResource PageBackgroundColor}" >
+    <ContentPage.Content>
+        <StackLayout Margin="20,35,20,20">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" 
+                       Grid.Column="0" 
+                       Grid.ColumnSpan="2"
+                       Text="Ændre login oplysninger"
+                       FontSize="Title"
+                       VerticalOptions="Start" 
+                       HorizontalOptions="CenterAndExpand" />
+                <Label Grid.Row="1" 
+                       Grid.Column="0" 
+                       VerticalTextAlignment="Center"
+                       Text="Email"
+                       FontSize="Body"
+                       HorizontalOptions="Start" />
+                <Entry Grid.Row="1" 
+                       Grid.Column="1" 
+                       x:Name="email"
+                       FontSize="Body"
+                   />
+                <Label Grid.Row="2" 
+                       Grid.Column="0" 
+                       VerticalTextAlignment="Center"
+                       Text="Bekræft email"
+                       FontSize="Body"
+                       HorizontalOptions="Start" />
+                <Entry Grid.Row="2" 
+                       Grid.Column="1" 
+                       x:Name="confirmEmail"
+                       FontSize="Body"
+                   />
+                <Label Grid.Row="3" 
+                       Grid.Column="0"
+                       VerticalTextAlignment="Center"
+                       Text="Kodeord"
+                       FontSize="Body"
+                       HorizontalOptions="Start" />
+                <Entry Grid.Row="3" 
+                       Grid.Column="1" 
+                       x:Name="password"
+                       FontSize="Body"
+                       IsPassword="True"
+                   />
+                <Label Grid.Row="4" 
+                       Grid.Column="0" 
+                       VerticalTextAlignment="Center"
+                       Text="Bekræft kodeord"
+                       FontSize="Body"
+                       HorizontalOptions="Start" />
+                <Entry Grid.Row="4" Grid.Column="1" 
+                       x:Name="confirmPassword"
+                       FontSize="Body"
+                       IsPassword="True"
+                   />
+                <Button Grid.Row="5" 
+                        Grid.Column="0" 
+                        Grid.ColumnSpan="2"
+                        Text="Gem"
+                        Clicked="SaveButton_Clicked"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
