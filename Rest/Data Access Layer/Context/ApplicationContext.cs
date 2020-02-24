@@ -2,16 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Data_Access_Layer.Models;
 
-namespace Data_Access_Layer
+namespace Data_Access_Layer.Context
 {
-    public class AppContext : DbContext
+    public class ApplicationContext : DbContext
     {
-        public AppContext() : base() { }
+        public ApplicationContext() : base() { }
 
-        public AppContext(DbContextOptions<AppContext> options) : base(options) { }
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
-        public DbSet<UserData> UserData { get; set; }
+        public DbSet<User> User { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
