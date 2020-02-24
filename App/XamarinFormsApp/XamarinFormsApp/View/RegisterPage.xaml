@@ -4,7 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="XamarinFormsApp.View.RegisterPage" BackgroundImageSource="db68d5b97d69e194ba6200863eae8395.png">
+             x:Class="XamarinFormsApp.View.RegisterPage" 
+             BackgroundColor="{StaticResource PageBackgroundColor}">
     <ContentPage.Content>
         <StackLayout Margin="20,35,20,20">
 

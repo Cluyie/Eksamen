@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,12 +10,14 @@ namespace XamarinFormsApp
     public App()
     {
       InitializeComponent();
-
-      MainPage = new MainPage();
+      DependencyService.Register<HttpClient>();
+      DependencyService.Register<ApiClientProxy>();
+      MainPage = new NavigationPage(new MainPage());
     }
 
     protected override void OnStart()
     {
+      DependencyService.Get<HttpClient>().BaseAddress = new Uri("http://10.0.2.2:5000/Auth/");
     }
 
     protected override void OnSleep()

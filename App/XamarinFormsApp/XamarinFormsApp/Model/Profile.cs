@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace XamarinFormsApp.ViewModel
+namespace XamarinFormsApp.Model
 {
-  public class ProfileViewModel
+  public class Profile
   {
     public string FirstName { get; set; }
     public string LastName { get; set; }

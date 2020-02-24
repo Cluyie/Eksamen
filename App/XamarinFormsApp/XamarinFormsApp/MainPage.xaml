@@ -4,16 +4,21 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="XamarinFormsApp.MainPage">
+             x:Class="XamarinFormsApp.MainPage"
+             BackgroundColor="{StaticResource PageBackgroundColor}">
 
     <StackLayout>
         <!-- Place new controls here -->
         <Label Text="Welcome to Xamarin.Forms!" 
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
-        <Label Text="Det her virker!" 
+        <Button Text="Login" 
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
+        <Button Text="Register" 
+                Clicked="RegisterButton_Clicked"
+                HorizontalOptions="Center"
+                VerticalOptions="CenterAndExpand" />
     </StackLayout>
 
 </ContentPage>

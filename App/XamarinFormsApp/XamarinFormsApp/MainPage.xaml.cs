@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using XamarinFormsApp.View;
 
 namespace XamarinFormsApp
 {
@@ -16,6 +17,11 @@ namespace XamarinFormsApp
     public MainPage()
     {
       InitializeComponent();
+    }
+
+    private void RegisterButton_Clicked(object sender, EventArgs e)
+    {
+      Navigation.PushAsync(new RegisterPage());
     }
   }
 }
