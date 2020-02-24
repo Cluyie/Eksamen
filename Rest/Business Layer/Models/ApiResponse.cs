@@ -4,7 +4,7 @@ namespace Business_Layer.Models
 {
     public enum ApiResponseCode : int
     {
-        NotAuthenticated = 0,
+        UnAuthenticated = 401,
         OK = 200,
         BadRequest = 400,
         NotModified = 304,
@@ -24,22 +24,16 @@ namespace Business_Layer.Models
             get; private set;
         }
 
-        public string CodeDescription
-        {
-            get; private set;
-        }
-
         public ApiResponse(ApiResponseCode code, T value)
         {
             Code = code;
             Value = value;
         }
 
-        public ApiResponse(ApiResponseCode code, T value, string codeDescription)
+        public ApiResponse(ApiResponseCode code, T value)
         {
             Code = code;
             Value = value;
-            CodeDescription = codeDescription;
         }
     }
 }

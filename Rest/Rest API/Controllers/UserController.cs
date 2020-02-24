@@ -22,7 +22,7 @@ namespace Rest_API.Controllers
         public ApiResponse<UserData> UpdateUser(Guid id, [FromBody] UserData userData)
         {
             if (userData == null)
-                return new ApiResponse<UserData>(ApiResponseCode.BadRequest, userData, "Intet data modtaget");
+                return new ApiResponse<UserData>(ApiResponseCode.BadRequest, userData);
 
             try
             {
@@ -30,7 +30,7 @@ namespace Rest_API.Controllers
             }
             catch (Exception)
             {
-                return new ApiResponse<UserData>(ApiResponseCode.NotModified, userData, "Det var ikke muligt at opdatere brugeren på databasen");
+                return new ApiResponse<UserData>(ApiResponseCode.NotModified, userData);
             }
 
             return new ApiResponse<UserData>(ApiResponseCode.OK, userData);

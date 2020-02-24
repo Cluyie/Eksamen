@@ -21,7 +21,7 @@ namespace Rest_API.Controllers
         public ApiResponse<string> Login([FromBody] LoginDTO loginDTO)
         {
             if (loginDTO == null)
-                return new ApiResponse<string>(ApiResponseCode.BadRequest, "", "Intet data modtaget");
+                return new ApiResponse<string>(ApiResponseCode.BadRequest, "");
 
             try
             {
@@ -29,10 +29,10 @@ namespace Rest_API.Controllers
             }
             catch (Exception)
             {
-                return new ApiResponse<string>(ApiResponseCode.NotAuthenticated, "", "Det var ikke muligt at authenticate dette login");
+                return new ApiResponse<string>(ApiResponseCode.NotAuthenticated, "");
             }
 
-            return new ApiResponse<string>(ApiResponseCode.BadRequest, "TestToken");
+            return new ApiResponse<string>(ApiResponseCode.OK, "TestToken");
         }
 
         [HttpPost("Register")]
@@ -42,7 +42,7 @@ namespace Rest_API.Controllers
         public ApiResponse<string> Register([FromBody] RegisterDTO registerDTO)
         {
             if (registerDTO == null)
-                return new ApiResponse<string>(ApiResponseCode.BadRequest, "", "Intet data modtaget");
+                return new ApiResponse<string>(ApiResponseCode.BadRequest, "");
 
             try
             {
@@ -50,7 +50,7 @@ namespace Rest_API.Controllers
             }
             catch (Exception)
             {
-                return new ApiResponse<string>(ApiResponseCode.InternalServerError, "", "Det var ikke muligt at oprette dette login");
+                return new ApiResponse<string>(ApiResponseCode.InternalServerError, "");
             }
 
             return new ApiResponse<string>(ApiResponseCode.Created, "TestToken");
