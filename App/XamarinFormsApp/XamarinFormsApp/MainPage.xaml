@@ -9,14 +9,14 @@
 
     <StackLayout>
         <!-- Place new controls here -->
-        <Label FontSize= "35" TextColor="Black" Text="Velkommen!" Margin="0,40"
+        <Label FontSize= "Title" Text="Velkommen!" Margin="0,40"
            FontAttributes="Bold"
            HorizontalOptions="Center"
            VerticalOptions="Start" />
-        <Label Text="Opret en ny profil:" FontSize="20" TextColor="Gray" Margin="15" HorizontalOptions="Center"/>
-        <Button Text="Registrer" FontSize="18" TextColor="Black" Clicked="ProfileButton_Clicked"/>
-        <Label Text="Har du allerede en profil:" FontSize="20" TextColor="Gray" Margin="15" HorizontalOptions="Center"/>
-        <Button Text="Log Ind" FontSize="18" TextColor="Black"           />
+        <Label Text="Opret en ny profil:" FontSize="Large" Margin="15" HorizontalOptions="Center"/>
+        <Button Text="Registrer" FontSize="Large" Clicked="RegisterButton_Clicked"/>
+        <Label Text="Har du allerede en profil:" FontSize="Large" Margin="15" HorizontalOptions="Center"/>
+        <Button Text="Log Ind" FontSize="Large" />
     </StackLayout>
 
 </ContentPage>
