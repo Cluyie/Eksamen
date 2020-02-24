@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business_Layer.Models;
+using Data_Access_Layer.Models;
 
 namespace Rest_API.Controllers
 {
@@ -15,9 +16,9 @@ namespace Rest_API.Controllers
     public class UserController : ControllerBase
     {
         [HttpPut("{id}")]
-        public ApiResponse<UserData> UpdateUser(Guid id, [FromBody] UserData userData)
+        public ApiResponse<User> UpdateUser(Guid id, [FromBody] User userData)
         {
-            return new ApiResponse<UserData>(ApiResponseCode.Success, userData);
+            return new ApiResponse<User>(ApiResponseCode.Success, userData);
         }
     }
 }
