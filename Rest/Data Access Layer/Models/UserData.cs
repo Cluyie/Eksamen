@@ -2,18 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace Data_Access_Layer
 {
-    public class UserData
+    public class UserData : IdentityUser
     {
-        [Key]
-        public Guid Id { get; set; }
-
-        public string Username { get; set; }
-
-        public string Email { get; set; }
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -22,7 +16,7 @@ namespace Data_Access_Layer
 
         public string City { get; set; }
 
-        public string ZipCode { get; set; }
+        public int ZipCode { get; set; }
 
         public string Country { get; set; }
     }
