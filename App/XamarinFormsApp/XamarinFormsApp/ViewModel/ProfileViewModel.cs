@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using AutoMapper;
+using Business_Layer.Models;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;

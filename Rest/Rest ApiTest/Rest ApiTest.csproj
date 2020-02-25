@@ -16,8 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Business Layer\Business Layer.csproj" />
-    <ProjectReference Include="..\Data Access Layer\Data Access Layer.csproj" />
     <ProjectReference Include="..\Rest API\Rest API.csproj" />
   </ItemGroup>
 

@@ -21,17 +21,17 @@ namespace XamarinFormsApp.Helpers
         var types = Assembly.GetExecutingAssembly().GetTypes();
         var config = new MapperConfiguration(cfg =>
         {
-          foreach (var item in types)
+          foreach (var type in types)
           {
             string viewmodelNamespace = $"{nameof(XamarinFormsApp)}.{nameof(ViewModel)}";
-            if (item.Namespace == viewmodelNamespace)
+            if (type.Namespace == viewmodelNamespace)
             {
-              string name = item.Name.Replace("ViewModel", "");
+              string name = type.Name.Replace("ViewModel", "");
               string modelNamespace = $"{nameof(XamarinFormsApp)}.{nameof(Model)}";
               var modelItem = types.FirstOrDefault(t => t.Namespace == modelNamespace && t.Name == name);
               if (modelItem != null)
               {
-                cfg.CreateMap(item, modelItem);
+                cfg.CreateMap(type, modelItem);
               }
             }
           }
