@@ -32,11 +32,11 @@ namespace XamarinFormsApp.ViewModel
 
     public async Task<bool> UpdateProfile()
     {
-      var response = await _proxy.PostAsync(@"Auth/1", _mapper.Map<Model.Profile>(this));
-      var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<string>>(response);
+      var response = await _proxy.PutAsync(@"User/7166f6e1-7de5-4757-8bc3-26145f991a7b", _mapper.Map<Model.Profile>(this));
+      var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<Model.Profile>>(response);
       if (response.IsSuccessStatusCode)
       {
-        Application.Current.Properties["token"] = result.Value;
+        
       }
       else
       {

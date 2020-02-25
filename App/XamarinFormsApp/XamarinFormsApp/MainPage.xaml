@@ -4,27 +4,17 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="XamarinFormsApp.MainPage">
+             x:Class="XamarinFormsApp.MainPage"
+             BackgroundColor="{StaticResource PageBackgroundColor}">
 
     <StackLayout>
-        <!-- Place new controls here -->
-        <Label  Text="Notes" 
-                HorizontalOptions="Center"
-                VerticalOptions="CenterAndExpand" 
-                FontAttributes="Bold"/>
-        <Editor x:Name="Editor"
-                Placeholder="Please enter your note"
-                HeightRequest="100"/>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button Text="Save"
-                    Clicked="SaveButton_OnClicked"/>
-            <Button Grid.Column="1"
-                    Text="Delete"
-                    Clicked="DeleteButton_OnClicked"/>
-        </Grid>
+        <Label FontSize= "Title" Text="Velkommen!" Margin="0,40"
+           FontAttributes="Bold"
+           HorizontalOptions="Center"
+           VerticalOptions="Start" />
+        <Label Text="Opret en ny profil:" FontSize="Large" Margin="15" HorizontalOptions="Center"/>
+        <Button Text="Registrer" FontSize="Large" Clicked="RegisterButton_Clicked"/>
+        <Label Text="Har du allerede en profil:" FontSize="Large" Margin="15" HorizontalOptions="Center"/>
+        <Button Text="Log Ind" FontSize="Large" Clicked="LoginButton_Clicked"/>
     </StackLayout>
 </ContentPage>

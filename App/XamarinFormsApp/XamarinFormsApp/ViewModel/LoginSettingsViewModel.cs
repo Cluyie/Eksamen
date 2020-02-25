@@ -30,8 +30,8 @@ namespace XamarinFormsApp.ViewModel
 
     public async Task<bool> UpdateLogin()
     {
-      //throw new NotImplementedException();
-      var response = await _proxy.PostAsync(@"Auth/UpdateLogin", _mapper.Map<LoginSettings>(this));
+      return true; //Nothing here yet
+      var response = await _proxy.PostAsync(@"User/UpdateLogin", _mapper.Map<LoginSettings>(this));
       var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<string>>(response);
       if (response.IsSuccessStatusCode)
       {

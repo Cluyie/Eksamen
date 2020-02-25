@@ -27,7 +27,7 @@ namespace XamarinFormsApp.View
     {
       if (await _loginSettingsViewModel.UpdateLogin())
       {
-        await Navigation.PushAsync(new MainPage());
+        await Navigation.PopAsync();
       }
       else
       {
