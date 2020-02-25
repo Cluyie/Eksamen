@@ -15,13 +15,13 @@ namespace Business_Layer
         /// <summary>
         /// The currently authenticated user
         /// </summary>
-        private UserData _user;
+        private User _user;
 
         /// <summary>
         /// Authenticate the specified user
         /// </summary>
         /// <param name="user"></param>
-        public void Authenticate(UserData user)
+        public void Authenticate(User user)
         {
             _user = user;
         }
@@ -31,7 +31,7 @@ namespace Business_Layer
         /// is not authenticated.
         /// </summary>
         /// <returns></returns>
-        public UserData GetUser()
+        public User GetUser()
         {
             return _user;
         }
@@ -41,7 +41,7 @@ namespace Business_Layer
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public string GetAuthToken(UserData user)
+        public string GetAuthToken(User user)
         {
             // TODO: CHANGE to a real token
             return user.UserName;

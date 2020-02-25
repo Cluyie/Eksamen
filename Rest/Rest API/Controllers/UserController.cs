@@ -27,12 +27,12 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status304NotModified)]
-        public ApiResponse<UserData> UpdateUser(Guid id, [FromBody] UserData userData)
+        public ApiResponse<User> UpdateUser(Guid id, [FromBody] User user)
         {
-            if (userData == null || !ModelState.IsValid)
-                return new ApiResponse<UserData>(ApiResponseCode.BadRequest, userData);
+            if (user == null || !ModelState.IsValid)
+                return new ApiResponse<User>(ApiResponseCode.BadRequest, user);
 
-            return _userService.Update(id, userData);
+            return _userService.Update(id, user);
         }
     }
 }

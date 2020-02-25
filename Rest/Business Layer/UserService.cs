@@ -1,20 +1,21 @@
-﻿using Data_Access_Layer;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Business_Layer.Models;
-using Data_Access_Layer.Context;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Data_Access_Layer;
+using Data_Access_Layer.Context;
+using Data_Access_Layer.Models;
+using Business_Layer.Models;
 
 namespace Business_Layer
 {
     public class UserService
     {
-        Data_Access_Layer.AppContext _identityContext;
+        IdentityContext _identityContext;
         AuthService _authService;
 
-        public UserService(Data_Access_Layer.AppContext identityContext, AuthService authService)
+        public UserService(IdentityContext identityContext, AuthService authService)
         {
             _identityContext = identityContext;
             _authService = authService;
@@ -35,25 +36,25 @@ namespace Business_Layer
             }
 
             // TODO: Create a real user in identity with hashed password
-            UserData user = new UserData
+            User user = new User
             {
                 UserName = registerDTO.Username,
                 Email = registerDTO.Email,
                 PasswordHash = ""
             };
 
-            _identityContext.UserData.Add(user);
+            _identityContext.Users.Add(user);
             _identityContext.SaveChanges();
 
             return new ApiResponse<string>(ApiResponseCode.OK, _authService.GetAuthToken(user));
         }
 
-        public ApiResponse<UserData> Update(Guid id, UserData user)
+        public ApiResponse<User> Update(Guid id, User user)
         {
             // Can only update an existing user
             if(GetFromID(id) == null)
             {
-                return new ApiResponse<UserData>(ApiResponseCode.BadRequest, null);
+                return new ApiResponse<User>(ApiResponseCode.BadRequest, null);
             }
 
             /* TODO: Uncomment this when authentication is working
@@ -68,7 +69,7 @@ namespace Business_Layer
             _identityContext.Attach(user).State = EntityState.Modified;
             _identityContext.SaveChanges();
 
-            return new ApiResponse<UserData>(ApiResponseCode.OK, user);
+            return new ApiResponse<User>(ApiResponseCode.OK, user);
         }
 
         public ApiResponse<string> Login(LoginDTO credentials)
@@ -76,7 +77,7 @@ namespace Business_Layer
             // TODO: Make proper login functionality. For now it always authenticates
             // if the username matches a user
 
-            UserData user = GetFromEmail(credentials.UsernameOrEmail);
+            User user = GetFromEmail(credentials.UsernameOrEmail);
 
             // Didn't find a user with that email, try to find by username
             if(user == null)
@@ -96,25 +97,25 @@ namespace Business_Layer
 
         // ----- Internal methods -----
 
-        UserData GetFromID(Guid id)
+        User GetFromID(Guid id)
         {
-            return _identityContext.UserData.FirstOrDefault(user => user.Id == id.ToString());
+            return _identityContext.Users.FirstOrDefault(user => user.Id == id.ToString());
         }
 
-        UserData GetFromEmail(string email)
+        User GetFromEmail(string email)
         {
-            return _identityContext.UserData.FirstOrDefault(user => user.Email.ToLower() == email.ToLower());
+            return _identityContext.Users.FirstOrDefault(user => user.Email.ToLower() == email.ToLower());
         }
 
-        UserData GetFromUsername(string username)
+        User GetFromUsername(string username)
         {
-            return _identityContext.UserData.FirstOrDefault(user => user.UserName.ToLower() == username.ToString());
+            return _identityContext.Users.FirstOrDefault(user => user.UserName.ToLower() == username.ToString());
         }
 
-        UserData GetUserFromToken(string token)
+        User GetUserFromToken(string token)
         {
             // TODO: Validate token against token in the database instead of username
-            return _identityContext.UserData.FirstOrDefault(user => user.UserName == token);
+            return _identityContext.Users.FirstOrDefault(user => user.UserName == token);
         }
     }
 }
