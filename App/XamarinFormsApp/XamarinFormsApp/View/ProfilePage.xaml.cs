@@ -24,10 +24,16 @@ namespace XamarinFormsApp.View
       _proxy = DependencyService.Get<ApiClientProxy>();
     }
 
-    private void UpdateButton_Clicked(object sender, EventArgs e)
+    private async void UpdateButton_Clicked(object sender, EventArgs e)
     {
-      _profileViewModel.UpdateProfile();
-      Navigation.PopAsync();
+      if (await _profileViewModel.UpdateProfile())
+      {
+        await Navigation.PopAsync();
+      }
+      else
+      {
+        //TODO Notify user of error
+      }
     }
 
     private void LoginSettingsButton_Clicked(object sender, EventArgs e)

@@ -9,6 +9,11 @@
     <ContentPage.Content>
         <StackLayout Margin="20,35,20,20"
                      VerticalOptions="Center">
+            <Label x:Name="title"
+                   Text="Login"
+                   FontSize="Title"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"/>
             <Entry x:Name="userName"
                    Placeholder="Brugernavn"
                    Text="{Binding UsernameOrEmail}"/>

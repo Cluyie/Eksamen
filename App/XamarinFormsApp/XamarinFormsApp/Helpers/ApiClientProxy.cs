@@ -25,28 +25,8 @@ namespace XamarinFormsApp
       httpClient = http;
     }
 
-    public ApiClientProxy()
-    {
-      httpClient = DependencyService.Get<HttpClient>();
-    }
-
     /// <summary>
-    /// This message is used to deserialize HttpResonseMessage there fx is created by a api with put and post rquest
-    /// </summary>
-    /// <typeparam name="returnObj"></typeparam>
-    /// <param name="responseMessage"></param>
-    /// <returns></returns>
-    public static returnObj ReadAnswer<returnObj>(HttpResponseMessage responseMessage) where returnObj : class
-    {
-      if (responseMessage.IsSuccessStatusCode)
-      {
-        return responseMessage.Content.ReadAsAsync<returnObj>().Result;
-      }
-      return null;
-    }
-
-    /// <summary>
-    /// this makes Get request
+    /// This makes a Get request
     /// retunrObj is the object you expect to get in return
     /// </summary>
     /// <typeparam name="returnObj"></typeparam>
@@ -64,7 +44,7 @@ namespace XamarinFormsApp
 
     /// <summary>
     /// This maks Put request
-    /// RetunrObj is the object you expect to get in return
+    /// retunrObj is the object you expect to get in return
     /// </summary>
     /// <typeparam name="returnObj"></typeparam>
     /// <param name="Http"></param>
@@ -79,7 +59,7 @@ namespace XamarinFormsApp
     }
 
     /// <summary>
-    /// this makes Post request
+    /// This makes a Post request
     /// retunrObj is the object you expect to get in return
     /// </summary>
     /// <typeparam name="returnObj"></typeparam>
@@ -103,9 +83,9 @@ namespace XamarinFormsApp
       return httpClient.DeleteAsync(Http).Result;
     }
 
-    //Async
     /// <summary>
-    /// This message is uest to desulise HttpResonseMessage there fx is creadet by a api wiht put and post rquest
+    /// Async
+    /// This async-method is used to deserialize a HttpResonseMessage that is fx created by an Api wiht Put and Post request
     /// </summary>
     /// <typeparam name="returnObj"></typeparam>
     /// <param name="responseMessage"></param>
@@ -118,9 +98,25 @@ namespace XamarinFormsApp
       }
       return null;
     }
+
     /// <summary>
-    /// this makes Get requset
-    /// retunrObj is the ubjekt you expekt to get in return;
+    /// This non-async method is used to deserialize HttpResonseMessage that is fx created by an Api with Put and Post request
+    /// </summary>
+    /// <typeparam name="returnObj"></typeparam>
+    /// <param name="responseMessage"></param>
+    /// <returns></returns>
+    public static returnObj ReadAnswer<returnObj>(HttpResponseMessage responseMessage) where returnObj : class
+    {
+      if (responseMessage.IsSuccessStatusCode)
+      {
+        return responseMessage.Content.ReadAsAsync<returnObj>().Result;
+      }
+      return null;
+    }
+
+    /// <summary>
+    /// This makes a Get request
+    /// retunrObj is the object you expect to get in return;
     /// </summary>
     /// <typeparam name="returnObj"></typeparam>
     /// <param name="Http"></param>
@@ -128,16 +124,16 @@ namespace XamarinFormsApp
     public async Task<returnObj> GetAsync<returnObj>(string Http) where returnObj : class
     {
       returnObj obj;
-      using (HttpResponseMessage respons = await httpClient.GetAsync(Http))
+      using (HttpResponseMessage response = await httpClient.GetAsync(Http))
       {
-        obj = await ReadAnswerAsync<returnObj>(respons);
+        obj = await ReadAnswerAsync<returnObj>(response);
       }
       return obj;
     }
 
     /// <summary>
-    /// this makes Put requset
-    /// retunrObj is the ubjekt you expekt to get in return;
+    /// This makes a Put request
+    /// retunrObj is the object you expect to get in return
     /// </summary>
     /// <typeparam name="returnObj"></typeparam>
     /// <param name="Http"></param>
@@ -152,8 +148,8 @@ namespace XamarinFormsApp
     }
 
     /// <summary>
-    /// this maks Post requset
-    /// retunrObj is the ubjekt you expekt to get in return;
+    /// This makes a Post request
+    /// returnObj is the object you expect to get in return
     /// </summary>
     /// <typeparam name="returnObj"></typeparam>
     /// <param name="Http"></param>
@@ -166,8 +162,9 @@ namespace XamarinFormsApp
       byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
       return await httpClient.PostAsync(Http, byteContent);
     }
+
     /// <summary>
-    /// this sendt a delead request
+    /// This sends a delete request
     /// </summary>
     /// <param name="Http"></param>
     /// <returns></returns>

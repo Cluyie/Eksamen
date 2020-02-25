@@ -80,7 +80,7 @@
                 <Button Grid.Row="5" 
                         Grid.Column="0" 
                         Grid.ColumnSpan="2"
-                        Text="Gem"
+                        Text="Opdater login"
                         Clicked="SaveButton_Clicked"/>
             </Grid>
         </StackLayout>

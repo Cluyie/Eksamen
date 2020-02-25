@@ -1,17 +1,23 @@
-﻿using System;
+﻿using Autofac;
+using AutoMapper;
+using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
+using XamarinFormsApp.Helpers;
 using XamarinFormsApp.Model;
 
 namespace XamarinFormsApp.ViewModel
 {
-  public class ProfileViewModel
+  public class ProfileViewModel : AutoMapper.Profile
   {
     #region Constructor
     private ApiClientProxy _proxy;
+    private Mapper _mapper;
 
     public ProfileViewModel()
     {
-      _proxy = DependencyService.Get<ApiClientProxy>();
+      _proxy = AutofacHelper.Container.Resolve<ApiClientProxy>();
+      _mapper = AutofacHelper.Container.Resolve<Mapper>();
     }
     #endregion
 
@@ -22,10 +28,22 @@ namespace XamarinFormsApp.ViewModel
     public int? ZipCode { get; set; }
     public string Country { get; set; }
 
-    public async void UpdateProfile()
+    public string ErrorMessage { get; private set; }
+
+    public async Task<bool> UpdateProfile()
     {
-      var profile = new Profile { FirstName = FirstName, LastName = LastName, Address = Address, City = City, ZipCode = ZipCode, Country = Country };
-      await _proxy.PostAsync("1", profile);
+      var response = await _proxy.PostAsync(@"Auth/1", _mapper.Map<Model.Profile>(this));
+      var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<string>>(response);
+      if (response.IsSuccessStatusCode)
+      {
+        Application.Current.Properties["token"] = result.Value;
+      }
+      else
+      {
+        ErrorMessage = Enum.GetName(typeof(ApiResponseCode), result.Code);
+      }
+      return response.IsSuccessStatusCode;
+      
     }
   }
 }

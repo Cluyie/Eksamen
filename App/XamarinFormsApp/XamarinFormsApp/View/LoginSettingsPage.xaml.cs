@@ -25,8 +25,14 @@ namespace XamarinFormsApp.View
 
     private async void SaveButton_Clicked(object sender, EventArgs e)
     {
-      _loginSettingsViewModel.UpdateLogin();
-      await Navigation.PushAsync(new MainPage());
+      if (await _loginSettingsViewModel.UpdateLogin())
+      {
+        await Navigation.PushAsync(new MainPage());
+      }
+      else
+      {
+        //TODO Notify user of error
+      }
     }
   }
 }

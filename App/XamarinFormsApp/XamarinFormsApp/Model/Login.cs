@@ -4,7 +4,7 @@ using System.Text;
 
 namespace XamarinFormsApp.Model
 {
-  public class Login
+  public class Login : AutoMapper.Profile
   {
     public string UsernameOrEmail { get; set; }
     public string Password { get; set; }

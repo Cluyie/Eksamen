@@ -92,7 +92,7 @@
                 <Button Grid.Row="6" 
                         Grid.Column="0" 
                         Grid.ColumnSpan="2"
-                        Text="Registrer"
+                        Text="Registrer profil"
                         Clicked="RegisterButton_Clicked"/>
             </Grid>
         </StackLayout>

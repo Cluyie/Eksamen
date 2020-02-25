@@ -17,7 +17,6 @@
         <Button Text="Registrer" FontSize="Large" Clicked="RegisterButton_Clicked"/>
         <Label Text="Har du allerede en profil:" FontSize="Large" Margin="15" HorizontalOptions="Center"/>
         <Button Text="Log Ind" FontSize="Large" Clicked="LoginButton_Clicked"/>
-        <Button Text="Profile" FontSize="Large" Clicked="ProfileButton_Clicked"/>
     </StackLayout>
 
 </ContentPage>

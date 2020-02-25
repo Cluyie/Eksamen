@@ -23,7 +23,6 @@ namespace XamarinFormsApp.View
     async void OnLoginButtonClicked(object sender, EventArgs e)
     {
 
-      _loginViewModel.Login();
       //if (!string.IsNullOrWhiteSpace(Account.Username) && !string.IsNullOrWhiteSpace(Account.Password))
       //{
       //    //send mig til login api
@@ -34,8 +33,14 @@ namespace XamarinFormsApp.View
       //    //else
       //}
 
-      ////
-      await Navigation.PopAsync();
+      if (await _loginViewModel.Login())
+      {
+        await Navigation.PushAsync(new HomePage());
+      }
+      else
+      {
+        //TODO Notify user of error
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,6 @@ namespace XamarinFormsApp.View
   [XamlCompilation(XamlCompilationOptions.Compile)]
   public partial class RegisterPage : ContentPage
   {
-    private ApiClientProxy _proxy;
     private AccountViewModel _accountViewModel;
 
     public RegisterPage()
@@ -21,13 +21,18 @@ namespace XamarinFormsApp.View
       InitializeComponent();
       BindingContext = _accountViewModel =
         new AccountViewModel();
-      _proxy = DependencyService.Get<ApiClientProxy>();
     }
 
     private async void RegisterButton_Clicked(object sender, EventArgs e)
     {
-      _accountViewModel.Register();
-      await Navigation.PopAsync();
+      if (await _accountViewModel.Register())
+      {
+        await Navigation.PushAsync(new HomePage());
+      }
+      else
+      {
+        //TODO Notify user of error
+      }
     }
   }
 }
