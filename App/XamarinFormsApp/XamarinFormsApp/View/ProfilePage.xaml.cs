@@ -13,16 +13,16 @@ namespace XamarinFormsApp.View
   [XamlCompilation(XamlCompilationOptions.Compile)]
   public partial class ProfilePage : ContentPage
   {
+    #region Constructor
     ProfileViewModel _profileViewModel;
-    private ApiClientProxy _proxy;
 
     public ProfilePage()
     {
       InitializeComponent();
       BindingContext = _profileViewModel
           = new ProfileViewModel();
-      _proxy = DependencyService.Get<ApiClientProxy>();
     }
+    #endregion
 
     private async void UpdateButton_Clicked(object sender, EventArgs e)
     {

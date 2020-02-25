@@ -21,6 +21,7 @@ namespace XamarinFormsApp.View
       InitializeComponent();
       BindingContext = _homeViewModel =
         new HomeViewModel();
+      _homeViewModel.SetUsername();
     }
 
     #endregion

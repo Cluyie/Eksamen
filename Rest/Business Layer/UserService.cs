@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Data_Access_Layer;
+using Business_Layer.Models;
 using Data_Access_Layer.Context;
 using Data_Access_Layer.Models;
-using Business_Layer.Models;
 
 namespace Business_Layer
 {
@@ -63,7 +62,7 @@ namespace Business_Layer
             {
                 return new ApiResponse<UserData>(ApiResponseCode.UnAuthenticated, null);
             }
-            */
+            */ 
 
             // Update the user
             _identityContext.Attach(user).State = EntityState.Modified;

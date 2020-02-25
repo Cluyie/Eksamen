@@ -1,11 +1,11 @@
 ﻿using Autofac;
 using AutoMapper;
-using Business_Layer.Models;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using XamarinFormsApp.Helpers;
 using XamarinFormsApp.Model;
+using Models;
 
 namespace XamarinFormsApp.ViewModel
 {

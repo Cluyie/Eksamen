@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Business_Layer.Models
+namespace Models
 {
     public enum ApiResponseCode : int
     {

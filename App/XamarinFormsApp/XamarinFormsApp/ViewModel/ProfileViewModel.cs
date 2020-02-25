@@ -1,11 +1,9 @@
 ﻿using Autofac;
 using AutoMapper;
-using Business_Layer.Models;
 using System;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 using XamarinFormsApp.Helpers;
-using XamarinFormsApp.Model;
+using Models;
 
 namespace XamarinFormsApp.ViewModel
 {
@@ -31,9 +29,10 @@ namespace XamarinFormsApp.ViewModel
 
     public string ErrorMessage { get; private set; }
 
+
     public async Task<bool> UpdateProfile()
     {
-      var response = await _proxy.PutAsync(@"User/7166f6e1-7de5-4757-8bc3-26145f991a7b", _mapper.Map<Model.Profile>(this));
+      var response = await _proxy.PutAsync(@"User/g", _mapper.Map<Model.Profile>(this));
       var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<Model.Profile>>(response);
       if (response.IsSuccessStatusCode)
       {
