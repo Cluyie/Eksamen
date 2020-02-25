@@ -6,6 +6,12 @@
              mc:Ignorable="d"
              x:Class="XamarinFormsApp.App">
     <Application.Resources>
-
+        <Color x:Key="PageBackgroundColor">#ffffff</Color>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="Black" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="TextColor" Value="Black" />
+        </Style>
     </Application.Resources>
 </Application>
