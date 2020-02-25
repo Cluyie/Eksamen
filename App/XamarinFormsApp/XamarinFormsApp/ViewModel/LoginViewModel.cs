@@ -43,7 +43,7 @@ namespace XamarinFormsApp.ViewModel
       }
       else
       {
-        ErrorMessage = result.Code.ToString();
+        ErrorMessage = response.ReasonPhrase;
       }
       return response.IsSuccessStatusCode;
     }

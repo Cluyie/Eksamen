@@ -17,14 +17,10 @@ namespace XamarinFormsApp.ViewModel
     public HomeViewModel()
     {
       _proxy = AutofacHelper.Container.Resolve<ApiClientProxy>();
+      Username = Application.Current.Properties["token"].ToString();
     }
     #endregion
 
     public string Username { get; set; }
-
-    public void SetUsername()
-    {
-      Username = Application.Current.Properties["token"].ToString();
-    }
   }
 }
