@@ -26,7 +26,7 @@ namespace Data_Access_Layer {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=10.56.8.34, 1433;Database=APPDatabase;User Id=lara2;Password=Hejmeddig19;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=10.56.8.34;Database=APPDatabase;User Id=lara2;Password=Hejmeddig19;")]
         public string UCLDB {
             get {
                 return ((string)(this["UCLDB"]));
