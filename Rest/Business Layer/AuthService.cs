@@ -10,26 +10,41 @@ namespace Business_Layer
     /// Is responsible for authenticating requests, generating and validating
     /// tokens.
     /// </summary>
-    public interface IAuthService
+    public class AuthService
     {
+        /// <summary>
+        /// The currently authenticated user
+        /// </summary>
+        private UserData _user;
+
         /// <summary>
         /// Authenticate the specified user
         /// </summary>
         /// <param name="user"></param>
-        void Authenticate(User user);
+        public void Authenticate(UserData user)
+        {
+            _user = user;
+        }
 
         /// <summary>
         /// Get the currently authenticated user, or null if the request
         /// is not authenticated.
         /// </summary>
         /// <returns></returns>
-        User GetUser();
+        public UserData GetUser()
+        {
+            return _user;
+        }
 
         /// <summary>
-        /// Generates (DOESN'T STORE) a auth token for the specified user
+        /// Gets the auth token for the specified user
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        string GenerateAuthToken(User user);
+        public string GetAuthToken(UserData user)
+        {
+            // TODO: CHANGE to a real token
+            return user.UserName;
+        }
     }
 }
