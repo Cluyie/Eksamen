@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Business_Layer;
+using Data_Access_Layer.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +28,9 @@ namespace Rest_API
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddControllers();
+      services.AddTransient<IdentityContext>(); 
+      services.AddTransient<AuthService>();
+      services.AddTransient<UserService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,7 +41,7 @@ namespace Rest_API
         app.UseDeveloperExceptionPage();
       }
 
-      app.UseHttpsRedirection();
+      //app.UseHttpsRedirection();
 
       app.UseRouting();
 
