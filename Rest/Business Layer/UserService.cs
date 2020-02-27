@@ -12,8 +12,8 @@ namespace Business_Layer
 {
     public class UserService
     {
-        IdentityContext _identityContext;
-        AuthService _authService;
+        private IdentityContext _identityContext;
+        private AuthService _authService;
 
         public UserService(IdentityContext identityContext, AuthService authService)
         {
@@ -30,7 +30,7 @@ namespace Business_Layer
             }
 
             // Username is already in use
-            if(GetFromUsername(registerDTO.Username) != null)
+            if (GetFromUsername(registerDTO.Username) != null)
             {
                 return new ApiResponse<string>(ApiResponseCode.UsernameAlreadyTaken, "");
             }
@@ -51,8 +51,10 @@ namespace Business_Layer
 
         public ApiResponse<User> Update(Guid id, User user)
         {
+            User existingUser = GetFromID(id);
+
             // Can only update an existing user
-            if(GetFromID(id) == null)
+            if (existingUser == null)
             {
                 return new ApiResponse<User>(ApiResponseCode.BadRequest, null);
             }
@@ -66,7 +68,7 @@ namespace Business_Layer
             */
 
             // Update the user
-            _identityContext.Update(user);
+            _identityContext.Entry(existingUser).CurrentValues.SetValues(user);
             _identityContext.SaveChanges();
 
             return new ApiResponse<User>(ApiResponseCode.OK, user);
@@ -80,13 +82,13 @@ namespace Business_Layer
             User user = GetFromEmail(credentials.UsernameOrEmail);
 
             // Didn't find a user with that email, try to find by username
-            if(user == null)
+            if (user == null)
             {
                 user = GetFromUsername(credentials.UsernameOrEmail);
             }
 
             // Didn't find a user by either email or username, so login fails
-            if(user == null)
+            if (user == null)
             {
                 return new ApiResponse<string>(ApiResponseCode.BadRequest, "");
             }
@@ -97,22 +99,22 @@ namespace Business_Layer
 
         // ----- Internal methods -----
 
-        User GetFromID(Guid id)
+        private User GetFromID(Guid id)
         {
             return _identityContext.Users.FirstOrDefault(user => user.Id == id.ToString());
         }
 
-        User GetFromEmail(string email)
+        private User GetFromEmail(string email)
         {
-            return _identityContext.Users.FirstOrDefault(user => user.Email.ToLower() == email.ToLower());
+            return _identityContext.Users.FirstOrDefault(user => string.Equals(user.Email, email, StringComparison.OrdinalIgnoreCase));
         }
 
-        User GetFromUsername(string username)
+        private User GetFromUsername(string username)
         {
-            return _identityContext.Users.FirstOrDefault(user => user.UserName.ToLower() == username.ToString());
+            return _identityContext.Users.FirstOrDefault(user => string.Equals(user.UserName, username, StringComparison.OrdinalIgnoreCase));
         }
 
-        User GetUserFromToken(string token)
+        private User GetUserFromToken(string token)
         {
             // TODO: Validate token against token in the database instead of username
             return _identityContext.Users.FirstOrDefault(user => user.UserName == token);
