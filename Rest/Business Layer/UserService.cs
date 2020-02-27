@@ -66,7 +66,7 @@ namespace Business_Layer
             */
 
             // Update the user
-            _identityContext.Attach(user).State = EntityState.Modified;
+            _identityContext.Update(user);
             _identityContext.SaveChanges();
 
             return new ApiResponse<User>(ApiResponseCode.OK, user);
