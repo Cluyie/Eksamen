@@ -37,15 +37,15 @@ namespace XamarinFormsApp.ViewModel
     {
       var response = await _proxy.PostAsync(@"Auth/Register", _mapper.Map<Account>(this));
       var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<string>>(response);
-      if (response.IsSuccessStatusCode)
+      if (response.IsSuccessStatusCode && result?.Code == ApiResponseCode.OK)
       {
         Application.Current.Properties["token"] = result.Value;
       }
       else
       {
-        ErrorMessage = Enum.GetName(typeof(ApiResponseCode), result.Code);
+        ErrorMessage = _proxy.GenerateErrorMessage(result, response);
       }
-      return response.IsSuccessStatusCode;
+      return result?.Code == ApiResponseCode.OK;
     }
   }
 }

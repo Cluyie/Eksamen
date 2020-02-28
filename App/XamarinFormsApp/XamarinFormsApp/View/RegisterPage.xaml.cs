@@ -31,7 +31,7 @@ namespace XamarinFormsApp.View
       }
       else
       {
-        //TODO Notify user of error
+        await DisplayAlert("Alert", _accountViewModel.ErrorMessage, "OK");
       }
     }
   }

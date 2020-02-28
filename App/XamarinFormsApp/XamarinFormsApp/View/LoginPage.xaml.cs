@@ -39,7 +39,7 @@ namespace XamarinFormsApp.View
       }
       else
       {
-        //TODO Notify user of error
+        await DisplayAlert("Alert", _loginViewModel.ErrorMessage, "OK");
       }
     }
   }

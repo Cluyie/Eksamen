@@ -32,18 +32,18 @@ namespace XamarinFormsApp.ViewModel
 
     public async Task<bool> UpdateProfile()
     {
-      var response = await _proxy.PutAsync(@"User/g", _mapper.Map<Model.Profile>(this));
+      var response = await _proxy.PutAsync(@"User/92cffb29-7699-4bbf-8da6-560c6f3bfdfb", _mapper.Map<Model.Profile>(this));
       var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<Model.Profile>>(response);
-      if (response.IsSuccessStatusCode)
+      if (response.IsSuccessStatusCode && result?.Code == ApiResponseCode.OK)
       {
         
       }
       else
       {
-        ErrorMessage = Enum.GetName(typeof(ApiResponseCode), result.Code);
+        ErrorMessage = _proxy.GenerateErrorMessage(result, response);
       }
-      return response.IsSuccessStatusCode;
-      
+      return result?.Code == ApiResponseCode.OK;
+
     }
   }
 }
