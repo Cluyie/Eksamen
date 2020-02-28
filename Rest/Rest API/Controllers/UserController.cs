@@ -16,7 +16,7 @@ namespace Rest_API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        UserService _userService;
+        private UserService _userService;
 
         public UserController(UserService userService)
         {
