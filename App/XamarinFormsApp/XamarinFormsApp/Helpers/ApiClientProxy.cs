@@ -62,7 +62,7 @@ namespace XamarinFormsApp
     }
 
     /// <summary>
-    /// This maks Put request
+    /// This makes a Put request
     /// retunrObj is the object you expect to get in return
     /// </summary>
     /// <typeparam name="returnObj"></typeparam>

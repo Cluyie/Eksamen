@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Text;
 using Autofac;
 using AutoMapper;
+using Models;
+using XamarinFormsApp.Model;
 
 namespace XamarinFormsApp.Helpers
 {
@@ -21,6 +23,8 @@ namespace XamarinFormsApp.Helpers
         var types = Assembly.GetExecutingAssembly().GetTypes();
         var config = new MapperConfiguration(cfg =>
         {
+          cfg.CreateMap(typeof(Model.Profile), typeof(User));
+          cfg.CreateMap(typeof(LoginSettings), typeof(User));
           foreach (var type in types)
           {
             string viewmodelNamespace = $"{nameof(XamarinFormsApp)}.{nameof(ViewModel)}";

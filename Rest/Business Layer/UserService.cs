@@ -101,23 +101,23 @@ namespace Business_Layer
 
         private User GetFromID(Guid id)
         {
-            return _identityContext.Users.FirstOrDefault(user => user.Id == id.ToString());
+            return _identityContext.Users.ToList().FirstOrDefault(user => user.Id == id.ToString());
         }
 
         private User GetFromEmail(string email)
         {
-            return _identityContext.Users.FirstOrDefault(user => string.Equals(user.Email, email, StringComparison.OrdinalIgnoreCase));
+            return _identityContext.Users.ToList().FirstOrDefault(user => string.Equals(user.Email, email, StringComparison.OrdinalIgnoreCase));
         }
 
         private User GetFromUsername(string username)
         {
-            return _identityContext.Users.FirstOrDefault(user => string.Equals(user.UserName, username, StringComparison.OrdinalIgnoreCase));
+            return _identityContext.Users.ToList().FirstOrDefault(user => string.Equals(user.UserName, username, StringComparison.OrdinalIgnoreCase));
         }
 
         private User GetUserFromToken(string token)
         {
             // TODO: Validate token against token in the database instead of username
-            return _identityContext.Users.FirstOrDefault(user => user.UserName == token);
+            return _identityContext.Users.ToList().FirstOrDefault(user => user.UserName == token);
         }
     }
 }
