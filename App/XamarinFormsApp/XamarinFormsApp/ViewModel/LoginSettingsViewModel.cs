@@ -32,17 +32,17 @@ namespace XamarinFormsApp.ViewModel
     public async Task<bool> UpdateLogin()
     {
       var user = _mapper.Map<User>(_mapper.Map<LoginSettings>(this));
-      user.Id = new Guid("92cffb29-7699-4bbf-8da6-560c6f3bfdfb");
-      user.Email = "chriskpedersen@hotmail.com";
-      user.UserName = "Tonur";
-      user.FirstName = "Christoffer";
-      user.LastName = "Pedersen";
-      user.Address = "Østerbrogade 20, 2 Th.";
-      user.City = "Vejle";
-      user.ZipCode = 7100;
-      user.Country = "Denmark";
+      user.Id = new Guid("3c53f1b5-e6c6-470c-b725-80ca60d9f88d");
+      user.Email = "test@mail.com";
+      user.UserName = "username";
+      user.FirstName = "firstname";
+      user.LastName = "lastname";
+      user.Address = "address";
+      user.City = "city";
+      user.ZipCode = 9999;
+      user.Country = "country";
       var response = await _proxy.PutAsync(@"User/" + user.Id, user);
-      var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<string>>(response);
+      var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<User>>(response);
       if (response.IsSuccessStatusCode && result?.Code == ApiResponseCode.OK)
       {
         Application.Current.Properties["token"] = result.Value;
