@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Text;
 using Autofac;
 using AutoMapper;
+using Models;
+using XamarinFormsApp.Model;
 
 namespace XamarinFormsApp.Helpers
 {
@@ -35,6 +37,7 @@ namespace XamarinFormsApp.Helpers
               }
             }
           }
+          cfg.CreateMap(typeof(LoginSettings), typeof(User));
         });
         Mapper mapper = new Mapper(config);
 
@@ -43,7 +46,7 @@ namespace XamarinFormsApp.Helpers
         {
           //Offentlig base adresse: http://81.27.216.103/webAPI/
           //Lokal base adresse til emulator http://10.0.2.2:5000/
-          BaseAddress = new Uri("http://81.27.216.103/webAPI/")
+          BaseAddress = new Uri("http://10.0.2.2:5000/")
         };
 
         var builder = new ContainerBuilder();
