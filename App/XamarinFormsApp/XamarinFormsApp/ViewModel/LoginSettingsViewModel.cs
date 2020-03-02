@@ -35,13 +35,7 @@ namespace XamarinFormsApp.ViewModel
       User user = _mapper.Map<User>(profile);
       user.Id = new Guid("3c53f1b5-e6c6-470c-b725-80ca60d9f88d");
       user.Email = "test@mail.com";
-      user.UserName = "username";
-      user.FirstName = "firstname";
-      user.LastName = "lastname";
-      user.Address = "address";
-      user.City = "city";
-      user.ZipCode = 9999;
-      user.Country = "country";
+      user.Password = "";
       var response = await _proxy.PutAsync(@"User/" + user.Id, user);
       var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<User>>(response);
       if (response.IsSuccessStatusCode && result?.Code == ApiResponseCode.OK)

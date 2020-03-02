@@ -35,7 +35,6 @@ namespace XamarinFormsApp.ViewModel
       Profile profile = _mapper.Map<Model.Profile>(this);
       User user = _mapper.Map<User>(profile);
       user.Id = new Guid("3c53f1b5-e6c6-470c-b725-80ca60d9f88d");
-      user.Email = "test@mail.com";
       user.UserName = "username";
       user.FirstName = "firstname";
       user.LastName = "lastname";

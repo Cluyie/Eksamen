@@ -46,6 +46,7 @@ namespace XamarinFormsApp.Helpers
         var client = new HttpClient
         {
           //Offentlig base adresse: http://81.27.216.103/webAPI/
+          //Intern base adresse: http://10.56.8.34/webAPI/
           //Lokal base adresse til emulator http://10.0.2.2:5000/
           BaseAddress = new Uri("http://81.27.216.103/webAPI/")
         };
