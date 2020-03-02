@@ -33,10 +33,7 @@ namespace XamarinFormsApp.ViewModel
     {
       LoginSettings profile = _mapper.Map<LoginSettings>(this);
       User user = _mapper.Map<User>(profile);
-      user.Id = new Guid("3c53f1b5-e6c6-470c-b725-80ca60d9f88d");
-      user.Email = "test@mail.com";
-      user.Password = "";
-      var response = await _proxy.PutAsync(@"User/" + user.Id, user);
+      var response = await _proxy.PutAsync(@"User/UpdateProfile", user);
       var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<User>>(response);
       if (response.IsSuccessStatusCode && result?.Code == ApiResponseCode.OK)
       {

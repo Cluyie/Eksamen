@@ -45,13 +45,14 @@ namespace XamarinFormsApp
     }
 
     /// <summary>
-    /// Generates an error message from an api response, and optionally a http response
+    /// Generates an error message from an api response, and optionally a http response. d
+    /// If all else fails, returns a ApiResponseCode.BadRequest
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="response"></param>
     /// <param name="result"></param>
     /// <returns></returns>
-    public string GenerateErrorMessage<T>(ApiResponse<T> result, HttpResponseMessage? response = null) where T : class
+    public string GenerateErrorMessage<T>(ApiResponse<T> result, HttpResponseMessage response = null) where T : class
     {
       ApiResponseCode? statusResponseCode = null;
       if (Enum.TryParse<ApiResponseCode>(response?.StatusCode.ToString(), out var responseCode))

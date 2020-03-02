@@ -32,17 +32,9 @@ namespace XamarinFormsApp.ViewModel
 
     public async Task<bool> UpdateProfile()
     {
-      Profile profile = _mapper.Map<Model.Profile>(this);
+      Model.Profile profile = _mapper.Map<Model.Profile>(this);
       User user = _mapper.Map<User>(profile);
-      user.Id = new Guid("3c53f1b5-e6c6-470c-b725-80ca60d9f88d");
-      user.UserName = "username";
-      user.FirstName = "firstname";
-      user.LastName = "lastname";
-      user.Address = "address";
-      user.City = "city";
-      user.ZipCode = 9999;
-      user.Country = "country";
-      var response = await _proxy.PutAsync(@"User/" + user.Id, user);
+      var response = await _proxy.PutAsync(@"User/UpdateProfile", user);
       var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<User>>(response);
       if (response.IsSuccessStatusCode && result?.Code == ApiResponseCode.OK)
       {

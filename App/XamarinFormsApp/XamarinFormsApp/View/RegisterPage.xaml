@@ -94,7 +94,29 @@
                        FontSize="Body"
                        IsPassword="True"
                    />
-                <Button Grid.Row="6" 
+                <Label Grid.Row="6" 
+                       Grid.Column="0" 
+                       VerticalTextAlignment="Center"
+                       Text="Fornavn"
+                       FontSize="Body"
+                       HorizontalOptions="Start" />
+                <Entry Grid.Row="6" Grid.Column="1" 
+                       x:Name="firstName"
+                       Placeholder="Indtast fornavn"
+                       FontSize="Body"
+                   />
+                <Label Grid.Row="7" 
+                       Grid.Column="0" 
+                       VerticalTextAlignment="Center"
+                       Text="Efternavn"
+                       FontSize="Body"
+                       HorizontalOptions="Start" />
+                <Entry Grid.Row="7" Grid.Column="1" 
+                       x:Name="lastName"
+                       Placeholder="Indtast efternavn"
+                       FontSize="Body"
+                   />
+                <Button Grid.Row="8" 
                         Grid.Column="0" 
                         Grid.ColumnSpan="2"
                         CornerRadius="10"
