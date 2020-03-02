@@ -1,4 +1,5 @@
 ﻿using System;
+using Models;
 using Xamarin.Forms;
 
 namespace XamarinFormsApp.Helpers
@@ -14,8 +15,11 @@ namespace XamarinFormsApp.Helpers
 
     public void Login(string token)
     {
-      Application.Current.Properties["Token"] = token;
       _proxy.httpClient.DefaultRequestHeaders.Add("Token", token);
+      Application.Current.Properties["Token"] = token;
+      //TODO IMPLEMENT THIS
+      //No method gets the user currently
+      Application.Current.Properties["UserData"] = _proxy.GetAsync<User>("User/GetProfile");
     }
   }
 }
