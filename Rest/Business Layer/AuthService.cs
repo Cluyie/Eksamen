@@ -43,7 +43,10 @@ namespace Business_Layer
     /// <returns></returns>
     public User GetUser()
     {
-      return _user;
+        User userToReturn = _user;
+        if (userToReturn != null)
+            userToReturn.PasswordHash = null;
+        return userToReturn;
     }
 
     /// <summary>

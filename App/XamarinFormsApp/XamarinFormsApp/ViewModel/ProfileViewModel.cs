@@ -12,11 +12,13 @@ namespace XamarinFormsApp.ViewModel
         #region Constructor
         private ApiClientProxy _proxy;
         private Mapper _mapper;
+        private AuthService _authService;
 
         public ProfileViewModel()
         {
             _proxy = AutofacHelper.Container.Resolve<ApiClientProxy>();
             _mapper = AutofacHelper.Container.Resolve<Mapper>();
+            _authService = AutofacHelper.Container.Resolve<AuthService>();
         }
 
         public ProfileViewModel InitializeWithUserData(User user)
@@ -43,7 +45,7 @@ namespace XamarinFormsApp.ViewModel
             var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<User>>(response);
             if (response.IsSuccessStatusCode && result?.Code == ApiResponseCode.OK)
             {
-
+                _authService.UpdateUser(result.Value);
             }
             else
             {

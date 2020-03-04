@@ -9,6 +9,7 @@ using Data_Access_Layer.Models;
 using Business_Layer.Models;
 using System.Threading.Tasks;
 using AutoMapper;
+using static System.String;
 
 namespace Business_Layer
 {
@@ -34,7 +35,7 @@ namespace Business_Layer
       }
 
       // Username is already in use
-      if (GetFromUsername(registerDTO.Username).Result != null)
+      if (GetFromUsername(registerDTO.Username) != null)
       {
         return new ApiResponse<string>(ApiResponseCode.UsernameAlreadyTaken, "");
       }
@@ -65,7 +66,7 @@ namespace Business_Layer
       {
         return new ApiResponse<User>(ApiResponseCode.UnAuthenticated, null);
       }
-      string oldPassword = userToChange.PasswordHash;
+
 
       /* TODO: Uncomment this when authentication is working
       // User can only update self
@@ -76,8 +77,15 @@ namespace Business_Layer
       */
 
       // Update the user
+      if (!IsNullOrWhiteSpace(userData.PasswordHash) && userData.PasswordHash != userToChange.PasswordHash)
+      {
+          //If the password is unchanged or empty, this does not update the password
+          userData.PasswordHash = userToChange.PasswordHash;
+      }
       // Automapper is configured to only overwrite the fields that are not null
       _mapper.Map(userData, userToChange);
+
+
 
       _identityContext.Update(userToChange);
       _identityContext.SaveChanges();
@@ -95,7 +103,7 @@ namespace Business_Layer
       // Didn't find a user with that email, try to find by username
       if (user == null)
       {
-        user = GetFromUsername(credentials.UsernameOrEmail).Result;
+        user = GetFromUsername(credentials.UsernameOrEmail);
       }
 
       // Didn't find a user by either email or username, so login fails
@@ -119,14 +127,28 @@ namespace Business_Layer
 
     private async Task<User> GetFromEmail(string email)
     {
-      return await _identityContext.Users.FirstOrDefaultAsync(user => user.Email == email);
-    }
+        foreach (User identityContextUser in _identityContext.Users)
+        {
+            if (string.Equals(identityContextUser.Email, email, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return identityContextUser;
+            }
+        }
 
-    private async Task<User> GetFromUsername(string username)
+        return null;
+        }
+
+    private User GetFromUsername(string username)
     {
-      return await _identityContext.Users.FirstOrDefaultAsync(user => user.UserName == username);
+        foreach (User identityContextUser in _identityContext.Users)
+        {
+            if (string.Equals(identityContextUser.UserName, username, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return identityContextUser;
+            }
+        }
+
+        return null;
     }
-
-
   }
 }

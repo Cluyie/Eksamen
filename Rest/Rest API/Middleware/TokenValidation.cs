@@ -25,7 +25,7 @@ namespace Rest_API.Middleware
       if (context.Request.Headers.ContainsKey("Token"))
       {
         string token = context.Request.Headers["Token"];
-        var user = authService.GetUserFromToken(token).Result;
+        var user = await authService.GetUserFromToken(token);
         if (user != null)
         {
           authService.Authenticate(user);
