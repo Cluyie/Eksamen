@@ -18,11 +18,24 @@ namespace Rest_API.Controllers
   public class UserController : ControllerBase
   {
     private UserService _userService;
+    private AuthService _authService;
 
     public UserController(UserService userService, AuthService authService)
     {
       _userService = userService;
+      _authService = authService;
     }
+
+    [HttpGet("GetProfile")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public ApiResponse<User> GetProfile()
+    {
+      var user = _authService.GetUser();
+      if (user == null)
+        return new ApiResponse<User>(ApiResponseCode.BadRequest, user);
+      return new ApiResponse<User>(ApiResponseCode.OK, user);
+    } 
 
     [HttpPut("UpdateProfile")]
     [ProducesResponseType(StatusCodes.Status200OK)]

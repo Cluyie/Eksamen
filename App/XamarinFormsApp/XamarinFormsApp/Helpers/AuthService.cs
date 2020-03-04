@@ -17,9 +17,8 @@ namespace XamarinFormsApp.Helpers
     {
       _proxy.httpClient.DefaultRequestHeaders.Add("Token", token);
       Application.Current.Properties["Token"] = token;
-      //TODO IMPLEMENT THIS
-      //No method gets the user currently
-      Application.Current.Properties["UserData"] = _proxy.GetAsync<User>("User/GetProfile");
+      var user = _proxy.Get<User>("User/GetProfile");
+      Application.Current.Properties["UserData"] = user;
     }
   }
 }

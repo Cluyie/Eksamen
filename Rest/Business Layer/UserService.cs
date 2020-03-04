@@ -104,6 +104,8 @@ namespace Business_Layer
         return new ApiResponse<string>(ApiResponseCode.BadRequest, "");
       }
 
+      _authService.Authenticate(user);
+
       // TODO: Send a proper token instead of just the username
       return new ApiResponse<string>(ApiResponseCode.OK, _authService.GetAuthToken(user));
     }
