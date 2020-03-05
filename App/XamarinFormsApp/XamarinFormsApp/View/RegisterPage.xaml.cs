@@ -14,24 +14,24 @@ namespace XamarinFormsApp.View
   [XamlCompilation(XamlCompilationOptions.Compile)]
   public partial class RegisterPage : ContentPage
   {
-    private AccountViewModel _accountViewModel;
+    private RegisterViewModel _registerViewModel;
 
     public RegisterPage()
     {
       InitializeComponent();
-      BindingContext = _accountViewModel =
-        new AccountViewModel();
+      BindingContext = _registerViewModel =
+        new RegisterViewModel();
     }
 
     private async void RegisterButton_Clicked(object sender, EventArgs e)
     {
-      if (await _accountViewModel.Register())
+      if (await _registerViewModel.Register())
       {
         await Navigation.PushAsync(new HomePage());
       }
       else
       {
-        await DisplayAlert("Alert", _accountViewModel.ErrorMessage, "OK");
+        await DisplayAlert("Alert", _registerViewModel.ErrorMessage, "OK");
       }
     }
   }
