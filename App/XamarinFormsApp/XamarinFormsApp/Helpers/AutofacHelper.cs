@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
@@ -42,12 +43,36 @@ namespace XamarinFormsApp.Helpers
         });
         Mapper mapper = new Mapper(config);
 
+        //Offentlig base adresse: http://81.27.216.103/webAPI/
+        //Intern base adresse: http://10.56.8.34/webAPI/
+        //Lokal base adresse til emulator http://10.0.2.2:5000/
+        string url = "http://10.0.2.2:5000/";
+
+        try
+        {
+          var myRequest = (HttpWebRequest)WebRequest.Create(url);
+
+          var response = (HttpWebResponse)myRequest.GetResponse();
+
+          if (response.StatusCode != HttpStatusCode.NotFound)
+          {
+            //  it's at least in some way responsive
+            //  but may be internally broken
+            //  as you could find out if you called one of the methods for real
+          }
+          else
+          {
+            //  well, at least it returned...
+          }
+        }
+        catch (Exception ex)
+        {
+          //  not available at all, for some reason
+        }
 
         var client = new HttpClient
         {
-          //Offentlig base adresse: http://81.27.216.103/webAPI/
-          //Intern base adresse: http://10.56.8.34/webAPI/
-          //Lokal base adresse til emulator http://10.0.2.2:5000/
+          
           BaseAddress = new Uri("http://81.27.216.103/webAPI/")
         };
         
