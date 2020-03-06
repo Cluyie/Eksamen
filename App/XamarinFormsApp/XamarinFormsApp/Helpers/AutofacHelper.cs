@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using Autofac;
 using AutoMapper;
 using Models;
@@ -43,30 +44,10 @@ namespace XamarinFormsApp.Helpers
         });
         Mapper mapper = new Mapper(config);
                 string url = null;
-                //Offentlig base adresse: http://81.27.216.103/webAPI/
-                //Intern base adresse: http://10.56.8.34/webAPI/
-                //Lokal base adresse til emulator http://10.0.2.2:5000/
-#if DEBUG
-                if(TestUrl("http://10.0.2.2:5000/User/GetProfile"))
-                {
-                    url = "http://10.0.2.2:5000/";
-                }
-#endif
-                //If you are not on the same Net as the server
-                if (url == null && TestUrl("http://81.27.216.103/webAPI/User/GetProfile"))
-                {
-                    url = "http://81.27.216.103/webAPI/";
-                }
-                //If you are on the same Net as the server
-                if(url == null && TestUrl("http://10.56.8.34/webAPI/User/GetProfile"))
-                {
-                    url = "http://10.56.8.34/webAPI/";
-                }
-                Console.WriteLine(url);
 
         var client = new HttpClient
         {
-          BaseAddress = new Uri(url)
+          BaseAddress = new Uri(FindUrl().Result)
         };
         
 
@@ -78,12 +59,36 @@ namespace XamarinFormsApp.Helpers
         Container = builder.Build();
       }
     }
-      private static bool TestUrl(string url)
+        private static async Task<string> FindUrl()
+        {
+            //Skal helst uptimeres
+            //Offentlig base adresse: http://81.27.216.103/webAPI/
+            //Intern base adresse: http://10.56.8.34/webAPI/
+            //Lokal base adresse til emulator http://10.0.2.2:5000/
+#if DEBUG
+            if (await AsyncTestUrl("http://10.0.2.2:5000/User/GetProfile"))
+            {
+                return "http://10.0.2.2:5000/";
+            }
+#endif
+            //If you are not on the same Net as the server
+            if (await AsyncTestUrl("http://81.27.216.103/webAPI/User/GetProfile"))
+            {
+                return "http://81.27.216.103/webAPI/";
+            }
+            //If you are on the same Net as the server
+            if (await AsyncTestUrl("http://10.56.8.34/webAPI/User/GetProfile"))
+            {
+                return "http://10.56.8.34/webAPI/";
+            }
+            return null;
+
+        }
+        private static async Task<bool> AsyncTestUrl(string url)
         {
             try
             {
                 var myRequest = (HttpWebRequest)WebRequest.Create(url);
-
                 var response = (HttpWebResponse)myRequest.GetResponse();
 
                 if (response.StatusCode != HttpStatusCode.NotFound)
