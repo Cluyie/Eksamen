@@ -24,6 +24,7 @@
                    IsPassword="True"
                    Text="{Binding Password}"/>
             <Button Text="Login"
+                    FontSize="Large"
                     CornerRadius="10"
                     Clicked="OnLoginButtonClicked"/>
         </StackLayout>
