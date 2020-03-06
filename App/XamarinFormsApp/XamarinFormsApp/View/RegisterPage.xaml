@@ -104,6 +104,7 @@
                        x:Name="firstName"
                        Placeholder="Indtast fornavn"
                        FontSize="Body"
+                       Text="{Binding FirstName}"
                    />
                 <Label Grid.Row="7" 
                        Grid.Column="0" 
@@ -115,6 +116,7 @@
                        x:Name="lastName"
                        Placeholder="Indtast efternavn"
                        FontSize="Body"
+                       Text="{Binding LastName}"
                    />
                 <Button Grid.Row="8" 
                         Grid.Column="0" 

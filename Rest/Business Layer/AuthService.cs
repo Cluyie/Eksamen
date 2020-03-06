@@ -38,7 +38,8 @@ namespace Business_Layer
 
     /// <summary>
     /// Get the currently authenticated user, or null if the request
-    /// is not authenticated.
+    /// is not authenticated. Always sets the password hash to null,
+    /// might need to change this in the future
     /// </summary>
     /// <returns></returns>
     public User GetUser()
