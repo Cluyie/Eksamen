@@ -49,7 +49,7 @@ namespace XamarinFormsApp.Helpers
 #if DEBUG
                 if(TestUrl("http://10.0.2.2:5000/User/GetProfile"))
                 {
-                    url = "http://10.0.2.2:5000/User/GetProfile";
+                    url = "http://10.0.2.2:5000/";
                 }
 #endif
                 //If you are not on the same Net as the server
