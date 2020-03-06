@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Data_Access_Layer;
 using Data_Access_Layer.Context;
 using Data_Access_Layer.Models;
 using Business_Layer.Models;
 using System.Threading.Tasks;
 using AutoMapper;
-using static System.String;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business_Layer
 {
@@ -77,7 +72,7 @@ namespace Business_Layer
             */
 
             // Update the user
-            if (!IsNullOrWhiteSpace(userData.PasswordHash) && userData.PasswordHash != userToChange.PasswordHash)
+            if (!string.IsNullOrWhiteSpace(userData.PasswordHash) && userData.PasswordHash != userToChange.PasswordHash)
             {
                 //If the password is unchanged or empty, this does not update the password
                 userData.PasswordHash = userToChange.PasswordHash;

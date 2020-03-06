@@ -41,7 +41,7 @@
                 <Entry Grid.Row="6" Grid.Column="1" Text="{Binding Country}"  FontSize="Body" Placeholder="Indtast Land"></Entry>
 
                 <Button Clicked="UpdateButton_Clicked" CornerRadius="10" Grid.Row="8" Grid.ColumnSpan="2" Text="Opdater profil" FontSize="Large" ></Button>
-                <Button Clicked="LoginSettingsButton_Clicked" CornerRadius="10" Grid.Row="9" Grid.ColumnSpan="2" Text="Ændre Loginoplysninger" FontSize="Large" ></Button>
+                <Button Clicked="LoginSettingsButton_Clicked" CornerRadius="10" Grid.Row="9" Grid.ColumnSpan="2" Grid.RowSpan="2" Text="Ændre &#x0a; Loginoplysninger" FontSize="Large" ></Button>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

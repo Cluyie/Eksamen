@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using Data_Access_Layer.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data_Access_Layer.Context
 {
