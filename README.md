@@ -1,23 +1,11 @@
 # UCLDreamTeam
 UCL 4. Semester Dreamteam Repository
 
-1 sprint:
+## Teams for 2 Sprint er:
 
+App - @Andreas G Hede, @Henrik Langer Hallemberg Schou,@Oleksii @Tobias Lauritzen og @Steffen Juhl 
+API - @Alex Holm, @Caspar @Frederik Knudsen, @Jacob Skov Madsen og @Jonas 
+Database - @Anders, @Christoffer Kragh Pedersen, @Ricardo Enrique Dollerup og @Simon Hansen 
+Website og Design (Mockups) - @Anders Østergaard Laursen, @Christian Jørgensen, @Frederik Hegnet Petersen, @Sebastian Søberg og @Simone 
 
-Iteration1: 3/2 - 7/2
-
-Iteration 2: 17/2 - 21/2
-
-Iteration 3: 24/2 - 28/2
-
-Teams for de første 3 iterationer 1 Sprint er:
-
-App - @Alex Holm, @Christoffer Kragh Pedersen, @Ricardo Enrique Dollerup og @Simon Hansen 
-
-Web Service & Signal R - @Frederik Hegnet Petersen, @Henrik Langer Hallemberg Schou, @Tobias Lauritzen og @Sebastian Søberg
-
-Database - @Caspar, @Christian Jørgensen, @Jacob Skov Madsen, @Simone og @Steffen Juhl 
-
-Dokumentation - @Anders, @Anders Østergaard Laursen, @Andreas G Hede og @Jonas 
-
-Mock-ups - @Frederik Knudsen og @Oleksii 
+[Dokumentation](https://docs.google.com/document/d/1LsvcOnyi4bbdBS5vJB79S8oc9nSKq3CvjDTdlnTwY4k/edit?usp=sharing)
