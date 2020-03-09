@@ -4,13 +4,17 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="XamarinFormsApp.MainPage">
+             x:Class="XamarinFormsApp.MainPage"
+             BackgroundColor="{StaticResource PageBackgroundColor}">
 
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
+    <StackLayout Margin="20,35,20,20">
+        <Label FontSize= "Title" Text="Velkommen!" Margin="0,40"
+           FontAttributes="Bold"
            HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+           VerticalOptions="Start" />
+        <Label Text="Opret en ny profil:" FontSize="Large" Margin="15" HorizontalOptions="Center"/>
+        <Button Text="Registrer" CornerRadius="10" FontSize="Large" Clicked="RegisterButton_Clicked"/>
+        <Label Text="Har du allerede en profil:" FontSize="Large" Margin="15" HorizontalOptions="Center"/>
+        <Button Text="Log Ind" CornerRadius="10" FontSize="Large" Clicked="LoginButton_Clicked"/>
     </StackLayout>
-
 </ContentPage>
