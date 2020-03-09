@@ -1,0 +1,31 @@
+﻿@using AdminPanel.Shared;
+@page "/Login"
+<h3>Log ind</h3>
+
+<EditForm Model="@_loginDTO" OnValidSubmit="OnValidSubmit">
+
+    <div class="form-group">
+        <label>Brugernavn</label>
+        <InputText class="form-control" placeholder="Brugernavn" @bind-Value="_loginDTO.Username" />
+    </div>
+
+    <div class="form-group">
+        <label>Adgangskode</label>
+        <InputText class="form-control" placeholder="********" type="password" @bind-Value="_loginDTO.Password" />
+    </div>
+
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Log ind</button>
+    </div>
+    
+</EditForm>
+
+
+@code {
+    private LoginDTO _loginDTO = new LoginDTO();
+
+    private void OnValidSubmit()
+    {
+        Console.WriteLine("Works");
+    }
+}
