@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using XamarinFormsApp.View;
 
 namespace XamarinFormsApp
 {
@@ -16,6 +19,16 @@ namespace XamarinFormsApp
     public MainPage()
     {
       InitializeComponent();
+    }
+
+    private void RegisterButton_Clicked(object sender, EventArgs e)
+    {
+      Navigation.PushAsync(new RegisterPage());
+    }
+
+    private void LoginButton_Clicked(object sender, EventArgs e)
+    {
+      Navigation.PushAsync(new LoginPage());
     }
   }
 }

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Business_Layer;
+using Data_Access_Layer.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,6 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Rest_API.Middleware;
+using AutoMapper;
+using Data_Access_Layer.Models;
 
 namespace Rest_API
 {
@@ -26,6 +31,18 @@ namespace Rest_API
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddControllers();
+      services.AddScoped<IdentityContext>();
+      services.AddScoped<AuthService>();
+      services.AddScoped<UserService>();
+
+      //AutoMapper setup
+
+      Mapper mapper = new Mapper(new MapperConfiguration(cfg =>
+      {
+        cfg.CreateMap<User, User>()
+     .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+      }));
+      services.AddSingleton(mapper);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,9 +53,11 @@ namespace Rest_API
         app.UseDeveloperExceptionPage();
       }
 
-      app.UseHttpsRedirection();
+      //app.UseHttpsRedirection();
 
       app.UseRouting();
+
+      app.UseTokenValidation();
 
       app.UseAuthorization();
 
