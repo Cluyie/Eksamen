@@ -37,9 +37,9 @@ namespace XamarinFormsApp
     public returnObj Get<returnObj>(string Http) where returnObj : class
     {
       returnObj obj;
-      using (HttpResponseMessage respons = httpClient.GetAsync(Http).Result)
+      using (HttpResponseMessage response = httpClient.GetAsync(Http).Result)
       {
-        obj = ReadAnswer<returnObj>(respons);
+        obj = ReadAnswer<returnObj>(response);
       }
       return obj;
     }
