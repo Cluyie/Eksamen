@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SignalR_Microservice.Hubs;
+using System;
+using System.IO;
 
 namespace SignalR_Microservice
 {
@@ -49,6 +51,22 @@ namespace SignalR_Microservice
 
             app.UseEndpoints(endpoints =>
             {
+                //Any Way to get generic type at runtime for MapHub???????
+                //try
+                //{
+                //    DirectoryInfo directory = new DirectoryInfo(Environment.CurrentDirectory + "/Hubs");
+                //    FileInfo[] Files = directory.GetFiles("*Hub.cs");
+                //    foreach (FileInfo file in Files)
+                //    {
+                //        var name = file.Name.Remove(file.Name.Length - 3, 3);
+                //        endpoints.MapHub<>($"/{name}");
+                //    }
+                //}
+                //catch (Exception)
+                //{
+                //    throw;
+                //}
+
                 endpoints.MapHub<DemoHub>("/DemoHub");
             });
         }
