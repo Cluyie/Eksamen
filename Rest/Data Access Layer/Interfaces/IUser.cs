@@ -11,6 +11,6 @@ namespace Data_Access_Layer.Interfaces
         string FirstName { get; set; }
         string LastName { get; set; }
         string UserName { get; set; }
-        int ZipCode { get; set; }
+        int? ZipCode { get; set; }
     }
 }
