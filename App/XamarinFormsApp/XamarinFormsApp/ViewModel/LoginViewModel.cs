@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using AutoMapper;
-using Business_Layer.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using XamarinFormsApp.Helpers;
 using XamarinFormsApp.Model;
+using Models;
 
 namespace XamarinFormsApp.ViewModel
 {
@@ -16,11 +16,13 @@ namespace XamarinFormsApp.ViewModel
     #region Constructor
     private ApiClientProxy _proxy;
     private Mapper _mapper;
+    private AuthService _authService;
 
     public LoginViewModel()
     {
       _proxy = AutofacHelper.Container.Resolve<ApiClientProxy>();
       _mapper = AutofacHelper.Container.Resolve<Mapper>();
+      _authService = AutofacHelper.Container.Resolve<AuthService>();
     }
     #endregion
 
@@ -37,15 +39,16 @@ namespace XamarinFormsApp.ViewModel
     {
       var response = await _proxy.PostAsync(@"Auth/Login", _mapper.Map<Login>(this));
       var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<string>>(response);
-      if (response.IsSuccessStatusCode)
+      if (response.IsSuccessStatusCode && result?.Code == ApiResponseCode.OK)
       {
-        Application.Current.Properties["token"] = result.Value;
+        //Gemmer user token
+        _authService.Login(result.Value);
       }
       else
       {
-        ErrorMessage = Enum.GetName(typeof(ApiResponseCode), result.Code);
+        ErrorMessage = _proxy.GenerateErrorMessage(result, response);
       }
-      return response.IsSuccessStatusCode;
+      return result?.Code == ApiResponseCode.OK;
     }
   }
 }

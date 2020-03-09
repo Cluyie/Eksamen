@@ -39,6 +39,7 @@
                 <Entry Grid.Row="1" 
                        Grid.Column="1" 
                        x:Name="email"
+                       Placeholder="Indtast email"
                        FontSize="Body"
                        Text="{Binding Email}"
                    />
@@ -51,6 +52,7 @@
                 <Entry Grid.Row="2" 
                        Grid.Column="1" 
                        x:Name="confirmEmail"
+                       Placeholder="Indtast email"
                        FontSize="Body"
                    />
                 <Label Grid.Row="3" 
@@ -62,6 +64,7 @@
                 <Entry Grid.Row="3" 
                        Grid.Column="1" 
                        x:Name="password"
+                       Placeholder="Indtast kodeord"
                        FontSize="Body"
                        IsPassword="True"
                        Text="{Binding Password}"
@@ -74,14 +77,18 @@
                        HorizontalOptions="Start" />
                 <Entry Grid.Row="4" Grid.Column="1" 
                        x:Name="confirmPassword"
+                       Placeholder="Indtast kodeord"
                        FontSize="Body"
                        IsPassword="True"
                    />
                 <Button Grid.Row="5" 
                         Grid.Column="0" 
                         Grid.ColumnSpan="2"
+                        CornerRadius="10"
                         Text="Opdater login"
-                        Clicked="SaveButton_Clicked"/>
+                        FontSize="Large"
+                        Clicked="SaveButton_Clicked"
+                        />
             </Grid>
         </StackLayout>
     </ContentPage.Content>

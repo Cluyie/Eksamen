@@ -15,12 +15,12 @@
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="Xamarin.Forms" Version="4.5.0.282-pre4" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.0-pre1" />
+    <PackageReference Include="Xamarin.Forms" Version="4.6.0.379-pre1" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.5.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Rest\Business Layer\Business Layer.csproj" />
+    <ProjectReference Include="..\..\..\Rest\Models\Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using XamarinFormsApp.Model;
 
 namespace XamarinFormsApp
 {
@@ -43,7 +45,25 @@ namespace XamarinFormsApp
     }
 
     /// <summary>
-    /// This maks Put request
+    /// Generates an error message from an api response, and optionally a http response. d
+    /// If all else fails, returns a ApiResponseCode.BadRequest
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="response"></param>
+    /// <param name="result"></param>
+    /// <returns></returns>
+    public string GenerateErrorMessage<T>(ApiResponse<T> result, HttpResponseMessage response = null) where T : class
+    {
+      ApiResponseCode? statusResponseCode = null;
+      if (Enum.TryParse<ApiResponseCode>(response?.StatusCode.ToString(), out var responseCode))
+        statusResponseCode = responseCode;
+      return Enum.GetName(typeof(ApiResponseCode), result?.Code
+         ?? statusResponseCode
+         ?? ApiResponseCode.BadRequest);
+    }
+
+    /// <summary>
+    /// This makes a Put request
     /// retunrObj is the object you expect to get in return
     /// </summary>
     /// <typeparam name="returnObj"></typeparam>

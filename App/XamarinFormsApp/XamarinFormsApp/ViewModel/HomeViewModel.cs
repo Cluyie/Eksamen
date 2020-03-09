@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 using XamarinFormsApp.Helpers;
 using XamarinFormsApp.Model;
 
@@ -16,18 +17,10 @@ namespace XamarinFormsApp.ViewModel
     public HomeViewModel()
     {
       _proxy = AutofacHelper.Container.Resolve<ApiClientProxy>();
+      Username = Application.Current.Properties["Token"].ToString();
     }
     #endregion
 
     public string Username { get; set; }
-
-    /// <summary>
-    /// Not in use, can't get to work
-    /// </summary>
-    private async void SetUsername()
-    {
-      var homeUser = await _proxy.GetAsync<Home>("User/7166f6e1-7de5-4757-8bc3-26145f991a7b");
-      Username = homeUser.Username;
-    }
   }
 }

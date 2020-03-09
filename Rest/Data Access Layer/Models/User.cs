@@ -9,9 +9,7 @@ namespace Data_Access_Layer.Models
 {
     public class User : IdentityUser, IUser
     {
-        [Required]
         public override string Email { get; set; }
-        [Required]
         public override string UserName { get; set; }
         public string FirstName { get; set; }
 
@@ -21,7 +19,7 @@ namespace Data_Access_Layer.Models
 
         public string City { get; set; }
 
-        public int ZipCode { get; set; }
+        public int? ZipCode { get; set; }
 
         public string Country { get; set; }
     }

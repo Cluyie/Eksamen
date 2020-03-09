@@ -12,6 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Rest_API.Middleware;
+using AutoMapper;
+using Data_Access_Layer.Models;
 
 namespace Rest_API
 {
@@ -28,9 +31,18 @@ namespace Rest_API
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddControllers();
-      services.AddTransient<IdentityContext>(); 
-      services.AddTransient<AuthService>();
-      services.AddTransient<UserService>();
+      services.AddScoped<IdentityContext>();
+      services.AddScoped<AuthService>();
+      services.AddScoped<UserService>();
+
+      //AutoMapper setup
+
+      Mapper mapper = new Mapper(new MapperConfiguration(cfg =>
+      {
+        cfg.CreateMap<User, User>()
+     .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+      }));
+      services.AddSingleton(mapper);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +56,8 @@ namespace Rest_API
       //app.UseHttpsRedirection();
 
       app.UseRouting();
+
+      app.UseTokenValidation();
 
       app.UseAuthorization();
 
