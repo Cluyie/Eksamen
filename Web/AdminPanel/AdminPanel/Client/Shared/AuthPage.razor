@@ -5,9 +5,10 @@
     @ChildContent
 } else
 {
-    <h1>Ingen adgang</h1>
-    <hr />
-    <p>Kun brugere som er logget ind har adgang til denne side.</p>
+    <div class="alert alert-danger">
+        <h3>Ingen adgang!</h3>
+        Kun brugere som er logget ind har adgang til denne side.
+    </div>
 }
 
 @code {

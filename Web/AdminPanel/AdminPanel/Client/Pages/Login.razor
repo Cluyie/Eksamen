@@ -10,14 +10,15 @@
     @if (_invalidLogin)
     {
         <div class="alert alert-danger">
-            <b>Fejl!</b> Brugernavnet eller kodeordet var forkert.
+            <b>Fejl!</b> De indtastede oplysninger kunne ikke matches til en bruger, eller også har brugeren ikke
+            administrator-rettigheder.
         </div>
     }
 
     <EditForm Model="@_loginDTO" OnValidSubmit="OnValidSubmit">
 
         <div class="form-group">
-            <label>Brugernavn</label>
+            <label>Brugernavn eller E-mail-adresse</label>
             <InputText class="form-control" placeholder="Brugernavn" @bind-Value="_loginDTO.Username" />
         </div>
 
