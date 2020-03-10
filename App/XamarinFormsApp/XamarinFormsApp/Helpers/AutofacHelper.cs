@@ -43,7 +43,6 @@ namespace XamarinFormsApp.Helpers
           }
         });
         Mapper mapper = new Mapper(config);
-                string url = null;
 
         var client = new HttpClient
         {
