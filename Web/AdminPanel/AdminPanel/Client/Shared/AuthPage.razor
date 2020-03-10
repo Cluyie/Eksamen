@@ -1,0 +1,16 @@
+﻿@inject AppState AppState
+
+@if(AppState.Authenticated)
+{
+    @ChildContent
+} else
+{
+    <h1>Ingen adgang</h1>
+    <hr />
+    <p>Kun brugere som er logget ind har adgang til denne side.</p>
+}
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

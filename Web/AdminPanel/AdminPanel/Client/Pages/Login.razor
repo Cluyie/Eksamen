@@ -1,31 +1,55 @@
-﻿@using AdminPanel.Shared;
+﻿@using AdminPanel.Shared
+@using AdminPanel.Client.Services
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
 @page "/Login"
-<h3>Log ind</h3>
+<h1>Log ind</h1>
+<hr />
 
-<EditForm Model="@_loginDTO" OnValidSubmit="OnValidSubmit">
+<div class="col-md-6">
+    @if (_invalidLogin)
+    {
+        <div class="alert alert-danger">
+            <b>Fejl!</b> Brugernavnet eller kodeordet var forkert.
+        </div>
+    }
 
-    <div class="form-group">
-        <label>Brugernavn</label>
-        <InputText class="form-control" placeholder="Brugernavn" @bind-Value="_loginDTO.Username" />
-    </div>
+    <EditForm Model="@_loginDTO" OnValidSubmit="OnValidSubmit">
 
-    <div class="form-group">
-        <label>Adgangskode</label>
-        <InputText class="form-control" placeholder="********" type="password" @bind-Value="_loginDTO.Password" />
-    </div>
+        <div class="form-group">
+            <label>Brugernavn</label>
+            <InputText class="form-control" placeholder="Brugernavn" @bind-Value="_loginDTO.Username" />
+        </div>
 
-    <div class="form-group">
-        <button class="btn btn-primary" type="submit">Log ind</button>
-    </div>
-    
-</EditForm>
+        <div class="form-group">
+            <label>Adgangskode</label>
+            <InputText class="form-control" placeholder="********" type="password" @bind-Value="_loginDTO.Password" />
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Log ind</button>
+        </div>
+
+    </EditForm>
+</div>
 
 
 @code {
     private LoginDTO _loginDTO = new LoginDTO();
 
-    private void OnValidSubmit()
+    private bool _invalidLogin = false;
+
+    private async void OnValidSubmit()
     {
-        Console.WriteLine("Works");
+        _invalidLogin = false;
+
+        if(await AuthService.Login(_loginDTO))
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            _invalidLogin = true;
+        }
     }
 }

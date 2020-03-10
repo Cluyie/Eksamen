@@ -6,12 +6,12 @@ using AdminPanel.Shared;
 
 namespace AdminPanel.Client.Services
 {
-    interface IAuthService
+    public interface IAuthService
     {
+        string GetToken();
+
         Task<bool> Login(LoginDTO loginDTO);
 
         void Logout();
-
-        bool IsLoggedIn();
     }
 }

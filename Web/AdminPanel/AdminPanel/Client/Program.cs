@@ -15,8 +15,11 @@ namespace AdminPanel.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
+            // Register state
+            builder.Services.AddSingleton(new AppState());
+
             // Register services
-            builder.Services.AddSingleton<IAuthService>(new MockAuthService());
+            builder.Services.AddSingleton<IAuthService, MockAuthService>();
 
             await builder.Build().RunAsync();
         }

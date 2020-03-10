@@ -8,21 +8,29 @@ namespace AdminPanel.Client.Services
 {
     public class MockAuthService : IAuthService
     {
-        bool loggedIn = false;
+        private AppState _state;
 
-        public bool IsLoggedIn()
+        private string _token = null;
+
+        public MockAuthService(AppState state)
         {
-            return loggedIn;
+            _state = state;
+        }
+
+        public string GetToken()
+        {
+            return _token;
         }
 
         public void Logout()
         {
-            loggedIn = false;
+            _state.Authenticated = false;
+            _token = null;
         }
 
         public async Task<bool> Login(LoginDTO loginDTO)
         {
-            loggedIn = true;
+            _state.Authenticated = true;
 
             return true;
         }
