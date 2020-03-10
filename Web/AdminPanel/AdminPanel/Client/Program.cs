@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Text;
 using Microsoft.AspNetCore.Blazor.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using AdminPanel.Client.Services;
 
 namespace AdminPanel.Client
 {
@@ -13,6 +14,9 @@ namespace AdminPanel.Client
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
+
+            // Register services
+            builder.Services.AddSingleton<IAuthService>(new MockAuthService());
 
             await builder.Build().RunAsync();
         }

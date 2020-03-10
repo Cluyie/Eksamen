@@ -8,10 +8,10 @@ namespace AdminPanel.Client.Services
 {
     interface IAuthService
     {
-        Task Login(LoginDTO loginDTO);
+        Task<bool> Login(LoginDTO loginDTO);
 
-        Task Logout();
+        void Logout();
 
-        Task<bool> IsAuthenticated();
+        bool IsLoggedIn();
     }
 }
