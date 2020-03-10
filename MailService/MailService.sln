@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailService", "MailService\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "..\Models\Models.csproj", "{67715B07-7C44-491E-8574-9DF10904CBF4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer", "BusinessLayer\BusinessLayer.csproj", "{0102C8DE-1125-46EC-AD49-E40625CA0A1D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UCLToolBox", "..\UCLToolBox\UCLToolBox.csproj", "{AD57BA4E-17AD-4BD1-8D1B-1C05B7333705}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{67715B07-7C44-491E-8574-9DF10904CBF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67715B07-7C44-491E-8574-9DF10904CBF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67715B07-7C44-491E-8574-9DF10904CBF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0102C8DE-1125-46EC-AD49-E40625CA0A1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0102C8DE-1125-46EC-AD49-E40625CA0A1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0102C8DE-1125-46EC-AD49-E40625CA0A1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0102C8DE-1125-46EC-AD49-E40625CA0A1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD57BA4E-17AD-4BD1-8D1B-1C05B7333705}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD57BA4E-17AD-4BD1-8D1B-1C05B7333705}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD57BA4E-17AD-4BD1-8D1B-1C05B7333705}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD57BA4E-17AD-4BD1-8D1B-1C05B7333705}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
