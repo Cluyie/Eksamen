@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Models\Models.csproj" />
     <ProjectReference Include="..\..\..\Rest\Models\Models.csproj" />
+    <ProjectReference Include="..\..\..\UCLToolBox\UCLToolBox.csproj" />
   </ItemGroup>
 
   <ItemGroup>

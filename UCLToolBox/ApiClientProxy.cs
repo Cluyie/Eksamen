@@ -1,15 +1,13 @@
-﻿using Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Xamarin.Forms;
-using XamarinFormsApp.Model;
+using Models;
 
-namespace XamarinFormsApp
+namespace UCLToolBox
 {
   /// <summary>
   /// This sents a http get rquest to a api

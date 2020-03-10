@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Autofac;
 using AutoMapper;
 using Models;
+using UCLToolBox;
 using XamarinFormsApp.Model;
 
 namespace XamarinFormsApp.Helpers
