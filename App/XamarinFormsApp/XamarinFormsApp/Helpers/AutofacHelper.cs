@@ -28,6 +28,7 @@ namespace XamarinFormsApp.Helpers
                 {
                     cfg.CreateMap(typeof(Model.Profile), typeof(User)).ReverseMap();
                     cfg.CreateMap(typeof(LoginSettings), typeof(User)).ReverseMap();
+                    cfg.CreateMap<IResource, BookRessource>();
                     foreach (var type in types)
                     {
                         string viewmodelNamespace = $"{nameof(XamarinFormsApp)}.{nameof(ViewModel)}";
