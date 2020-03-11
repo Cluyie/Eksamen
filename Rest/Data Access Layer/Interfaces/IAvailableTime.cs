@@ -2,7 +2,7 @@
 
 namespace Data_Access_Layer.Interfaces
 {
-    interface IAvailableTime
+    public interface IAvailableTime
     {
         bool Available { get; set; }
         DateTime From { get; set; }

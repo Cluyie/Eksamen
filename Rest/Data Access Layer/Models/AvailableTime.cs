@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Data_Access_Layer.Interfaces;
+using System;
 
 namespace Data_Access_Layer.Models
 {
-    class AvailableTime : IAvailableTime
+    public class AvailableTime : IAvailableTime
     {
         public bool Available { get; set; }
         public int? Recurring { get; set; }
