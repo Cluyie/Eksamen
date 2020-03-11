@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Data_Access_Layer.Interfaces
+namespace Models
 {
     public interface IReserveTime
     {
