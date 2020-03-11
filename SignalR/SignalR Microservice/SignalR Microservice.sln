@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignalR Microservice", "Sig
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnitSignalR", "NUnitSignalR\NUnitSignalR.csproj", "{BAA30319-D281-43A6-93FA-8A69A5CA9662}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "..\..\Rest\Models\Models.csproj", "{14AE8B92-6B91-4ED5-AAF8-76F5DA8DDC67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "..\..\Models\Models.csproj", "{7D8B1F6C-85CB-4DA2-AA15-0B3767781589}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{BAA30319-D281-43A6-93FA-8A69A5CA9662}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAA30319-D281-43A6-93FA-8A69A5CA9662}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAA30319-D281-43A6-93FA-8A69A5CA9662}.Release|Any CPU.Build.0 = Release|Any CPU
-		{14AE8B92-6B91-4ED5-AAF8-76F5DA8DDC67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{14AE8B92-6B91-4ED5-AAF8-76F5DA8DDC67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{14AE8B92-6B91-4ED5-AAF8-76F5DA8DDC67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{14AE8B92-6B91-4ED5-AAF8-76F5DA8DDC67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D8B1F6C-85CB-4DA2-AA15-0B3767781589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D8B1F6C-85CB-4DA2-AA15-0B3767781589}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D8B1F6C-85CB-4DA2-AA15-0B3767781589}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D8B1F6C-85CB-4DA2-AA15-0B3767781589}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
