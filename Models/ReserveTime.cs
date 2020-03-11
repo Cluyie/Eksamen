@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class LoginDTO
+    public class ReserveTime : IReserveTime
     {
-        public string UsernameOrEmail { get; set; }
-        public string Password { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
     }
 }
