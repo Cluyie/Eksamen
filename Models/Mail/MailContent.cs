@@ -4,15 +4,11 @@ using System.Text;
 
 namespace Models.Mail
 {
-  public class MailTemplate
+  public class MailContent
   {
-    public enum Templates : int
-    {
-      BookingConfirmation = 1,
-      CancellationConfirmation = 2,
-    }
+    
 
-    public Templates Template { get; set; } 
+    public Template Template { get; set; } 
     public string Recipient { get; set; }
     public string[] CcRecipients { get; set; } = null;
     public string TitleContent { get; set; }

@@ -1,41 +1,27 @@
 ﻿using System;
 using System.Net.Mail;
+using System.Threading.Tasks;
+using Models;
 using Models.Mail;
+using ViewTemplates.Controllers;
+using ViewTemplates.Models;
 
 namespace BusinessLayer
 {
   public class MailHelper
   {
-    public void SendMail(string title, string htmlBody, string recipient, string[] ccRecipients = null)
+    private SmtpClient _smtpClient;
+    private ViewRenderService _viewRenderService;
+
+    public MailHelper(ViewRenderService viewRenderService)
     {
-      SmtpClient smtpClient = new SmtpClient(Properties.Resources.MailService_HostName, int.Parse(Properties.Resources.MailService_HostPort)); //"laraSMTP", 25);
-
-      smtpClient.Credentials = new System.Net.NetworkCredential(Properties.Resources.MailService_Username, Properties.Resources.MailService_Password);
-      // smtpClient.UseDefaultCredentials = true; // uncomment if you don't want to use the network credentials
-      smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-      smtpClient.EnableSsl = true;
-
-      //Setting From, subject and body
-      MailMessage mail = new MailMessage
-      {
-        From = new MailAddress(Properties.Resources.MailService_SenderEmail), // "booking@ucl.dk");
-        Subject = title,
-        Body = htmlBody,
-      };
-
-      //Setting To and CC
-      mail.To.Add(new MailAddress(recipient));
-      foreach (string ccRecipient in ccRecipients)
-      {
-        mail.CC.Add(new MailAddress(ccRecipient));
-      }
-
-      smtpClient.Send(mail);
+      ConfigureSMTPClient();
+      _viewRenderService = viewRenderService;
     }
 
-    public void SendMail(MailContent content)
+    private void ConfigureSMTPClient()
     {
-      SmtpClient smtpClient = new SmtpClient(Properties.Resources.MailService_HostName,
+      _smtpClient = new SmtpClient(Properties.Resources.MailService_HostName,
         int.Parse(Properties.Resources.MailService_HostPort))
       {
         Credentials = new System.Net.NetworkCredential(Properties.Resources.MailService_Username,
@@ -43,26 +29,28 @@ namespace BusinessLayer
         DeliveryMethod = SmtpDeliveryMethod.Network,
         EnableSsl = true
       }; //"laraSMTP", 25);
-
       // smtpClient.UseDefaultCredentials = true; // uncomment if you don't want to use the network credentials
+    }
 
-      //Setting From, subject and body
+    public void SendMail(MailMessage mail)
+    {
+      _smtpClient.Send(mail);
+    }
+
+    public async Task<MailMessage> GenerateMail(Template template, User user)
+    {
       MailMessage mail = new MailMessage
       {
         From = new MailAddress(Properties.Resources.MailService_SenderEmail), // "booking@ucl.dk");
-        Subject = content.TitleContent,
-        Body = content.BodyContent,
       };
-
       //Setting To and CC
-      mail.To.Add(new MailAddress(content.Recipient));
-      foreach (string ccRecipient in content.CcRecipients)
-      {
-        mail.CC.Add(new MailAddress(ccRecipient));
-      }
+      mail.To.Add(new MailAddress(user.Email));
 
+      var controller = new TemplatesController().ControllerContext;
 
-      smtpClient.Send(mail);
+      mail.Body = await _viewRenderService.RenderViewToString(controller, template.ToString(), typeof(TemplateViewModel));
+
+      return mail;
     }
   }
 }

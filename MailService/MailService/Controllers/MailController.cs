@@ -28,20 +28,20 @@ namespace MailService.Controllers
     }
 
     [HttpPost]
-    public ApiResponse<string> PostMail(int recipientId, [FromBody] MailContent content)
+    public async Task<ApiResponse<string>> PostMail(Template template, string recipientId, string resourceId = null)
     {
-      try
-      {
+      //try
+      //{
         var user = _proxy.Get<User>("User/GetProfileById/" + recipientId);
-        content.Recipient = user.Email;
-        _mailHelper.SendMail(content);
-      }
-      catch (Exception e)
-      {
-        Console.WriteLine(e);
-        throw;
-        return new ApiResponse<string>(ApiResponseCode.InternalServerError, e.Message);
-      }
+        MailMessage mail = await _mailHelper.GenerateMail(template, user);
+        _mailHelper.SendMail(mail);
+      //}
+      //catch (Exception e)
+      //{
+      //  Console.WriteLine(e);
+      //  throw;
+      //  return new ApiResponse<string>(ApiResponseCode.InternalServerError, e.Message);
+      //}
       return new ApiResponse<string>(ApiResponseCode.OK, "Email send");
     }
   }

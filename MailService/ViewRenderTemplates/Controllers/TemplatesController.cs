@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace ViewRenderTemplates.Controllers
+{
+  public class TemplatesController : Controller
+  {
+    public ActionResult BookingConfirmation()
+    {
+      return View();
+    }
+  }
+}

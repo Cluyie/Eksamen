@@ -61,7 +61,7 @@ namespace BusinessLayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to laraSMTP.
+        ///   Looks up a localized string similar to lara.UCL.local.
         /// </summary>
         internal static string MailService_HostName {
             get {
