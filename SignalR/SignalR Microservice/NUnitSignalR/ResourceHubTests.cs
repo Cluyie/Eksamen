@@ -1,6 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+<<<<<<< Updated upstream
+=======
+using Models;
+>>>>>>> Stashed changes
 using Moq;
 using NUnit.Framework;
 using SignalR_Microservice.Hubs;
@@ -33,8 +37,12 @@ namespace NUnitSignalR
             [Test]
             public async Task UpdateReservation_ShouldReturnSentReservationObject()
             {
+<<<<<<< Updated upstream
                 //Change object to Reservation type when it is available from DB team
                 object reservation = new object();
+=======
+                Reservation reservation = new Reservation();
+>>>>>>> Stashed changes
                 await resourceHub.UpdateReservation(reservation);
 
                 mockClients.Verify(clients => clients.All, Times.Once);
@@ -72,8 +80,12 @@ namespace NUnitSignalR
             [Test]
             public async Task UpdateResource_ShouldReturnSentResourceObject()
             {
+<<<<<<< Updated upstream
                 //Change object to Resource type when it is available from DB team
                 object resource = new object();
+=======
+                Resource resource = new Resource();
+>>>>>>> Stashed changes
                 await resourceHub.UpdateResource(resource);
 
                 mockClients.Verify(clients => clients.All, Times.Once);
