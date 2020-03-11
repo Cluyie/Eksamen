@@ -7,7 +7,7 @@ using SignalR_Microservice.Hubs;
 
 namespace NUnitSignalR
 {
-    public class Tests
+    public class DemoHubTests
     {
         public DemoHub demohub { get; set; }
         public Mock<IHubCallerClients> mockClients { get; set; }

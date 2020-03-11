@@ -52,6 +52,7 @@ namespace SignalR_Microservice
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<DemoHub>("/DemoHub");
+                endpoints.MapHub<ResourceHub>("/ResourceHub");
             });
         }
     }
