@@ -4,8 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SignalR_Microservice.Hubs;
-using System;
-using System.IO;
 
 namespace SignalR_Microservice
 {
@@ -44,6 +42,8 @@ namespace SignalR_Microservice
             }
 
             //app.UseHttpsRedirection(); //Enable Later!
+
+            app.UseWebSockets();
 
             app.UseRouting();
 

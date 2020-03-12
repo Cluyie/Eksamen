@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Models;
@@ -8,82 +9,62 @@ using SignalR_Microservice.Hubs;
 
 namespace NUnitSignalR
 {
-    public static class ResourceHubTests
+    public class ResourceHubTests
     {
-        public class UpdateReservationTests
+        public ResourceHub resourceHub { get; set; }
+        public Mock<IHubCallerClients> mockClients { get; set; }
+        public Mock<IClientProxy> mockClientProxy { get; set; }
+
+        [SetUp]
+        public void Setup()
         {
-            public ResourceHub resourceHub { get; set; }
-            public Mock<IHubCallerClients> mockClients { get; set; }
-            public Mock<IClientProxy> mockClientProxy { get; set; }
+            mockClients = new Mock<IHubCallerClients>();
+            mockClientProxy = new Mock<IClientProxy>();
 
-            [SetUp]
-            public void Setup()
+            mockClients.Setup(clients => clients.All).Returns(mockClientProxy.Object);
+
+            resourceHub = new ResourceHub()
             {
-                mockClients = new Mock<IHubCallerClients>();
-                mockClientProxy = new Mock<IClientProxy>();
-
-                mockClients.Setup(clients => clients.All).Returns(mockClientProxy.Object);
-
-
-                resourceHub = new ResourceHub()
-                {
-                    Clients = mockClients.Object
-                };
-            }
-
-            [Test]
-            public async Task UpdateReservation_ShouldReturnSentReservationObject()
-            {
-                Reservation reservation = new Reservation();
-                await resourceHub.UpdateReservation(reservation);
-
-                mockClients.Verify(clients => clients.All, Times.Once);
-
-                mockClientProxy.Verify(
-                    clientProxy => clientProxy.SendCoreAsync(
-                        "ReceiveMessage",
-                        It.Is<object[]>(o => o[0].Equals(reservation)),
-                        default(CancellationToken)),
-                    Times.Once);
-            }
+                Clients = mockClients.Object
+            };
         }
 
-        public class UpdateResourceTests
+        [Test]
+        public async Task UpdateReservation_ShouldReturnSentReservationObject()
         {
-            public ResourceHub resourceHub { get; set; }
-            public Mock<IHubCallerClients> mockClients { get; set; }
-            public Mock<IClientProxy> mockClientProxy { get; set; }
-
-            [SetUp]
-            public void Setup()
+            Reservation reservation = new Reservation()
             {
-                mockClients = new Mock<IHubCallerClients>();
-                mockClientProxy = new Mock<IClientProxy>();
+                Id = Guid.NewGuid()
+            };
+            await resourceHub.UpdateReservation(reservation);
 
-                mockClients.Setup(clients => clients.All).Returns(mockClientProxy.Object);
+            mockClients.Verify(clients => clients.All, Times.Once);
 
+            mockClientProxy.Verify(
+                clientProxy => clientProxy.SendCoreAsync(
+                    "UpdateReservation",
+                    new object[] { reservation },
+                    default(CancellationToken)),
+                Times.Once);
+        }
 
-                resourceHub = new ResourceHub()
-                {
-                    Clients = mockClients.Object
-                };
-            }
-
-            [Test]
-            public async Task UpdateResource_ShouldReturnSentResourceObject()
+        [Test]
+        public async Task UpdateResource_ShouldReturnSentResourceObject()
+        {
+            Resource resource = new Resource()
             {
-                Resource resource = new Resource();
-                await resourceHub.UpdateResource(resource);
+                Id = Guid.NewGuid()
+            };
+            await resourceHub.UpdateResource(resource);
 
-                mockClients.Verify(clients => clients.All, Times.Once);
+            mockClients.Verify(clients => clients.All, Times.Once);
 
-                mockClientProxy.Verify(
-                    clientProxy => clientProxy.SendCoreAsync(
-                        "UpdateReservation",
-                        It.Is<object[]>(o => o[0].Equals(resource)),
-                        default(CancellationToken)),
-                    Times.Once);
-            }
+            mockClientProxy.Verify(
+                clientProxy => clientProxy.SendCoreAsync(
+                    "UpdateResource",
+                    new object[] { resource },
+                    default(CancellationToken)),
+                Times.Once);
         }
     }
 }
