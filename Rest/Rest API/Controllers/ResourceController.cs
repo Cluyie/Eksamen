@@ -23,7 +23,7 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ApiResponse<IResource> CreateResource([FromBody] IResource resource)
+        public ApiResponse<IResource> CreateResource([FromBody] Resource resource)
         {
             if (resource == null || !ModelState.IsValid)
                 return new ApiResponse<IResource>(ApiResponseCode.BadRequest, resource);
@@ -35,12 +35,12 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ApiResponse<List<IResource>> GetResource()
+        public ApiResponse<List<IResource>> GetResources()
         {
             return _resourceService.Get();
         }
 
-        [HttpGet("{guid}")]
+        [HttpGet("guid={guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -57,7 +57,7 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status304NotModified)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ApiResponse<IResource> UpdateResource([FromBody] IResource resource)
+        public ApiResponse<IResource> UpdateResource([FromBody] Resource resource)
         {
             if (resource == null || !ModelState.IsValid)
                 return new ApiResponse<IResource>(ApiResponseCode.BadRequest, resource);
@@ -70,7 +70,7 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status304NotModified)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ApiResponse<string> DeleteResource(IResource resource)
+        public ApiResponse<string> DeleteResource(Resource resource)
         {
             if (resource == null || !ModelState.IsValid)
                 return new ApiResponse<string>(ApiResponseCode.BadRequest, "");

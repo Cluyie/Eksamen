@@ -37,6 +37,7 @@ namespace Rest_API
       services.AddScoped<AuthService>();
       services.AddScoped<UserService>();
       services.AddScoped<ResourceService>();
+      services.AddScoped<ReservationService>();
 
       //AutoMapper setup
 
