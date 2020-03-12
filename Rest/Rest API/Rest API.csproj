@@ -12,6 +12,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Business Layer\Business Layer.csproj" />
     <ProjectReference Include="..\Data Access Layer\Data Access Layer.csproj" />
+    <ProjectReference Include="..\..\Models\Models.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 
 

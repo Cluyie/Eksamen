@@ -16,6 +16,7 @@ using Rest_API.Middleware;
 using AutoMapper;
 using Data_Access_Layer.Models;
 
+
 namespace Rest_API
 {
   public class Startup
@@ -32,8 +33,10 @@ namespace Rest_API
     {
       services.AddControllers();
       services.AddScoped<IdentityContext>();
+      services.AddScoped<ApplicationContext>();
       services.AddScoped<AuthService>();
       services.AddScoped<UserService>();
+      services.AddScoped<ResourceService>();
 
       //AutoMapper setup
 
