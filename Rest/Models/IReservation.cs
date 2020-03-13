@@ -1,13 +1,12 @@
-﻿using Data_Access_Layer.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace Data_Access_Layer.Interfaces
+namespace Models
 {
     public interface IReservation
     {
         Guid Id { get; set; }
-        List<ReserveTime> Timeslot { get; set; }
+        List<IReserveTime> Timeslot { get; set; }
         Guid UserId { get; set; }
     }
 }

@@ -13,6 +13,6 @@ namespace Models
         string LastName { get; set; }
         [Required]
         string UserName { get; set; }
-        int ZipCode { get; set; }
+        int? ZipCode { get; set; }
     }
 }
