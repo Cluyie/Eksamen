@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminPanel.Server", "AdminP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminPanel.Client", "AdminPanel\Client\AdminPanel.Client.csproj", "{2BC5BF18-BE8E-4C22-AE9E-1D52F2C38DF5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminPanel.Shared", "AdminPanel\Shared\AdminPanel.Shared.csproj", "{5A1D9373-50ED-406C-A8EE-E439A269E18A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{2BC5BF18-BE8E-4C22-AE9E-1D52F2C38DF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BC5BF18-BE8E-4C22-AE9E-1D52F2C38DF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BC5BF18-BE8E-4C22-AE9E-1D52F2C38DF5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A1D9373-50ED-406C-A8EE-E439A269E18A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A1D9373-50ED-406C-A8EE-E439A269E18A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A1D9373-50ED-406C-A8EE-E439A269E18A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A1D9373-50ED-406C-A8EE-E439A269E18A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

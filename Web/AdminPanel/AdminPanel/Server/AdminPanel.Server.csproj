@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Client\AdminPanel.Client.csproj" />
-    <ProjectReference Include="..\Shared\AdminPanel.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
