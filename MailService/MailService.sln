@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UCLToolBox", "..\UCLToolBox
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewTemplates", "ViewTemplates\ViewTemplates.csproj", "{DE621A82-D162-4510-9AD8-42E83CCD759F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailTest", "MailTest\MailTest.csproj", "{6F309DFF-6A44-4FD3-9441-670AA1B44E66}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{DE621A82-D162-4510-9AD8-42E83CCD759F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE621A82-D162-4510-9AD8-42E83CCD759F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE621A82-D162-4510-9AD8-42E83CCD759F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F309DFF-6A44-4FD3-9441-670AA1B44E66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F309DFF-6A44-4FD3-9441-670AA1B44E66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F309DFF-6A44-4FD3-9441-670AA1B44E66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F309DFF-6A44-4FD3-9441-670AA1B44E66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

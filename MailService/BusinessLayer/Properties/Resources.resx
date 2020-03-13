@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MailService_HostName" xml:space="preserve">
-    <value>lara.UCL.local</value>
+    <value>LARA_Server</value>
   </data>
   <data name="MailService_HostPort" xml:space="preserve">
     <value>25</value>
   </data>
   <data name="MailService_Password" xml:space="preserve">
-    <value>Hejmeddig19</value>
+    <value>!q2w3e4r</value>
   </data>
   <data name="MailService_SenderEmail" xml:space="preserve">
     <value>booking@ucl.dk</value>

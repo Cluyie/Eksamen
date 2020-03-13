@@ -9,7 +9,6 @@ namespace UCLToolBox
   {
     public static string FindUrl()
     {
-      return "http://10.56.8.34/webAPI/";
       //Skal helst uptimeres
       //Offentlig base adresse: http://81.27.216.103/webAPI/
       //Intern base adresse: http://10.56.8.34/webAPI/
