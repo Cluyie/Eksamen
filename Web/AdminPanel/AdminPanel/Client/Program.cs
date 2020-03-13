@@ -20,7 +20,7 @@ namespace AdminPanel.Client
 
             // Register services
             builder.Services.AddSingleton<IAuthService, MockAuthService>();
-            builder.Services.AddSingleton<IResourceService, IResourceService>();
+            builder.Services.AddSingleton<IResourceService, MockResourceService>();
 
             await builder.Build().RunAsync();
         }
