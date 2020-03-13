@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using BusinessLayer;
 using Microsoft.AspNetCore.Builder;
@@ -13,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using UCLToolBox;
+using ViewTemplates.Controllers;
 
 namespace MailService
 {
@@ -28,9 +31,22 @@ namespace MailService
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddSingleton<HttpClient>();
+      string url = ConnectionManager.FindUrl();
+      if (url != null)
+      {
+
+        var client = new HttpClient
+        {
+          BaseAddress = new Uri(url)
+        };
+        client.DefaultRequestHeaders.Add("Token", "Tonur");
+
+        services.AddSingleton(client);
+        services.AddSingleton<ApiClientProxy>();
+      }
+
       services.AddSingleton<MailHelper>();
-      services.AddSingleton<ViewRenderService>();
+      services.AddSingleton<TemplatesController>();
 
       services.AddControllers();
       services.AddSwaggerGen(c =>

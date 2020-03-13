@@ -32,8 +32,8 @@ namespace MailService.Controllers
     {
       //try
       //{
-        var user = _proxy.Get<User>("User/GetProfileById/" + recipientId);
-        MailMessage mail = await _mailHelper.GenerateMail(template, user);
+      var response = _proxy.Get<ApiResponse<User>>("User/GetProfile/");// + recipientId);
+        MailMessage mail = await _mailHelper.GenerateMail(template, response.Value);
         _mailHelper.SendMail(mail);
       //}
       //catch (Exception e)

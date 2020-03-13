@@ -11,15 +11,15 @@ namespace BusinessLayer
   public class MailHelper
   {
     private SmtpClient _smtpClient;
-    private ViewRenderService _viewRenderService;
+    private TemplatesController _templatesController;
 
-    public MailHelper(ViewRenderService viewRenderService)
+    public MailHelper(TemplatesController templatesController)
     {
-      ConfigureSMTPClient();
-      _viewRenderService = viewRenderService;
+      ConfigureSmtpClient();
+      _templatesController = templatesController;
     }
 
-    private void ConfigureSMTPClient()
+    private void ConfigureSmtpClient()
     {
       _smtpClient = new SmtpClient(Properties.Resources.MailService_HostName,
         int.Parse(Properties.Resources.MailService_HostPort))
@@ -46,9 +46,8 @@ namespace BusinessLayer
       //Setting To and CC
       mail.To.Add(new MailAddress(user.Email));
 
-      var controller = new TemplatesController().ControllerContext;
 
-      mail.Body = await _viewRenderService.RenderViewToString(controller, template.ToString(), typeof(TemplateViewModel));
+      mail.Body = _templatesController.RenderViewToString(template.ToString());
 
       return mail;
     }

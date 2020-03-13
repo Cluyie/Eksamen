@@ -5,8 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="View\**" />
+    <EmbeddedResource Remove="View\**" />
+    <None Remove="View\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.2.0" />
+    <PackageReference Include="Westwind.Web.Mvc" Version="2.69.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,10 +34,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="View\" />
   </ItemGroup>
 
 </Project>
