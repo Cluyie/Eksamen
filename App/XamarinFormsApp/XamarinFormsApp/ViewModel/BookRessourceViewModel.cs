@@ -9,7 +9,7 @@ namespace XamarinFormsApp.ViewModel
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public List<IAvailableTime> 
+        public List<IAvailableTime> AllRessources;
         
 
 

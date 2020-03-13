@@ -34,5 +34,10 @@ namespace XamarinFormsApp.View
     {
       Navigation.PushAsync(new ProfilePage());
     }
-  }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new ViewRessourceView());
+        }
+    }
 }
