@@ -1,12 +1,37 @@
 ﻿@page "/Resource/All"
 @using AdminPanel.Client.Services
+@using AdminPanel.Client.DTOs
 @inject IResourceService ResourceService
 
-<AuthPage>
-    <h1>Alle Ressourcer</h1>
-    <hr />
-</AuthPage>
+    <AuthPage>
+        <h1>Alle Ressourcer</h1>
+        <hr />
+    <table class="table">
+    <thead>
+        <tr>
+            <th>Resource:</th>
+            <th>Antal Timeslots:</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var _resourceDTO in _resources)
+        {
+            <tr>
+                <th>@_resourceDTO.Name</th>
+                <th>@_resourceDTO.Timeslots.Count</th>
+            </tr>        
+        }
+    </tbody>
+    </table>        
+        
+    </AuthPage>
 
 @code {
+    List<ResourceDTO> _resources;    
+
+    protected override void OnInitialized()
+    {
+        _resources = ResourceService.GetAll();
+    }
 
 }
