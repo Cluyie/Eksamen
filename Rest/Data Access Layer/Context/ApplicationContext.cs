@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Data_Access_Layer.Interfaces;
-using Data_Access_Layer.Models;
 using Microsoft.EntityFrameworkCore;
+using Models;
 
 namespace Data_Access_Layer.Context
 {
