@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class ReserveTime : IReserveTime
+    public class ReserveTime
     {
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
