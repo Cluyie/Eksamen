@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Reservation : IReservation
+    public class Reservation
     {
         public Guid Id { get; set; }
-        public List<IReserveTime> Timeslot { get; set; }
+        public List<ReserveTime> Timeslot { get; set; }
         public Guid UserId { get; set; }
     }
 }

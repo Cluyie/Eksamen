@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class AvailableTime : IAvailableTime
+    public class AvailableTime
     {
         public bool Available { get; set; }
         public DateTime From { get; set; }

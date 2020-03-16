@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Resource : IResource
+    public class Resource
     {
         public Guid Id { get; set; }
         public string strName { get; set; }
-        public List<IReservation> Reservations { get; set; }
-        public List<IAvailableTime> TimeSlot { get; set; }
+        public List<Reservation> Reservations { get; set; }
+        public List<AvailableTime> TimeSlot { get; set; }
     }
 }
