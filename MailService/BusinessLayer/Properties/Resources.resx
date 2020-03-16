@@ -117,11 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MailService_HostName" xml:space="preserve">
+  <data name="MailService_DomainName" xml:space="preserve">
     <value>LARA_Server</value>
   </data>
+  <data name="MailService_HostName" xml:space="preserve">
+    <value>10.56.8.34</value>
+  </data>
   <data name="MailService_HostPort" xml:space="preserve">
-    <value>25</value>
+    <value>587</value>
   </data>
   <data name="MailService_Password" xml:space="preserve">
     <value>!q2w3e4r</value>

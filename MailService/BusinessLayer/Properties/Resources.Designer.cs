@@ -63,6 +63,15 @@ namespace BusinessLayer.Properties {
         /// <summary>
         ///   Looks up a localized string similar to LARA_Server.
         /// </summary>
+        internal static string MailService_DomainName {
+            get {
+                return ResourceManager.GetString("MailService_DomainName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 10.56.8.34.
+        /// </summary>
         internal static string MailService_HostName {
             get {
                 return ResourceManager.GetString("MailService_HostName", resourceCulture);
@@ -70,7 +79,7 @@ namespace BusinessLayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 25.
+        ///   Looks up a localized string similar to 587.
         /// </summary>
         internal static string MailService_HostPort {
             get {

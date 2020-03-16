@@ -15,7 +15,7 @@ namespace BusinessLayer
 
         public MailHelper()
         {
-
+            ConfigureSmtpClient();
         }
 
         public MailHelper(TemplatesController templatesController)
@@ -29,10 +29,10 @@ namespace BusinessLayer
             _smtpClient = new SmtpClient(Properties.Resources.MailService_HostName,
               int.Parse(Properties.Resources.MailService_HostPort))
             {
-                Credentials = new System.Net.NetworkCredential(Properties.Resources.MailService_Username,
-                Properties.Resources.MailService_Password),
+                //Credentials = new System.Net.NetworkCredential(Properties.Resources.MailService_Username,
+                //Properties.Resources.MailService_Password, Properties.Resources.MailService_DomainName),
                 DeliveryMethod = SmtpDeliveryMethod.Network,
-                EnableSsl = true
+                EnableSsl = false
             }; //"laraSMTP", 25);
                // smtpClient.UseDefaultCredentials = true; // uncomment if you don't want to use the network credentials
         }
