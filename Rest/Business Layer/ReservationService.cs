@@ -14,12 +14,12 @@ namespace Business_Layer
             _applicationContext = applicationContext;
         }
 
-        public ApiResponse<IReservation> Create(IReservation reservation)
+        public ApiResponse<Reservation> Create(Reservation reservation)
         {
             throw new NotImplementedException();
         }
 
-        public ApiResponse<IReservation> Get(Guid guid)
+        public ApiResponse<Reservation> Get(Guid guid)
         {
             throw new NotImplementedException();
         }

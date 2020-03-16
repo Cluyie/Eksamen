@@ -18,32 +18,32 @@ namespace Business_Layer
         }
 
         //Create resource
-        public ApiResponse<IResource> Create(IResource resource)
+        public ApiResponse<Resource> Create(Resource resource)
         {
             throw new NotImplementedException();
         }
 
         //Get all resources
-        public ApiResponse<List<IResource>> Get()
+        public ApiResponse<List<Resource>> Get()
         {
             throw new NotImplementedException();
         }
 
         //Get a specific resource from a GUID
-        public ApiResponse<IResource> Get(Guid guid)
+        public ApiResponse<Resource> Get(Guid guid)
         {
             throw new NotImplementedException();
         }
 
         //Update a resource
         //Should ignore reservations when being updated
-        public ApiResponse<IResource> Update(IResource resource)
+        public ApiResponse<Resource> Update(Resource resource)
         {
             throw new NotImplementedException();
         }
 
         //Delete a resource
-        public ApiResponse<string> Delete(IResource resource)
+        public ApiResponse<string> Delete(Resource resource)
         {
             throw new NotImplementedException();
         }

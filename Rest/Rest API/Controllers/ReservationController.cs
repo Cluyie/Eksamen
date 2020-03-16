@@ -22,10 +22,10 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ApiResponse<IReservation> CreateReservation([FromBody] Reservation reservation)
+        public ApiResponse<Reservation> CreateReservation([FromBody] Reservation reservation)
         {
             if (reservation == null || !ModelState.IsValid)
-                return new ApiResponse<IReservation>(ApiResponseCode.BadRequest, reservation);
+                return new ApiResponse<Reservation>(ApiResponseCode.BadRequest, reservation);
 
             return _reservationService.Create(reservation);
         }
@@ -34,10 +34,10 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ApiResponse<IReservation> GetReservationById([FromRoute]Guid guid)
+        public ApiResponse<Reservation> GetReservationById([FromRoute]Guid guid)
         {
             if (guid == null)
-                return new ApiResponse<IReservation>(ApiResponseCode.BadRequest, null);
+                return new ApiResponse<Reservation>(ApiResponseCode.BadRequest, null);
 
             return _reservationService.Get(guid);
         }
