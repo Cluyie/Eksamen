@@ -8,6 +8,10 @@ namespace AdminPanel.Client.Services
 {
     interface IResourceService
     {
-        public List<ResourceDTO> GetAll();
+        Task<List<ResourceDTO>> GetAll();
+
+        Task<ResourceDTO> GetFromId(Guid id);
+
+        Task DeleteFromId(Guid id);
     }
 }

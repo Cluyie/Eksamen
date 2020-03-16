@@ -3,35 +3,38 @@
 @using AdminPanel.Client.DTOs
 @inject IResourceService ResourceService
 
-    <AuthPage>
-        <h1>Alle Ressourcer</h1>
-        <hr />
+<AuthPage>
+    <h1>Alle Ressourcer</h1>
+    <hr />
     <table class="table">
     <thead>
         <tr>
             <th>Resource:</th>
             <th>Antal Timeslots:</th>
+            <th>Handlinger:</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var _resourceDTO in _resources)
         {
+            string deleteUrl = "/Resource/Delete/" + _resourceDTO.Id.ToString();
             <tr>
-                <th>@_resourceDTO.Name</th>
-                <th>@_resourceDTO.Timeslots.Count</th>
+                <td>@_resourceDTO.Name</td>
+                <td>@_resourceDTO.Timeslots.Count</td>
+                <td>
+                    <NavLink class="btn btn-danger" href="@deleteUrl">Slet</NavLink>
+                </td>
             </tr>        
         }
     </tbody>
-    </table>        
-        
-    </AuthPage>
+    </table>
+</AuthPage>
 
 @code {
-    List<ResourceDTO> _resources;    
+    List<ResourceDTO> _resources;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        _resources = ResourceService.GetAll();
+        _resources = await ResourceService.GetAll();
     }
-
 }
