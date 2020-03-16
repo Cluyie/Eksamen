@@ -43,6 +43,7 @@ namespace Rest_API.Controllers
                 return new ApiResponse<string>(ApiResponseCode.BadRequest, "");
 
             return _userService.Register(registerDTO);
+
         }
     }
 }

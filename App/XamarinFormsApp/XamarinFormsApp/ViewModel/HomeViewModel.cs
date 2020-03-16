@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,7 +18,7 @@ namespace XamarinFormsApp.ViewModel
     public HomeViewModel()
     {
       _proxy = AutofacHelper.Container.Resolve<ApiClientProxy>();
-      Username = Application.Current.Properties["Token"].ToString();
+      Username = (Application.Current.Properties["UserData"] as User).UserName.ToString();
     }
     #endregion
 
