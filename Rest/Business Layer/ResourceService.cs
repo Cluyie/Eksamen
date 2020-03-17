@@ -23,10 +23,15 @@ namespace Business_Layer
         public ApiResponse<Resource> Create(Resource resource)
         {
             _applicationContext.Add(resource);
-            _applicationContext.SaveChangesAsync();
 
-            return new ApiResponse<Resource>(ApiResponseCode.Created, resource);
-
+            if (_applicationContext.SaveChangesAsync().IsCompletedSuccessfully)
+            {
+                return new ApiResponse<Resource>(ApiResponseCode.Created, resource);
+            }
+            else
+            {
+                return new ApiResponse<Resource>(ApiResponseCode.NotModified, resource);
+            }
         }
 
         //Get all resources
