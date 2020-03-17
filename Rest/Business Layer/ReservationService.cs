@@ -2,6 +2,8 @@
 using Data_Access_Layer.Context;
 using Models;
 using System.Collections.Generic;
+using Data_Access_Layer.Models;
+using Business_Layer.Models;
 
 namespace Business_Layer
 {

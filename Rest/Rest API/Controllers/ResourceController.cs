@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using Business_Layer.Models;
+using Data_Access_Layer.Models;
 
 namespace Rest_API.Controllers
 {

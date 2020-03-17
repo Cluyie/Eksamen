@@ -4,6 +4,8 @@ using System;
 using System.Threading.Tasks;
 using XamarinFormsApp.Helpers;
 using Models;
+using Models.Interfaces;
+using XamarinFormsApp.Model;
 
 namespace XamarinFormsApp.ViewModel
 {

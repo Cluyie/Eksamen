@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Models.Interfaces;
 using Xamarin.Forms;
 using XamarinFormsApp.Model;
 

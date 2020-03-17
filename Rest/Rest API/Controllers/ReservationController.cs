@@ -1,9 +1,10 @@
 ﻿using Business_Layer;
-using Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using Data_Access_Layer.Models;
+using Business_Layer.Models;
 
 namespace Rest_API.Controllers
 {

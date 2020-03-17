@@ -1,7 +1,7 @@
-﻿using Data_Access_Layer.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Models.Interfaces;
 
 namespace Data_Access_Layer.Models
 {
@@ -9,7 +9,7 @@ namespace Data_Access_Layer.Models
     {
         public Guid Id { get; set; }
         public string strName { get; set; }
-        public List<AvailableTime> TimeSlot { get; set; }
-        public List<Reservation> Reservations { get; set; }
+        public List<IAvailableTime> TimeSlot { get; set; }
+        public List<IReservation> Reservations { get; set; }
     }
 }
