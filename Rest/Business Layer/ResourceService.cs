@@ -24,7 +24,8 @@ namespace Business_Layer
         {
             _applicationContext.Add(resource);
 
-            if (_applicationContext.SaveChangesAsync().IsCompletedSuccessfully)
+            //If the _applicationContext does not make any changes, it returns 0.
+            if (_applicationContext.SaveChanges() != 0)
             {
                 return new ApiResponse<Resource>(ApiResponseCode.Created, resource);
             }
