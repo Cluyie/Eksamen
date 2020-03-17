@@ -22,7 +22,11 @@ namespace Business_Layer
         //Create resource
         public ApiResponse<Resource> Create(Resource resource)
         {
-            throw new NotImplementedException();
+            _applicationContext.Add(resource);
+            _applicationContext.SaveChangesAsync();
+
+            return new ApiResponse<Resource>(ApiResponseCode.Created, resource);
+
         }
 
         //Get all resources

@@ -23,6 +23,7 @@ namespace Rest_API.Controllers
         
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status304NotModified)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<Resource> CreateResource([FromBody] Resource resource)
