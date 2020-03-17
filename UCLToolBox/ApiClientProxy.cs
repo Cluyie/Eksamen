@@ -12,7 +12,7 @@ namespace UCLToolBox
   /// <summary>
   /// This sents a http get rquest to a api
   /// if you have pre set the base url du you only need to write the rest of the url fx.
-  /// if the pre url is https://localhost5001
+  /// if the pre url is http://localhost:5000
   /// do you need to set Http to 
   /// /Auth/Login
   /// to hit the post lig in method if you need to send variablse in the url.
