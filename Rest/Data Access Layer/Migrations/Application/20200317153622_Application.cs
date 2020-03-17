@@ -12,7 +12,7 @@ namespace Data_Access_Layer.Migrations.Application
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    strName = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
