@@ -1,5 +1,5 @@
-﻿using Data_Access_Layer.Interfaces;
-using System;
+﻿using System;
+using Models.Interfaces;
 
 namespace Data_Access_Layer.Models
 {

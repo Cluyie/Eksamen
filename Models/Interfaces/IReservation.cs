@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Data_Access_Layer.Models;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Data_Access_Layer.Interfaces
+namespace Models.Interfaces
 {
     public interface IReservation
     {
         Guid Id { get; set; }
-        List<ReserveTime> Timeslot { get; set; }
+        List<IReserveTime> Timeslot { get; set; }
         Guid UserId { get; set; }
     }
 }
