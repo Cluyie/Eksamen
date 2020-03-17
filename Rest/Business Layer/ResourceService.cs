@@ -23,29 +23,61 @@ namespace Business_Layer
         //Create resource
         public ApiResponse<Resource> Create(Resource resource)
         {
-            _applicationContext.Add(resource);
+            try
+            {
+                _applicationContext.Add(resource);
 
-            //If the _applicationContext does not make any changes, it returns 0.
-            if (_applicationContext.SaveChanges() != 0)
-            {
-                return new ApiResponse<Resource>(ApiResponseCode.Created, resource);
+                //If the _applicationContext does not make any changes, it returns 0.
+                if (_applicationContext.SaveChanges() != 0)
+                {
+                    return new ApiResponse<Resource>(ApiResponseCode.Created, resource);
+                }
+                else
+                {
+                    return new ApiResponse<Resource>(ApiResponseCode.NotModified, resource);
+                }
             }
-            else
+            catch (Exception)
             {
-                return new ApiResponse<Resource>(ApiResponseCode.NotModified, resource);
+                return new ApiResponse<Resource>(ApiResponseCode.InternalServerError, resource);
             }
         }
 
         //Get all resources
         public ApiResponse<List<Resource>> Get()
         {
-            return new ApiResponse<List<Resource>>(ApiResponseCode.OK, _applicationContext.Resources.ToList());
+            try
+            {
+                return new ApiResponse<List<Resource>>(ApiResponseCode.OK, _applicationContext.Resources.ToList());
+            }
+            catch (Exception)
+            {
+                return new ApiResponse<List<Resource>>(ApiResponseCode.InternalServerError, null);
+            }
         }
 
         //Get a specific resource from a GUID
         public ApiResponse<Resource> Get(Guid guid)
         {
-            throw new NotImplementedException();
+            Resource resourceToReturn = new Resource();
+
+            try
+            {
+               resourceToReturn = _applicationContext.Resources.Find(guid);
+            }
+            catch (Exception)
+            {
+                return new ApiResponse<Resource>(ApiResponseCode.InternalServerError, null);
+            }
+
+            if (resourceToReturn == null)
+            {
+                return new ApiResponse<Resource>(ApiResponseCode.NoContent, null);
+            }
+            else
+            {
+                return new ApiResponse<Resource>(ApiResponseCode.OK, resourceToReturn);
+            }
         }
 
         //Update a resource
