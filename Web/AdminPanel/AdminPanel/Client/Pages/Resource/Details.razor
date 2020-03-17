@@ -1,0 +1,33 @@
+﻿@page "/Resource/Details/{Id:guid}"
+@using AdminPanel.Client.Services
+@using AdminPanel.Client.DTOs
+@inject IResourceService ResourceService
+@inject NavigationManager NavigationManager
+
+<h3>Detaljer</h3>
+<hr />
+<div class="card" style="width: 30rem;">
+    <div class="card-header">
+        ID: @_resource.Id
+    </div>
+    <div class="card-body">
+        <ul>         
+            <li><b>Resource: </b>@_resource.Name</li>
+            <br />
+            <li><b>Antal Timeslots: </b>@_resource.Timeslots.Count</li>
+        </ul>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+
+    ResourceDTO _resource;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _resource = await ResourceService.GetFromId(Id);
+    }
+}
