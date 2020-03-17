@@ -2,6 +2,7 @@
 using Data_Access_Layer.Context;
 using Models;
 using System.Collections.Generic;
+using System.Linq;
 using Data_Access_Layer.Models;
 using Business_Layer.Models;
 
@@ -38,7 +39,7 @@ namespace Business_Layer
         //Get all resources
         public ApiResponse<List<Resource>> Get()
         {
-            throw new NotImplementedException();
+            return new ApiResponse<List<Resource>>(ApiResponseCode.OK, _applicationContext.Resources.ToList());
         }
 
         //Get a specific resource from a GUID
