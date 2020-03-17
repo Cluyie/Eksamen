@@ -6,8 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\Application\20200311105300_Application.cs" />
+    <Compile Remove="Migrations\Application\20200311105300_Application.Designer.cs" />
     <Compile Remove="Migrations\Application\20200316105047_ApplicationUpdate.cs" />
     <Compile Remove="Migrations\Application\20200316105047_ApplicationUpdate.Designer.cs" />
+    <Compile Remove="Migrations\Application\20200317151455_Interface Segregation.cs" />
+    <Compile Remove="Migrations\Application\20200317151455_Interface Segregation.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
