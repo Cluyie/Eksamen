@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Models.Interfaces
 {
-    public interface IReservation
+    public interface IReservation<TReserveTime>
+        where TReserveTime : IReserveTime
     {
         Guid Id { get; set; }
-        List<IReserveTime> Timeslot { get; set; }
+        List<TReserveTime> Timeslot { get; set; }
         Guid UserId { get; set; }
     }
 }
