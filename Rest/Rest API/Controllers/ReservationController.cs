@@ -34,6 +34,7 @@ namespace Rest_API.Controllers
         [HttpGet("guid={guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<Reservation> GetReservationById([FromRoute]Guid guid)
         {
@@ -41,6 +42,18 @@ namespace Rest_API.Controllers
                 return new ApiResponse<Reservation>(ApiResponseCode.BadRequest, null);
 
             return _reservationService.Get(guid);
+        }
+
+        [HttpDelete("guid={guid}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ApiResponse<Reservation> CancelReservationById([FromRoute]Guid guid)
+        {
+            if (guid == null)
+                return new ApiResponse<Reservation>(ApiResponseCode.BadRequest, null);
+
+            return _reservationService.Cancel(guid);
         }
     }
 }
