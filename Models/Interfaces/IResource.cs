@@ -9,7 +9,7 @@ namespace Models.Interfaces
     public interface IResource
     {
         Guid Id { get; set; }
-        string strName { get; set; }
+        string Name { get; set; }
         List<IReservation> Reservations { get; set; }
         List<IAvailableTime> TimeSlot { get; set; }
     }
