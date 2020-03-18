@@ -6,9 +6,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\Application\20200311105300_Application.cs" />
+    <Compile Remove="Migrations\Application\20200311105300_Application.Designer.cs" />
+    <Compile Remove="Migrations\Application\20200316105047_ApplicationUpdate.cs" />
+    <Compile Remove="Migrations\Application\20200316105047_ApplicationUpdate.Designer.cs" />
+    <Compile Remove="Migrations\Application\20200317151455_Interface Segregation.cs" />
+    <Compile Remove="Migrations\Application\20200317151455_Interface Segregation.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Models\Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +41,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 
 </Project>

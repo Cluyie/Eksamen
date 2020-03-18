@@ -2,6 +2,7 @@
 using Models;
 using UCLToolBox;
 using Xamarin.Forms;
+using XamarinFormsApp.Model;
 
 namespace XamarinFormsApp.Helpers
 {

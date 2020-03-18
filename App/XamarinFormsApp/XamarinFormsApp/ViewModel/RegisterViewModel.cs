@@ -6,6 +6,7 @@ using Xamarin.Forms;
 using XamarinFormsApp.Helpers;
 using XamarinFormsApp.Model;
 using Models;
+using Models.Interfaces;
 using UCLToolBox;
 
 namespace XamarinFormsApp.ViewModel

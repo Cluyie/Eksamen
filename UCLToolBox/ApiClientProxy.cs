@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Models;
+using Models.Interfaces;
 
 namespace UCLToolBox
 {
@@ -50,7 +51,7 @@ namespace UCLToolBox
     /// <param name="response"></param>
     /// <param name="result"></param>
     /// <returns></returns>
-    public string GenerateErrorMessage<T>(ApiResponse<T> result, HttpResponseMessage response = null) where T : class
+    public string GenerateErrorMessage<T>(IApiResponse<T> result, HttpResponseMessage response = null) where T : class
     {
       ApiResponseCode? statusResponseCode = null;
       if (Enum.TryParse<ApiResponseCode>(response?.StatusCode.ToString(), out var responseCode))
