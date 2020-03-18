@@ -23,7 +23,6 @@ namespace Data_Access_Layer.Context
       {
         optionsBuilder.UseSqlServer(Settings.Default.UCLDB);
       }
-
     }
   }
 }
