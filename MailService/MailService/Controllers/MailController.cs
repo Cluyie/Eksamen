@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using MailService.Models;
 using BusinessLayer;
+using BusinessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Models;
+using Models.Interfaces;
 using Models.Mail;
 using UCLToolBox;
 
