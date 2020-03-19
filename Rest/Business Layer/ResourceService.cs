@@ -84,13 +84,58 @@ namespace Business_Layer
         //Should ignore reservations when being updated
         public ApiResponse<Resource> Update(Resource resource)
         {
-            throw new NotImplementedException();
+            Resource resourceToUpdate = new Resource();
+
+            try
+            {
+                resourceToUpdate = _applicationContext.Resources.Find(resource.Id);
+
+                if (resourceToUpdate == null)
+                {
+                    return new ApiResponse<Resource>(ApiResponseCode.NoContent, null);
+                }
+                else
+                {
+                    resourceToUpdate.Name = resource.Name;
+                    resourceToUpdate.TimeSlot = resource.TimeSlot;
+
+                    _applicationContext.SaveChanges();
+
+                    return new ApiResponse<Resource>(ApiResponseCode.OK, resourceToUpdate);
+                }
+            }
+            catch (Exception)
+            {
+                return new ApiResponse<Resource>(ApiResponseCode.InternalServerError, null);
+            }
         }
 
         //Delete a resource
-        public ApiResponse<string> Delete(Resource resource)
+        public ApiResponse<Resource> Delete(Resource resource)
         {
-            throw new NotImplementedException();
+            Resource resourceToDelete = new Resource();
+
+            try
+            {
+                resourceToDelete = _applicationContext.Resources.Find(resource.Id);
+
+                if (resourceToDelete == null)
+                {
+                    return new ApiResponse<Resource>(ApiResponseCode.NoContent, null);
+                }
+                else
+                {
+                    _applicationContext.Resources.Remove(resourceToDelete);
+
+                    _applicationContext.SaveChanges();
+
+                    return new ApiResponse<Resource>(ApiResponseCode.OK, null);
+                }
+            }
+            catch (Exception)
+            {
+                return new ApiResponse<Resource>(ApiResponseCode.InternalServerError, null);
+            }
         }
     }
 }

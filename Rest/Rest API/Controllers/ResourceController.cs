@@ -25,8 +25,7 @@ namespace Rest_API.Controllers
 
             _user = _authService.GetUser();
         }
-
-        
+       
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status304NotModified)]
@@ -35,12 +34,20 @@ namespace Rest_API.Controllers
         public ApiResponse<Resource> CreateResource([FromBody] Resource resource)
         {
             if (_user == null)
+            {
+                Response.StatusCode = StatusCodes.Status401Unauthorized;
                 return new ApiResponse<Resource>(ApiResponseCode.UnAuthenticated, resource);
+            }
 
             if (resource == null || !ModelState.IsValid)
+            {
+                Response.StatusCode = StatusCodes.Status400BadRequest;
                 return new ApiResponse<Resource>(ApiResponseCode.BadRequest, resource);
+            }
 
-            return _resourceService.Create(resource);
+            ApiResponse<Resource> response = _resourceService.Create(resource);
+            Response.StatusCode = (int)response.Code;
+            return response;
         }
 
         [HttpGet]
@@ -50,7 +57,10 @@ namespace Rest_API.Controllers
         public ApiResponse<List<Resource>> GetResources()
         {
             if (_user == null)
+            {
+                Response.StatusCode = StatusCodes.Status401Unauthorized;
                 return new ApiResponse<List<Resource>>(ApiResponseCode.UnAuthenticated, null);
+            }
 
             return _resourceService.Get();
         }
@@ -62,10 +72,16 @@ namespace Rest_API.Controllers
         public ApiResponse<Resource> GetResourceById([FromRoute]Guid guid)
         {
             if (_user == null)
+            {
+                Response.StatusCode = StatusCodes.Status401Unauthorized;
                 return new ApiResponse<Resource>(ApiResponseCode.UnAuthenticated, null);
+            }
 
-            if (guid == null)
+            if (guid == null || !ModelState.IsValid)
+            {
+                Response.StatusCode = StatusCodes.Status400BadRequest;
                 return new ApiResponse<Resource>(ApiResponseCode.BadRequest, null);
+            }
 
             return _resourceService.Get(guid);
         }
@@ -78,10 +94,16 @@ namespace Rest_API.Controllers
         public ApiResponse<Resource> UpdateResource([FromBody] Resource resource)
         {
             if (_user == null)
+            {
+                Response.StatusCode = StatusCodes.Status401Unauthorized;
                 return new ApiResponse<Resource>(ApiResponseCode.UnAuthenticated, resource);
+            }
 
             if (resource == null || !ModelState.IsValid)
+            {
+                Response.StatusCode = StatusCodes.Status400BadRequest;
                 return new ApiResponse<Resource>(ApiResponseCode.BadRequest, resource);
+            }
 
             return _resourceService.Update(resource);
         }
@@ -91,13 +113,19 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status304NotModified)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ApiResponse<string> DeleteResource(Resource resource)
+        public ApiResponse<Resource> DeleteResource(Resource resource)
         {
             if (_user == null)
-                return new ApiResponse<string>(ApiResponseCode.UnAuthenticated, "");
+            {
+                Response.StatusCode = StatusCodes.Status401Unauthorized;
+                return new ApiResponse<Resource>(ApiResponseCode.UnAuthenticated, resource);
+            }
 
             if (resource == null || !ModelState.IsValid)
-                return new ApiResponse<string>(ApiResponseCode.BadRequest, "");
+            {
+                Response.StatusCode = StatusCodes.Status400BadRequest;
+                return new ApiResponse<Resource>(ApiResponseCode.BadRequest, resource);
+            }
 
             return _resourceService.Delete(resource);
         }
