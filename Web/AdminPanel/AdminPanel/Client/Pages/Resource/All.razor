@@ -1,12 +1,13 @@
 ﻿@page "/Resource/All"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
 @using AdminPanel.Client.Services
 @using AdminPanel.Client.DTOs
 @inject IResourceService ResourceService
 
-<AuthPage>
-    <h1>Alle Ressourcer</h1>
-    <hr />
-    <table class="table">
+<h1>Alle Ressourcer</h1>
+<hr />
+<table class="table">
     <thead>
         <tr>
             <th>Resource:</th>
@@ -26,11 +27,11 @@
                     <NavLink class="btn btn-danger" href="@deleteUrl">Slet</NavLink>
                     <NavLink class="btn btn-info" href="@detailsUrl">Detaljer</NavLink>
                 </td>
-            </tr>        
+            </tr>
+
         }
     </tbody>
-    </table>
-</AuthPage>
+</table>
 
 @code {
     List<ResourceDTO> _resources;

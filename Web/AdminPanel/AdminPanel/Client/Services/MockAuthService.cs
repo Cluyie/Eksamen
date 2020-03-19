@@ -3,18 +3,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace AdminPanel.Client.Services
 {
     public class MockAuthService : IAuthService
     {
-        private AppState _state;
-
         private string _token = null;
 
-        public MockAuthService(AppState state)
+        private CustomAuthStateProvider _authStateProvider;
+
+        public MockAuthService(AuthenticationStateProvider authStateProvider)
         {
-            _state = state;
+            _authStateProvider = (CustomAuthStateProvider)authStateProvider;
         }
 
         public string GetToken()
@@ -24,13 +25,14 @@ namespace AdminPanel.Client.Services
 
         public void Logout()
         {
-            _state.Authenticated = false;
+            _authStateProvider.Logout();
+
             _token = null;
         }
 
         public async Task<bool> Login(LoginDTO loginDTO)
         {
-            _state.Authenticated = true;
+            _authStateProvider.Login(loginDTO.Username);
 
             return true;
         }

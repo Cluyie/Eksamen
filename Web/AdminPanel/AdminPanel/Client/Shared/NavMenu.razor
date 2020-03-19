@@ -1,4 +1,5 @@
-﻿@inject AppState AppState
+﻿@using Microsoft.AspNetCore.Components.Authorization
+
 <div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">Administrations panel</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -8,32 +9,32 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
-        @if (AppState.Authenticated)
-        {
-            <li class="nav-item px-3">
-                <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-                    <span class="oi oi-home" aria-hidden="true"></span> Hjem
-                </NavLink>
-            </li>
-            <li class="nav-item px-3">
-                <NavLink class="nav-link" href="/Resource/All" Match="NavLinkMatch.All">
-                    <span class="oi oi-home" aria-hidden="true"></span> Ressourcer
-                </NavLink>
-            </li>
-            <li class="nav-item px-3">
-                <NavLink class="nav-link" href="/logout" Match="NavLinkMatch.All">
-                    <span class="oi oi-account-logout" aria-hidden="true"></span> Log ud
-                </NavLink>
-            </li>
-        }
-        else
-        {
-            <li class="nav-item px-3">
-                <NavLink class="nav-link" href="/login">
-                    <span class="oi oi-account-login" aria-hidden="true"></span> Log ind
-                </NavLink>
-            </li>
-        }
+        <AuthorizeView>
+            <Authorized>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> Hjem
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="/Resource/All" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> Ressourcer
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="/logout" Match="NavLinkMatch.All">
+                        <span class="oi oi-account-logout" aria-hidden="true"></span> Log ud
+                    </NavLink>
+                </li>
+            </Authorized>
+            <NotAuthorized>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="/login">
+                        <span class="oi oi-account-login" aria-hidden="true"></span> Log ind
+                    </NavLink>
+                </li>
+            </NotAuthorized>
+        </AuthorizeView>
     </ul>
 </div>
 
@@ -45,10 +46,5 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
-    }
-
-    protected override void OnInitialized()
-    {
-        AppState.OnChange += StateHasChanged;
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.AspNetCore.Blazor.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using AdminPanel.Client.Services;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace AdminPanel.Client
 {
@@ -13,10 +14,15 @@ namespace AdminPanel.Client
         public static async Task Main(string[] args)
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
-            builder.RootComponents.Add<App>("app");
 
-            // Register state
-            builder.Services.AddSingleton(new AppState());
+            // Register auth
+            builder.Services.AddSingleton<AuthenticationStateProvider,
+                CustomAuthStateProvider>();
+            builder.Services.AddOptions();
+            builder.Services.AddAuthorizationCore(options => { }); // The options needs to be there for auth to work on some machines
+
+            // Register root component
+            builder.RootComponents.Add<App>("app");
 
             // Register services
             builder.Services.AddSingleton<IAuthService, MockAuthService>();

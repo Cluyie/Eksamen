@@ -1,19 +1,19 @@
 ﻿@page "/Resource/Delete/{Id:guid}"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
 @using AdminPanel.Client.Services
 @using AdminPanel.Client.DTOs
 @inject IResourceService ResourceService
 @inject NavigationManager NavigationManager
 
-<AuthPage>
-    @if (_resource != null)
-    {
-        <h3>Slet ressource: @_resource.Name</h3>
-        <hr />
-        <p>Er du sikker på at du vil slette denne ressource?</p>
-        <button class="btn btn-danger" @onclick="OnConfirm">Ja</button>
-        <button class="btn btn-dark" @onclick="RedirectToOverviewPage">Nej</button>
-    }
-</AuthPage>
+@if (_resource != null)
+{
+    <h3>Slet ressource: @_resource.Name</h3>
+    <hr />
+    <p>Er du sikker på at du vil slette denne ressource?</p>
+    <button class="btn btn-danger" @onclick="OnConfirm">Ja</button>
+    <button class="btn btn-dark" @onclick="RedirectToOverviewPage">Nej</button>
+}
 
 @code {
     [Parameter]

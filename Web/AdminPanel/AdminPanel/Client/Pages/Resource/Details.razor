@@ -1,4 +1,6 @@
 ﻿@page "/Resource/Details/{Id:guid}"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
 @using AdminPanel.Client.Services
 @using AdminPanel.Client.DTOs
 @inject IResourceService ResourceService
@@ -11,9 +13,8 @@
         ID: @_resource.Id
     </div>
     <div class="card-body">
-        <ul>         
+        <ul>
             <li><b>Resource: </b>@_resource.Name</li>
-            <br />
             <li><b>Antal Timeslots: </b>@_resource.Timeslots.Count</li>
         </ul>
     </div>
