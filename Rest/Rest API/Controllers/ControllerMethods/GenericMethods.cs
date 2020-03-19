@@ -30,13 +30,13 @@ namespace Rest_API.Controllers.ControllerMethods
         {
             if (_user == null)
             {
-                Response.StatusCode = StatusCodes.Status401Unauthorized;
+                //Response.StatusCode = StatusCodes.Status401Unauthorized;
                 return new ApiResponse<TR>(ApiResponseCode.UnAuthenticated, null);
             }
 
             if (data == null || !ModelState.IsValid)
             {
-                Response.StatusCode = StatusCodes.Status400BadRequest;
+                //Response.StatusCode = StatusCodes.Status400BadRequest;
                 return new ApiResponse<TR>(ApiResponseCode.BadRequest, null);
             }
 
@@ -51,7 +51,7 @@ namespace Rest_API.Controllers.ControllerMethods
         {
             if (_user == null)
             {
-                Response.StatusCode = StatusCodes.Status401Unauthorized;
+                //Response.StatusCode = StatusCodes.Status401Unauthorized;
                 return new ApiResponse<TR>(ApiResponseCode.UnAuthenticated, null);
             }
 

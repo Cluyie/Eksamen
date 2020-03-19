@@ -18,15 +18,11 @@ namespace Rest_API.Controllers
         AuthService _authService;
         GenericMethods _genericMethods;
 
-        private User _user;
-
         public ResourceController(ResourceService resourceService, AuthService authService, GenericMethods genericMethods)
         {
             _resourceService = resourceService;
             _authService = authService;
             _genericMethods = genericMethods;
-
-            _user = _authService.GetUser();
         }
        
         [HttpPost]
