@@ -16,6 +16,7 @@ using Rest_API.Middleware;
 using AutoMapper;
 using Data_Access_Layer.Models;
 using Microsoft.OpenApi.Models;
+using Rest_API.Controllers.ControllerMethods;
 
 
 namespace Rest_API
@@ -39,6 +40,7 @@ namespace Rest_API
             services.AddScoped<UserService>();
             services.AddScoped<ResourceService>();
             services.AddScoped<ReservationService>();
+            services.AddScoped<GenericMethods>();
 
             services.AddSwaggerGen(c =>
             {
