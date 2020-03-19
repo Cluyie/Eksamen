@@ -8,19 +8,55 @@
 
 @if (_resource != null)
 {
-    <h3>Detaljer</h3>
+    string deleteUrl = "/Resource/Delete/" + _resource.Id.ToString();
+    string editUrl = "/Resource/Edit/" + _resource.Id.ToString();
+
+    <h1>Ressource: @_resource.Name</h1>
     <hr />
-    <div class="card" style="width: 30rem;">
-        <div class="card-header">
-            ID: @_resource.Id
+    <p>
+        <NavLink href="@editUrl" class="btn btn-info">Rediger</NavLink>
+        <NavLink href="@deleteUrl" class="btn btn-danger">Slet</NavLink>
+    </p>
+    <p>
+        <b>ID</b>
+        <div>@_resource.Id</div>
+    </p>
+    <p>
+        <b>Navn</b>
+        <div>@_resource.Name</div>
+    </p>
+    <h4 class="mb-4">Tidsperioder (@_resource.Timeslots.Count)</h4>
+    @if (_resource.Timeslots.Count == 0)
+    {
+        <p>Denne ressource har ingen tidsperioder tilknyttet.</p>
+    }
+    else
+    {
+        <div class="row">
+            @foreach(TimeslotDTO timeslot in _resource.Timeslots)
+            {
+                <div class="col-md-6 col-xl-4">
+                    <div class="card mb-3">
+                        <div class="card-header">Tidsperiode</div>
+                        <div class="card-body">
+                            <p>
+                                <b>Fra</b>
+                                <div>@timeslot.FromDateTime.ToString()</div>
+                            </p>
+                            <p>
+                                <b>Til</b>
+                                <div>@timeslot.ToDateTime.ToString()</div>
+                            </p>
+                            <p>
+                                <b>Tilbagevendende interval (dage)</b>
+                                <div>@timeslot.Recurring</div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
-        <div class="card-body">
-            <ul>
-                <li><b>Resource: </b>@_resource.Name</li>
-                <li><b>Antal Timeslots: </b>@_resource.Timeslots.Count</li>
-            </ul>
-        </div>
-    </div>
+    }
 }
 else
 {

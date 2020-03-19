@@ -90,7 +90,8 @@ namespace AdminPanel.Client.Services
 
         public async Task Update(ResourceDTO resource)
         {
-            
+            // Don't need to do anything here as the resource that was edited is
+            // already a reference to the resource in memory
         }
     }
 }
