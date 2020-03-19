@@ -13,14 +13,27 @@
                 HorizontalOptions="CenterAndExpand" />
 
 
-                <ListView x:Name="ResourceView" >
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextCell Text="{Binding strName}" />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
 
-            </StackLayout>
+            <ListView ItemsSource="{Binding Items}"
+              CachingStrategy="RecycleElement"
+              RowHeight="60">
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Margin="8">
+
+                                <Label Text="{Binding strName}"
+                               FontAttributes="Bold" />
+                                <Label Text="{Binding Id}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+
+        </StackLayout>
         </ContentPage.Content>
     </ContentPage>

@@ -15,21 +15,25 @@ namespace XamarinFormsApp.View
     public partial class ViewRessourceView : ContentPage
     {
 
-        ViewRessourceViewModel viewRessourceViewModel;
-        private ApiClientProxy _proxy;
+        
 
 
         public ViewRessourceView()
         {
             InitializeComponent();
 
-            viewRessourceViewModel  = new ViewRessourceViewModel();
-                       
+            BindingContext = new ViewRessourceViewModel();
 
-            BindingContext = viewRessourceViewModel.AllRessources;
-
-            _proxy = DependencyService.Get<ApiClientProxy>();
+            
+            //_proxy = DependencyService.Get<ApiClientProxy>();
 
         }
+
+        //protected override void OnAppearing()
+        //{
+        //    base.OnAppearing();
+
+        //}
     }
+
 }
