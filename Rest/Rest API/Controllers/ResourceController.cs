@@ -14,10 +14,16 @@ namespace Rest_API.Controllers
     public class ResourceController : ControllerBase
     {
         ResourceService _resourceService;
+        AuthService _authService;
 
-        public ResourceController(ResourceService resourceService)
+        private User _user;
+
+        public ResourceController(ResourceService resourceService, AuthService authService)
         {
             _resourceService = resourceService;
+            _authService = authService;
+
+            _user = _authService.GetUser();
         }
 
         
@@ -28,6 +34,9 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<Resource> CreateResource([FromBody] Resource resource)
         {
+            if (_user == null)
+                return new ApiResponse<Resource>(ApiResponseCode.UnAuthenticated, resource);
+
             if (resource == null || !ModelState.IsValid)
                 return new ApiResponse<Resource>(ApiResponseCode.BadRequest, resource);
 
@@ -40,6 +49,9 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<List<Resource>> GetResources()
         {
+            if (_user == null)
+                return new ApiResponse<List<Resource>>(ApiResponseCode.UnAuthenticated, null);
+
             return _resourceService.Get();
         }
 
@@ -49,6 +61,9 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<Resource> GetResourceById([FromRoute]Guid guid)
         {
+            if (_user == null)
+                return new ApiResponse<Resource>(ApiResponseCode.UnAuthenticated, null);
+
             if (guid == null)
                 return new ApiResponse<Resource>(ApiResponseCode.BadRequest, null);
 
@@ -62,6 +77,9 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<Resource> UpdateResource([FromBody] Resource resource)
         {
+            if (_user == null)
+                return new ApiResponse<Resource>(ApiResponseCode.UnAuthenticated, resource);
+
             if (resource == null || !ModelState.IsValid)
                 return new ApiResponse<Resource>(ApiResponseCode.BadRequest, resource);
 
@@ -75,6 +93,9 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<string> DeleteResource(Resource resource)
         {
+            if (_user == null)
+                return new ApiResponse<string>(ApiResponseCode.UnAuthenticated, "");
+
             if (resource == null || !ModelState.IsValid)
                 return new ApiResponse<string>(ApiResponseCode.BadRequest, "");
 
