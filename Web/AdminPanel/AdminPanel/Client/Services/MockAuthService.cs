@@ -9,30 +9,26 @@ namespace AdminPanel.Client.Services
 {
     public class MockAuthService : IAuthService
     {
-        private string _token = null;
-
         private CustomAuthStateProvider _authStateProvider;
+        private AuthCredentialsKeeper _credentialsKeeper;
 
-        public MockAuthService(AuthenticationStateProvider authStateProvider)
+        public MockAuthService(AuthenticationStateProvider authStateProvider,
+            AuthCredentialsKeeper credentialsKeeper)
         {
             _authStateProvider = (CustomAuthStateProvider)authStateProvider;
-        }
-
-        public string GetToken()
-        {
-            return _token;
+            _credentialsKeeper = credentialsKeeper;
         }
 
         public void Logout()
         {
-            _authStateProvider.Logout();
-
-            _token = null;
+            _credentialsKeeper.SetCredentials(null, null);
+            _authStateProvider.Refresh();
         }
 
         public async Task<bool> Login(LoginDTO loginDTO)
         {
-            _authStateProvider.Login(loginDTO.Username);
+            _credentialsKeeper.SetCredentials(loginDTO.Username, "DummyToken");
+            _authStateProvider.Refresh();
 
             return true;
         }

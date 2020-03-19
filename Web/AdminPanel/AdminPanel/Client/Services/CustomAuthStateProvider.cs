@@ -7,7 +7,12 @@ namespace AdminPanel.Client.Services
 {
     public class CustomAuthStateProvider : AuthenticationStateProvider
     {
-        private string _username = null;
+        AuthCredentialsKeeper _credentialsKeeper;
+
+        public CustomAuthStateProvider(AuthCredentialsKeeper credentialsKeeper)
+        {
+            _credentialsKeeper = credentialsKeeper;
+        }
 
         /// <summary>
         /// Create the initial authenticationstate when loading the site for the first time
@@ -16,14 +21,14 @@ namespace AdminPanel.Client.Services
         public override Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             // Username is null, so return an empty claimsprinipal, so we are NOT authenticated
-            if(_username == null)
+            if(!_credentialsKeeper.HasCredentials())
             {
                 return Task.FromResult(new AuthenticationState(new ClaimsPrincipal()));
             }
 
             var identity = new ClaimsIdentity(new[]
             {
-                new Claim(ClaimTypes.Name, _username),
+                new Claim(ClaimTypes.Name, _credentialsKeeper.Username),
             }, "ApiWebAuth");
 
             var user = new ClaimsPrincipal(identity);
@@ -32,23 +37,11 @@ namespace AdminPanel.Client.Services
         }
 
         /// <summary>
-        /// Authenticate the user from the given username
+        /// Re-calculate the users authentication state
         /// </summary>
         /// <param name="username"></param>
-        public void Login(string username)
+        public void Refresh()
         {
-            _username = username;
-
-            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
-        }
-
-        /// <summary>
-        /// Log the user out
-        /// </summary>
-        public void Logout()
-        {
-            _username = null;
-
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
     }

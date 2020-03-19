@@ -8,8 +8,6 @@ namespace AdminPanel.Client.Services
 {
     public interface IAuthService
     {
-        string GetToken();
-
         Task<bool> Login(LoginDTO loginDTO);
 
         void Logout();

@@ -1,6 +1,10 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
+@using Microsoft.AspNetCore.Components.Authorization
 
-<h1>Instrumentbræt</h1>
-<hr />
+<AuthorizeView>
+    <h1>Instrumentbræt</h1>
+    <hr />
+    <p>Velkommen til dit instrumentbræt, @context.User.Identity.Name!</p>
+</AuthorizeView>
