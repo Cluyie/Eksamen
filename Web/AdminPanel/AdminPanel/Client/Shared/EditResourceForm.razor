@@ -1,0 +1,80 @@
+﻿@using AdminPanel.Client.DTOs
+
+<EditForm Model="@Resource" OnValidSubmit="OnValidSubmit">
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Navn</label>
+                <InputText class="form-control" placeholder="Navn" @bind-Value="Resource.Name" />
+            </div>
+        </div>
+    </div>
+    <h3>Tidsperioder</h3>
+    <p>
+        <button type="button" class="btn btn-info" @onclick="AddTimeslot"><b>+</b> Tilføj tidsperiode</button>
+    </p>
+    <div class="row">
+        @foreach (TimeslotDTO timeslot in Resource.Timeslots)
+        {
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        Tidsperiode
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Fra</label>
+                            <InputDateTime class="form-control" @bind-Value="timeslot.FromDateTime" />
+                        </div>
+                        <div class="form-group">
+                            <label>Til</label>
+                            <InputDateTime class="form-control" @bind-Value="timeslot.ToDateTime" />
+                        </div>
+                        <div class="form-group">
+                            <label>Tilbagevendende interval (dage)</label>
+                            <InputNumber class="form-control" placeholder="Tilbagevendende interval" @bind-Value="timeslot.Recurring" />
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-danger" @onclick="@(() => RemoveTimeslot(timeslot.Id))">
+                                <b>-</b> Fjern
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">@SubmitButtonText</button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public ResourceDTO Resource { get; set; }
+
+    [Parameter]
+    public string SubmitButtonText { get; set; }
+
+    [Parameter]
+    public Action<ResourceDTO> OnEditComplete { get; set; }
+
+    private void OnValidSubmit()
+    {
+        OnEditComplete?.Invoke(Resource);
+    }
+
+    private void AddTimeslot()
+    {
+        Resource.Timeslots.Add(new TimeslotDTO()
+        {
+            Id = Guid.NewGuid()
+        });
+    }
+
+    private void RemoveTimeslot(Guid id)
+    {
+        Resource.Timeslots.Remove(Resource.Timeslots.First(timeslot => timeslot.Id == id));
+    }
+}

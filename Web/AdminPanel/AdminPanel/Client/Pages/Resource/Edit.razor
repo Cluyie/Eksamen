@@ -1,4 +1,4 @@
-﻿@page "/Resource/Delete/{Id:guid}"
+﻿@page "/Resource/Edit/{Id:guid}"
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
 @using AdminPanel.Client.Services
@@ -8,11 +8,10 @@
 
 @if (_resource != null)
 {
-    <h3>Slet ressource: @_resource.Name</h3>
+    <h1>Rediger ressource: @_resource.Name</h1>
     <hr />
-    <p>Er du sikker på at du vil slette denne ressource?</p>
-    <button class="btn btn-danger" @onclick="OnConfirm">Ja</button>
-    <button class="btn btn-dark" @onclick="RedirectToOverviewPage">Nej</button>
+
+    <EditResourceForm Resource="_resource" SubmitButtonText="Gem ressource" OnEditComplete="OnEditComplete" />
 }
 else
 {
@@ -32,15 +31,10 @@ else
         _resource = await ResourceService.GetFromId(Id);
     }
 
-    private async void OnConfirm()
+    private async void OnEditComplete(ResourceDTO resource)
     {
-        await ResourceService.DeleteFromId(Id);
+        await ResourceService.Update(resource);
 
-        RedirectToOverviewPage();
-    }
-
-    private void RedirectToOverviewPage()
-    {
-        NavigationManager.NavigateTo("/Resource/All");
+        NavigationManager.NavigateTo("/Resource/Details/" + resource.Id.ToString());
     }
 }

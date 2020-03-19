@@ -1,0 +1,27 @@
+﻿@page "/Resource/Add"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+@using AdminPanel.Client.Services
+@using AdminPanel.Client.DTOs
+@inject IResourceService ResourceService
+@inject NavigationManager  NavigationManager;
+
+<h1>Opret ny ressource</h1>
+<hr />
+
+<EditResourceForm Resource="_resource" SubmitButtonText="Opret ressource" OnEditComplete="OnEditComplete" />
+
+@code {
+    private ResourceDTO _resource = new ResourceDTO()
+    {
+        Id = Guid.NewGuid(),
+        Timeslots = new List<TimeslotDTO>()
+    };
+
+    private async void OnEditComplete(ResourceDTO resource)
+    {
+        await ResourceService.Add(resource);
+
+        NavigationManager.NavigateTo("/Resource/Details/" + resource.Id.ToString());
+    }
+}

@@ -6,24 +6,32 @@
 @inject IResourceService ResourceService
 @inject NavigationManager NavigationManager
 
-<h3>Detaljer</h3>
-<hr />
-<div class="card" style="width: 30rem;">
-    <div class="card-header">
-        ID: @_resource.Id
+@if (_resource != null)
+{
+    <h3>Detaljer</h3>
+    <hr />
+    <div class="card" style="width: 30rem;">
+        <div class="card-header">
+            ID: @_resource.Id
+        </div>
+        <div class="card-body">
+            <ul>
+                <li><b>Resource: </b>@_resource.Name</li>
+                <li><b>Antal Timeslots: </b>@_resource.Timeslots.Count</li>
+            </ul>
+        </div>
     </div>
-    <div class="card-body">
-        <ul>
-            <li><b>Resource: </b>@_resource.Name</li>
-            <li><b>Antal Timeslots: </b>@_resource.Timeslots.Count</li>
-        </ul>
-    </div>
-</div>
+}
+else
+{
+    <h1>Henter ressource...</h1>
+    <hr />
+    <p>Forsøger at hente den specificerede ressource. Hvis dette tager lang tid, så findes ressourcen muligvis ikke.</p>
+}
 
 @code {
     [Parameter]
     public Guid Id { get; set; }
-
 
     ResourceDTO _resource;
 

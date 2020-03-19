@@ -75,12 +75,22 @@ namespace AdminPanel.Client.Services
 
         public async Task<ResourceDTO> GetFromId(Guid id)
         {
-            return _resources.First(resource => resource.Id == id);
+            return _resources.FirstOrDefault(resource => resource.Id == id);
         }
 
         public async Task DeleteFromId(Guid id)
         {
             _resources.Remove(await GetFromId(id));
+        }
+
+        public async Task Add(ResourceDTO resource)
+        {
+            _resources.Add(resource);
+        }
+
+        public async Task Update(ResourceDTO resource)
+        {
+            
         }
     }
 }

@@ -7,6 +7,9 @@
 
 <h1>Alle Ressourcer</h1>
 <hr />
+<p>
+    <NavLink class="btn btn-primary" href="/Resource/Add"><b>+</b> Opret ny ressource</NavLink>
+</p>
 <table class="table">
     <thead>
         <tr>
@@ -20,12 +23,13 @@
         {
             string deleteUrl = "/Resource/Delete/" + _resourceDTO.Id.ToString();
             string detailsUrl = "/Resource/Details/" + _resourceDTO.Id.ToString();
+            string editUrl = "/Resource/Edit/" + _resourceDTO.Id.ToString();
             <tr>
-                <td>@_resourceDTO.Name</td>
+                <td><NavLink href="@detailsUrl">@_resourceDTO.Name</NavLink></td>
                 <td>@_resourceDTO.Timeslots.Count</td>
                 <td>
+                    <NavLink class="btn btn-info" href="@editUrl">Rediger</NavLink>
                     <NavLink class="btn btn-danger" href="@deleteUrl">Slet</NavLink>
-                    <NavLink class="btn btn-info" href="@detailsUrl">Detaljer</NavLink>
                 </td>
             </tr>
 

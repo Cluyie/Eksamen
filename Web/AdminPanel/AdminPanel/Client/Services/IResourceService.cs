@@ -13,5 +13,9 @@ namespace AdminPanel.Client.Services
         Task<ResourceDTO> GetFromId(Guid id);
 
         Task DeleteFromId(Guid id);
+
+        Task Add(ResourceDTO resource);
+
+        Task Update(ResourceDTO resource);
     }
 }
