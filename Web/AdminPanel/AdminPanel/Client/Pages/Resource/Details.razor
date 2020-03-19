@@ -51,6 +51,17 @@
                                 <b>Tilbagevendende interval (dage)</b>
                                 <div>@timeslot.Recurring</div>
                             </p>
+                            <p>
+                                <b>Tilgængelig</b>
+                                @if(timeslot.Available)
+                                {
+                                    <div>Ja</div>
+                                }
+                                else
+                                {
+                                    <div>Nej</div>
+                                }
+                            </p>
                         </div>
                     </div>
                 </div>

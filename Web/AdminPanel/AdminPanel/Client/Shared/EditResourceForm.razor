@@ -36,6 +36,12 @@
                             <InputNumber class="form-control" placeholder="Tilbagevendende interval" @bind-Value="timeslot.Recurring" />
                         </div>
                         <div class="form-group">
+                            <label>Tilgængelig</label>
+                            <div>
+                                <InputCheckbox @bind-Value="timeslot.Available" />
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <button type="button" class="btn btn-danger" @onclick="@(() => RemoveTimeslot(timeslot.Id))">
                                 <b>-</b> Fjern
                             </button>
@@ -69,7 +75,8 @@
     {
         Resource.Timeslots.Add(new TimeslotDTO()
         {
-            Id = Guid.NewGuid()
+            Id = Guid.NewGuid(),
+            Available = true
         });
     }
 
