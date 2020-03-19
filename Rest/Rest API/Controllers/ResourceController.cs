@@ -15,14 +15,12 @@ namespace Rest_API.Controllers
     public class ResourceController : ControllerBase
     {
         ResourceService _resourceService;
-        AuthService _authService;
-        GenericMethods _genericMethods;
+        RequestValidator _requestValidator;
 
-        public ResourceController(ResourceService resourceService, AuthService authService, GenericMethods genericMethods)
+        public ResourceController(ResourceService resourceService, RequestValidator genericMethods)
         {
             _resourceService = resourceService;
-            _authService = authService;
-            _genericMethods = genericMethods;
+            _requestValidator = genericMethods;
         }
        
         [HttpPost]
@@ -32,7 +30,7 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<Resource> CreateResource([FromBody] Resource resource)
         {
-            return _genericMethods.ValidateAndPerfom(resource, _resourceService.Create);
+            return _requestValidator.ValidateAndPerfom(resource, _resourceService.Create, Response);
         }
 
         [HttpGet]
@@ -41,7 +39,7 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<List<Resource>> GetResources()
         {
-            return _genericMethods.ValidateAndPerfom(_resourceService.Get);
+            return _requestValidator.ValidateAndPerfom(_resourceService.Get, Response);
         }
 
         [HttpGet("guid={guid}")]
@@ -50,7 +48,7 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<Resource> GetResourceById([FromRoute]Guid guid)
         {
-            return _genericMethods.ValidateAndPerfom(guid, _resourceService.Get);
+            return _requestValidator.ValidateAndPerfom(guid, _resourceService.Get, Response);
         }
 
         [HttpPut]
@@ -60,7 +58,7 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<Resource> UpdateResource([FromBody] Resource resource)
         {
-            return _genericMethods.ValidateAndPerfom(resource, _resourceService.Update);
+            return _requestValidator.ValidateAndPerfom(resource, _resourceService.Update, Response);
         }
 
         [HttpDelete]
@@ -70,7 +68,7 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<Resource> DeleteResource(Resource resource)
         {
-            return _genericMethods.ValidateAndPerfom(resource, _resourceService.Delete);
+            return _requestValidator.ValidateAndPerfom(resource, _resourceService.Delete, Response);
         }
     }
 }

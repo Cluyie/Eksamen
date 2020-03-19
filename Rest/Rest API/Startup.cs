@@ -40,11 +40,11 @@ namespace Rest_API
             services.AddScoped<UserService>();
             services.AddScoped<ResourceService>();
             services.AddScoped<ReservationService>();
-            services.AddScoped<GenericMethods>();
+            services.AddScoped<RequestValidator>();
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Application API", Version = "v1" });
             });
 
             //AutoMapper setup
