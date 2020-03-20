@@ -5,7 +5,7 @@ namespace Models.Interfaces
 {
   public interface IUser
   {
-    string Id { get; set; }
+    Guid Id { get; set; }
     string Address { get; set; }
     string City { get; set; }
     string Country { get; set; }

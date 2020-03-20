@@ -14,6 +14,6 @@ namespace Models.Interfaces
         Guid Id { get; set; }
         string Name { get; set; }
         List<TReservation> Reservations { get; set; }
-        List<TAvailableTime> TimeSlot { get; set; }
+        List<TAvailableTime> TimeSlots { get; set; }
     }
 }

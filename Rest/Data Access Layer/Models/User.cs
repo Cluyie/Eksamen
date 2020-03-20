@@ -7,7 +7,7 @@ using Models.Interfaces;
 
 namespace Data_Access_Layer.Models
 {
-    public class User : IdentityUser, IUser
+    public class User : IdentityUser<Guid>, IUser
     {
         public override string Email { get; set; }
         public override string UserName { get; set; }
