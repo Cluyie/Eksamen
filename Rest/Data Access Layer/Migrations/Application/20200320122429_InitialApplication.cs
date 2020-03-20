@@ -3,10 +3,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data_Access_Layer.Migrations.Application
 {
-    public partial class Application : Migration
+    public partial class InitialApplication : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ReserveTime",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    FromDate = table.Column<DateTime>(nullable: false),
+                    ToDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReserveTime", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Resources",
                 columns: table => new
@@ -47,6 +60,7 @@ namespace Data_Access_Layer.Migrations.Application
                 {
                     Id = table.Column<Guid>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
+                    TimeslotId = table.Column<Guid>(nullable: true),
                     ResourceId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
@@ -58,24 +72,10 @@ namespace Data_Access_Layer.Migrations.Application
                         principalTable: "Resources",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ReserveTime",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    FromDate = table.Column<DateTime>(nullable: false),
-                    ToDate = table.Column<DateTime>(nullable: false),
-                    ReservationId = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ReserveTime", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ReserveTime_Reservations_ReservationId",
-                        column: x => x.ReservationId,
-                        principalTable: "Reservations",
+                        name: "FK_Reservations_ReserveTime_TimeslotId",
+                        column: x => x.TimeslotId,
+                        principalTable: "ReserveTime",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -91,9 +91,9 @@ namespace Data_Access_Layer.Migrations.Application
                 column: "ResourceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ReserveTime_ReservationId",
-                table: "ReserveTime",
-                column: "ReservationId");
+                name: "IX_Reservations_TimeslotId",
+                table: "Reservations",
+                column: "TimeslotId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -102,13 +102,13 @@ namespace Data_Access_Layer.Migrations.Application
                 name: "AvailableTime");
 
             migrationBuilder.DropTable(
-                name: "ReserveTime");
-
-            migrationBuilder.DropTable(
                 name: "Reservations");
 
             migrationBuilder.DropTable(
                 name: "Resources");
+
+            migrationBuilder.DropTable(
+                name: "ReserveTime");
         }
     }
 }

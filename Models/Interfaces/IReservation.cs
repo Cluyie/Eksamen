@@ -10,7 +10,7 @@ namespace Models.Interfaces
         where TReserveTime : IReserveTime
     {
         Guid Id { get; set; }
-        List<TReserveTime> Timeslot { get; set; }
+        TReserveTime Timeslot { get; set; }
         Guid UserId { get; set; }
     }
 }
