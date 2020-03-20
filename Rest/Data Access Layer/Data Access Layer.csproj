@@ -12,6 +12,14 @@
     <Compile Remove="Migrations\Application\20200316105047_ApplicationUpdate.Designer.cs" />
     <Compile Remove="Migrations\Application\20200317151455_Interface Segregation.cs" />
     <Compile Remove="Migrations\Application\20200317151455_Interface Segregation.Designer.cs" />
+    <Compile Remove="Migrations\Application\20200317153622_Application.cs" />
+    <Compile Remove="Migrations\Application\20200317153622_Application.Designer.cs" />
+    <Compile Remove="Migrations\Application\20200320122153_GuidUpdateList.cs" />
+    <Compile Remove="Migrations\Application\20200320122153_GuidUpdateList.Designer.cs" />
+    <Compile Remove="Migrations\Identity\20200224102056_Initial.cs" />
+    <Compile Remove="Migrations\Identity\20200224102056_Initial.Designer.cs" />
+    <Compile Remove="Migrations\Identity\20200320122132_GuidUpdate.cs" />
+    <Compile Remove="Migrations\Identity\20200320122132_GuidUpdate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

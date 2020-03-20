@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailService", "MailService\MailService.csproj", "{D9019E8B-20D9-4EE5-848F-CEA9BC4CF4F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "..\Models\Models.csproj", "{67715B07-7C44-491E-8574-9DF10904CBF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "..\Models\Models.csproj", "{0A95F3D5-2EFB-4CD8-A9BE-CA880BA0829E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer", "BusinessLayer\BusinessLayer.csproj", "{0102C8DE-1125-46EC-AD49-E40625CA0A1D}"
 EndProject

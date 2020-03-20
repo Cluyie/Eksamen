@@ -9,7 +9,7 @@ namespace Data_Access_Layer.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public List<AvailableTime> TimeSlot { get; set; }
+        public List<AvailableTime> TimeSlots { get; set; }
         public List<Reservation> Reservations { get; set; }
     }
 }

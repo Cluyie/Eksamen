@@ -54,7 +54,7 @@ namespace Business_Layer
         public ApiResponse<User> Update(User userData)
         {
             //Prevent changing the ID
-            userData.Id = null;
+            userData.Id = Guid.Empty;
             User userToChange = _authService.GetUser();
             // Can only update an existing user
             if (userToChange == null)
@@ -115,7 +115,7 @@ namespace Business_Layer
 
         // ----- Internal methods -----
 
-        private async Task<User> GetFromID(string id)
+        private async Task<User> GetFromID(Guid id)
         {
             return await _identityContext.Users.FirstOrDefaultAsync(user => user.Id == id);
         }

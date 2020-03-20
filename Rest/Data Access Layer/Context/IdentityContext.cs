@@ -7,7 +7,7 @@ using Data_Access_Layer.Models;
 
 namespace Data_Access_Layer.Context
 {
-  public class IdentityContext : IdentityDbContext<User>
+  public class IdentityContext : IdentityDbContext<User, Role, Guid>
   {
     public IdentityContext() : base()
     {

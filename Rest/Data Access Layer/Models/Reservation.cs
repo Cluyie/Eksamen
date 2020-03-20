@@ -10,6 +10,6 @@ namespace Data_Access_Layer.Models
     {
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
-        public List<ReserveTime> Timeslot { get; set; }
+        public ReserveTime Timeslot { get; set; }
     }
 }
