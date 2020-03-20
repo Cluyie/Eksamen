@@ -67,7 +67,7 @@ namespace Business_Layer
             {
                 var reservationToRemove = _applicationContext.Reservations.Find(guid);
                 
-                if (reservationToRemove != null && _applicationContext.SaveChanges() > 0)
+                if (reservationToRemove != null)
                 {
                     _applicationContext.Reservations.Remove(reservationToRemove);
                     _applicationContext.SaveChanges();

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Data_Access_Layer.Models;
 using Business_Layer.Models;
+using Rest_API.Controllers.ControllerMethods;
 
 namespace Rest_API.Controllers
 {
@@ -13,10 +14,12 @@ namespace Rest_API.Controllers
     public class ReservationController : ControllerBase
     {
         ReservationService _reservationService;
+        RequestValidator _requestValidator;
 
-        public ReservationController(ReservationService reservationService)
+        public ReservationController(ReservationService reservationService, RequestValidator requestValidator)
         {
             _reservationService = reservationService;
+            _requestValidator = requestValidator;
         }
 
         [HttpPost]
@@ -25,10 +28,7 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<Reservation> CreateReservation([FromBody] Reservation reservation)
         {
-            if (reservation == null || !ModelState.IsValid)
-                return new ApiResponse<Reservation>(ApiResponseCode.BadRequest, reservation);
-
-            return _reservationService.Create(reservation);
+            return _requestValidator.ValidateAndPerfom(reservation, _reservationService.Create, Response);
         }
 
         [HttpGet("guid={guid}")]
@@ -38,10 +38,7 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<Reservation> GetReservationById([FromRoute]Guid guid)
         {
-            if (guid == null)
-                return new ApiResponse<Reservation>(ApiResponseCode.BadRequest, null);
-
-            return _reservationService.Get(guid);
+            return _requestValidator.ValidateAndPerfom(guid, _reservationService.Get, Response);
         }
 
         [HttpDelete("guid={guid}")]
@@ -50,10 +47,7 @@ namespace Rest_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<Reservation> CancelReservationById([FromRoute]Guid guid)
         {
-            if (guid == null)
-                return new ApiResponse<Reservation>(ApiResponseCode.BadRequest, null);
-
-            return _reservationService.Cancel(guid);
+            return _requestValidator.ValidateAndPerfom(guid, _reservationService.Cancel, Response);
         }
     }
 }
