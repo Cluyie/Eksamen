@@ -13,6 +13,7 @@ namespace UCLToolBox
 
         public static async Task<string> FindUrl(int timeoutMs = 999)
         {
+            return "http://81.27.216.103/webAPI/";
             TimeoutMs = timeoutMs;
 
             //Skal helst uptimeres

@@ -1,4 +1,5 @@
 using BusinessLayer;
+using BusinessLayer.Models;
 using Models;
 using Models.Mail;
 using NUnit.Framework;
@@ -18,7 +19,7 @@ namespace MailTest
         public void Send()
         {
             _mailHelper.SendMail(_mailHelper
-                .GenerateMail(Template.BookingConfirmation, new User() {Email = "krelle1010@gmail.com"}).Result);
+                .GenerateMail(Template.BookingConfirmation.ToString(), new User() {Email = "krelle1010@gmail.com"}));
         }
     }
 }

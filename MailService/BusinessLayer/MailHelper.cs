@@ -4,28 +4,18 @@ using System.Threading.Tasks;
 using BusinessLayer.Models;
 using Models;
 using Models.Mail;
-using ViewTemplates.Controllers;
-using ViewTemplates.Models;
-
 namespace BusinessLayer
 {
-    public class MailHelper
+    public class MailHelper: IMailHelper
     {
         private SmtpClient _smtpClient;
-        private TemplatesController _templatesController;
 
         public MailHelper()
         {
             ConfigureSmtpClient();
         }
 
-        public MailHelper(TemplatesController templatesController)
-        {
-            ConfigureSmtpClient();
-            _templatesController = templatesController;
-        }
-
-        private void ConfigureSmtpClient()
+        public void ConfigureSmtpClient()
         {
             _smtpClient = new SmtpClient(Properties.Resources.MailService_HostName,
               int.Parse(Properties.Resources.MailService_HostPort))
@@ -43,17 +33,17 @@ namespace BusinessLayer
             _smtpClient.Send(mail);
         }
 
-        public async Task<MailMessage> GenerateMail(Template template, User user)
+        public MailMessage GenerateMail(string mailContent, User user)
         {
             MailMessage mail = new MailMessage
             {
-                From = new MailAddress(Properties.Resources.MailService_SenderEmail), // "booking@ucl.dk");
+                From = new MailAddress(Properties.Resources.MailService_SenderEmail, "UCL Booking Service"), // "booking@ucl.dk");
             };
             //Setting To and CC
-            mail.To.Add(new MailAddress(user.Email));
+            mail.To.Add(new MailAddress(user.Email, "Tonur"));
 
 
-            mail.Body = "Hej"; //_templatesController.RenderViewToString(template.ToString());
+            mail.Body = mailContent;
 
             return mail;
         }

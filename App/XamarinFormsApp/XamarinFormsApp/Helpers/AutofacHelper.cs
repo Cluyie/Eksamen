@@ -48,7 +48,7 @@ namespace XamarinFormsApp.Helpers
 
                 var client = new HttpClient
                 {
-                    BaseAddress = new Uri(ConnectionManager.FindUrl().Result)
+                    BaseAddress = new Uri("http://81.27.216.103/webAPI/")
                 };
 
                 var builder = new ContainerBuilder();

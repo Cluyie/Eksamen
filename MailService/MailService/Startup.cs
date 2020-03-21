@@ -1,87 +1,85 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using BusinessLayer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using UCLToolBox;
-using ViewTemplates.Controllers;
 
 namespace MailService
 {
-  public class Startup
-  {
-    public Startup(IConfiguration configuration)
+    public class Startup
     {
-      Configuration = configuration;
-    }
-
-    public IConfiguration Configuration { get; }
-
-    // This method gets called by the runtime. Use this method to add services to the container.
-    public void ConfigureServices(IServiceCollection services)
-    {
-      string url = ConnectionManager.FindUrl().Result;
-      if (url != null)
-      {
-
-        var client = new HttpClient
+        public Startup(IConfiguration configuration)
         {
-          BaseAddress = new Uri(url)
-        };
-        client.DefaultRequestHeaders.Add("Token", "Tonur");
+            Configuration = configuration;
+        }
 
-        services.AddSingleton(client);
-        services.AddSingleton<ApiClientProxy>();
-      }
+        public IConfiguration Configuration { get; }
 
-      services.AddSingleton<MailHelper>();
-      services.AddSingleton<TemplatesController>();
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            string url = ConnectionManager.FindUrl().Result;
+            if (url != null)
+            {
 
-      services.AddControllers();
-      services.AddSwaggerGen(c =>
-      {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-      });
+                var client = new HttpClient
+                {
+                    BaseAddress = new Uri(url)
+                };
+                client.DefaultRequestHeaders.Add("Token", "Tonur");
+
+                services.AddSingleton(client);
+                services.AddSingleton<ApiClientProxy>();
+            }
+
+            services.AddSingleton<IMailHelper, MockMailHelper>();
+            services.AddMvc();
+            
+            services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            //app.UseHttpsRedirection();
+
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
+        }
     }
-
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-      if (env.IsDevelopment())
-      {
-        app.UseDeveloperExceptionPage();
-      }
-
-      //app.UseHttpsRedirection();
-
-      app.UseSwagger();
-
-      // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-      // specifying the Swagger JSON endpoint.
-      app.UseSwaggerUI(c =>
-      {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-      });
-
-      app.UseRouting();
-
-      app.UseAuthorization();
-
-      app.UseEndpoints(endpoints =>
-      {
-        endpoints.MapControllers();
-      });
-    }
-  }
 }
