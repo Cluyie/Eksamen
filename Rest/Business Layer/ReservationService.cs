@@ -4,6 +4,7 @@ using System.Linq;
 using Data_Access_Layer.Models;
 using Business_Layer.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Business_Layer
 {
@@ -18,23 +19,41 @@ namespace Business_Layer
 
         public ApiResponse<Reservation> Create(Reservation reservation)
         {
-            try
-            {
-                _applicationContext.Add(reservation);
-                
+            Resource resourceToAddTo = _applicationContext.Resources
+                    .Include(resource => resource.TimeSlots)
+                    .Include(resource => resource.Reservations)
+                    .ThenInclude(reservation => reservation.Timeslot)
+                    .SingleOrDefault(resource => resource.Id == reservation.ResourceId);
 
-                if (_applicationContext.SaveChanges() > 0)
-                {
-                    _applicationContext.SaveChanges();
-                    return new ApiResponse<Reservation>(ApiResponseCode.OK, reservation);
-                }
-                else
-                {
-                    return new ApiResponse<Reservation>(ApiResponseCode.NotModified, reservation);
-                }
-                
+            if (resourceToAddTo == null)
+            {
+                return new ApiResponse<Reservation>(ApiResponseCode.NoContent, reservation);
             }
-            catch (Exception)
+
+            List<AvailableTime> validTimes = new List<AvailableTime>();
+            resourceToAddTo.TimeSlots.ForEach(delegate(AvailableTime time)
+            {
+                if (time.From <= reservation.Timeslot.FromDate && time.To >= reservation.Timeslot.ToDate)
+                {
+                    validTimes.Add(time);
+                }
+            });
+
+            if (validTimes.Any())
+            {
+                try
+                {
+                    _applicationContext.Add(reservation);
+                    _applicationContext.SaveChanges();
+
+                    return new ApiResponse<Reservation>(ApiResponseCode.OK, reservation);                
+                }
+                catch (Exception)
+                {
+                    return new ApiResponse<Reservation>(ApiResponseCode.InternalServerError, reservation);
+                }
+            }
+            else
             {
                 return new ApiResponse<Reservation>(ApiResponseCode.InternalServerError, reservation);
             }
