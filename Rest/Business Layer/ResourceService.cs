@@ -53,6 +53,7 @@ namespace Business_Layer
                     (ApiResponseCode.OK, _applicationContext.Resources
                     .Include(resource => resource.TimeSlots)
                     .Include(resource => resource.Reservations)
+                    .ThenInclude(reservation => reservation.Timeslot)
                     .ToList());
             }
             catch (Exception)
@@ -71,6 +72,7 @@ namespace Business_Layer
                resourceToReturn = _applicationContext.Resources
                     .Include(resource => resource.TimeSlots)
                     .Include(resource => resource.Reservations)
+                    .ThenInclude(reservation => reservation.Timeslot)
                     .SingleOrDefault(resource => resource.Id == guid);
             }
             catch (Exception)
@@ -130,6 +132,7 @@ namespace Business_Layer
                 resourceToDelete = _applicationContext.Resources
                     .Include(resource => resource.TimeSlots)
                     .Include(resource => resource.Reservations)
+                    .ThenInclude(reservation => reservation.Timeslot)
                     .SingleOrDefault(resource => resource.Id == guid);
 
                 if (resourceToDelete == null)
