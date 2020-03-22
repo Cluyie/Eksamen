@@ -20,8 +20,8 @@ namespace Business_Layer
             _applicationContext = applicationContext;
             
         }
-
-        //Create resource
+        #region Create
+        //Creates a resource
         public ApiResponse<Resource> Create(Resource resource)
         {
             try
@@ -34,21 +34,22 @@ namespace Business_Layer
                     return new ApiResponse<Resource>(ApiResponseCode.Created, resource);
                 }
                 else
-                {
-                    return new ApiResponse<Resource>(ApiResponseCode.NotModified, resource);
+                {   //Not modified does not return any body.
+                    return new ApiResponse<Resource>(ApiResponseCode.NotModified, null);
                 }
             }
             catch (Exception)
             {
-                return new ApiResponse<Resource>(ApiResponseCode.InternalServerError, resource);
+                return new ApiResponse<Resource>(ApiResponseCode.InternalServerError, null);
             }
         }
-
+        #endregion
+        #region Get
         //Get all resources
         public ApiResponse<List<Resource>> Get()
         {
             try
-            {
+            {   //Returns a list of Resources, with all of its children
                 return new ApiResponse<List<Resource>>
                     (ApiResponseCode.OK, _applicationContext.Resources
                     .Include(resource => resource.TimeSlots)
@@ -69,27 +70,29 @@ namespace Business_Layer
 
             try
             {
+                //Gets a resource with all of its children
                resourceToReturn = _applicationContext.Resources
                     .Include(resource => resource.TimeSlots)
                     .Include(resource => resource.Reservations)
                     .ThenInclude(reservation => reservation.Timeslot)
                     .SingleOrDefault(resource => resource.Id == guid);
+
+                if (resourceToReturn == null)
+                {
+                    return new ApiResponse<Resource>(ApiResponseCode.NoContent, null);
+                }
+                else
+                {
+                    return new ApiResponse<Resource>(ApiResponseCode.OK, resourceToReturn);
+                }
             }
             catch (Exception)
             {
                 return new ApiResponse<Resource>(ApiResponseCode.InternalServerError, null);
             }
-
-            if (resourceToReturn == null)
-            {
-                return new ApiResponse<Resource>(ApiResponseCode.NoContent, null);
-            }
-            else
-            {
-                return new ApiResponse<Resource>(ApiResponseCode.OK, resourceToReturn);
-            }
         }
-
+        #endregion
+        #region Update
         //Update a resource
         //Should ignore reservations when being updated
         public ApiResponse<Resource> Update(Resource resource)
@@ -109,7 +112,8 @@ namespace Business_Layer
                     resourceToUpdate.Name = resource.Name;
                     resourceToUpdate.TimeSlots = resource.TimeSlots;
 
-                    //_applicationContext.Entry(resourceToUpdate).Property(resource => resource.Reservations).IsModified = false;
+                    //Makes sure that the reservations on the resource are not modified
+                    _applicationContext.Entry(resourceToUpdate).Property(resource => resource.Reservations).IsModified = false;
 
                     _applicationContext.SaveChanges();
 
@@ -121,7 +125,8 @@ namespace Business_Layer
                 return new ApiResponse<Resource>(ApiResponseCode.InternalServerError, null);
             }
         }
-
+        #endregion
+        #region Delete
         //Delete a resource
         public ApiResponse<Resource> Delete(Guid guid)
         {
@@ -129,6 +134,7 @@ namespace Business_Layer
 
             try
             {
+                //Gets the resource to be deleted. All children are tracked as well, so that they are also deleted.
                 resourceToDelete = _applicationContext.Resources
                     .Include(resource => resource.TimeSlots)
                     .Include(resource => resource.Reservations)
@@ -141,7 +147,7 @@ namespace Business_Layer
                 }
                 else
                 {
-                    //Needs to CASCADE delete, so that TimeSlots are removed as well.
+                    //This will cascade delete.
                     _applicationContext.Resources.Remove(resourceToDelete);
 
                     _applicationContext.SaveChanges();
@@ -154,5 +160,6 @@ namespace Business_Layer
                 return new ApiResponse<Resource>(ApiResponseCode.InternalServerError, null);
             }
         }
+        #endregion
     }
 }
