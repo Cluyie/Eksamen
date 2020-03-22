@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Data_Access_Layer.Models;
 using Business_Layer.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business_Layer
 {
@@ -48,7 +49,11 @@ namespace Business_Layer
         {
             try
             {
-                return new ApiResponse<List<Resource>>(ApiResponseCode.OK, _applicationContext.Resources.ToList());
+                return new ApiResponse<List<Resource>>
+                    (ApiResponseCode.OK, _applicationContext.Resources
+                    .Include(resource => resource.TimeSlots)
+                    .Include(resource => resource.Reservations)
+                    .ToList());
             }
             catch (Exception)
             {
@@ -63,7 +68,10 @@ namespace Business_Layer
 
             try
             {
-               resourceToReturn = _applicationContext.Resources.Find(guid);
+               resourceToReturn = _applicationContext.Resources
+                    .Include(resource => resource.TimeSlots)
+                    .Include(resource => resource.Reservations)
+                    .SingleOrDefault(resource => resource.Id == guid);
             }
             catch (Exception)
             {
@@ -97,7 +105,9 @@ namespace Business_Layer
                 else
                 {
                     resourceToUpdate.Name = resource.Name;
-                    resourceToUpdate.TimeSlot = resource.TimeSlot;
+                    resourceToUpdate.TimeSlots = resource.TimeSlots;
+
+                    //_applicationContext.Entry(resourceToUpdate).Property(resource => resource.Reservations).IsModified = false;
 
                     _applicationContext.SaveChanges();
 
@@ -111,13 +121,16 @@ namespace Business_Layer
         }
 
         //Delete a resource
-        public ApiResponse<Resource> Delete(Resource resource)
+        public ApiResponse<Resource> Delete(Guid guid)
         {
             Resource resourceToDelete = new Resource();
 
             try
             {
-                resourceToDelete = _applicationContext.Resources.Find(resource.Id);
+                resourceToDelete = _applicationContext.Resources
+                    .Include(resource => resource.TimeSlots)
+                    .Include(resource => resource.Reservations)
+                    .SingleOrDefault(resource => resource.Id == guid);
 
                 if (resourceToDelete == null)
                 {
@@ -125,6 +138,7 @@ namespace Business_Layer
                 }
                 else
                 {
+                    //Needs to CASCADE delete, so that TimeSlots are removed as well.
                     _applicationContext.Resources.Remove(resourceToDelete);
 
                     _applicationContext.SaveChanges();

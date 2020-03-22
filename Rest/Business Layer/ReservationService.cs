@@ -3,6 +3,7 @@ using Data_Access_Layer.Context;
 using System.Linq;
 using Data_Access_Layer.Models;
 using Business_Layer.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business_Layer
 {
@@ -43,7 +44,9 @@ namespace Business_Layer
         {
             try
             {
-                var getReservation = _applicationContext.Reservations.Find(guid);
+                var getReservation = _applicationContext.Reservations
+                    .Include(reservation => reservation.Timeslot)
+                    .FirstOrDefault(reservation => reservation.Id == guid);
 
                 if (getReservation != null)
                 {
@@ -72,7 +75,7 @@ namespace Business_Layer
                     _applicationContext.Reservations.Remove(reservationToRemove);
                     _applicationContext.SaveChanges();
 
-                    return new ApiResponse<Reservation>(ApiResponseCode.OK, reservationToRemove);
+                    return new ApiResponse<Reservation>(ApiResponseCode.OK, null);
                 }
                 else
                 {

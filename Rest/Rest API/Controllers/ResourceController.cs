@@ -61,14 +61,14 @@ namespace Rest_API.Controllers
             return _requestValidator.ValidateAndPerfom(resource, _resourceService.Update, Response);
         }
 
-        [HttpDelete]
+        [HttpDelete("guid={guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status304NotModified)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ApiResponse<Resource> DeleteResource(Resource resource)
+        public ApiResponse<Resource> DeleteResource([FromRoute]Guid guid)
         {
-            return _requestValidator.ValidateAndPerfom(resource, _resourceService.Delete, Response);
+            return _requestValidator.ValidateAndPerfom(guid, _resourceService.Delete, Response);
         }
     }
 }
