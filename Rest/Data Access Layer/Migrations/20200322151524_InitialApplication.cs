@@ -1,25 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Data_Access_Layer.Migrations.Application
+namespace Data_Access_Layer.Migrations
 {
     public partial class InitialApplication : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "ReserveTime",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    FromDate = table.Column<DateTime>(nullable: false),
-                    ToDate = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ReserveTime", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Resources",
                 columns: table => new
@@ -41,7 +28,7 @@ namespace Data_Access_Layer.Migrations.Application
                     Recurring = table.Column<int>(nullable: true),
                     From = table.Column<DateTime>(nullable: false),
                     To = table.Column<DateTime>(nullable: false),
-                    ResourceId = table.Column<Guid>(nullable: true)
+                    ResourceId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,7 +38,7 @@ namespace Data_Access_Layer.Migrations.Application
                         column: x => x.ResourceId,
                         principalTable: "Resources",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,8 +47,7 @@ namespace Data_Access_Layer.Migrations.Application
                 {
                     Id = table.Column<Guid>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
-                    TimeslotId = table.Column<Guid>(nullable: true),
-                    ResourceId = table.Column<Guid>(nullable: true)
+                    ResourceId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,13 +57,27 @@ namespace Data_Access_Layer.Migrations.Application
                         column: x => x.ResourceId,
                         principalTable: "Resources",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReserveTime",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    FromDate = table.Column<DateTime>(nullable: false),
+                    ToDate = table.Column<DateTime>(nullable: false),
+                    ReservationId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReserveTime", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reservations_ReserveTime_TimeslotId",
-                        column: x => x.TimeslotId,
-                        principalTable: "ReserveTime",
+                        name: "FK_ReserveTime_Reservations_ReservationId",
+                        column: x => x.ReservationId,
+                        principalTable: "Reservations",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -91,9 +91,10 @@ namespace Data_Access_Layer.Migrations.Application
                 column: "ResourceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservations_TimeslotId",
-                table: "Reservations",
-                column: "TimeslotId");
+                name: "IX_ReserveTime_ReservationId",
+                table: "ReserveTime",
+                column: "ReservationId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -102,13 +103,13 @@ namespace Data_Access_Layer.Migrations.Application
                 name: "AvailableTime");
 
             migrationBuilder.DropTable(
+                name: "ReserveTime");
+
+            migrationBuilder.DropTable(
                 name: "Reservations");
 
             migrationBuilder.DropTable(
                 name: "Resources");
-
-            migrationBuilder.DropTable(
-                name: "ReserveTime");
         }
     }
 }

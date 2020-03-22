@@ -11,5 +11,6 @@ namespace Models.Interfaces
     Guid Id { get; set; }
     DateTime FromDate { get; set; }
     DateTime ToDate { get; set; }
+    Guid ReservationId { get; set; }
   }
 }
