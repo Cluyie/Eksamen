@@ -12,5 +12,6 @@ namespace Models.Interfaces
         Guid Id { get; set; }
         TReserveTime Timeslot { get; set; }
         Guid UserId { get; set; }
+        Guid ResourceId { get; set; }
     }
 }
