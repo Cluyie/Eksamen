@@ -36,7 +36,7 @@ namespace XamarinFormsApp.Helpers
                         {
                             string name = type.Name.Replace("ViewModel", "");
                             string modelNamespace = $"{nameof(XamarinFormsApp)}.{nameof(Model)}";
-                            var modelItem = types.FirstOrDefault(t => t.Namespace == modelNamespace && t.Name == name);
+                            var modelItem = types.FirstOrDefault(t => t.Namespace == modelNamespace && (t.Name == name || name.Contains(t.Name)));
                             if (modelItem != null)
                             {
                                 cfg.CreateMap(type, modelItem).ReverseMap();
