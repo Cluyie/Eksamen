@@ -21,6 +21,8 @@ namespace Business_Layer
         //Create a reservation
         public ApiResponse<Reservation> Create(Reservation reservation)
         {
+            bool invalidDate = false;
+
             //Finds the resource that the reservation belongs to
             Resource resourceToAddTo = _applicationContext.Resources
                     .Include(resource => resource.TimeSlots)
@@ -32,6 +34,15 @@ namespace Business_Layer
             {
                 return new ApiResponse<Reservation>(ApiResponseCode.NoContent, reservation);
             }
+
+            resourceToAddTo.Reservations.ForEach(delegate(Reservation existingReservation)
+            {
+                if (!(((reservation.Timeslot.FromDate <= existingReservation.Timeslot.FromDate) && (reservation.Timeslot.ToDate <= existingReservation.Timeslot.FromDate)) ||
+                ((reservation.Timeslot.FromDate >= existingReservation.Timeslot.ToDate) && (reservation.Timeslot.ToDate >= existingReservation.Timeslot.ToDate))))
+                {
+                    invalidDate = true;
+                }
+            });
 
             //A list of all the valid times for reservations duration
             List<AvailableTime> validTimes = new List<AvailableTime>();
@@ -46,7 +57,7 @@ namespace Business_Layer
             });
 
             //If the resource contains a valid timeslot, that matches the duration of the reservation
-            if (validTimes.Any())
+            if (validTimes.Any() && !invalidDate)
             {
                 try
                 {

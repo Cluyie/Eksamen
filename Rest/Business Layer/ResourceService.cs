@@ -101,7 +101,7 @@ namespace Business_Layer
 
             try
             {
-                resourceToUpdate = _applicationContext.Resources.Find(resource.Id);
+                resourceToUpdate = _applicationContext.Resources.Include(r => r.TimeSlots).SingleOrDefault(r => r.Id == resource.Id);
 
                 if (resourceToUpdate == null)
                 {
@@ -110,11 +110,10 @@ namespace Business_Layer
                 else
                 {
                     resourceToUpdate.Name = resource.Name;
+
                     resourceToUpdate.TimeSlots = resource.TimeSlots;
 
-                    //Makes sure that the reservations on the resource are not modified
-                    _applicationContext.Entry(resourceToUpdate).Property(resource => resource.Reservations).IsModified = false;
-
+                    _applicationContext.Update(resourceToUpdate);
                     _applicationContext.SaveChanges();
 
                     return new ApiResponse<Resource>(ApiResponseCode.OK, resourceToUpdate);
