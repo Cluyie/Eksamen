@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Models
+namespace Models.Interfaces
 {
-    public class LoginDTO
+    public interface ILoginDTO
     {
-        public string UsernameOrEmail { get; set; }
-        public string Password { get; set; }
+        string UsernameOrEmail { get; set; }
+        string Password { get; set; }
     }
 }

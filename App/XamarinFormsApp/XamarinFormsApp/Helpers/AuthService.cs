@@ -1,6 +1,7 @@
 ﻿using System;
 using Models;
 using Xamarin.Forms;
+using XamarinFormsApp.Model;
 
 namespace XamarinFormsApp.Helpers
 {

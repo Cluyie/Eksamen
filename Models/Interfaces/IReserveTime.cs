@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Models
+namespace Models.Interfaces
 {
-    public interface IReserveTime
-    {
-        DateTime FromDate { get; set; }
-        DateTime ToDate { get; set; }
-    }
+  public interface IReserveTime
+  {
+    Guid ReservationId { get; set; }
+    DateTime FromDate { get; set; }
+    DateTime ToDate { get; set; }
+  }
 }

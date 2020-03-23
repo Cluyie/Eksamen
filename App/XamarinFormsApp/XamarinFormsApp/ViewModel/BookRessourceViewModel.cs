@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Models;
+using Models.Interfaces;
 
 namespace XamarinFormsApp.ViewModel
 {
@@ -9,7 +10,7 @@ namespace XamarinFormsApp.ViewModel
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public List<IAvailableTime> 
+        public List<IAvailableTime> AllRessources;
         
 
 

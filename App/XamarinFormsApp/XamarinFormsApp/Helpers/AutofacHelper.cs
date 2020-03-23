@@ -10,7 +10,9 @@ using System.Threading.Tasks;
 using Autofac;
 using AutoMapper;
 using Models;
+using Models.Interfaces;
 using XamarinFormsApp.Model;
+using XamarinFormsApp.ViewModel;
 
 namespace XamarinFormsApp.Helpers
 {
@@ -28,7 +30,8 @@ namespace XamarinFormsApp.Helpers
                 {
                     cfg.CreateMap(typeof(Model.Profile), typeof(User)).ReverseMap();
                     cfg.CreateMap(typeof(LoginSettings), typeof(User)).ReverseMap();
-                    cfg.CreateMap<IResource, BookRessource>();
+                    cfg.CreateMap(typeof(List<Resource>), typeof(ResourceViewModel));
+                    cfg.CreateMap<IResource<Reservation,ReserveTime,AvailableTime>, Resource>();
                     foreach (var type in types)
                     {
                         string viewmodelNamespace = $"{nameof(XamarinFormsApp)}.{nameof(ViewModel)}";
@@ -66,23 +69,23 @@ namespace XamarinFormsApp.Helpers
             //Offentlig base adresse: http://81.27.216.103/webAPI/
             //Intern base adresse: http://10.56.8.34/webAPI/
             //Lokal base adresse til emulator http://10.0.2.2:5000/
-#if DEBUG
-            if (TestUrl("http://10.0.2.2:53524/"))
-            {
-                return "http://10.0.2.2:53524/";
-            }
-#endif
-            //If you are not on the same Net as the server
-            if (TestUrl("http://81.27.216.103/webAPI/User/GetProfile"))
-            {
-                return "http://81.27.216.103/webAPI/";
-            }
-            //If you are on the same Net as the server
-            if (TestUrl("http://10.56.8.34/webAPI/User/GetProfile"))
-            {
-                return "http://10.56.8.34/webAPI/";
-            }
-            return null;
+//#if DEBUG
+//            if (TestUrl("http://10.0.2.2:53524/"))
+//            {
+//                return "http://10.0.2.2:53524/";
+//            }
+//#endif
+//            //If you are not on the same Net as the server
+//            if (TestUrl("http://81.27.216.103/webAPI/User/GetProfile"))
+//            {
+//                return "http://81.27.216.103/webAPI/";
+//            }
+//            //If you are on the same Net as the server
+//            if (TestUrl("http://10.56.8.34/webAPI/User/GetProfile"))
+//            {
+//                return "http://10.56.8.34/webAPI/";
+//            }
+            return "http://81.27.216.103/webAPI/";
         }
 
         private static bool TestUrl(string url)
