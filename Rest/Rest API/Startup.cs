@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Business_Layer;
 using Data_Access_Layer.Context;
@@ -43,7 +44,10 @@ namespace Rest_API
      .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
       }));
       services.AddSingleton(mapper);
-    }
+
+      services.AddControllers().AddJsonOptions(options =>
+          options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+        }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

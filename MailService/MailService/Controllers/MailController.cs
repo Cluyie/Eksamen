@@ -43,9 +43,12 @@ namespace MailService.Controllers
         {
             try
             {
-                ApiResponse<User> userResponse = new ApiResponse<User>(ApiResponseCode.OK, new User{ Id = Guid.NewGuid(), UserName = "Tonur", FirstName = "Christoffer", LastName = "Pedersen", Address = "Østerbrogade 20", Email = "chriskpedersen@hotmail.com", }); //_proxy.Get<ApiResponse<User>>("User/GetProfile/");// + recipientId);
-                ApiResponse<Reservation> reservationResponse = new ApiResponse<Reservation>(ApiResponseCode.OK, new Reservation{UserId = userResponse.Value.Id, Timeslot = new ReserveTime{FromDate = DateTime.Today.AddHours(8), ToDate = DateTime.Today.AddHours(16)}}); //_proxy.Get<ApiResponse<User>>("User/GetProfile/");// + recipientId);
-                ApiResponse<Resource> resourceResponse = new ApiResponse<Resource>(ApiResponseCode.OK, new Resource{Name = "Hansens rengøringsservice", Reservations = new List<Reservation>{reservationResponse.Value}}); //_proxy.Get<ApiResponse<User>>("User/GetProfile/");// + recipientId);
+                //  new ApiResponse<User>(ApiResponseCode.OK, new User{ Id = Guid.NewGuid(), UserName = "Tonur", FirstName = "Christoffer", LastName = "Pedersen", Address = "Østerbrogade 20", Email = "chriskpedersen@hotmail.com", });
+                ApiResponse<User> userResponse = _proxy.Get<ApiResponse<User>>("User/GetProfile/" + recipientId); 
+                //  new ApiResponse<Reservation>(ApiResponseCode.OK, new Reservation{UserId = userResponse.Value.Id, Timeslot = new ReserveTime{FromDate = DateTime.Today.AddHours(8), ToDate = DateTime.Today.AddHours(16)}});
+                ApiResponse<Reservation> reservationResponse = _proxy.Get<ApiResponse<Reservation>>("Reservation/Get/" + reservationId); 
+                // new ApiResponse<Resource>(ApiResponseCode.OK, new Resource{Name = "Hansens rengøringsservice", Reservations = new List<Reservation>{reservationResponse.Value}});
+                ApiResponse<Resource> resourceResponse = _proxy.Get<ApiResponse<Resource>>("Resource/Get/" + resourceId);
                 TemplateViewModel templateViewModel = new TemplateViewModel
                 {
                     Title = template.GetAttribute<DisplayAttribute>().Name,
@@ -53,8 +56,6 @@ namespace MailService.Controllers
                     Resource = resourceResponse.Value,
                     Reservation = reservationResponse.Value
                 };
-
-
 
                 string mailContent = await RenderViewToString(template.ToString(), templateViewModel);
                 MailMessage mail = _mailHelper.GenerateMail(userResponse.Value, template.GetAttribute<DisplayAttribute>().Name, mailContent);

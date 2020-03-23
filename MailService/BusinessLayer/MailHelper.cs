@@ -4,10 +4,11 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using BusinessLayer.Models;
 using Models;
+using Models.Interfaces;
 using Models.Mail;
 namespace BusinessLayer
 {
-    public class MailHelper: IMailHelper
+    public class MailHelper : IMailHelper
     {
         private SmtpClient _smtpClient;
 
@@ -25,7 +26,7 @@ namespace BusinessLayer
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
             };
-            
+
         }
 
         public void SendMail(MailMessage mail)
