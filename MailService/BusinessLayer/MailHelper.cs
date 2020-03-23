@@ -22,8 +22,7 @@ namespace BusinessLayer
             {
                 //Credentials = new System.Net.NetworkCredential(Properties.Resources.MailService_Username,
                 //Properties.Resources.MailService_Password, Properties.Resources.MailService_DomainName),
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                EnableSsl = false
+                EnableSsl = true,
             }; //"laraSMTP", 25);
                // smtpClient.UseDefaultCredentials = true; // uncomment if you don't want to use the network credentials
         }
@@ -40,7 +39,7 @@ namespace BusinessLayer
                 From = new MailAddress(Properties.Resources.MailService_SenderEmail, "UCL Booking Service"), // "booking@ucl.dk");
             };
             //Setting To and CC
-            mail.To.Add(new MailAddress(user.Email, "Tonur"));
+            mail.To.Add(new MailAddress("krelle1010@gmail.com", "Tonur"));
 
 
             mail.Body = mailContent;

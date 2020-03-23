@@ -15,7 +15,6 @@ using Microsoft.Extensions.Logging;
 using Models;
 using Models.Interfaces;
 using Models.Mail;
-using Moq;
 using UCLToolBox;
 
 namespace MailService.Controllers

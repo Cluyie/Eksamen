@@ -118,21 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MailService_DomainName" xml:space="preserve">
-    <value>LARA_Server</value>
+    <value>gmail.com</value>
   </data>
   <data name="MailService_HostName" xml:space="preserve">
-    <value>10.56.8.34</value>
+    <value>smtp.gmail.com</value>
   </data>
   <data name="MailService_HostPort" xml:space="preserve">
     <value>587</value>
   </data>
   <data name="MailService_Password" xml:space="preserve">
-    <value>!q2w3e4r</value>
+    <value>vuhdnxysimctpozq</value>
   </data>
   <data name="MailService_SenderEmail" xml:space="preserve">
-    <value>booking@ucl.dk</value>
+    <value>DreamTeamUCL@gmail.com</value>
   </data>
   <data name="MailService_Username" xml:space="preserve">
-    <value>lara</value>
+    <value>DreamTeamUCL@gmail.com</value>
   </data>
 </root>

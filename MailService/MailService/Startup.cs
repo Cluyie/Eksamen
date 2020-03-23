@@ -42,7 +42,7 @@ namespace MailService
                 services.AddSingleton<ApiClientProxy>();
             }
 
-            services.AddSingleton<IMailHelper, MockMailHelper>();
+            services.AddSingleton<IMailHelper, MailHelper>();
             services.AddMvc();
             
             services.AddControllers();

@@ -61,7 +61,7 @@ namespace BusinessLayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LARA_Server.
+        ///   Looks up a localized string similar to gmail.com.
         /// </summary>
         internal static string MailService_DomainName {
             get {
@@ -70,7 +70,7 @@ namespace BusinessLayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 10.56.8.34.
+        ///   Looks up a localized string similar to smtp.gmail.com.
         /// </summary>
         internal static string MailService_HostName {
             get {
@@ -88,7 +88,7 @@ namespace BusinessLayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to !q2w3e4r.
+        ///   Looks up a localized string similar to vuhdnxysimctpozq.
         /// </summary>
         internal static string MailService_Password {
             get {
@@ -97,7 +97,7 @@ namespace BusinessLayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to booking@ucl.dk.
+        ///   Looks up a localized string similar to DreamTeamUCL@gmail.com.
         /// </summary>
         internal static string MailService_SenderEmail {
             get {
@@ -106,7 +106,7 @@ namespace BusinessLayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to lara.
+        ///   Looks up a localized string similar to DreamTeamUCL@gmail.com.
         /// </summary>
         internal static string MailService_Username {
             get {
