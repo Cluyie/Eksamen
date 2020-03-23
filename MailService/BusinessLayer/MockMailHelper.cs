@@ -20,24 +20,26 @@ namespace BusinessLayer
             return;
         }
 
-        public void SendMail(MailMessage mail)
-        {
-            return;
-        }
-
-        public MailMessage GenerateMail(string mailContent, User user)
+        public MailMessage GenerateMail(User user, string subject, string mailContent)
         {
             MailMessage mail = new MailMessage
             {
-                From = new MailAddress("booking@ucl.dk", "UCL Booking Service")
+                IsBodyHtml = true,
+                From = new MailAddress("booking@ucl.dk", "UCL Booking Service"),
+                Subject = subject,
+                Body = mailContent,
             };
             //Setting To and CC
             mail.To.Add(new MailAddress("chriskpedersen@hotmail.com", "Tonur"));
 
 
-            mail.Body = mailContent;
 
             return mail;
+        }
+
+        public void SendMail(MailMessage mail)
+        {
+            return;
         }
     }
 }

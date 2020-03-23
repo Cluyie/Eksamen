@@ -61,7 +61,7 @@ namespace BusinessLayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to gmail.com.
+        ///   Looks up a localized string similar to smtp.gmail.com.
         /// </summary>
         internal static string MailService_DomainName {
             get {
@@ -88,7 +88,7 @@ namespace BusinessLayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to vuhdnxysimctpozq.
+        ///   Looks up a localized string similar to maauuhyrjpejtmvw.
         /// </summary>
         internal static string MailService_Password {
             get {

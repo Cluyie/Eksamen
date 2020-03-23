@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Extensions;
 using Models;
 using Models.Interfaces;
 using Models.Mail;
@@ -37,13 +39,25 @@ namespace MailService.Controllers
         }
 
         [HttpPost]
-        public async Task<ApiResponse<string>> PostMail(Template template, string recipientId, string resourceId = null)
+        public async Task<ApiResponse<string>> PostMail(Template template, string recipientId, string resourceId, string reservationId)
         {
-            string mailContent = await RenderViewToString(template.ToString(), new TemplateViewModel());
             try
             {
-                var response = new ApiResponse<User>(ApiResponseCode.OK, new User() { UserName = "Tonur", Address = "Østerbrogade 20", Email = "chriskpedersen@hotmail.com", }); //_proxy.Get<ApiResponse<User>>("User/GetProfile/");// + recipientId);
-                MailMessage mail = _mailHelper.GenerateMail(mailContent, response.Value);
+                ApiResponse<User> userResponse = new ApiResponse<User>(ApiResponseCode.OK, new User{ Id = Guid.NewGuid(), UserName = "Tonur", FirstName = "Christoffer", LastName = "Pedersen", Address = "Østerbrogade 20", Email = "chriskpedersen@hotmail.com", }); //_proxy.Get<ApiResponse<User>>("User/GetProfile/");// + recipientId);
+                ApiResponse<Reservation> reservationResponse = new ApiResponse<Reservation>(ApiResponseCode.OK, new Reservation{UserId = userResponse.Value.Id, Timeslot = new ReserveTime{FromDate = DateTime.Today.AddHours(8), ToDate = DateTime.Today.AddHours(16)}}); //_proxy.Get<ApiResponse<User>>("User/GetProfile/");// + recipientId);
+                ApiResponse<Resource> resourceResponse = new ApiResponse<Resource>(ApiResponseCode.OK, new Resource{Name = "Hansens rengøringsservice", Reservations = new List<Reservation>{reservationResponse.Value}}); //_proxy.Get<ApiResponse<User>>("User/GetProfile/");// + recipientId);
+                TemplateViewModel templateViewModel = new TemplateViewModel
+                {
+                    Title = template.GetAttribute<DisplayAttribute>().Name,
+                    User = userResponse.Value,
+                    Resource = resourceResponse.Value,
+                    Reservation = reservationResponse.Value
+                };
+
+
+
+                string mailContent = await RenderViewToString(template.ToString(), templateViewModel);
+                MailMessage mail = _mailHelper.GenerateMail(userResponse.Value, template.GetAttribute<DisplayAttribute>().Name, mailContent);
                 _mailHelper.SendMail(mail);
             }
             catch (Exception e)

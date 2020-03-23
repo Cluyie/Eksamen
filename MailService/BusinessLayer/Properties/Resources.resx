@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MailService_DomainName" xml:space="preserve">
-    <value>gmail.com</value>
+    <value>smtp.gmail.com</value>
   </data>
   <data name="MailService_HostName" xml:space="preserve">
     <value>smtp.gmail.com</value>
@@ -127,7 +127,7 @@
     <value>587</value>
   </data>
   <data name="MailService_Password" xml:space="preserve">
-    <value>vuhdnxysimctpozq</value>
+    <value>maauuhyrjpejtmvw</value>
   </data>
   <data name="MailService_SenderEmail" xml:space="preserve">
     <value>DreamTeamUCL@gmail.com</value>

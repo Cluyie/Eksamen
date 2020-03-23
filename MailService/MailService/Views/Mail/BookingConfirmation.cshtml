@@ -1,7 +1,16 @@
-﻿
+﻿@using MailService.Models 
+@model TemplateViewModel
 @{
-    ViewData["Title"] = "BookingConfirmation";
+    ViewData["Title"] = @Model.Title;
+    Layout = "_Layout";
 }
 
-<h1>BookingConfirmation</h1>
+<p>Hej @Model.User.FirstName!</p>
 
+<br/>
+
+<p>Du har reserveret @Model.Resource.Name d. @Model.Reservation.Timeslot.FromDate.ToString("d") i tidsrummet @Model.Reservation.Timeslot.FromDate.ToString("HH:mm") til @Model.Reservation.Timeslot.ToDate.ToString("HH:mm").</p>
+
+<br/>
+
+<p>Tak fordi du bruger UCL Dream Team booking!</p>

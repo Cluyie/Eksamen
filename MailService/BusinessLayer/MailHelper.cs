@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using BusinessLayer.Models;
@@ -17,14 +18,14 @@ namespace BusinessLayer
 
         public void ConfigureSmtpClient()
         {
-            _smtpClient = new SmtpClient(Properties.Resources.MailService_HostName,
-              int.Parse(Properties.Resources.MailService_HostPort))
+            _smtpClient = new SmtpClient("smtp.gmail.com", 587)
             {
-                //Credentials = new System.Net.NetworkCredential(Properties.Resources.MailService_Username,
-                //Properties.Resources.MailService_Password, Properties.Resources.MailService_DomainName),
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential("DreamTeamUCL@gmail.com", "maauuhyrjpejtmvw"),
                 EnableSsl = true,
-            }; //"laraSMTP", 25);
-               // smtpClient.UseDefaultCredentials = true; // uncomment if you don't want to use the network credentials
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+            };
+            
         }
 
         public void SendMail(MailMessage mail)
@@ -32,17 +33,18 @@ namespace BusinessLayer
             _smtpClient.Send(mail);
         }
 
-        public MailMessage GenerateMail(string mailContent, User user)
+        public MailMessage GenerateMail(User user, string subject, string mailContent)
         {
             MailMessage mail = new MailMessage
             {
-                From = new MailAddress(Properties.Resources.MailService_SenderEmail, "UCL Booking Service"), // "booking@ucl.dk");
+                IsBodyHtml = true,
+                From = new MailAddress(Properties.Resources.MailService_SenderEmail,
+                    "UCL Booking Service"),
+                Subject = subject,
+                Body = mailContent, // "booking@ucl.dk");
             };
             //Setting To and CC
-            mail.To.Add(new MailAddress("krelle1010@gmail.com", "Tonur"));
-
-
-            mail.Body = mailContent;
+            mail.To.Add(new MailAddress(user.Email, user.FirstName));
 
             return mail;
         }
