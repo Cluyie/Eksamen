@@ -1,78 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 using XamarinFormsApp.Helpers;
 using Models;
 using System.Collections.ObjectModel;
-using Xamarin.Forms;
+using Autofac;
 using System.Threading.Tasks;
-using System.ComponentModel;
+using System.Collections.Generic;
+using System.Net.Http;
+using AutoMapper;
 
 namespace XamarinFormsApp.ViewModel
 {
-   
-        public class ViewRessourceViewModel: INotifyPropertyChanged
+
+    public class ViewRessourceViewModel : AutoMapper.Profile
     {
-
-            public string Id { get; set; }
-            public string strName { get; set; }
-            
-     
-        private ObservableCollection<Resource> items;
-        public ObservableCollection<Resource> Items
-        {
-            get { return items; }
-            set
-            {
-
-                items = value;
-            }
-        }
-
-
+        public string ErrorMessage { get; private set; }
+        public List<Resource> Resources { get; set; }
+        private ApiClientProxy _proxy;
+        private Mapper _mapper;
         public ViewRessourceViewModel()
         {
-           
-
-
-
-            Items = new ObservableCollection<Resource>() {
-                new Resource()
-                {
-                    Id= Guid.NewGuid(),
-                    strName= "Toiletpapir"
-
-                },
-                new Resource()
-                {
-                    Id= Guid.NewGuid(),
-                    strName= "Håndsprit"
-
-                },
-                new Resource()
-                {
-                    strName= "[REDACTED]",
-                    Id= Guid.NewGuid()
-                    
-                },
-                new Resource()
-                {
-                    strName= "The backrooms",
-                    Id= Guid.NewGuid()
-                }
-            };
-
-
-
-            Resource res = new Resource();
-            res.Id = Guid.NewGuid();
-            res.strName = "Meeting room 1";
-
-            Items.Add(res);
-
+           _mapper = AutofacHelper.Container.Resolve<Mapper>();
+            _proxy = AutofacHelper.Container.Resolve<ApiClientProxy>();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+
+       
+
+
+
+        public ViewRessourceViewModel InitializeWithResourceData()
+        {
+            var response =  _proxy.Get<HttpResponseMessage>(@"http://81.27.216.103/webAPI/Resource");
+            var result =  ApiClientProxy.ReadAnswer<ApiResponse<List<Resource>>>(response);
+            if(!response.IsSuccessStatusCode && result?.Code != ApiResponseCode.OK)
+            {
+                ErrorMessage = _proxy.GenerateErrorMessage(result, response);
+            }
+            return _mapper.Map<ViewRessourceViewModel>(_mapper.Map<List<Resource>>(result.Value));
+            
+        }
+        
     }
     
 }
