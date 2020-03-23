@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Models;
+using Models.Interfaces;
 
 namespace XamarinFormsApp.ViewModel
 {

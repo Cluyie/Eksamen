@@ -1,4 +1,5 @@
 ﻿using Models;
+using Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,5 +10,6 @@ namespace XamarinFormsApp.Model
     {
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
+        public Guid ReservationId { get ; set ; }
     }
 }

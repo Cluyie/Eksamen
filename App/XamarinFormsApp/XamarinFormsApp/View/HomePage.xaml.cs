@@ -37,7 +37,7 @@ namespace XamarinFormsApp.View
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new ViewRessourceView());
+            Navigation.PushAsync(new ResourceView());
         }
     }
 }

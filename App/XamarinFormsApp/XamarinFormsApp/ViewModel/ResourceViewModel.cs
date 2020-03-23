@@ -7,17 +7,19 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Net.Http;
 using AutoMapper;
+using Models.Interfaces;
+using XamarinFormsApp.Model;
 
 namespace XamarinFormsApp.ViewModel
 {
 
-    public class ViewRessourceViewModel : AutoMapper.Profile
+    public class ResourceViewModel : AutoMapper.Profile
     {
         public string ErrorMessage { get; private set; }
         public List<Resource> Resources { get; set; }
         private ApiClientProxy _proxy;
         private Mapper _mapper;
-        public ViewRessourceViewModel()
+        public ResourceViewModel()
         {
            _mapper = AutofacHelper.Container.Resolve<Mapper>();
             _proxy = AutofacHelper.Container.Resolve<ApiClientProxy>();
@@ -28,16 +30,19 @@ namespace XamarinFormsApp.ViewModel
 
 
 
-        public ViewRessourceViewModel InitializeWithResourceData()
+        public ResourceViewModel InitializeWithResourceData()
         {
-            var response =  _proxy.Get<HttpResponseMessage>(@"http://81.27.216.103/webAPI/Resource");
-            var result =  ApiClientProxy.ReadAnswer<ApiResponse<List<Resource>>>(response);
-            if(!response.IsSuccessStatusCode && result?.Code != ApiResponseCode.OK)
+            var response =  _proxy.Get<ApiResponse<List<Resource>>>(@"Resource");
+           
+            if( response?.Code != ApiResponseCode.OK)
             {
-                ErrorMessage = _proxy.GenerateErrorMessage(result, response);
+                ErrorMessage = _proxy.GenerateErrorMessage(response);
             }
-            return _mapper.Map<ViewRessourceViewModel>(_mapper.Map<List<Resource>>(result.Value));
             
+            return new ResourceViewModel()
+            {
+                Resources = response.Value
+            };
         }
         
     }

@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="XamarinFormsApp.View.ViewRessourceView"
+             x:Class="XamarinFormsApp.View.ResourceView"
              Title="Resource List">
     <ContentPage.Content>
         <StackLayout>
@@ -14,7 +14,7 @@
 
 
 
-            <ListView ItemsSource="{Binding Items}"
+            <ListView ItemsSource="{Binding Resources}"
               CachingStrategy="RecycleElement"
               RowHeight="60">
 
@@ -23,7 +23,7 @@
                         <ViewCell>
                             <StackLayout Margin="8">
 
-                                <Label Text="{Binding strName}"
+                                <Label Text="{Binding Name}"
                                FontAttributes="Bold" />
                                 <Label Text="{Binding Id}"/>
                             </StackLayout>
