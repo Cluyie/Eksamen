@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Models;
+using SignalR_Microservice.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +11,18 @@ namespace SignalR_Microservice.Hubs
 {
     public class ResourceHub : Hub
     {
-        public async Task UpdateReservationHub(Reservation reservation)
+        public async Task UpdateReservation(Reservation reservation)
         {
-            await Clients.All.SendAsync("UpdateReservationClient", reservation);
+            await Clients.All.SendAsync("UpdateReservation", reservation);
+
+            //private HubConnection hubConnection;
+
+            //hubConnection = new HubConnectionBuilder().WithUrl($"/ResourceHub").Build();
 
             //SignalR Client methods for UpdateReservation
-            //_hubConnection.On<Reservation>("UpdateReservationClient", (reservation) =>
+            //_hubConnection.On<Reservation>("UpdateReservation", (reservation) =>
             //        {
-            //            if (resource.Reservations.Find(r => r.Id = reservation.Id) != null)
+            //            if (resource.Reservations.Find(r => r.Id == reservation.Id) != null)
             //            {
             //                resource.Reservations[resource.Reservations.FindId(r => r.Id = reservation.Id)] = reservation;
             //            }
@@ -25,24 +30,27 @@ namespace SignalR_Microservice.Hubs
             //            {
             //                resource.Reservations.Add(reservation);
             //            }
-
             //        });
 
             //Task UpdateReservation() =>
-            //        _hubConnection.SendAsync("UpdateReservationHub", _reservation);
+            //        _hubConnection.SendAsync("UpdateReservation", _reservation);
         }
 
         //Change object to Reservation type when it is available from DB team
-        public async Task UpdateResourceHub(Resource resource)
+        public async Task UpdateResource(Resource resource)
         {
-            await Clients.All.SendAsync("UpdateResourceClient", resource);
+            await Clients.All.SendAsync("UpdateResource", resource);
 
-            //SignalR Client methods for UpdateResource
-            //_hubConnection.On<Resource>("UpdateResourceClient", (resource) =>
+            //private HubConnection hubConnection;
+
+            //hubConnection = new HubConnectionBuilder().WithUrl($"/ResourceHub").Build();
+
+            ////SignalR Client methods for UpdateResource
+            //_hubConnection.On<Resource>("UpdateResource", (resource) =>
             //        {
             //            if (resourceList.Find(r => r.Id == resource.Id) != null)
             //            {
-            //                resourceList[resourceList.FindId(r => r.Id = resource.Id)] = resource;
+            //                resourceList[resourceList.FindId(r => r.Id == resource.Id)] = resource;
             //            }
             //            else
             //            {
@@ -51,7 +59,7 @@ namespace SignalR_Microservice.Hubs
             //        });
 
             //Task UpdateResource() =>
-            //        _hubConnection.SendAsync("UpdateResourceHub", _resource);
+            //        _hubConnection.SendAsync("UpdateResource", _resource);
         }
     }
 }
