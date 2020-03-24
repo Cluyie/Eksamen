@@ -21,7 +21,7 @@ namespace Business_Layer
             
             _applicationContext = applicationContext;
             _hubConnection = new HubConnectionBuilder()
-            .WithUrl($"ResourceHub")
+            .WithUrl($"{Properties.Resources.ResourceManager.GetString("SignalRBaseAddress")}ResourceHub")
             .Build();
             Connect();
 
@@ -31,6 +31,7 @@ namespace Business_Layer
         {
             await _hubConnection.StartAsync();
         }
+
         #region Create
         //Creates a resource
         public ApiResponse<Resource> Create(Resource resource)
@@ -61,7 +62,7 @@ namespace Business_Layer
                 {
                     _applicationContext.Add(resource);
                     _applicationContext.SaveChanges();
-                    _hubConnection.SendAsync("UpdateResource", resource);
+                    _hubConnection.SendAsync("CreateResource", resource);
 
                     return new ApiResponse<Resource>(ApiResponseCode.OK, resource);
                 }
@@ -206,6 +207,8 @@ namespace Business_Layer
                     _applicationContext.Resources.Remove(resourceToDelete);
 
                     _applicationContext.SaveChanges();
+                    _hubConnection.SendAsync("DeleteResource", resourceToDelete);
+
 
                     return new ApiResponse<Resource>(ApiResponseCode.OK, null);
                 }

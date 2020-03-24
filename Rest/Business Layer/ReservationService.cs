@@ -5,16 +5,28 @@ using Data_Access_Layer.Models;
 using Business_Layer.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.SignalR.Client;
+using System.Threading.Tasks;
 
 namespace Business_Layer
 {
     public class ReservationService
     {
         private ApplicationContext _applicationContext;
+        private HubConnection _hubConnection;
 
         public ReservationService(ApplicationContext applicationContext)
         {
             _applicationContext = applicationContext;
+            _hubConnection = new HubConnectionBuilder()
+            .WithUrl($"{Properties.Resources.ResourceManager.GetString("SignalRBaseAddress")}ReservationHub")
+            .Build();
+            Connect();
+        }
+
+        private async Task Connect()
+        {
+            await _hubConnection.StartAsync();
         }
 
         #region Create
@@ -63,6 +75,7 @@ namespace Business_Layer
                 {
                     _applicationContext.Add(reservation);
                     _applicationContext.SaveChanges();
+                    _hubConnection.SendAsync("CreateReservation", reservation);
 
                     return new ApiResponse<Reservation>(ApiResponseCode.OK, reservation);                
                 }
@@ -117,6 +130,7 @@ namespace Business_Layer
                 {
                     _applicationContext.Reservations.Remove(reservationToRemove);
                     _applicationContext.SaveChanges();
+                    _hubConnection.SendAsync("DeleteReservation", reservationToRemove);
 
                     return new ApiResponse<Reservation>(ApiResponseCode.OK, null);
                 }
