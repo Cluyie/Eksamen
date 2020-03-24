@@ -79,7 +79,11 @@ namespace Rest_API
 
             app.UseRouting();
 
-            app.UseCors();
+            app.UseCors(builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
 
             app.UseTokenValidation();
 
