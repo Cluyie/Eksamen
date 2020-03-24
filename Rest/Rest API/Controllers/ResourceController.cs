@@ -8,6 +8,7 @@ using Business_Layer.Models;
 using Data_Access_Layer.Models;
 using Rest_API.Controllers.ControllerMethods;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Rest_API.Controllers
 {
@@ -22,7 +23,6 @@ namespace Rest_API.Controllers
         {
             _resourceService = resourceService;
             _requestValidator = genericMethods;
-
         }
 
         [HttpPost]

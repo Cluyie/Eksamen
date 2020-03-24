@@ -17,6 +17,13 @@ using AutoMapper;
 using Data_Access_Layer.Models;
 using Microsoft.OpenApi.Models;
 using Rest_API.Controllers.ControllerMethods;
+using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 
 namespace Rest_API
@@ -41,6 +48,21 @@ namespace Rest_API
             services.AddScoped<ResourceService>();
             services.AddScoped<ReservationService>();
             services.AddScoped<RequestValidator>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = Configuration["Jwt:Issuer"],
+            ValidAudience = Configuration["Jwt:Issuer"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+            };
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -85,6 +107,8 @@ namespace Rest_API
             .AllowAnyHeader());
 
             app.UseTokenValidation();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
