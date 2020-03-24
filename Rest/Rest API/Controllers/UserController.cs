@@ -35,7 +35,15 @@ namespace Rest_API.Controllers
       if (user == null)
         return new ApiResponse<User>(ApiResponseCode.BadRequest, user);
       return new ApiResponse<User>(ApiResponseCode.OK, user);
-    } 
+    }
+
+    [HttpGet("guid={guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public Task<ApiResponse<User>> GetProfileFromGuid([FromRoute] Guid guid)
+    {
+        return _userService.GetUserFromId(guid);
+    }
 
     [HttpPut("UpdateProfile")]
     [ProducesResponseType(StatusCodes.Status200OK)]

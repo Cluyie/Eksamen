@@ -33,6 +33,7 @@ namespace Business_Layer
                     return new ApiResponse<Resource>(ApiResponseCode.NoContent, null);
                 }
 
+                //Makes sure that the timeslots do not overlap.
                 resource.TimeSlots.ForEach(delegate (AvailableTime outerTime)
                 {
                     resource.TimeSlots.ForEach(delegate (AvailableTime innerTime)
@@ -129,6 +130,7 @@ namespace Business_Layer
                     return new ApiResponse<Resource>(ApiResponseCode.NoContent, null);
                 }
 
+                //Checks that the timeslots do not overlap. Also makes sure that he id is not the same, if the times do match.
                 resource.TimeSlots.ForEach(delegate (AvailableTime newTimeSlot)
                 {
                     resourceToUpdate.TimeSlots.ForEach(delegate (AvailableTime existingTimeSlot)

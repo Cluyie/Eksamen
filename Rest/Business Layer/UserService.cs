@@ -113,6 +113,20 @@ namespace Business_Layer
             return new ApiResponse<string>(ApiResponseCode.OK, _authService.GetAuthToken(user));
         }
 
+        public async  Task<ApiResponse<User>> GetUserFromId(Guid id)
+        {
+            User userToReturn = await GetFromID(id);
+
+            if (userToReturn == null)
+            {
+                return new ApiResponse<User>(ApiResponseCode.NoContent, null);
+            }
+            else
+            {
+                return new ApiResponse<User>(ApiResponseCode.OK, userToReturn);
+            }
+        }
+
         // ----- Internal methods -----
 
         private async Task<User> GetFromID(Guid id)
