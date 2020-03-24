@@ -79,6 +79,8 @@ namespace Rest_API
 
             app.UseRouting();
 
+            app.UseCors();
+
             app.UseTokenValidation();
 
             app.UseAuthorization();
