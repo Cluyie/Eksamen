@@ -24,17 +24,36 @@ namespace Business_Layer
         //Creates a resource
         public ApiResponse<Resource> Create(Resource resource)
         {
+            bool invalidDate = false;
+
             try
             {
-                _applicationContext.Add(resource);
-
-                //If the _applicationContext does not make any changes, it returns 0.
-                if (_applicationContext.SaveChanges() != 0)
+                if (resource == null)
                 {
-                    return new ApiResponse<Resource>(ApiResponseCode.Created, resource);
+                    return new ApiResponse<Resource>(ApiResponseCode.NoContent, null);
+                }
+
+                resource.TimeSlots.ForEach(delegate (AvailableTime outerTime)
+                {
+                    resource.TimeSlots.ForEach(delegate (AvailableTime innerTime)
+                    {
+                        if (!(((outerTime.From <= innerTime.From) && (outerTime.To <= innerTime.From)) ||
+                        ((outerTime.From >= innerTime.To) && (outerTime.To >= innerTime.To))))
+                        {
+                            invalidDate = true;
+                        }
+                    });
+                });
+
+                if (!invalidDate)
+                {
+                    _applicationContext.Add(resource);
+                    _applicationContext.SaveChanges();
+
+                    return new ApiResponse<Resource>(ApiResponseCode.OK, resource);
                 }
                 else
-                {   //Not modified does not return any body.
+                {
                     return new ApiResponse<Resource>(ApiResponseCode.NotModified, null);
                 }
             }
@@ -99,6 +118,8 @@ namespace Business_Layer
         {
             Resource resourceToUpdate = new Resource();
 
+            bool invalidDate = false;
+
             try
             {
                 resourceToUpdate = _applicationContext.Resources.Include(r => r.TimeSlots).SingleOrDefault(r => r.Id == resource.Id);
@@ -107,7 +128,23 @@ namespace Business_Layer
                 {
                     return new ApiResponse<Resource>(ApiResponseCode.NoContent, null);
                 }
-                else
+
+                resource.TimeSlots.ForEach(delegate (AvailableTime newTimeSlot)
+                {
+                    resourceToUpdate.TimeSlots.ForEach(delegate (AvailableTime existingTimeSlot)
+                    {
+                        if (!(((newTimeSlot.From <= existingTimeSlot.From) && (newTimeSlot.To <= existingTimeSlot.From)) ||
+                        ((newTimeSlot.From >= existingTimeSlot.To) && (newTimeSlot.To >= existingTimeSlot.To))))
+                        {
+                            if (newTimeSlot.Id != existingTimeSlot.Id)
+                            {
+                                invalidDate = true;
+                            }
+                        }
+                    });
+                });
+
+                if (!invalidDate)
                 {
                     resourceToUpdate.Name = resource.Name;
 
@@ -117,6 +154,10 @@ namespace Business_Layer
                     _applicationContext.SaveChanges();
 
                     return new ApiResponse<Resource>(ApiResponseCode.OK, resourceToUpdate);
+                }
+                else
+                {
+                    return new ApiResponse<Resource>(ApiResponseCode.NotModified, null);
                 }
             }
             catch (Exception)
