@@ -119,7 +119,7 @@ namespace Business_Layer
 
             if (userToReturn == null)
             {
-                return new ApiResponse<User>(ApiResponseCode.NoContent, null);
+                return new ApiResponse<User>(ApiResponseCode.BadRequest, null);
             }
             else
             {
