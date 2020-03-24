@@ -1,18 +1,20 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.SignalR;
-using Models;
+﻿using Microsoft.AspNetCore.SignalR;
 using Moq;
 using NUnit.Framework;
 using SignalR_Microservice.Hubs;
 using SignalR_Microservice.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace NUnitSignalR
 {
-    public class ResourceHubTests
+    public class ReservationHubTests
     {
-        public ResourceHub resourceHub { get; set; }
+        public ReservationHub reservationHub { get; set; }
         public Mock<IHubCallerClients> mockClients { get; set; }
         public Mock<IClientProxy> mockClientProxy { get; set; }
 
@@ -24,65 +26,65 @@ namespace NUnitSignalR
 
             mockClients.Setup(clients => clients.All).Returns(mockClientProxy.Object);
 
-            resourceHub = new ResourceHub()
+            reservationHub = new ReservationHub()
             {
                 Clients = mockClients.Object
             };
         }
 
         [Test]
-        public async Task CreateResource_ShouldReturnSentResourceObject()
+        public async Task CreateReservation_ShouldReturnSentReservationObject()
         {
-            Resource resource = new Resource()
+            Reservation reservation = new Reservation()
             {
                 Id = Guid.NewGuid()
             };
-            await resourceHub.CreateResource(resource);
+            await reservationHub.CreateReservation(reservation);
 
             mockClients.Verify(clients => clients.All, Times.Once);
 
             mockClientProxy.Verify(
                 clientProxy => clientProxy.SendCoreAsync(
-                    "CreateResource",
-                    new object[] { resource },
+                    "CreateReservation",
+                    new object[] { reservation },
                     default(CancellationToken)),
                 Times.Once);
         }
 
         [Test]
-        public async Task UpdateResource_ShouldReturnSentResourceObject()
+        public async Task UpdateReservation_ShouldReturnSentReservationObject()
         {
-            Resource resource = new Resource()
+            Reservation reservation = new Reservation()
             {
                 Id = Guid.NewGuid()
             };
-            await resourceHub.UpdateResource(resource);
+            await reservationHub.UpdateReservation(reservation);
 
             mockClients.Verify(clients => clients.All, Times.Once);
 
             mockClientProxy.Verify(
                 clientProxy => clientProxy.SendCoreAsync(
-                    "UpdateResource",
-                    new object[] { resource },
+                    "UpdateReservation",
+                    new object[] { reservation },
                     default(CancellationToken)),
                 Times.Once);
         }
 
         [Test]
-        public async Task DeleteResource_ShouldReturnSentResourceObject()
+        public async Task DeleteReservation_ShouldReturnSentReservationObject()
         {
-            Resource resource = new Resource()
+            Reservation reservation = new Reservation()
             {
                 Id = Guid.NewGuid()
             };
-            await resourceHub.DeleteResource(resource);
+            await reservationHub.DeleteReservation(reservation);
 
             mockClients.Verify(clients => clients.All, Times.Once);
 
             mockClientProxy.Verify(
                 clientProxy => clientProxy.SendCoreAsync(
-                    "DeleteResource",
-                    new object[] { resource },
+                    "DeleteReservation",
+                    new object[] { reservation },
                     default(CancellationToken)),
                 Times.Once);
         }
