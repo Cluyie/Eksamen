@@ -30,8 +30,15 @@ namespace AdminPanel.Client
 
             // Register services
             builder.Services.AddSingleton<AuthCredentialsKeeper>();
-            builder.Services.AddSingleton<IAuthService, MockAuthService>();
-            builder.Services.AddSingleton<IResourceService, MockResourceService>();
+            builder.Services.AddSingleton<ApiClient>();
+
+            // Real services
+            builder.Services.AddSingleton<IAuthService, ApiAuthService>();
+            builder.Services.AddSingleton<IResourceService, ApiResourceService>();
+
+            // Mock services
+            //builder.Services.AddSingleton<IAuthService, MockAuthService>();
+            //builder.Services.AddSingleton<IResourceService, MockResourceService>();
 
             await builder.Build().RunAsync();
         }

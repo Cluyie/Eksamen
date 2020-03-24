@@ -7,14 +7,14 @@ namespace AdminPanel.Client.DTOs
 {
     public class TimeslotDTO
     {
-        public Guid Id;
+        public Guid Id { get; set; }
 
-        public bool Available;
+        public bool Available { get; set; }
 
-        public int? Recurring;
+        public int? Recurring { get; set; }
 
-        public DateTime FromDateTime;
+        public DateTime From { get; set; }
 
-        public DateTime ToDateTime;
+        public DateTime To { get; set; }
     }
 }

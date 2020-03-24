@@ -6,7 +6,11 @@
 @inject IResourceService ResourceService
 @inject NavigationManager NavigationManager
 
-@if (_resource != null)
+@if (_resource == null)
+{
+    <Loading />
+}
+else
 {
     string deleteUrl = "/Resource/Delete/" + _resource.Id.ToString();
     string editUrl = "/Resource/Edit/" + _resource.Id.ToString();
@@ -33,7 +37,7 @@
     else
     {
         <div class="row">
-            @foreach(TimeslotDTO timeslot in _resource.Timeslots)
+            @foreach (TimeslotDTO timeslot in _resource.Timeslots)
             {
                 <div class="col-md-6 col-xl-4">
                     <div class="card mb-3">
@@ -41,11 +45,11 @@
                         <div class="card-body">
                             <p>
                                 <b>Fra</b>
-                                <div>@timeslot.FromDateTime.ToString()</div>
+                                <div>@timeslot.From.ToString()</div>
                             </p>
                             <p>
                                 <b>Til</b>
-                                <div>@timeslot.ToDateTime.ToString()</div>
+                                <div>@timeslot.To.ToString()</div>
                             </p>
                             <p>
                                 <b>Tilbagevendende interval (dage)</b>
@@ -53,7 +57,7 @@
                             </p>
                             <p>
                                 <b>Tilgængelig</b>
-                                @if(timeslot.Available)
+                                @if (timeslot.Available)
                                 {
                                     <div>Ja</div>
                                 }
@@ -68,12 +72,6 @@
             }
         </div>
     }
-}
-else
-{
-    <h1>Henter ressource...</h1>
-    <hr />
-    <p>Forsøger at hente den specificerede ressource. Hvis dette tager lang tid, så findes ressourcen muligvis ikke.</p>
 }
 
 @code {

@@ -6,19 +6,17 @@
 @inject IResourceService ResourceService
 @inject NavigationManager NavigationManager
 
-@if (_resource != null)
+@if (_resource == null)
+{
+    <Loading/>
+}
+else
 {
     <h3>Slet ressource: @_resource.Name</h3>
     <hr />
     <p>Er du sikker på at du vil slette denne ressource?</p>
     <button class="btn btn-danger" @onclick="OnConfirm">Ja</button>
     <button class="btn btn-dark" @onclick="RedirectToOverviewPage">Nej</button>
-}
-else
-{
-    <h1>Henter ressource...</h1>
-    <hr />
-    <p>Forsøger at hente den specificerede ressource. Hvis dette tager lang tid, så findes ressourcen muligvis ikke.</p>
 }
 
 @code {

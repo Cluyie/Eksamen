@@ -27,7 +27,7 @@ namespace AdminPanel.Client.Services
 
         public async Task<bool> Login(LoginDTO loginDTO)
         {
-            _credentialsKeeper.SetCredentials(loginDTO.Username, "DummyToken");
+            _credentialsKeeper.SetCredentials(loginDTO.UsernameOrEmail, "DummyToken");
             _authStateProvider.Refresh();
 
             return true;

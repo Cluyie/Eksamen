@@ -6,18 +6,24 @@
 @inject IResourceService ResourceService
 @inject NavigationManager NavigationManager
 
-@if (_resource != null)
+@if (_resource == null)
+{
+    <Loading />
+}
+else
 {
     <h1>Rediger ressource: @_resource.Name</h1>
     <hr />
 
+    @if (_error)
+    {
+        <div class="alert alert-danger">
+            <b>Der opstod en fejl!</b> Tjek at du har udfyldt alle felter rigtigt, og at tidsperioderne ikke overlapper.
+            Problemet kan også skyldes din internetforbindelse.
+        </div>
+    }
+
     <EditResourceForm Resource="_resource" SubmitButtonText="Gem ressource" OnEditComplete="OnEditComplete" />
-}
-else
-{
-    <h1>Henter ressource...</h1>
-    <hr />
-    <p>Forsøger at hente den specificerede ressource. Hvis dette tager lang tid, så findes ressourcen muligvis ikke.</p>
 }
 
 @code {
@@ -26,6 +32,8 @@ else
 
     ResourceDTO _resource;
 
+    bool _error = false;
+
     protected override async Task OnInitializedAsync()
     {
         _resource = await ResourceService.GetFromId(Id);
@@ -33,8 +41,19 @@ else
 
     private async void OnEditComplete(ResourceDTO resource)
     {
-        await ResourceService.Update(resource);
+        _error = false;
+        StateHasChanged();
 
-        NavigationManager.NavigateTo("/Resource/Details/" + resource.Id.ToString());
+        try
+        {
+            await ResourceService.Update(resource);
+
+            NavigationManager.NavigateTo("/Resource/Details/" + resource.Id.ToString());
+        }
+        catch(Exception e)
+        {
+            _error = true;
+            StateHasChanged();
+        }
     }
 }

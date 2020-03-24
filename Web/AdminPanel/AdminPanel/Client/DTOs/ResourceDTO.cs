@@ -7,10 +7,10 @@ namespace AdminPanel.Client.DTOs
 {
     public class ResourceDTO
     {
-        public Guid Id;
+        public Guid Id { get; set; }
 
-        public string Name;
+        public string Name { get; set; }
 
-        public List<TimeslotDTO> Timeslots;
+        public List<TimeslotDTO> Timeslots { get; set; }
     }
 }

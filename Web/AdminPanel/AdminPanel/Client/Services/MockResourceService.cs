@@ -20,8 +20,8 @@ namespace AdminPanel.Client.Services
                     {
                         Id = Guid.NewGuid(),
                         Available = true,
-                        FromDateTime = new DateTime(2020, 1, 1, 1, 1, 1),
-                        ToDateTime = new DateTime(2020, 1, 1, 2, 2, 2),
+                        From = new DateTime(2020, 1, 1, 1, 1, 1),
+                        To = new DateTime(2020, 1, 1, 2, 2, 2),
                         Recurring = 1
                     }
                 }
@@ -36,16 +36,16 @@ namespace AdminPanel.Client.Services
                     {
                         Id = Guid.NewGuid(),
                         Available = true,
-                        FromDateTime = new DateTime(2020, 1, 1, 1, 1, 1),
-                        ToDateTime = new DateTime(2020, 1, 1, 2, 2, 2),
+                        From = new DateTime(2020, 1, 1, 1, 1, 1),
+                        To = new DateTime(2020, 1, 1, 2, 2, 2),
                         Recurring = 1
                     },
                     new TimeslotDTO
                     {
                         Id = Guid.NewGuid(),
                         Available = true,
-                        FromDateTime = new DateTime(2020, 1, 1, 3, 1, 1),
-                        ToDateTime = new DateTime(2020, 1, 1, 4, 2, 2),
+                        From = new DateTime(2020, 1, 1, 3, 1, 1),
+                        To = new DateTime(2020, 1, 1, 4, 2, 2),
                         Recurring = 1
                     }
                 }
@@ -60,8 +60,8 @@ namespace AdminPanel.Client.Services
                     {
                         Id = Guid.NewGuid(),
                         Available = true,
-                        FromDateTime = new DateTime(2020, 1, 1, 1, 1, 1),
-                        ToDateTime = new DateTime(2020, 1, 1, 2, 2, 2),
+                        From = new DateTime(2020, 1, 1, 1, 1, 1),
+                        To = new DateTime(2020, 1, 1, 2, 2, 2),
                         Recurring = 1
                     }
                 }

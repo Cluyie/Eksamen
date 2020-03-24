@@ -19,7 +19,7 @@
 
         <div class="form-group">
             <label>Brugernavn eller E-mail-adresse</label>
-            <InputText class="form-control" placeholder="Brugernavn" @bind-Value="_loginDTO.Username" />
+            <InputText class="form-control" placeholder="Brugernavn" @bind-Value="_loginDTO.UsernameOrEmail" />
         </div>
 
         <div class="form-group">
@@ -43,6 +43,7 @@
     private async void OnValidSubmit()
     {
         _invalidLogin = false;
+        StateHasChanged();
 
         if(await AuthService.Login(_loginDTO))
         {
@@ -51,6 +52,7 @@
         else
         {
             _invalidLogin = true;
+            StateHasChanged();
         }
     }
 }
