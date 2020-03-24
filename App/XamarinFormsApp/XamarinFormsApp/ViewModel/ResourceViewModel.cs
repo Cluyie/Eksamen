@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using Xamarin.Forms;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Linq;
 
 namespace XamarinFormsApp.ViewModel
 {
@@ -44,10 +45,24 @@ namespace XamarinFormsApp.ViewModel
             _hubConnection = new HubConnectionBuilder().WithUrl($"{Properties.Resources.SignalRBaseAddress}ResourceHub").Build();
             Connect();
 
-            //SignalR Client methods for UpdateResource
-            _hubConnection.On<Resource>("UpdateResource", (resource) =>
+            //SignalR Client methods for Resource
+            _hubConnection.On<Resource>("CreateResource", (resource) =>
             {
                 Resources.Add(resource);
+            });
+
+            _hubConnection.On<Resource>("UpdateResource", (resource) =>
+            {
+                var oldResource = Resources.FirstOrDefault(r => r.Id == resource.Id);
+                if (oldResource != null)
+                {
+                    oldResource = resource;
+                }
+            });
+
+            _hubConnection.On<Resource>("DeleteResource", (resource) =>
+            {
+                Resources.Remove(resource);
             });
         }
 
