@@ -6,19 +6,30 @@ using System.Linq;
 using Data_Access_Layer.Models;
 using Business_Layer.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.SignalR.Client;
+using System.Threading.Tasks;
 
 namespace Business_Layer
 {
     public class ResourceService
-    {
-        
+    {        
         private ApplicationContext _applicationContext;
+        private HubConnection _hubConnection;
 
         public ResourceService(ApplicationContext applicationContext)
         {
             
             _applicationContext = applicationContext;
-            
+            _hubConnection = new HubConnectionBuilder()
+            .WithUrl($"ResourceHub")
+            .Build();
+            Connect();
+
+        }
+
+        private async Task Connect()
+        {
+            await _hubConnection.StartAsync();
         }
         #region Create
         //Creates a resource
@@ -50,6 +61,7 @@ namespace Business_Layer
                 {
                     _applicationContext.Add(resource);
                     _applicationContext.SaveChanges();
+                    _hubConnection.SendAsync("UpdateResource", resource);
 
                     return new ApiResponse<Resource>(ApiResponseCode.OK, resource);
                 }
@@ -154,6 +166,7 @@ namespace Business_Layer
 
                     _applicationContext.Update(resourceToUpdate);
                     _applicationContext.SaveChanges();
+                    _hubConnection.SendAsync("UpdateResource", resourceToUpdate);
 
                     return new ApiResponse<Resource>(ApiResponseCode.OK, resourceToUpdate);
                 }
