@@ -15,7 +15,7 @@ else
     <h3>Slet ressource: @_resource.Name</h3>
     <hr />
     <p>Er du sikker på at du vil slette denne ressource?</p>
-    <button class="btn btn-danger" @onclick="OnConfirm">Ja</button>
+    <button id="confirmDelete" class="btn btn-danger" @onclick="OnConfirm">Ja</button>
     <button class="btn btn-dark" @onclick="RedirectToOverviewPage">Nej</button>
 }
 

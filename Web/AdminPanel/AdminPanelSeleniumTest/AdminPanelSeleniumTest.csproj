@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -18,6 +18,10 @@
     <PackageReference Include="Selenium.Support" Version="4.0.0-alpha05" />
     <PackageReference Include="Selenium.WebDriver" Version="4.0.0-alpha05" />
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="80.0.3987.10600" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AdminPanel\Client\AdminPanel.Client.csproj" />
   </ItemGroup>
 
 </Project>
