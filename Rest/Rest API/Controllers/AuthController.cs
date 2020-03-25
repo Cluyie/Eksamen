@@ -21,42 +21,45 @@ namespace Rest_API.Controllers
     public class AuthController : ControllerBase
     {
         UserService _userService;
+        AuthService _authService;
+
         private IConfiguration _config;
 
-        public AuthController(UserService userService, IConfiguration config)
+        public AuthController(UserService userService, IConfiguration config, AuthService authService)
         {
             _userService = userService;
+            _authService = authService;
             _config = config;
         }
 
-        [HttpPost("Login")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [AllowAnonymous]
+        [HttpPost("Register")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ApiResponse<string> Login([FromBody] LoginDTO loginDTO)
+        public ApiResponse<string> Register([FromBody] User userToRegister)
         {
-            if (loginDTO == null || !ModelState.IsValid)
+            if (userToRegister == null)
                 return new ApiResponse<string>(ApiResponseCode.BadRequest, "");
 
-            return _userService.Login(loginDTO);
+            return _userService.RegisterAsync(userToRegister).Result;
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login([FromBody]User login)
+        public IActionResult Login([FromBody]LoginDTO login)
         {
             IActionResult response = Unauthorized();
-            var user = AuthenticateUser(login);
+            var user = _authService.Authenticate(login);
 
             if (user != null)
             {
-                var tokenString = GenerateJSONWebToken(user);
+                var tokenString = GenerateJSONWebToken(user.Result);
                 response = Ok(new { token = tokenString });
             }
 
             return response;
         }
-
 
         private string GenerateJSONWebToken(User userInfo)
         {
@@ -66,9 +69,9 @@ namespace Rest_API.Controllers
             var claims = new[] {
             new Claim(JwtRegisteredClaimNames.Sub, userInfo.UserName),
             new Claim(JwtRegisteredClaimNames.Email, userInfo.Email),
+            new Claim("Roles", String.Join(",", _userService.GetUserRolesAsync(userInfo).Result.ToString())),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
-
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
                 _config["Jwt:Issuer"],
                 claims,
@@ -76,34 +79,6 @@ namespace Rest_API.Controllers
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-
-        private User AuthenticateUser(User login)
-        {
-            User user = null;
-
-            //Validate the User Credentials  
-            //Demo Purpose, I have Passed HardCoded User Information  
-            if (login.UserName == "Cratz")
-            {
-                user = new User { UserName = "Caspar", Email = "test@test.com" };
-            }
-            return user;
-        }
-
-
-        [HttpPost("Register")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ApiResponse<string> Register([FromBody] RegisterDTO registerDTO)
-        {
-            if (registerDTO == null)
-                return new ApiResponse<string>(ApiResponseCode.BadRequest, "");
-
-            return _userService.Register(registerDTO);
-
         }
     }
 }

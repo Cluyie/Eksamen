@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Business_Layer.Models;
 using Data_Access_Layer.Models;
 using Microsoft.AspNetCore.Http;
-using Rest_API.Middleware;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Rest_API.Controllers
 {
@@ -26,25 +26,15 @@ namespace Rest_API.Controllers
       _authService = authService;
     }
 
-    [HttpGet("GetProfile")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public ApiResponse<User> GetProfile()
-    {
-      var user = _authService.GetUser();
-      if (user == null)
-        return new ApiResponse<User>(ApiResponseCode.BadRequest, user);
-      return new ApiResponse<User>(ApiResponseCode.OK, user);
-    }
-
     [HttpGet("guid={guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public Task<ApiResponse<User>> GetProfileFromGuid([FromRoute] Guid guid)
+    public ApiResponse<User> GetProfileFromGuid([FromRoute] Guid guid)
     {
         return _userService.GetUserFromId(guid);
     }
 
+    [Authorize]
     [HttpPut("UpdateProfile")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -25,6 +25,7 @@ namespace Rest_API.Controllers
             _requestValidator = genericMethods;
         }
 
+        [Authorize(Roles ="Admin")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status304NotModified)]
@@ -35,6 +36,7 @@ namespace Rest_API.Controllers
             return _requestValidator.ValidateAndPerfom(resource, _resourceService.Create, Response);
         }
 
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -53,6 +55,7 @@ namespace Rest_API.Controllers
             return _requestValidator.ValidateAndPerfom(guid, _resourceService.Get, Response);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -63,6 +66,7 @@ namespace Rest_API.Controllers
             return _requestValidator.ValidateAndPerfom(resource, _resourceService.Update, Response);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("guid={guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -1,30 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Business_Layer;
 using Data_Access_Layer.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Rest_API.Middleware;
 using AutoMapper;
 using Data_Access_Layer.Models;
 using Microsoft.OpenApi.Models;
 using Rest_API.Controllers.ControllerMethods;
-using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authorization;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-
 
 namespace Rest_API
 {
@@ -49,18 +36,30 @@ namespace Rest_API
             services.AddScoped<ReservationService>();
             services.AddScoped<RequestValidator>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddIdentity<User, Role>()
+            .AddEntityFrameworkStores<IdentityContext>();
+
+            /*services.Configure<IdentityOptions>(options =>            {
+            // Password settings
+                options.Password.RequireDigit = true;                options.Password.RequireLowercase = true;                options.Password.RequireNonAlphanumeric = false;                options.Password.RequireUppercase = true;                options.Password.RequiredLength = 6;                options.Password.RequiredUniqueChars = 1;            });*/
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
             .AddJwtBearer(options =>
             {
             options.TokenValidationParameters = new TokenValidationParameters
             {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = Configuration["Jwt:Issuer"],
-            ValidAudience = Configuration["Jwt:Issuer"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = Configuration["Jwt:Issuer"],
+                ValidAudience = Configuration["Jwt:Issuer"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
             };
             });
 
@@ -105,8 +104,6 @@ namespace Rest_API
             .AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader());
-
-            app.UseTokenValidation();
 
             app.UseAuthentication();
 

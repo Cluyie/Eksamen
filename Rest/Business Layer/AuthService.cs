@@ -7,64 +7,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace Business_Layer
 {
-  /// <summary>
-  /// Is responsible for authenticating requests, generating and validating
-  /// tokens.
-  /// </summary>
-  public class AuthService
-  {
-    /// <summary>
-    /// The currently authenticated user
-    /// </summary>
-    private User _user;
-    private IdentityContext _identityContext;
-
-    public AuthService(IdentityContext identityContext)
+/// <summary>
+/// Is responsible for authenticating requests, generating and validating
+/// tokens.
+/// </summary>
+    public class AuthService
     {
-      _identityContext = identityContext;
-    }
+        /// <summary>
+        /// The currently authenticated user
+        /// </summary>
+        private SignInManager<User> _signInManager;
+        private UserService _userService;
 
-    /// <summary>
-    /// Authenticate the specified user
-    /// </summary>
-    /// <param name="user"></param>
-    public void Authenticate(User user)
-    {
-      _user = user;
-    }
+        public AuthService(SignInManager<User> signInManager, UserService userService)
+        {
+            _signInManager = signInManager;
+            _userService = userService;
+        }
 
-    /// <summary>
-    /// Get the currently authenticated user, or null if the request
-    /// is not authenticated. Always sets the password hash to null,
-    /// might need to change this in the future
-    /// </summary>
-    /// <returns></returns>
-    public User GetUser()
-    {
-        User userToReturn = _user;
-        if (userToReturn != null)
-            userToReturn.PasswordHash = null;
-        return userToReturn;
-    }
+        /// <summary>
+        /// Authenticate the specified user
+        /// </summary>
+        /// <param name="user"></param>
+        public async Task<User> Authenticate(LoginDTO user)
+        {
+            var result = await _signInManager.PasswordSignInAsync(user.UsernameOrEmail, user.Password, false, false);
 
-    /// <summary>
-    /// Gets the auth token for the specified user
-    /// </summary>
-    /// <param name="user"></param>
-    /// <returns></returns>
-    public string GetAuthToken(User user)
-    {
-      // TODO: CHANGE to a real token
-      return user.UserName;
-    }
+            User userToReturn = null;
 
-    public async Task<User> GetUserFromToken(string token)
-    {
-      // TODO: Validate token against token in the database instead of username
-      return await _identityContext.Users.FirstOrDefaultAsync(user => user.UserName == token);
+            if (result.Succeeded)
+            {
+                userToReturn = _userService.GetUserFromUserNameAsync(user.UsernameOrEmail).Result ?? _userService.GetUserFromEmailAsync(user.UsernameOrEmail).Result;
+            }
+            return userToReturn;
+        }
+
+        /// <summary>
+        /// Get the currently authenticated user, or null if the request
+        /// is not authenticated. Always sets the password hash to null,
+        /// might need to change this in the future
+        /// </summary>
+        /// <returns></returns>
     }
-  }
 }

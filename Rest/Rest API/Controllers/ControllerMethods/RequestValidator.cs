@@ -12,13 +12,9 @@ namespace Rest_API.Controllers.ControllerMethods
     {
         AuthService _authService;
 
-        private User _user;
-
         public RequestValidator(AuthService authService)
         {
             _authService = authService;
-
-            _user = _authService.GetUser();
         }
 
         //Takes generic data and methods, for validation and execution.
@@ -31,12 +27,6 @@ namespace Rest_API.Controllers.ControllerMethods
         /// <param name="recievedResponse">The original HttpResponse from the calling controller.</param>
         public ApiResponse<TR> ValidateAndPerfom<T, TR>(T data, Func<T, ApiResponse<TR>> MethodName, HttpResponse recievedResponse) where TR : class
         {
-            if (_user == null)
-            {
-                recievedResponse.StatusCode = StatusCodes.Status401Unauthorized;
-                return new ApiResponse<TR>(ApiResponseCode.UnAuthenticated, null);
-            }
-
             if (data == null || !ModelState.IsValid)
             {
                 recievedResponse.StatusCode = StatusCodes.Status400BadRequest;
@@ -57,12 +47,6 @@ namespace Rest_API.Controllers.ControllerMethods
         /// <param name="recievedResponse">The original HttpResponse from the calling controller.</param>
         public ApiResponse<TR> ValidateAndPerfom<TR>(Func<ApiResponse<TR>> MethodName, HttpResponse recievedResponse) where TR : class
         {
-            if (_user == null)
-            {
-                recievedResponse.StatusCode = StatusCodes.Status401Unauthorized;
-                return new ApiResponse<TR>(ApiResponseCode.UnAuthenticated, null);
-            }
-
             ApiResponse<TR> apiResponse = MethodName();
             recievedResponse.StatusCode = (int)apiResponse.Code;
             return apiResponse;
