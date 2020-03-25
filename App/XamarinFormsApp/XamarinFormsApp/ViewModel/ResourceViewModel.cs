@@ -11,6 +11,7 @@ using Xamarin.Forms;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Linq;
+using Xamarin.Forms.Internals;
 
 namespace XamarinFormsApp.ViewModel
 {
@@ -53,11 +54,7 @@ namespace XamarinFormsApp.ViewModel
 
             _hubConnection.On<Resource>("UpdateResource", (resource) =>
             {
-                var oldResource = Resources.FirstOrDefault(r => r.Id == resource.Id);
-                if (oldResource != null)
-                {
-                    oldResource = resource;
-                }
+                Resources[Resources.IndexOf(Resources.FirstOrDefault(r => r.Id == resource.Id))] = resource;
             });
 
             _hubConnection.On<Resource>("DeleteResource", (resource) =>
