@@ -31,7 +31,7 @@ else
                 string detailsUrl = "/Resource/Details/" + _resourceDTO.Id.ToString();
                 string editUrl = "/Resource/Edit/" + _resourceDTO.Id.ToString();
                 <tr>
-                    <td><NavLink href="@detailsUrl">@_resourceDTO.Name</NavLink></td>
+                    <td><NavLink id="detailsBtn" href="@detailsUrl">@_resourceDTO.Name</NavLink></td>
                     <td>@_resourceDTO.Timeslots.Count</td>
                     <td>
                         <NavLink class="btn btn-info" href="@editUrl">Rediger</NavLink>

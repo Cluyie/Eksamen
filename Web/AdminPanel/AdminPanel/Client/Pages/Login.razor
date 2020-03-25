@@ -19,16 +19,16 @@
 
         <div class="form-group">
             <label>Brugernavn eller E-mail-adresse</label>
-            <InputText class="form-control" placeholder="Brugernavn" @bind-Value="_loginDTO.UsernameOrEmail" />
+            <InputText id="login-username" class="form-control" placeholder="Brugernavn" @bind-Value="_loginDTO.UsernameOrEmail" />
         </div>
 
         <div class="form-group">
             <label>Adgangskode</label>
-            <InputText class="form-control" placeholder="********" type="password" @bind-Value="_loginDTO.Password" />
+            <InputText id="login-password" class="form-control" placeholder="********" type="password" @bind-Value="_loginDTO.Password" />
         </div>
 
         <div class="form-group">
-            <button class="btn btn-primary" type="submit">Log ind</button>
+            <button id="loginSubmit" class="btn btn-primary" type="submit">Log ind</button>
         </div>
 
     </EditForm>
