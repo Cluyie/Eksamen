@@ -42,5 +42,6 @@ namespace XamarinFormsApp.View
         await DisplayAlert("Alert", _loginViewModel.ErrorMessage, "OK");
       }
     }
-  }
+        
+    }
 }
