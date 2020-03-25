@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using BusinessLayer.Interfaces;
 using BusinessLayer.Models;
 using Models;
 using Models.Interfaces;
@@ -19,10 +20,10 @@ namespace BusinessLayer
 
         public void ConfigureSmtpClient()
         {
-            _smtpClient = new SmtpClient("smtp.gmail.com", 587)
+            _smtpClient = new SmtpClient(Properties.Resources.MailService_HostName, Convert.ToInt32(Properties.Resources.MailService_HostPort))
             {
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("DreamTeamUCL@gmail.com", "maauuhyrjpejtmvw"),
+                Credentials = new NetworkCredential(Properties.Resources.MailService_SenderEmail, Properties.Resources.MailService_Password),
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
             };
@@ -39,9 +40,9 @@ namespace BusinessLayer
             MailMessage mail = new MailMessage
             {
                 IsBodyHtml = true,
-                From = new MailAddress("DreamTeamUCL@gmail.com", "UCL Booking Service"),
+                From = new MailAddress(Properties.Resources.MailService_SenderEmail, Properties.Resources.MailService_SenderName),
                 Subject = subject,
-                Body = mailContent, // "booking@ucl.dk");
+                Body = mailContent,
             };
             //Setting To and CC
             mail.To.Add(new MailAddress(user.Email, user.FirstName));

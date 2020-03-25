@@ -106,6 +106,15 @@ namespace BusinessLayer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to UCL Booking Service.
+        /// </summary>
+        internal static string MailService_SenderName {
+            get {
+                return ResourceManager.GetString("MailService_SenderName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DreamTeamUCL@gmail.com.
         /// </summary>
         internal static string MailService_Username {

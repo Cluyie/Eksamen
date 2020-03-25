@@ -132,6 +132,9 @@
   <data name="MailService_SenderEmail" xml:space="preserve">
     <value>DreamTeamUCL@gmail.com</value>
   </data>
+  <data name="MailService_SenderName" xml:space="preserve">
+    <value>UCL Booking Service</value>
+  </data>
   <data name="MailService_Username" xml:space="preserve">
     <value>DreamTeamUCL@gmail.com</value>
   </data>

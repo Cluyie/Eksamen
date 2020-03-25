@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using BusinessLayer;
+using BusinessLayer.Interfaces;
 using BusinessLayer.Models;
 using MailService.Models;
 using Microsoft.AspNetCore.Mvc;

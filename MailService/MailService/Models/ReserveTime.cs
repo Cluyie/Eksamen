@@ -5,7 +5,7 @@ namespace MailService.Models
 {
     public class ReserveTime : IReserveTime
     {
-        public Guid Id { get; set; }
+        public Guid ReservationId { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
     }

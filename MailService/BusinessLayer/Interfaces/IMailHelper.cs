@@ -1,9 +1,7 @@
-﻿using System;
-using System.Net.Mail;
+﻿using System.Net.Mail;
 using BusinessLayer.Models;
-using Models.Interfaces;
 
-namespace BusinessLayer
+namespace BusinessLayer.Interfaces
 {
     public interface IMailHelper
     {

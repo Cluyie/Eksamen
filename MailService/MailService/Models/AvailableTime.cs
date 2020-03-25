@@ -10,5 +10,6 @@ namespace MailService.Models
         public DateTime From { get; set; }
         public int? Recurring { get; set; }
         public DateTime To { get; set; }
+        public Guid ResourceId { get; set; }
     }
 }
