@@ -43,11 +43,11 @@ namespace MailService.Controllers
         {
             try
             {
-                ApiResponse<User> userResponse = //_proxy.Get<ApiResponse<User>>("User/Get/" + recipientId); 
-                  new ApiResponse<User>(ApiResponseCode.OK, new User{ Id = Guid.NewGuid(), UserName = "Tonur", FirstName = "Christoffer", LastName = "Pedersen", Address = "Østerbrogade 20", Email = "chriskpedersen@hotmail.com", });
-                ApiResponse<Reservation> reservationResponse = _proxy.Get<ApiResponse<Reservation>>("Reservation/Get/" + reservationId); 
+                ApiResponse<User> userResponse = _proxy.Get<ApiResponse<User>>("User/guid=" + recipientId);
+                //new ApiResponse<User>(ApiResponseCode.OK, new User{ Id = Guid.NewGuid(), UserName = "Tonur", FirstName = "Christoffer", LastName = "Pedersen", Address = "Østerbrogade 20", Email = "chriskpedersen@hotmail.com", });
+                ApiResponse<Reservation> reservationResponse = _proxy.Get<ApiResponse<Reservation>>("Reservation/guid=" + reservationId); 
                 //  new ApiResponse<Reservation>(ApiResponseCode.OK, new Reservation{UserId = userResponse.Value.Id, Timeslot = new ReserveTime{FromDate = DateTime.Today.AddHours(8), ToDate = DateTime.Today.AddHours(16)}});
-                ApiResponse<Resource> resourceResponse = _proxy.Get<ApiResponse<Resource>>("Resource/Get/" + resourceId);
+                ApiResponse<Resource> resourceResponse = _proxy.Get<ApiResponse<Resource>>("Resource/guid=" + resourceId);
                 // new ApiResponse<Resource>(ApiResponseCode.OK, new Resource{Name = "Hansens rengøringsservice", Reservations = new List<Reservation>{reservationResponse.Value}});
                 TemplateViewModel templateViewModel = new TemplateViewModel
                 {

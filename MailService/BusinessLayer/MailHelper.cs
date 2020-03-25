@@ -39,8 +39,7 @@ namespace BusinessLayer
             MailMessage mail = new MailMessage
             {
                 IsBodyHtml = true,
-                From = new MailAddress(Properties.Resources.MailService_SenderEmail,
-                    "UCL Booking Service"),
+                From = new MailAddress("DreamTeamUCL@gmail.com", "UCL Booking Service"),
                 Subject = subject,
                 Body = mailContent, // "booking@ucl.dk");
             };
