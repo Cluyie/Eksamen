@@ -7,54 +7,50 @@ using System;
 
 namespace AdminPanelSeleniumTest
 {
-    public class Tests
+    public class ResourceTests
     {
         //webdriveren igennem nugetpacket fungerer ikke hensigtsmæssigt.
         //En løsning er at hente en chromedriver her: https://chromedriver.chromium.org/ (sørg for at versionen stemmer overens med din webbrowser) 
         //installere den lokalt, og refere til den herunder:
-        IWebDriver driver = new ChromeDriver(@"C:\Users\User\Source\repos\lasserasch\UCLDreamTeam\Web\AdminPanel\AdminPanelSeleniumTest");
+        IWebDriver driver = new ChromeDriver(@"C:\Users\frede\Downloads\chromedriver");
+        // Det ser ud til at det er nok bare at referere til mappen som chromedriver.exe ligger i, i hvert fald
+        // hvis der kun ligger den fil i mappen
 
-        LoginPageObjects login;
-        SidebarPageObjects sidebar;
-        AllRessourcesPageObjects allRessourcesPage;
-           
+        LoginPageObjects _login;
+        SidebarPageObjects _sidebar;
+        AllRessourcesPageObjects _allResourcesPage;
 
         [SetUp]
         public void Setup()
         {
-
-            login = new LoginPageObjects(driver);
-            sidebar = new SidebarPageObjects(driver);
-            allRessourcesPage = new AllRessourcesPageObjects(driver);
+            _login = new LoginPageObjects(driver);
+            _sidebar = new SidebarPageObjects(driver);
+            _allResourcesPage = new AllRessourcesPageObjects(driver);
             driver.Navigate().GoToUrl("http://localhost:57346");
             WebDriverWait waitForElement = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
             waitForElement.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.ClassName("sidebar")));
 
-            login.Login("hejhejhej123", "1234");
+            _login.Login("hejhejhej123", "1234");
         }
 
 
         [Test]
         public void AllRessources()
         {
-           
-           sidebar.navRessource.Click();
-           
+           _sidebar.NavRessource.Click();
         }
 
         [Test]
-        public void goToRessourceDetail()
+        public void GoToRessourceDetail()
         {
-            
-            sidebar.navRessource.Click();
-            allRessourcesPage.detailsBtn.Click();
-            
+            _sidebar.NavRessource.Click();
+            _allResourcesPage.DetailsBtn.Click();
         }
 
         [TearDown]
         public void Logout()
         {
-            sidebar.navLogout.Click();
+            _sidebar.NavLogout.Click();
         }
 
 

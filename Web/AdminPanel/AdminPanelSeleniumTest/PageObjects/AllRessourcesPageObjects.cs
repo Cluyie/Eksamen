@@ -5,14 +5,13 @@ using System.Text;
 
 namespace AdminPanelSeleniumTest.PageObjects
 {
-   public class AllRessourcesPageObjects
+    public class AllRessourcesPageObjects
     {
-        IWebDriver driver;
-        public AllRessourcesPageObjects(IWebDriver _driver)
+        IWebDriver _driver;
+        public AllRessourcesPageObjects(IWebDriver driver)
         {
-            driver = _driver;
+            _driver = driver;
         }
-        public IWebElement detailsBtn => driver.FindElement(By.Id("detailsBtn"));
-
+        public IWebElement DetailsBtn => _driver.FindElement(By.Id("detailsBtn"));
     }
 }

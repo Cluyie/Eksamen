@@ -7,13 +7,13 @@ namespace AdminPanelSeleniumTest.PageObjects
 {
    public class SidebarPageObjects
     {
-        IWebDriver driver;
-        public SidebarPageObjects(IWebDriver _driver)
+        IWebDriver _driver;
+        public SidebarPageObjects(IWebDriver driver)
         {
-            driver = _driver;
+            _driver = driver;
         }
-        public IWebElement navRessource => driver.FindElement(By.Id("navRessourcer"));
+        public IWebElement NavRessource => _driver.FindElement(By.Id("navRessourcer"));
 
-        public IWebElement navLogout => driver.FindElement(By.Id("navLogout"));
+        public IWebElement NavLogout => _driver.FindElement(By.Id("navLogout"));
     }
 }
