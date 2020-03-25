@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Data_Access_Layer.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Rest_API.Controllers
 {
@@ -52,7 +53,7 @@ namespace Rest_API.Controllers
             IActionResult response = Unauthorized();
             var user = _authService.Authenticate(login);
 
-            if (user != null)
+            if (user.Result != null)
             {
                 var tokenString = GenerateJSONWebToken(user.Result);
                 response = Ok(new { token = tokenString });
@@ -66,12 +67,16 @@ namespace Rest_API.Controllers
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            var claims = new[] {
+            var claims = new List<Claim> {
             new Claim(JwtRegisteredClaimNames.Sub, userInfo.UserName),
-            new Claim(JwtRegisteredClaimNames.Email, userInfo.Email),
-            new Claim("Roles", String.Join(",", _userService.GetUserRolesAsync(userInfo).Result.ToString())),
+            new Claim(JwtRegisteredClaimNames.Email, userInfo.Email ?? ""),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
+
+            var roles = _userService.GetUserRolesAsync(userInfo).Result;
+
+            claims.AddRange(roles.Select(role => new Claim(ClaimsIdentity.DefaultRoleClaimType, role)));
+
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
                 _config["Jwt:Issuer"],
                 claims,

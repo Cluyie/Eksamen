@@ -12,6 +12,9 @@ using Rest_API.Controllers.ControllerMethods;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Threading.Tasks;
+using System;
+using Microsoft.AspNetCore.Identity;
 
 namespace Rest_API
 {
@@ -36,7 +39,7 @@ namespace Rest_API
             services.AddScoped<ReservationService>();
             services.AddScoped<RequestValidator>();
 
-            services.AddIdentity<User, Role>()
+            services.AddIdentity<User, IdentityRole<Guid>>()
             .AddEntityFrameworkStores<IdentityContext>();
 
             /*services.Configure<IdentityOptions>(options =>            {
@@ -79,7 +82,7 @@ namespace Rest_API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -113,6 +116,54 @@ namespace Rest_API
             {
                 endpoints.MapControllers();
             });
+
+            CreateRoles(serviceProvider).Wait();
+        }
+
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+
+        {
+            //adding custom roles
+
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+
+            var UserManager = serviceProvider.GetRequiredService<UserManager<User>>();
+
+            string[] roleNames = { "Admin"};
+
+            IdentityResult roleResult;
+
+            foreach (var roleName in roleNames)
+            {
+                //creating the roles and seeding them to the database
+                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+
+                if (!roleExist)
+                {
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole<Guid>(roleName));
+                }
+            }
+
+            //creating an admin
+            var admin = new User
+            {
+                UserName = Configuration.GetSection("UserSettings")["UserName"]
+            };
+
+            string UserPassword = Configuration.GetSection("UserSettings")["UserPassword"];
+
+            var _user = await UserManager.FindByNameAsync(Configuration.GetSection("UserSettings")["UserName"]);
+
+            if (_user == null)
+            {
+                var createAdmin = await UserManager.CreateAsync(admin, UserPassword);
+                if (createAdmin.Succeeded)
+                {
+                    //here we tie the new user to the "Admin" role 
+                    await UserManager.AddToRoleAsync(admin, "Admin");
+                }
+            }
+
         }
     }
 }

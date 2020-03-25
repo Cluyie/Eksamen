@@ -4,10 +4,11 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Data_Access_Layer.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Data_Access_Layer.Context
 {
-  public class IdentityContext : IdentityDbContext<User, Role, Guid>
+  public class IdentityContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
   {
     public IdentityContext() : base()
     {
@@ -23,7 +24,6 @@ namespace Data_Access_Layer.Context
       {
         optionsBuilder.UseSqlServer(Settings.Default.UCLDB);
       }
-
     }
   }
 }
