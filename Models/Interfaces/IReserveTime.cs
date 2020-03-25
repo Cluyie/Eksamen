@@ -8,7 +8,7 @@ namespace Models.Interfaces
 {
   public interface IReserveTime
   {
-    Guid Id { get; set; }
+    Guid ReservationId { get; set; }
     DateTime FromDate { get; set; }
     DateTime ToDate { get; set; }
   }

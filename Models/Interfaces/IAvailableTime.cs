@@ -13,5 +13,6 @@ namespace Models.Interfaces
     DateTime From { get; set; }
     int? Recurring { get; set; }
     DateTime To { get; set; }
+    Guid ResourceId { get; set; }
   }
 }
