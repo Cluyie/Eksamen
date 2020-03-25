@@ -62,7 +62,7 @@ namespace XamarinFormsApp.ViewModel
 
             _hubConnection.On<Resource>("DeleteResource", (resource) =>
             {
-                Resources.Remove(resource);
+                Resources.Remove(Resources.FirstOrDefault(r => r.Id == resource.Id));
             });
         }
 
