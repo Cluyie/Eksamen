@@ -4,7 +4,6 @@ using Data_Access_Layer.Models;
 using Business_Layer.Models;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 

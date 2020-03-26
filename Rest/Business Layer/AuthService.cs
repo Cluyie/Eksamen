@@ -1,20 +1,14 @@
 ﻿using Business_Layer.Models;
-using Data_Access_Layer.Context;
 using Data_Access_Layer.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
 namespace Business_Layer
 {
-/// <summary>
-/// Is responsible for authenticating requests, generating and validating
-/// tokens.
-/// </summary>
+    /// <summary>
+    /// Is responsible for authenticating requests, generating and validating
+    /// tokens.
+    /// </summary>
     public class AuthService
     {
         private SignInManager<User> _signInManager;
@@ -32,7 +26,7 @@ namespace Business_Layer
         /// <param name="user"></param>
         public async Task<User> Authenticate(LoginDTO user)
         {
-            User userIn = _userService.GetUserFromUserNameAsync(user.UsernameOrEmail).Result ?? _userService.GetUserFromEmailAsync(user.UsernameOrEmail).Result;
+            var userIn = await _userService.GetUserFromUserNameAsync(user.UsernameOrEmail) ?? await _userService.GetUserFromEmailAsync(user.UsernameOrEmail);
 
             User userOut = null;
 

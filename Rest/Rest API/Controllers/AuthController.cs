@@ -13,7 +13,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Data_Access_Layer.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace Rest_API.Controllers
 {
@@ -48,15 +47,15 @@ namespace Rest_API.Controllers
 
         [AllowAnonymous]
         [HttpPost("Login")]
-        public IActionResult Login([FromBody]LoginDTO login)
+        public async Task<ApiResponse<string>> LoginAsync([FromBody]LoginDTO login)
         {
-            IActionResult response = Unauthorized();
-            User user = _authService.Authenticate(login).Result;
+            var response = new ApiResponse<string>(ApiResponseCode.UnAuthenticated, "");
+            var user = await _authService.Authenticate(login);
 
             if (user != null)
             {
                 var tokenString = GenerateJSONWebToken(user);
-                response = Ok(new { token = tokenString });
+                response = new ApiResponse<string>(ApiResponseCode.OK, tokenString);
             }
 
             return response;
@@ -68,7 +67,7 @@ namespace Rest_API.Controllers
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new List<Claim> {
-            new Claim(JwtRegisteredClaimNames.Sub, userInfo.UserName),
+            new Claim(JwtRegisteredClaimNames.Sub, userInfo.UserName ?? string.Empty),
             new Claim(JwtRegisteredClaimNames.Email, userInfo.Email ?? string.Empty),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };

@@ -24,7 +24,6 @@ namespace Business_Layer
             .WithUrl($"{Properties.Resources.ResourceManager.GetString("SignalRBaseAddress")}ResourceHub")
             .Build();
             Connect();
-
         }
 
         private async Task Connect()
@@ -45,7 +44,12 @@ namespace Business_Layer
                     return new ApiResponse<Resource>(ApiResponseCode.NoContent, null);
                 }
 
-                //Makes sure that the timeslots do not overlap.
+                foreach (var timeslot in resource.TimeSlots)
+                {
+                    timeslot.Id = Guid.NewGuid();
+                }
+
+                //Checks that the timeslots do not overlap.
                 resource.TimeSlots.ForEach(delegate (AvailableTime outerTime)
                 {
                     resource.TimeSlots.ForEach(delegate (AvailableTime innerTime)
@@ -53,7 +57,10 @@ namespace Business_Layer
                         if (!(((outerTime.From <= innerTime.From) && (outerTime.To <= innerTime.From)) ||
                         ((outerTime.From >= innerTime.To) && (outerTime.To >= innerTime.To))))
                         {
-                            invalidDate = true;
+                            if (outerTime.Id != innerTime.Id)
+                            {
+                                invalidDate = true;
+                            }
                         }
                     });
                 });
