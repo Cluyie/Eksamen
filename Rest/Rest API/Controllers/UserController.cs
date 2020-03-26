@@ -39,7 +39,7 @@ namespace Rest_API.Controllers
         return response;
     }
 
-     [HttpGet("guid={guid}")]
+    [HttpGet("guid={guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ApiResponse<User> GetProfileFromGuid([FromRoute] Guid guid)
