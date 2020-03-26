@@ -28,5 +28,11 @@ namespace XamarinFormsApp.View
             _resourceViewModel = viewRessourceViewModel.InitializeWithResourceData();
             BindingContext = _resourceViewModel ??= viewRessourceViewModel;
         }
+
+        private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            var content = e.Item as Resource;
+            Navigation.PushAsync(new BookingRessourcePage(content.Id));
+        }
     }
 }

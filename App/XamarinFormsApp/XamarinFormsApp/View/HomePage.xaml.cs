@@ -35,13 +35,10 @@ namespace XamarinFormsApp.View
       Navigation.PushAsync(new ProfilePage());
     }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void ResourceButton_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new ResourceView());
         }
-        async void OnMenuButtonClicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new BookingRessourcePage(Guid.Parse("3fa85f64-5717-4562-b3fc-2c963f66afa6")));
-        }
+       
     }
 }

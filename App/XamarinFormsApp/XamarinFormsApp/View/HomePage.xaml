@@ -48,11 +48,8 @@
                         CornerRadius="10"
                         Grid.Row="4"
                         Grid.ColumnSpan="2"
-                        Clicked="Button_Clicked"/>
-                <Button Text="Menu"
-                    FontSize="Large"
-                    CornerRadius="10"
-                    Clicked="OnMenuButtonClicked"/>
+                        Clicked="ResourceButton_Clicked"/>
+               
             </Grid>
         </StackLayout>
     </ContentPage.Content>

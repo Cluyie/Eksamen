@@ -16,7 +16,7 @@
 
             <ListView ItemsSource="{Binding Resources}"
               CachingStrategy="RecycleElement"
-              RowHeight="60">
+              RowHeight="60" ItemTapped="ListView_ItemTapped">
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
