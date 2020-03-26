@@ -5,5 +5,9 @@
     <RootNamespace>SignalR_Microservice</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Models\Models.csproj" />
+  </ItemGroup>
+
 
 </Project>

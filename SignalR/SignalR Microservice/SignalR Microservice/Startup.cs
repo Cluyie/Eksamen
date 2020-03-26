@@ -43,13 +43,17 @@ namespace SignalR_Microservice
 
             //app.UseHttpsRedirection(); //Enable Later!
 
+            app.UseWebSockets();
+
             app.UseRouting();
 
             app.UseCors("AllowOrigin");
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<DemoHub>("/DemoHub");
+                endpoints.MapHub<ResourceHub>("/ResourceHub");
+                endpoints.MapHub<ReservationHub>("/ReservationHub");
+                endpoints.MapHub<AvailableTimeHub>("/AvailableTimeHub");
             });
         }
     }

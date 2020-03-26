@@ -121,4 +121,7 @@
   <data name="BackgroundImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\backgroundimage.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="SignalRBaseAddress" xml:space="preserve">
+    <value>http://81.27.216.103/SignalR/</value>
+  </data>
 </root>
