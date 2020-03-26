@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="SignalRBaseAddress" xml:space="preserve">
-    <value>http://81.27.216.103/SignalR/</value>
+    <value>http://10.56.8.34/SignalR/</value>
   </data>
   <data name="String" xml:space="preserve">
     <value>Properties.Resources</value>
