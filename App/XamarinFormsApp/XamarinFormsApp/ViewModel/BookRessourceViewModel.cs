@@ -33,7 +33,8 @@ namespace XamarinFormsApp.ViewModel
 
         public Reftesh reftesh { get; set; }
 
-        private HubConnection _hubConnection;
+        private HubConnection _hubConnectionRerservation;
+        private HubConnection _hubConnectionAvaiableTime;
 
         public BookRessourceViewModel()
         {
@@ -43,26 +44,43 @@ namespace XamarinFormsApp.ViewModel
             StartTime = DateTime.Now.TimeOfDay;
             SlutTime = DateTime.Now.TimeOfDay;
 
-            _hubConnection = new HubConnectionBuilder().WithUrl($"{Properties.Resources.SignalRBaseAddress}ReservationHub").Build();
-            Connect();
+            _hubConnectionRerservation = new HubConnectionBuilder().WithUrl($"{Properties.Resources.SignalRBaseAddress}ReservationHub").Build();
 
+            Connect();
             //SignalR Client methods for Reservation
-            _hubConnection.On<Reservation<ReserveTime>>("CreateReservation", (reservation) =>
+            _hubConnectionRerservation.On<Reservation<ReserveTime>>("CreateReservation", (reservation) =>
             {
                 Reservations.Add(reservation);
                 reftesh(reservation.Timeslot.FromDate.DayOfWeek);
             });
-
-            _hubConnection.On<Reservation<ReserveTime>>("UpdateReservation", (reservation) =>
+            _hubConnectionRerservation.On<Reservation<ReserveTime>>("UpdateReservation", (reservation) =>
             {
                 Reservations[Reservations.FindIndex(r => r.Id == reservation.Id)] = reservation;
                 reftesh();
             });
-
-            _hubConnection.On<Reservation<ReserveTime>>("DeleteReservation", (reservation) =>
+            _hubConnectionRerservation.On<Reservation<ReserveTime>>("DeleteReservation", (reservation) =>
             {
-                Reservations.Remove(reservation);
+                Reservations.RemoveAt(Reservations.FindIndex(re=> reservation.Id == re.Id));
                 reftesh(reservation.Timeslot.FromDate.DayOfWeek);
+            });
+
+
+            _hubConnectionAvaiableTime = new HubConnectionBuilder().WithUrl($"{Properties.Resources.SignalRBaseAddress}AvailableTimeHub").Build();
+            _hubConnectionAvaiableTime.StartAsync();
+            _hubConnectionAvaiableTime.On<AvailableTime>("CreateAvailableTime", (TimeAvaiable) =>
+            {
+                TimeSlots.Add(TimeAvaiable);
+                reftesh(TimeAvaiable.From.DayOfWeek);
+            });
+            _hubConnectionAvaiableTime.On<AvailableTime>("UpdateAvailableTime", (TimeAvaiable) =>
+            {
+                TimeSlots[TimeSlots.FindIndex(r => r.Id == TimeAvaiable.Id)] = TimeAvaiable;
+                reftesh();
+            });
+            _hubConnectionAvaiableTime.On<AvailableTime>("DeleteAvailableTime", (TimeAvaiable) =>
+            {
+                TimeSlots.RemoveAt(TimeSlots.FindIndex(re=> TimeAvaiable.Id == re.Id));
+                reftesh();
             });
         }
         public void Reserver()
@@ -180,7 +198,7 @@ namespace XamarinFormsApp.ViewModel
         }
         private async Task Connect()
         {
-            await _hubConnection.StartAsync();
+            await _hubConnectionRerservation.StartAsync();
         }
     }
 }

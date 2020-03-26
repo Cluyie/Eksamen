@@ -27,7 +27,7 @@ namespace XamarinFormsApp.View
             InitializeComponent();
             var proxy = AutofacHelper.Container.Resolve<ApiClientProxy>();
             var _mapper = AutofacHelper.Container.Resolve<Mapper>();
-            BindingContext = page = proxy.Get<BookRessourceViewModel>($"Resource/{Id}");
+            BindingContext = page = proxy.Get<ApiResponse<BookRessourceViewModel>>($"Resource/Guid={Id}").Value;
             page.reftesh = Refresh;
         }
         
