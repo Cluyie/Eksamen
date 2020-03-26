@@ -15,12 +15,10 @@ namespace Rest_API.Controllers
   public class UserController : ControllerBase
   {
     private UserService _userService;
-    private AuthService _authService;
 
-    public UserController(UserService userService, AuthService authService)
+    public UserController(UserService userService)
     {
       _userService = userService;
-      _authService = authService;
     }
 
     [HttpGet]
