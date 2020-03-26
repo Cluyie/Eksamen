@@ -90,12 +90,12 @@ namespace XamarinFormsApp.ViewModel
                 User user = (User)Application.Current.Properties["UserData"];
                 ReserveTime Resevation = GetCorrentSelected();
                 List<IAvailableTime> availables = FindAllAvailableTime(Resevation.FromDate);
-                bool valid = true;
+                bool valid = false;
                 foreach (IAvailableTime available in availables)
                 {
-                    if (available.From >= Resevation.FromDate && available.To <= Resevation.ToDate)
+                    if (available.From.TimeOfDay <= Resevation.FromDate.TimeOfDay && available.To.TimeOfDay >= Resevation.ToDate.TimeOfDay)
                     {
-                        valid = false;
+                        valid = true;
                         break;
                     }
                 }
@@ -119,9 +119,9 @@ namespace XamarinFormsApp.ViewModel
                 {
                     return;
                 }
-                Reservation<ReserveTime> res = new Reservation<ReserveTime>() { UserId = user.Id, Id = Guid.NewGuid(), Timeslot = Resevation };
-                proxy.Post("Reservation/", res);
-                Reservations.Add(res);
+                IReservation<IReserveTime> res = new Reservation<IReserveTime>() { UserId = user.Id, Id = Guid.NewGuid(), Timeslot = Resevation };
+                var test  = proxy.Post<IReservation<IReserveTime>>("Reservation/", res);
+                //Reservations.Add(res);
             }
         }
         public List<IAvailableTime> FindAllAvailableTime(DateTime date)
@@ -191,10 +191,6 @@ namespace XamarinFormsApp.ViewModel
                 FoundRes.Add(new Reservation<ReserveTime>() { Id = Guid.Empty, UserId = user.Id, Timeslot = GetCorrentSelected(), ResourceId = Id });
             }
             drawBookning.DrawDay(canvas, wtidth, height, FindAllAvailableTime(date), FoundRes, user.Id);
-        }
-        public async Task GetReseveringFromSignelR()
-        {
-
         }
         private async Task Connect()
         {

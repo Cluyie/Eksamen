@@ -49,10 +49,6 @@
                         Grid.Row="4"
                         Grid.ColumnSpan="2"
                         Clicked="Button_Clicked"/>
-                <Button Text="Menu"
-                    FontSize="Large"
-                    CornerRadius="10"
-                    Clicked="OnMenuButtonClicked"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>
