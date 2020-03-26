@@ -55,7 +55,7 @@ namespace Rest_API.Controllers
             if (user != null)
             {
                 var tokenString = GenerateJSONWebToken(user);
-                response = new ApiResponse<string>(ApiResponseCode.OK, tokenString);
+                response = new ApiResponse<string>(ApiResponseCode.OK, "Bearer" + " " + tokenString);
             }
 
             return response;
