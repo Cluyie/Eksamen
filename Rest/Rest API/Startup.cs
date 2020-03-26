@@ -147,7 +147,8 @@ namespace Rest_API
             //creating an admin
             var admin = new User
             {
-                UserName = Configuration.GetSection("UserSettings")["UserName"]
+                UserName = Configuration.GetSection("UserSettings")["UserName"],
+                Email = Configuration.GetSection("UserSettings")["UserEmail"]
             };
 
             string UserPassword = Configuration.GetSection("UserSettings")["UserPassword"];
