@@ -23,7 +23,7 @@ namespace Business_Layer
             _hubConnection = new HubConnectionBuilder()
             .WithUrl($"{Properties.Resources.ResourceManager.GetString("SignalRBaseAddress")}ResourceHub")
             .Build();
-            Connect();
+            _ = Connect();
         }
 
         private async Task Connect()

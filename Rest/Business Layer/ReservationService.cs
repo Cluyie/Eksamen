@@ -21,7 +21,7 @@ namespace Business_Layer
             _hubConnection = new HubConnectionBuilder()
             .WithUrl($"{Properties.Resources.ResourceManager.GetString("SignalRBaseAddress")}ReservationHub")
             .Build();
-            Connect();
+            _ = Connect();
         }
 
         private async Task Connect()
