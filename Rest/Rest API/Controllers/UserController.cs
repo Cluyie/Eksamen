@@ -5,10 +5,11 @@ using Business_Layer.Models;
 using Data_Access_Layer.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Rest_API.Controllers
 {
-    [Authorize]
+  [Authorize]
   [Route("[controller]")]
   [ApiController]
   public class UserController : ControllerBase
@@ -22,7 +23,25 @@ namespace Rest_API.Controllers
       _authService = authService;
     }
 
-    [HttpGet("guid={guid}")]
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public ApiResponse<User> GetProfile()
+    {
+        var response = new ApiResponse<User>(ApiResponseCode.NoContent, null);
+
+        var userName = User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
+
+        var userProfile = _userService.GetUserFromUserNameAsync(userName).Result;
+
+        if (userProfile != null)
+        {
+            response = new ApiResponse<User>(ApiResponseCode.OK, userProfile);
+        }
+        return response;
+    }
+
+     [HttpGet("guid={guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ApiResponse<User> GetProfileFromGuid([FromRoute] Guid guid)
