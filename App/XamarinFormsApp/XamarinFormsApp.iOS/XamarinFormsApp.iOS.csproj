@@ -137,10 +137,4 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.5.1" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <ItemGroup>
-    <ProjectReference Include="..\XamarinFormsApp\XamarinFormsApp.csproj">
-      <Project>{EE2946D7-CE19-4DB5-94F6-F6582E92B208}</Project>
-      <Name>XamarinFormsApp</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
