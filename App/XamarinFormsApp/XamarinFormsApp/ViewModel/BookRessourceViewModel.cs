@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Autofac;
-using AutoMapper;
+﻿using Autofac;
+using Microsoft.AspNetCore.SignalR.Client;
 using Models.Interfaces;
 using SkiaSharp;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using XamarinFormsApp.Helpers;
 using XamarinFormsApp.Helpers.Graphish;
-using System.Linq;
 using XamarinFormsApp.Model;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.SignalR.Client;
 
 namespace XamarinFormsApp.ViewModel
 {
@@ -111,18 +108,18 @@ namespace XamarinFormsApp.ViewModel
                 bool valid = true;
                 foreach (IAvailableTime available in availables)
                 {
-                    if (available.From >= Resevation.FromDate && available.To <= Resevation.ToDate)
+                    if (available.To > Resevation.FromDate && available.From < Resevation.ToDate)
                     {
                         valid = false;
                         break;
                     }
                 }
-                if (!valid)
+                if (valid)
                 {
-                    return;
+                    //return;
                 }
                 List<IReservation<ReserveTime>> Resvertions = FindAllReservationer(Resevation.FromDate);
-                foreach (IReservation<IReserveTime> resv in Resvertions)
+                foreach (IReservation<ReserveTime> resv in Resvertions)
                 {
                     IReserveTime reservation = resv.Timeslot;
                     {
@@ -137,9 +134,9 @@ namespace XamarinFormsApp.ViewModel
                 {
                     return;
                 }
-                Reservation<ReserveTime> res = new Reservation<ReserveTime>() { UserId = user.Id, Id = Guid.NewGuid(), Timeslot = Resevation };
-                proxy.Post("Reservation/", res);
-                Reservations.Add(res);
+                IReservation<IReserveTime> res = new Reservation<IReserveTime>() { UserId = user.Id, Id = Guid.NewGuid(), Timeslot = Resevation,ResourceId = Id };
+                var test = proxy.Post("Reservation/", res);
+                //Reservations.Add(res);
             }
         }
         public List<IAvailableTime> FindAllAvailableTime(DateTime date)
@@ -209,10 +206,6 @@ namespace XamarinFormsApp.ViewModel
                 FoundRes.Add(new Reservation<ReserveTime>() { Id = Guid.Empty, UserId = user.Id, Timeslot = GetCorrentSelected(), ResourceId = Id });
             }
             drawBookning.DrawDay(canvas, wtidth, height, FindAllAvailableTime(date), FoundRes, user.Id);
-        }
-        public async Task GetReseveringFromSignelR()
-        {
-
         }
         private async Task Connect()
         {
