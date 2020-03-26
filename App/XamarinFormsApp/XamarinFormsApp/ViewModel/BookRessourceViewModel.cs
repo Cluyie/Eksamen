@@ -1,14 +1,17 @@
-﻿using Autofac;
-using Microsoft.AspNetCore.SignalR.Client;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Autofac;
+using AutoMapper;
 using Models.Interfaces;
 using SkiaSharp;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using XamarinFormsApp.Helpers;
 using XamarinFormsApp.Helpers.Graphish;
+using System.Linq;
 using XamarinFormsApp.Model;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR.Client;
 
 namespace XamarinFormsApp.ViewModel
 {
@@ -47,27 +50,18 @@ namespace XamarinFormsApp.ViewModel
             //SignalR Client methods for Reservation
             _hubConnectionRerservation.On<Reservation<ReserveTime>>("CreateReservation", (reservation) =>
             {
-                if(reservation.ResourceId == Id)
-                {
-                    Reservations.Add(reservation);
-                    reftesh(reservation.Timeslot.FromDate.DayOfWeek);
-                }
+                Reservations.Add(reservation);
+                reftesh(reservation.Timeslot.FromDate.DayOfWeek);
             });
             _hubConnectionRerservation.On<Reservation<ReserveTime>>("UpdateReservation", (reservation) =>
             {
-                if (reservation.ResourceId == Id)
-                {
-                    Reservations[Reservations.FindIndex(r => r.Id == reservation.Id)] = reservation;
-                    reftesh();
-                }
+                Reservations[Reservations.FindIndex(r => r.Id == reservation.Id)] = reservation;
+                reftesh();
             });
             _hubConnectionRerservation.On<Reservation<ReserveTime>>("DeleteReservation", (reservation) =>
             {
-                if (reservation.ResourceId == Id)
-                {
-                    Reservations.RemoveAt(Reservations.FindIndex(re => reservation.Id == re.Id));
-                    reftesh(reservation.Timeslot.FromDate.DayOfWeek);
-                }
+                Reservations.RemoveAt(Reservations.FindIndex(re=> reservation.Id == re.Id));
+                reftesh(reservation.Timeslot.FromDate.DayOfWeek);
             });
 
 
@@ -75,27 +69,18 @@ namespace XamarinFormsApp.ViewModel
             _hubConnectionAvaiableTime.StartAsync();
             _hubConnectionAvaiableTime.On<AvailableTime>("CreateAvailableTime", (TimeAvaiable) =>
             {
-                if (TimeAvaiable.ResourceId == Id)
-                {
-                    TimeSlots.Add(TimeAvaiable);
-                    reftesh(TimeAvaiable.From.DayOfWeek);
-                }
+                TimeSlots.Add(TimeAvaiable);
+                reftesh(TimeAvaiable.From.DayOfWeek);
             });
             _hubConnectionAvaiableTime.On<AvailableTime>("UpdateAvailableTime", (TimeAvaiable) =>
             {
-                if (TimeAvaiable.ResourceId == Id)
-                {
-                    TimeSlots[TimeSlots.FindIndex(r => r.Id == TimeAvaiable.Id)] = TimeAvaiable;
-                    reftesh();
-                }
+                TimeSlots[TimeSlots.FindIndex(r => r.Id == TimeAvaiable.Id)] = TimeAvaiable;
+                reftesh();
             });
             _hubConnectionAvaiableTime.On<AvailableTime>("DeleteAvailableTime", (TimeAvaiable) =>
             {
-                if (TimeAvaiable.ResourceId == Id)
-                {
-                    TimeSlots.RemoveAt(TimeSlots.FindIndex(re => TimeAvaiable.Id == re.Id));
-                    reftesh();
-                }
+                TimeSlots.RemoveAt(TimeSlots.FindIndex(re=> TimeAvaiable.Id == re.Id));
+                reftesh();
             });
         }
         public void Reserver()
@@ -105,21 +90,21 @@ namespace XamarinFormsApp.ViewModel
                 User user = (User)Application.Current.Properties["UserData"];
                 ReserveTime Resevation = GetCorrentSelected();
                 List<IAvailableTime> availables = FindAllAvailableTime(Resevation.FromDate);
-                bool valid = true;
+                bool valid = false;
                 foreach (IAvailableTime available in availables)
                 {
-                    if (available.To > Resevation.FromDate && available.From < Resevation.ToDate)
+                    if (available.From.TimeOfDay <= Resevation.FromDate.TimeOfDay && available.To.TimeOfDay >= Resevation.ToDate.TimeOfDay)
                     {
-                        valid = false;
+                        valid = true;
                         break;
                     }
                 }
-                if (valid)
+                if (!valid)
                 {
                     return;
                 }
                 List<IReservation<ReserveTime>> Resvertions = FindAllReservationer(Resevation.FromDate);
-                foreach (IReservation<ReserveTime> resv in Resvertions)
+                foreach (IReservation<IReserveTime> resv in Resvertions)
                 {
                     IReserveTime reservation = resv.Timeslot;
                     {
@@ -134,8 +119,8 @@ namespace XamarinFormsApp.ViewModel
                 {
                     return;
                 }
-                IReservation<IReserveTime> res = new Reservation<IReserveTime>() { UserId = user.Id, Id = Guid.NewGuid(), Timeslot = Resevation,ResourceId = Id };
-                var test = proxy.Post("Reservation/", res);
+                IReservation<IReserveTime> res = new Reservation<IReserveTime>() { UserId = user.Id, Id = Guid.NewGuid(), Timeslot = Resevation };
+                var test  = proxy.Post<IReservation<IReserveTime>>("Reservation/", res);
                 //Reservations.Add(res);
             }
         }

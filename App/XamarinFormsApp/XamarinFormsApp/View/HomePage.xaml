@@ -48,8 +48,7 @@
                         CornerRadius="10"
                         Grid.Row="4"
                         Grid.ColumnSpan="2"
-                        Clicked="ResourceButton_Clicked"/>
-               
+                        Clicked="Button_Clicked"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>
