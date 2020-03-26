@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using BusinessLayer;
-using BusinessLayer.Interfaces;
 using BusinessLayer.Models;
 using MailService.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -28,10 +27,10 @@ namespace MailService.Controllers
     {
         private readonly ILogger<MailController> _logger;
         private readonly ApiClientProxy _proxy;
-        private readonly IMailHelper _mailHelper;
+        private readonly MailHelper _mailHelper;
         private readonly ICompositeViewEngine _viewEngine;
 
-        public MailController(ILogger<MailController> logger, ApiClientProxy proxy, IMailHelper mailHelper, ICompositeViewEngine viewEngine)
+        public MailController(ILogger<MailController> logger, ApiClientProxy proxy, MailHelper mailHelper, ICompositeViewEngine viewEngine)
         {
             _logger = logger;
             _proxy = proxy;
@@ -40,26 +39,20 @@ namespace MailService.Controllers
         }
 
         [HttpPost]
-        public async Task<ApiResponse<string>> PostMail(Template template, string recipientId, string resourceId, string reservationId)
+        public async Task<ApiResponse<string>> PostMail([FromBody]TemplateViewModel templateViewModel)
         {
             try
             {
-                ApiResponse<User> userResponse = _proxy.Get<ApiResponse<User>>("User/guid=" + recipientId);
-                //new ApiResponse<User>(ApiResponseCode.OK, new User{ Id = Guid.NewGuid(), UserName = "Tonur", FirstName = "Christoffer", LastName = "Pedersen", Address = "Østerbrogade 20", Email = "chriskpedersen@hotmail.com", });
-                ApiResponse<Reservation> reservationResponse = _proxy.Get<ApiResponse<Reservation>>("Reservation/guid=" + reservationId); 
+                //ApiResponse<Recipent> userResponse = _proxy.Get<ApiResponse<Recipent>>("Recipent/guid=" + recipientId);
+                //new ApiResponse<Recipent>(ApiResponseCode.OK, new Recipent{ Id = Guid.NewGuid(), UserName = "Tonur", FirstName = "Christoffer", LastName = "Pedersen", Address = "Østerbrogade 20", Email = "chriskpedersen@hotmail.com", });
+                //ApiResponse<Reservation> reservationResponse = _proxy.Get<ApiResponse<Reservation>>("Reservation/guid=" + reservationId); 
                 //  new ApiResponse<Reservation>(ApiResponseCode.OK, new Reservation{UserId = userResponse.Value.Id, Timeslot = new ReserveTime{FromDate = DateTime.Today.AddHours(8), ToDate = DateTime.Today.AddHours(16)}});
-                ApiResponse<Resource> resourceResponse = _proxy.Get<ApiResponse<Resource>>("Resource/guid=" + resourceId);
+                //ApiResponse<Resource> resourceResponse = _proxy.Get<ApiResponse<Resource>>("Resource/guid=" + resourceId);
                 // new ApiResponse<Resource>(ApiResponseCode.OK, new Resource{Name = "Hansens rengøringsservice", Reservations = new List<Reservation>{reservationResponse.Value}});
-                TemplateViewModel templateViewModel = new TemplateViewModel
-                {
-                    Title = template.GetAttribute<DisplayAttribute>().Name,
-                    User = userResponse.Value,
-                    Resource = resourceResponse.Value,
-                    Reservation = reservationResponse.Value
-                };
 
-                string mailContent = await RenderViewToString(template.ToString(), templateViewModel);
-                MailMessage mail = _mailHelper.GenerateMail(userResponse.Value, template.GetAttribute<DisplayAttribute>().Name, mailContent);
+                string mailContent = await RenderViewToString(templateViewModel.Template.ToString(), templateViewModel);
+                MailMessage mail = _mailHelper.GenerateMail(templateViewModel.Recipent,
+                    templateViewModel.Template.GetAttribute<DisplayAttribute>().Name, mailContent);
                 _mailHelper.SendMail(mail);
             }
             catch (Exception e)
@@ -68,6 +61,12 @@ namespace MailService.Controllers
             }
             return new ApiResponse<string>(ApiResponseCode.OK, "Email send");
         }
+
+        //private void Login()
+        //{
+        //    var token = _proxy.Get<ApiResponse<string>>("Auth/Login");
+        //    _proxy.httpClient.DefaultRequestHeaders.Add("Authorization", token.Value);
+        //}
 
         [HttpGet]
         private async Task<string> RenderViewToString(string viewName, object model)

@@ -81,9 +81,9 @@ namespace BusinessLayer.Properties {
         /// <summary>
         ///   Looks up a localized string similar to 587.
         /// </summary>
-        internal static string MailService_HostPort {
+        internal static int MailService_HostPort {
             get {
-                return ResourceManager.GetString("MailService_HostPort", resourceCulture);
+                return Convert.ToInt32(ResourceManager.GetString("MailService_HostPort", resourceCulture));
             }
         }
         
