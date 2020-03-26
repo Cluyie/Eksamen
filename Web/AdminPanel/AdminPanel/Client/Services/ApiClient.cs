@@ -17,7 +17,7 @@ namespace AdminPanel.Client.Services
         private readonly AuthCredentialsKeeper _credentialsKeeper;
 
         private const string BASE_URL = "http://81.27.216.103/WebApi/";
-        private const string TOKEN_HEADER_NAME = "token";
+        private const string TOKEN_HEADER_NAME = "Authorization";
 
         private bool _tokenHeaderIsSet = false;
 
