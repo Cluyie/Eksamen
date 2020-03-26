@@ -116,7 +116,7 @@ namespace XamarinFormsApp.ViewModel
                 }
                 if (valid)
                 {
-                    //return;
+                    return;
                 }
                 List<IReservation<ReserveTime>> Resvertions = FindAllReservationer(Resevation.FromDate);
                 foreach (IReservation<ReserveTime> resv in Resvertions)
