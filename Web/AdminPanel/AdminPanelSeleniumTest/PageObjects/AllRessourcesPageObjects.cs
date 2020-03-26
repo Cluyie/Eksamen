@@ -14,9 +14,9 @@ namespace AdminPanelSeleniumTest.PageObjects
         }
         public IWebElement DetailsBtn => _driver.FindElement(By.Id("detailsBtn"));
 
-        public IWebElement newRessource => _driver.FindElement(By.Id("newRessource"));
-        public IWebElement editRessource => _driver.FindElement(By.Id("editRessource"));
-        public IWebElement deleteRessource => _driver.FindElement(By.Id("deleteRessource"));
+        public IWebElement NewRessource => _driver.FindElement(By.Id("newRessource"));
+        public IWebElement EditRessource => _driver.FindElement(By.Id("editRessource"));
+        public IWebElement DeleteRessource => _driver.FindElement(By.Id("deleteRessource"));
 
 
 

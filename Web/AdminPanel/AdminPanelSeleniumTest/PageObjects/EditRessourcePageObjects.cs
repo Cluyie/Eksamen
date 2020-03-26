@@ -13,32 +13,32 @@ namespace AdminPanelSeleniumTest.PageObjects
             _driver = driver;
         }
 
-        public IWebElement inputRessourceName => _driver.FindElement(By.Id("inputRessourceName"));
+        public IWebElement InputRessourceName => _driver.FindElement(By.Id("inputRessourceName"));
 
-      public IWebElement addTimeslot => _driver.FindElement(By.Id("addTimeslot"));
+        public IWebElement AddTimeslot => _driver.FindElement(By.Id("addTimeslot"));
 
-        public IWebElement dateFrom => _driver.FindElement(By.Id("dateFrom"));
+        public IWebElement DateFrom => _driver.FindElement(By.Id("dateFrom"));
 
-        public IWebElement dateTo => _driver.FindElement(By.Id("dateTo"));
+        public IWebElement DateTo => _driver.FindElement(By.Id("dateTo"));
 
-        public IWebElement recurring => _driver.FindElement(By.Id("recurring"));
+        public IWebElement Recurring => _driver.FindElement(By.Id("recurring"));
 
-        public IWebElement available => _driver.FindElement(By.Id("available"));
-        public IWebElement ressourceSubmit => _driver.FindElement(By.Id("ressourceSubmit"));
+        public IWebElement Available => _driver.FindElement(By.Id("available"));
+        public IWebElement RessourceSubmit => _driver.FindElement(By.Id("ressourceSubmit"));
 
 
         public void AddorEdit(string name, DateTime from, DateTime to, int rec, bool avail)
         {
-            inputRessourceName.Clear();
-            inputRessourceName.SendKeys(name);
-            addTimeslot.Click();
-            dateFrom.SendKeys(from.ToString());
-            dateTo.SendKeys(to.ToString());
-            recurring.Clear();
-            recurring.SendKeys(rec.ToString());
+            InputRessourceName.Clear();
+            InputRessourceName.SendKeys(name);
+            AddTimeslot.Click();
+            DateFrom.SendKeys(from.ToString());
+            DateTo.SendKeys(to.ToString());
+            Recurring.Clear();
+            Recurring.SendKeys(rec.ToString());
             if (!avail)
-                available.Click();
-            ressourceSubmit.Click();
+                Available.Click();
+            RessourceSubmit.Click();
         }
     }
 

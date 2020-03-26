@@ -15,7 +15,7 @@ namespace AdminPanelSeleniumTest
         //webdriveren igennem nugetpacket fungerer ikke hensigtsmæssigt.
         //En løsning er at hente en chromedriver her: https://chromedriver.chromium.org/ (sørg for at versionen stemmer overens med din webbrowser) 
         //installere den lokalt, og refere til den herunder:
-        IWebDriver driver = new ChromeDriver(@"C:\Users\User\Documents\webdriver");
+        IWebDriver driver = new ChromeDriver(@"C:\Users\frede\Downloads\chromedriver");
         // Det ser ud til at det er nok bare at referere til mappen som chromedriver.exe ligger i, i hvert fald
         // hvis der kun ligger den fil i mappen
 
@@ -61,7 +61,7 @@ namespace AdminPanelSeleniumTest
             displayRessources(false);           
             Console.WriteLine();
             _sidebar.NavRessource.Click();
-            _allResourcesPage.newRessource.Click();
+            _allResourcesPage.NewRessource.Click();
 
             _editRessourcePageObjects.AddorEdit("Trailer", new DateTime(2020, 4, 14), new DateTime(2020, 4, 24), 7, true);           
 
@@ -84,7 +84,7 @@ namespace AdminPanelSeleniumTest
             _sidebar.NavRessource.Click();
 
             Console.WriteLine("attempting to delete: " + driver.FindElement(By.Id("ressourceName")).Text);
-            _allResourcesPage.deleteRessource.Click();
+            _allResourcesPage.DeleteRessource.Click();
             driver.FindElement(By.Id("confirmDelete")).Click();
 
 
@@ -100,7 +100,7 @@ namespace AdminPanelSeleniumTest
             displayRessources(false);
             _sidebar.NavRessource.Click();
             Console.WriteLine("Will attempt to edit: " + driver.FindElement(By.Id("ressourceName")).Text);
-            _allResourcesPage.editRessource.Click();
+            _allResourcesPage.EditRessource.Click();
             
             _editRessourcePageObjects.AddorEdit("Lokale 34", new DateTime(2020, 4, 14), new DateTime(2020, 4, 24), 4, true);
             displayRessources(true);
