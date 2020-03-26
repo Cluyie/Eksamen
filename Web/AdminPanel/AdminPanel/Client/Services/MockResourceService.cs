@@ -93,5 +93,10 @@ namespace AdminPanel.Client.Services
             // Don't need to do anything here as the resource that was edited is
             // already a reference to the resource in memory
         }
+
+        public int GetCount()
+        {
+            return _resources.Count();
+        }
     }
 }

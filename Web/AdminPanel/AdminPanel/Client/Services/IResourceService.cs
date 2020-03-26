@@ -6,7 +6,7 @@ using AdminPanel.Client.DTOs;
 
 namespace AdminPanel.Client.Services
 {
-    interface IResourceService
+   public interface IResourceService
     {
         Task<List<ResourceDTO>> GetAll();
 
@@ -17,5 +17,7 @@ namespace AdminPanel.Client.Services
         Task Add(ResourceDTO resource);
 
         Task Update(ResourceDTO resource);
+
+        
     }
 }

@@ -14,7 +14,7 @@ else
     <h1>Alle Ressourcer</h1>
     <hr />
     <p>
-        <NavLink class="btn btn-primary" href="/Resource/Add"><b>+</b> Opret ny ressource</NavLink>
+        <NavLink id="newRessource" class="btn btn-primary" href="/Resource/Add"><b>+</b> Opret ny ressource</NavLink>
     </p>
     <table class="table">
         <thead>
@@ -30,12 +30,12 @@ else
                 string deleteUrl = "/Resource/Delete/" + _resourceDTO.Id.ToString();
                 string detailsUrl = "/Resource/Details/" + _resourceDTO.Id.ToString();
                 string editUrl = "/Resource/Edit/" + _resourceDTO.Id.ToString();
-                <tr>
-                    <td><NavLink href="@detailsUrl">@_resourceDTO.Name</NavLink></td>
-                    <td>@_resourceDTO.Timeslots.Count</td>
+                <tr id="tableRow">
+                    <td id="ressourceName"><NavLink id="detailsBtn" href="@detailsUrl">@_resourceDTO.Name</NavLink></td>
+                    <td>@_resourceDTO.Timeslots.Count</td>  
                     <td>
-                        <NavLink class="btn btn-info" href="@editUrl">Rediger</NavLink>
-                        <NavLink class="btn btn-danger" href="@deleteUrl">Slet</NavLink>
+                        <NavLink id="editRessource" class="btn btn-info" href="@editUrl">Rediger</NavLink>
+                        <NavLink id="deleteRessource" class="btn btn-danger" href="@deleteUrl">Slet</NavLink>
                     </td>
                 </tr>
 
