@@ -48,7 +48,7 @@ else
         {
             await ResourceService.Update(resource);
 
-            NavigationManager.NavigateTo("/Resource/Details/" + resource.Id.ToString());
+            NavigationManager.NavigateTo("Resource/Details/" + resource.Id.ToString());
         }
         catch(Exception e)
         {

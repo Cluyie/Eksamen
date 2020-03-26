@@ -14,7 +14,7 @@ else
     <h1>Alle Ressourcer</h1>
     <hr />
     <p>
-        <NavLink id="newRessource" class="btn btn-primary" href="/Resource/Add"><b>+</b> Opret ny ressource</NavLink>
+        <NavLink id="newRessource" class="btn btn-primary" href="Resource/Add"><b>+</b> Opret ny ressource</NavLink>
     </p>
     <table class="table">
         <thead>
@@ -27,9 +27,9 @@ else
         <tbody>
             @foreach (var _resourceDTO in _resources)
             {
-                string deleteUrl = "/Resource/Delete/" + _resourceDTO.Id.ToString();
-                string detailsUrl = "/Resource/Details/" + _resourceDTO.Id.ToString();
-                string editUrl = "/Resource/Edit/" + _resourceDTO.Id.ToString();
+                string deleteUrl = "Resource/Delete/" + _resourceDTO.Id.ToString();
+                string detailsUrl = "Resource/Details/" + _resourceDTO.Id.ToString();
+                string editUrl = "Resource/Edit/" + _resourceDTO.Id.ToString();
                 <tr id="tableRow">
                     <td id="ressourceName"><NavLink id="detailsBtn" href="@detailsUrl">@_resourceDTO.Name</NavLink></td>
                     <td>@_resourceDTO.Timeslots.Count</td>  
