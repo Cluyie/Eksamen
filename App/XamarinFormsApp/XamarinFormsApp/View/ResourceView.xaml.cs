@@ -23,10 +23,18 @@ namespace XamarinFormsApp.View
         public ResourceView()
         {
             InitializeComponent();
-
             var viewRessourceViewModel = new ResourceViewModel();
             _resourceViewModel = viewRessourceViewModel.InitializeWithResourceData();
             BindingContext = _resourceViewModel ??= viewRessourceViewModel;
+        }
+
+        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if(e.SelectedItem.GetType().Equals(typeof(Resource)))
+            {
+                Resource resource = (Resource)(e.SelectedItem);
+                Navigation.PushAsync(new BookingRessourcePage(resource.Id));
+            }
         }
     }
 }

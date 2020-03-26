@@ -16,13 +16,13 @@
 
             <ListView ItemsSource="{Binding Resources}"
               CachingStrategy="RecycleElement"
-              RowHeight="60">
+              RowHeight="60"
+              ItemSelected ="ListView_ItemSelected">
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Margin="8">
-
                                 <Label Text="{Binding Name}"
                                FontAttributes="Bold" />
                                 <Label Text="{Binding Id}"/>
