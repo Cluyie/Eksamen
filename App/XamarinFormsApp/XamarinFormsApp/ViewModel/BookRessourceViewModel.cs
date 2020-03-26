@@ -50,18 +50,27 @@ namespace XamarinFormsApp.ViewModel
             //SignalR Client methods for Reservation
             _hubConnectionRerservation.On<Reservation<ReserveTime>>("CreateReservation", (reservation) =>
             {
-                Reservations.Add(reservation);
-                reftesh(reservation.Timeslot.FromDate.DayOfWeek);
+                if(reservation.ResourceId == Id)
+                {
+                    Reservations.Add(reservation);
+                    reftesh(reservation.Timeslot.FromDate.DayOfWeek);
+                }
             });
             _hubConnectionRerservation.On<Reservation<ReserveTime>>("UpdateReservation", (reservation) =>
             {
-                Reservations[Reservations.FindIndex(r => r.Id == reservation.Id)] = reservation;
-                reftesh();
+                if (reservation.ResourceId == Id)
+                {
+                    Reservations[Reservations.FindIndex(r => r.Id == reservation.Id)] = reservation;
+                    reftesh();
+                }
             });
             _hubConnectionRerservation.On<Reservation<ReserveTime>>("DeleteReservation", (reservation) =>
             {
-                Reservations.RemoveAt(Reservations.FindIndex(re=> reservation.Id == re.Id));
-                reftesh(reservation.Timeslot.FromDate.DayOfWeek);
+                if (reservation.ResourceId == Id)
+                {
+                    Reservations.RemoveAt(Reservations.FindIndex(re => reservation.Id == re.Id));
+                    reftesh(reservation.Timeslot.FromDate.DayOfWeek);
+                }
             });
 
 
@@ -69,18 +78,27 @@ namespace XamarinFormsApp.ViewModel
             _hubConnectionAvaiableTime.StartAsync();
             _hubConnectionAvaiableTime.On<AvailableTime>("CreateAvailableTime", (TimeAvaiable) =>
             {
-                TimeSlots.Add(TimeAvaiable);
-                reftesh(TimeAvaiable.From.DayOfWeek);
+                if (TimeAvaiable.ResourceId == Id)
+                {
+                    TimeSlots.Add(TimeAvaiable);
+                    reftesh(TimeAvaiable.From.DayOfWeek);
+                }
             });
             _hubConnectionAvaiableTime.On<AvailableTime>("UpdateAvailableTime", (TimeAvaiable) =>
             {
-                TimeSlots[TimeSlots.FindIndex(r => r.Id == TimeAvaiable.Id)] = TimeAvaiable;
-                reftesh();
+                if (TimeAvaiable.ResourceId == Id)
+                {
+                    TimeSlots[TimeSlots.FindIndex(r => r.Id == TimeAvaiable.Id)] = TimeAvaiable;
+                    reftesh();
+                }
             });
             _hubConnectionAvaiableTime.On<AvailableTime>("DeleteAvailableTime", (TimeAvaiable) =>
             {
-                TimeSlots.RemoveAt(TimeSlots.FindIndex(re=> TimeAvaiable.Id == re.Id));
-                reftesh();
+                if (TimeAvaiable.ResourceId == Id)
+                {
+                    TimeSlots.RemoveAt(TimeSlots.FindIndex(re => TimeAvaiable.Id == re.Id));
+                    reftesh();
+                }
             });
         }
         public void Reserver()
