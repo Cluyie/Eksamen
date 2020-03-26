@@ -17,9 +17,6 @@ namespace Business_Layer
 /// </summary>
     public class AuthService
     {
-        /// <summary>
-        /// The currently authenticated user
-        /// </summary>
         private SignInManager<User> _signInManager;
         private UserService _userService;
 
@@ -35,15 +32,21 @@ namespace Business_Layer
         /// <param name="user"></param>
         public async Task<User> Authenticate(LoginDTO user)
         {
-            var result = await _signInManager.PasswordSignInAsync(user.UsernameOrEmail, user.Password, false, false);
+            User userIn = _userService.GetUserFromUserNameAsync(user.UsernameOrEmail).Result ?? _userService.GetUserFromEmailAsync(user.UsernameOrEmail).Result;
 
-            User userToReturn = null;
+            User userOut = null;
 
-            if (result.Succeeded)
+            if (userIn != null)
             {
-                userToReturn = _userService.GetUserFromUserNameAsync(user.UsernameOrEmail).Result ?? _userService.GetUserFromEmailAsync(user.UsernameOrEmail).Result;
+                var result = await _signInManager.CheckPasswordSignInAsync(userIn, user.Password, false);
+
+                if (result.Succeeded)
+                {
+                    userOut = userIn;
+                    return userOut;
+                }
             }
-            return userToReturn;
+            return userOut;
         }
 
         /// <summary>

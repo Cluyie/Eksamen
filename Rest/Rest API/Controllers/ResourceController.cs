@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Rest_API.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class ResourceController : ControllerBase
@@ -36,7 +37,6 @@ namespace Rest_API.Controllers
             return _requestValidator.ValidateAndPerfom(resource, _resourceService.Create, Response);
         }
 
-        [Authorize]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

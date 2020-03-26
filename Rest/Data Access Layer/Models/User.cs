@@ -9,7 +9,9 @@ namespace Data_Access_Layer.Models
 {
     public class User : IdentityUser<Guid>, IUser
     {
+        [Required]
         public override string Email { get; set; }
+        [Required]
         public override string UserName { get; set; }
         public string FirstName { get; set; }
 

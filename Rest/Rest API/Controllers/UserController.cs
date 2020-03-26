@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Rest_API.Controllers
 {
+  [Authorize]
   [Route("[controller]")]
   [ApiController]
   public class UserController : ControllerBase
@@ -31,11 +32,18 @@ namespace Rest_API.Controllers
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ApiResponse<User> GetProfileFromGuid([FromRoute] Guid guid)
     {
-        return _userService.GetUserFromId(guid);
+        var response = new ApiResponse<User>(ApiResponseCode.NoContent, null);
+
+        var userProfile = _userService.GetUserFromIdAsync(guid).Result;
+
+        if (userProfile != null)
+        {
+            response = new ApiResponse<User>(ApiResponseCode.OK, _userService.GetUserFromIdAsync(guid).Result);
+        }
+        return response;
     }
 
-    [Authorize]
-    [HttpPut("UpdateProfile")]
+    [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status304NotModified)]

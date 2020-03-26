@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Rest_API.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class ReservationController : ControllerBase
@@ -23,7 +24,6 @@ namespace Rest_API.Controllers
             _requestValidator = requestValidator;
         }
 
-        [Authorize]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -33,7 +33,6 @@ namespace Rest_API.Controllers
             return _requestValidator.ValidateAndPerfom(reservation, _reservationService.Create, Response);
         }
 
-        [Authorize]
         [HttpGet("guid={guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -44,7 +43,6 @@ namespace Rest_API.Controllers
             return _requestValidator.ValidateAndPerfom(guid, _reservationService.Get, Response);
         }
 
-        [Authorize]
         [HttpDelete("guid={guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -47,15 +47,15 @@ namespace Rest_API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost]
+        [HttpPost("Login")]
         public IActionResult Login([FromBody]LoginDTO login)
         {
             IActionResult response = Unauthorized();
-            var user = _authService.Authenticate(login);
+            User user = _authService.Authenticate(login).Result;
 
-            if (user.Result != null)
+            if (user != null)
             {
-                var tokenString = GenerateJSONWebToken(user.Result);
+                var tokenString = GenerateJSONWebToken(user);
                 response = Ok(new { token = tokenString });
             }
 
@@ -69,7 +69,7 @@ namespace Rest_API.Controllers
 
             var claims = new List<Claim> {
             new Claim(JwtRegisteredClaimNames.Sub, userInfo.UserName),
-            new Claim(JwtRegisteredClaimNames.Email, userInfo.Email ?? ""),
+            new Claim(JwtRegisteredClaimNames.Email, userInfo.Email ?? string.Empty),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 

@@ -60,20 +60,6 @@ namespace Business_Layer
             return new ApiResponse<User>(ApiResponseCode.OK, userToChange);
         }
 
-        public ApiResponse<User> GetUserFromId(Guid id)
-        {
-            User userToReturn = GetUserFromIdAsync(id).Result;
-
-            if (userToReturn == null)
-            {
-                return new ApiResponse<User>(ApiResponseCode.BadRequest, null);
-            }
-            else
-            {
-                return new ApiResponse<User>(ApiResponseCode.OK, userToReturn);
-            }
-        }
-
         // ----- Internal methods -----
 
         public async Task<User> GetUserFromUserNameAsync(string Username)
