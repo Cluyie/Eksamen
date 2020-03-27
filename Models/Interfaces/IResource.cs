@@ -13,6 +13,7 @@ namespace Models.Interfaces
     {
         Guid Id { get; set; }
         string Name { get; set; }
+        string Description { get; set; }
         List<TReservation> Reservations { get; set; }
         List<TAvailableTime> TimeSlots { get; set; }
     }
