@@ -11,6 +11,7 @@ using Xamarin.Forms;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Linq;
+using UCLToolBox;
 using Xamarin.Forms.Internals;
 
 namespace XamarinFormsApp.ViewModel
