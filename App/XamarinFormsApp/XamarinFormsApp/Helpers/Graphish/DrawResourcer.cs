@@ -35,7 +35,7 @@ namespace XamarinFormsApp.Helpers.Graphish
         public void DrawDay(SKCanvas canvas, int width, int height, List<IAvailableTime> AvailabelToDay, List<IReservation<ReserveTime>> ReservatToDay, Guid GuidForOwnerResv)
         {
             float PixPrMin = height / (24 * 60f);
-            Box.Color = SKColors.White;
+            Box.Color = SKColors.LightGray;
             foreach (IAvailableTime availableTime in AvailabelToDay)
             {
                 DateTime theDay = new DateTime(availableTime.From.Year, availableTime.From.Month, availableTime.From.Day, 0, 0, 0);
@@ -57,7 +57,7 @@ namespace XamarinFormsApp.Helpers.Graphish
                 }
                 else
                 {
-                    Box.Color = SKColors.White;
+                    Box.Color = SKColors.LightGray;
                 }
 
                 IReserveTime reserveTime = resrvation.Timeslot;

@@ -38,7 +38,7 @@
                             <skia:SKCanvasView
                                 x:Name="Monday"
                                 PaintSurface="PaintSurface"
-                                BackgroundColor="LightGray"
+                                BackgroundColor="White"
                                 Grid.Row ="1"
                                 Grid.Column="0" />
 
@@ -50,7 +50,7 @@
                             <skia:SKCanvasView
                                 x:Name="Tuesday"
                                 PaintSurface="PaintSurface"
-                                BackgroundColor="LightGray"
+                                BackgroundColor="White"
                                 Grid.Row ="1"
                                 Grid.Column="1" />
 
@@ -61,7 +61,7 @@
                             <skia:SKCanvasView
                                 x:Name="Wednesday"
                                 PaintSurface="PaintSurface"
-                                BackgroundColor="LightGray"
+                                BackgroundColor="White"
                                 Grid.Row ="1"
                                 Grid.Column="2" />
 
@@ -73,7 +73,7 @@
                             <skia:SKCanvasView
                                 x:Name="Thursday"
                                 PaintSurface="PaintSurface"
-                                BackgroundColor="LightGray"
+                                BackgroundColor="White"
                                 Grid.Row ="1"
                                 Grid.Column="3" />
 
@@ -84,7 +84,7 @@
                             <skia:SKCanvasView
                                 x:Name="Friday"
                                 PaintSurface="PaintSurface"
-                                BackgroundColor="LightGray"
+                                BackgroundColor="White"
                                 Grid.Row ="1"
                                 Grid.Column="4" />
 
@@ -95,7 +95,7 @@
                             <skia:SKCanvasView
                                 x:Name="Saturday"
                                 PaintSurface="PaintSurface"
-                                BackgroundColor="LightGray"
+                                BackgroundColor="White"
                                 Grid.Row ="1"
                                 Grid.Column="5" />
 
@@ -106,7 +106,7 @@
                             <skia:SKCanvasView
                                 x:Name="Sunday"
                                 PaintSurface="PaintSurface"
-                                BackgroundColor="LightGray"
+                                BackgroundColor="White"
                                 Grid.Row ="1"
                                 Grid.Column="6" />
                         </Grid>

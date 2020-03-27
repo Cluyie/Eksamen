@@ -130,8 +130,8 @@ namespace XamarinFormsApp.ViewModel
                 {
                     return;
                 }
-                IReservation<IReserveTime> res = new Reservation<IReserveTime>() { UserId = user.Id, Id = Guid.NewGuid(), Timeslot = Resevation };
-                var test = proxy.Post<IReservation<IReserveTime>>("Reservation/", res);
+                IReservation<IReserveTime> res = new Reservation<IReserveTime>() { UserId = user.Id, Timeslot = Resevation, ResourceId = this.Id };
+                var test = proxy.Post<IReservation<IReserveTime>>("Reservation", res);
                 //Reservations.Add(res);
             }
         }
@@ -179,14 +179,12 @@ namespace XamarinFormsApp.ViewModel
             {
                 return new ReserveTime()
                 {
-                    ReservationId = Guid.NewGuid(),
                     FromDate = new DateTime(Date.Year, Date.Month, Date.Day, SlutTime.Hours, SlutTime.Minutes, 0),
                     ToDate = new DateTime(Date.Year, Date.Month, Date.Day, StartTime.Hours, StartTime.Minutes, 0)
                 };
             }
             return new ReserveTime()
             {
-                ReservationId = Guid.NewGuid(),
                 FromDate = new DateTime(Date.Year, Date.Month, Date.Day, StartTime.Hours, StartTime.Minutes, 0),
                 ToDate = new DateTime(Date.Year, Date.Month, Date.Day, SlutTime.Hours, SlutTime.Minutes, 0)
             };
