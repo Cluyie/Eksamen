@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using BusinessLayer;
-using BusinessLayer.Interfaces;
 using BusinessLayer.Models;
 using MailService.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -22,22 +21,22 @@ using UCLToolBox;
 
 namespace MailService.Controllers
 {
-  [ApiController]
-  [Route("[controller]")]
-  public class MailController : Controller
-  {
-    private readonly ILogger<MailController> _logger;
-    private readonly ApiClientProxy _proxy;
-    private readonly IMailHelper _mailHelper;
-    private readonly ICompositeViewEngine _viewEngine;
-
-    public MailController(ILogger<MailController> logger, ApiClientProxy proxy, IMailHelper mailHelper, ICompositeViewEngine viewEngine)
+    [ApiController]
+    [Route("[controller]")]
+    public class MailController : Controller
     {
-      _logger = logger;
-      _proxy = proxy;
-      _mailHelper = mailHelper;
-      _viewEngine = viewEngine;
-    }
+        private readonly ILogger<MailController> _logger;
+        private readonly ApiClientProxy _proxy;
+        private readonly MailHelper _mailHelper;
+        private readonly ICompositeViewEngine _viewEngine;
+
+        public MailController(ILogger<MailController> logger, ApiClientProxy proxy, MailHelper mailHelper, ICompositeViewEngine viewEngine)
+        {
+            _logger = logger;
+            _proxy = proxy;
+            _mailHelper = mailHelper;
+            _viewEngine = viewEngine;
+        }
 
     [HttpPost]
     public async Task<ApiResponse<string>> PostMail(ITemplateViewModel templateViewModel)
@@ -76,11 +75,17 @@ namespace MailService.Controllers
       return PostMail(templateViewModel);
     }
 
-    [HttpGet]
-    private async Task<string> RenderViewToString(string viewName, object model)
-    {
-      if (string.IsNullOrEmpty(viewName))
-        viewName = ControllerContext.ActionDescriptor.ActionName;
+        //private void Login()
+        //{
+        //    var token = _proxy.Get<ApiResponse<string>>("Auth/Login");
+        //    _proxy.httpClient.DefaultRequestHeaders.Add("Authorization", token.Value);
+        //}
+
+        [HttpGet]
+        private async Task<string> RenderViewToString(string viewName, object model)
+        {
+            if (string.IsNullOrEmpty(viewName))
+                viewName = ControllerContext.ActionDescriptor.ActionName;
 
       ViewData.Model = model;
 

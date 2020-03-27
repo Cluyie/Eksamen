@@ -12,6 +12,7 @@ using System.Linq;
 using XamarinFormsApp.Model;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR.Client;
+using UCLToolBox;
 
 namespace XamarinFormsApp.ViewModel
 {

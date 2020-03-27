@@ -2,14 +2,13 @@
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using BusinessLayer.Interfaces;
 using BusinessLayer.Models;
 using Models;
 using Models.Interfaces;
 using Models.Mail;
 namespace BusinessLayer
 {
-    public class MailHelper : IMailHelper
+    public class MailHelper
     {
         private SmtpClient _smtpClient;
 
@@ -20,12 +19,15 @@ namespace BusinessLayer
 
         public void ConfigureSmtpClient()
         {
-            _smtpClient = new SmtpClient(Properties.Resources.MailService_HostName, Convert.ToInt32(Properties.Resources.MailService_HostPort))
+            _smtpClient = new SmtpClient()
             {
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(Properties.Resources.MailService_SenderEmail, Properties.Resources.MailService_Password),
-                EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                EnableSsl = true,
+                Host = Properties.Resources.MailService_HostName,
+                Port = Properties.Resources.MailService_HostPort,
+                Credentials = new NetworkCredential(Properties.Resources.MailService_SenderEmail, Properties.Resources.MailService_Password),
+                Timeout = 20000,
             };
 
         }
@@ -35,7 +37,7 @@ namespace BusinessLayer
             _smtpClient.Send(mail);
         }
 
-        public MailMessage GenerateMail(User user, string subject, string mailContent)
+        public MailMessage GenerateMail(IUser user, string subject, string mailContent)
         {
             MailMessage mail = new MailMessage
             {

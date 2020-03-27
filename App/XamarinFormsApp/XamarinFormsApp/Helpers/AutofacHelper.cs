@@ -11,6 +11,7 @@ using Autofac;
 using AutoMapper;
 using Models;
 using Models.Interfaces;
+using UCLToolBox;
 using XamarinFormsApp.Model;
 using XamarinFormsApp.ViewModel;
 
