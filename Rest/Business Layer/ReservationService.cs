@@ -47,14 +47,10 @@ namespace Business_Layer
                 return new ApiResponse<Reservation>(ApiResponseCode.NoContent, reservation);
             }
 
-            resourceToAddTo.Reservations.ForEach(delegate(Reservation existingReservation)
+            if (reservation.Timeslot.FromDate > reservation.Timeslot.ToDate)
             {
-                if (!(((reservation.Timeslot.FromDate <= existingReservation.Timeslot.FromDate) && (reservation.Timeslot.ToDate <= existingReservation.Timeslot.FromDate)) ||
-                ((reservation.Timeslot.FromDate >= existingReservation.Timeslot.ToDate) && (reservation.Timeslot.ToDate >= existingReservation.Timeslot.ToDate))))
-                {
-                    invalidDate = true;
-                }
-            });
+                invalidDate = true;
+            }
 
             //A list of all the valid times for reservations duration
             List<AvailableTime> validTimes = new List<AvailableTime>();
@@ -62,9 +58,27 @@ namespace Business_Layer
             //Finds all the valid timeslots of the resource. The duration of the reservation must be equal to, or fit into an avaliable timeslot.
             resourceToAddTo.TimeSlots.ForEach(delegate(AvailableTime time)
             {
-                if (time.From <= reservation.Timeslot.FromDate && time.To >= reservation.Timeslot.ToDate)
+                if (time.Available)
                 {
-                    validTimes.Add(time);
+                    if (time.Recurring == null || time.From.Date == reservation.Timeslot.FromDate.Date)
+                    {
+                        if (time.From <= reservation.Timeslot.FromDate && time.To >= reservation.Timeslot.ToDate)
+                        {
+                            validTimes.Add(time);
+                        }
+                    }
+                    else if ((DayOfWeek)((time.Recurring + 1) % 7) == reservation.Timeslot.FromDate.DayOfWeek && time.From.TimeOfDay <= reservation.Timeslot.FromDate.TimeOfDay && time.To.TimeOfDay >= reservation.Timeslot.ToDate.TimeOfDay)
+                    {
+                        validTimes.Add(time);
+                    }
+                }
+            });
+
+            resourceToAddTo.Reservations.ForEach(delegate(Reservation existingReservation)
+            {
+                if (!(reservation.Timeslot.ToDate <= existingReservation.Timeslot.FromDate || reservation.Timeslot.FromDate >= existingReservation.Timeslot.ToDate))
+                {
+                    invalidDate = true;
                 }
             });
 
