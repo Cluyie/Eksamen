@@ -11,6 +11,8 @@ namespace AdminPanel.Client.DTOs
 
         public string Name { get; set; }
 
+        public string Description { get; set; }
+
         public List<TimeslotDTO> Timeslots { get; set; }
     }
 }

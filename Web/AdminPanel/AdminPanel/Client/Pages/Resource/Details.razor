@@ -29,6 +29,10 @@ else
         <b>Navn</b>
         <div>@_resource.Name</div>
     </p>
+    <p>
+        <b>Beskrivelse</b>
+        <div>@_resource.Description</div>
+    </p>
     <h4 class="mb-4">Tidsperioder (@_resource.Timeslots.Count)</h4>
     @if (_resource.Timeslots.Count == 0)
     {
