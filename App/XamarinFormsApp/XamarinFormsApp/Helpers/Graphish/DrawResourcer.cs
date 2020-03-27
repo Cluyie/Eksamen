@@ -9,49 +9,53 @@ namespace XamarinFormsApp.Helpers.Graphish
 {
     public class DrawResourcer
     {
-        SKPaint Box = new SKPaint
+        private SKPaint Box = new SKPaint
         {
             Style = SKPaintStyle.Fill,
             StrokeCap = SKStrokeCap.Round
         };
-        SKPaint Outlinje = new SKPaint
+
+        private SKPaint Outlinje = new SKPaint
         {
             Style = SKPaintStyle.Stroke,
             StrokeCap = SKStrokeCap.Round,
             Color = SKColors.Blue
         };
-        SKPaint Text = new SKPaint
+
+        private SKPaint Text = new SKPaint
         {
             TextSize = 24,
             TextAlign = SKTextAlign.Left,
             Color = SKColors.Black
-            
         };
-        int xRounding = 10;
-        int yRounding = 10;
-        public void DrawDay(SKCanvas canvas, int width, int height, List<IAvailableTime> AvailabelToDay, List<IReservation<ReserveTime>> ReservatToDay, Guid GuidForOwnerResv )
+
+        private int xRounding = 10;
+        private int yRounding = 10;
+
+        public void DrawDay(SKCanvas canvas, int width, int height, List<IAvailableTime> AvailabelToDay, List<IReservation<ReserveTime>> ReservatToDay, Guid GuidForOwnerResv)
         {
             float PixPrMin = height / (24 * 60f);
-            Box.Color = SKColors.LightGray;
-            foreach(IAvailableTime availableTime in AvailabelToDay)
+            Box.Color = SKColors.White;
+            foreach (IAvailableTime availableTime in AvailabelToDay)
             {
                 DateTime theDay = new DateTime(availableTime.From.Year, availableTime.From.Month, availableTime.From.Day, 0, 0, 0);
                 float yTop = (float)availableTime.From.TimeOfDay.TotalMinutes * PixPrMin;
                 float yBotton = (float)availableTime.To.TimeOfDay.TotalMinutes * PixPrMin;
                 canvas.DrawRect(new SKRect(0, yTop, width, yBotton), Box);
-                if ( yBotton - yTop > 25)
+                if (yBotton - yTop > 25)
                 {
                     canvas.DrawText(availableTime.From.TimeOfDay.ToString("hh':'mm"), 5, yTop + 24, Text);
                 }
-                canvas.DrawText(availableTime.To.TimeOfDay.ToString("hh':'mm"),5, yBotton + 24, Text);
+                canvas.DrawText(availableTime.To.TimeOfDay.ToString("hh':'mm"), 5, yBotton + 24, Text);
             }
             canvas.Save();
-            foreach(IReservation<ReserveTime> resrvation in ReservatToDay)
+            foreach (IReservation<ReserveTime> resrvation in ReservatToDay)
             {
-                if(resrvation.UserId.Equals(GuidForOwnerResv))
+                if (resrvation.UserId.Equals(GuidForOwnerResv))
                 {
                     Box.Color = SKColors.CadetBlue;
-                }else
+                }
+                else
                 {
                     Box.Color = SKColors.White;
                 }
@@ -60,12 +64,12 @@ namespace XamarinFormsApp.Helpers.Graphish
                 float yTop = (float)reserveTime.FromDate.TimeOfDay.TotalMinutes * PixPrMin;
                 float yBottum = (float)reserveTime.ToDate.TimeOfDay.TotalMinutes * PixPrMin;
 
-                SKRect Boxen = new SKRect(0, yTop, width-1, yBottum);
+                SKRect Boxen = new SKRect(0, yTop, width - 1, yBottum);
                 canvas.DrawRoundRect(Boxen, xRounding, yRounding, Box);
                 canvas.DrawRoundRect(Boxen, xRounding, yRounding, Outlinje);
-                canvas.DrawRoundRect(Boxen.Left+1,Boxen.Top+1,Boxen.Width-2, Boxen.Height - 2, xRounding, yRounding, Outlinje);
-                canvas.DrawRoundRect(Boxen.Left+2,Boxen.Top+2,Boxen.Width-4, Boxen.Height - 4, xRounding, yRounding, Outlinje);
-                if(Boxen.Height > 25)
+                canvas.DrawRoundRect(Boxen.Left + 1, Boxen.Top + 1, Boxen.Width - 2, Boxen.Height - 2, xRounding, yRounding, Outlinje);
+                canvas.DrawRoundRect(Boxen.Left + 2, Boxen.Top + 2, Boxen.Width - 4, Boxen.Height - 4, xRounding, yRounding, Outlinje);
+                if (Boxen.Height > 25)
                 {
                     canvas.DrawText(reserveTime.FromDate.TimeOfDay.ToString("hh':'mm"), Boxen.Left + 5, Boxen.Top + 24, Text);
                 }

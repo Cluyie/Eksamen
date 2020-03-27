@@ -26,115 +26,110 @@
                             </Grid.ColumnDefinitions>
 
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="20"/>
-                                <RowDefinition Height="300*"/>
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="300*" />
                             </Grid.RowDefinitions>
 
-
-                            <Label 
+                            <Label
                                Text="Mandag"
                                Grid.Row="0"
                                Grid.Column="0"
-                               HorizontalOptions="Center"/>
+                               HorizontalOptions="Center" />
                             <skia:SKCanvasView
                                 x:Name="Monday"
                                 PaintSurface="PaintSurface"
-                                BackgroundColor="White"
+                                BackgroundColor="LightGray"
                                 Grid.Row ="1"
-                                Grid.Column="0"/>
+                                Grid.Column="0" />
 
-
-                            <Label 
+                            <Label
                                 Text="Tirsdag"
                                 Grid.Row="0"
                                 Grid.Column="1"
-                                HorizontalOptions="Center"/>
+                                HorizontalOptions="Center" />
                             <skia:SKCanvasView
                                 x:Name="Tuesday"
                                 PaintSurface="PaintSurface"
-                                BackgroundColor="White"
+                                BackgroundColor="LightGray"
                                 Grid.Row ="1"
-                                Grid.Column="1"/>
-
+                                Grid.Column="1" />
 
                             <Label Text="Onsdag"
                                Grid.Row="0"
                                Grid.Column="2"
-                               HorizontalOptions="Center"/>
+                               HorizontalOptions="Center" />
                             <skia:SKCanvasView
                                 x:Name="Wednesday"
                                 PaintSurface="PaintSurface"
-                                BackgroundColor="White"
+                                BackgroundColor="LightGray"
                                 Grid.Row ="1"
-                                Grid.Column="2"/>
-
+                                Grid.Column="2" />
 
                             <Label
                                Text="Torsdag"
                                Grid.Row="0"
                                Grid.Column="3"
-                               HorizontalOptions="Center"/>
+                               HorizontalOptions="Center" />
                             <skia:SKCanvasView
                                 x:Name="Thursday"
                                 PaintSurface="PaintSurface"
-                                BackgroundColor="White"
+                                BackgroundColor="LightGray"
                                 Grid.Row ="1"
-                                Grid.Column="3"/>
-
+                                Grid.Column="3" />
 
                             <Label Text="Fredag"
                                 Grid.Row="0"
                                 Grid.Column="4"
-                                HorizontalOptions="Center"/>
+                                HorizontalOptions="Center" />
                             <skia:SKCanvasView
                                 x:Name="Friday"
                                 PaintSurface="PaintSurface"
-                                BackgroundColor="White"
+                                BackgroundColor="LightGray"
                                 Grid.Row ="1"
-                                Grid.Column="4"/>
+                                Grid.Column="4" />
 
                             <Label Text="Lørdag"
                                 Grid.Row="0"
                                 Grid.Column="5"
-                                HorizontalOptions="Center"/>
+                                HorizontalOptions="Center" />
                             <skia:SKCanvasView
                                 x:Name="Saturday"
                                 PaintSurface="PaintSurface"
-                                BackgroundColor="White"
+                                BackgroundColor="LightGray"
                                 Grid.Row ="1"
-                                Grid.Column="5"/>
+                                Grid.Column="5" />
 
                             <Label Text="Søndag"
                                 Grid.Row="0"
                                 Grid.Column="6"
-                                HorizontalOptions="Center"/>
+                                HorizontalOptions="Center" />
                             <skia:SKCanvasView
                                 x:Name="Sunday"
                                 PaintSurface="PaintSurface"
-                                BackgroundColor="White"
+                                BackgroundColor="LightGray"
                                 Grid.Row ="1"
-                                Grid.Column="6"/>
+                                Grid.Column="6" />
                         </Grid>
                     </ScrollView>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="20" />
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="20"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="20" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Label Grid.Row ="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Dato"/>
-                        <DatePicker Date="{Binding Date}" Grid.Row ="1" Grid.Column="0" Grid.ColumnSpan="2" PropertyChanged="DatePicker_PropertyChanged"/>
-                        <Label Grid.Row ="2" Grid.Column="1" Text="Slut Tid"/>
-                        <Label Grid.Row ="2" Grid.Column="0" Text="Start Tid"/>
-                        <TimePicker Time="{Binding SlutTime}" Grid.Row="3" Grid.Column="1" PropertyChanging="TimePicker_PropertyChanged"/>
-                        <TimePicker Time="{Binding StartTime}" Grid.Row="3" Grid.Column="0" PropertyChanging="TimePicker_PropertyChanged"/>
+                        <Label Grid.Row ="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Dato" />
+                        <DatePicker Date="{Binding Date}" Grid.Row ="1" Grid.Column="0" Grid.ColumnSpan="2" PropertyChanged="DatePicker_PropertyChanged" />
+                        <Label Grid.Row ="2" Grid.Column="1" Text="Slut Tid" />
+                        <Label Grid.Row ="2" Grid.Column="0" Text="Start Tid" />
+                        <TimePicker Time="{Binding SlutTime}" Grid.Row="3" Grid.Column="1" PropertyChanging="TimePicker_PropertyChanged" />
+                        <TimePicker Time="{Binding StartTime}" Grid.Row="3" Grid.Column="0" PropertyChanging="TimePicker_PropertyChanged" />
                     </Grid>
-                    <Button Text="Reserver" Clicked="OnReseverButtonClicked"/>
+                    <Button Text="Reserver" Clicked="OnReseverButtonClicked" />
                 </StackLayout>
             </ScrollView>
         </StackLayout>
