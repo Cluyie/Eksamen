@@ -8,8 +8,11 @@
              x:Class="XamarinFormsApp.View.BookingRessourcePage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding strName}"
+            <Label Text="{Binding Name}"
                 FontSize="Title"
+                Padding="10, 20, 10, 20" />
+            <Label Text="{Binding Description}"
+                FontSize="Subtitle"
                 Padding="10, 20, 10, 20" />
             <ScrollView>
                 <StackLayout>

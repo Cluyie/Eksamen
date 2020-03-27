@@ -19,7 +19,7 @@
 
                                 <Label Text="{Binding Name}"
                                FontAttributes="Bold" />
-                                <Label Text="{Binding Id}" />
+                                <Label Text="{Binding Description}" />
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
