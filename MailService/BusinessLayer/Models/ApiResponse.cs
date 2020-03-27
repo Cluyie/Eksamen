@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Models.Interfaces;
+﻿using Models.Interfaces;
 
-namespace MailService.Models
+namespace BusinessLayer.Models
 {
   public class ApiResponse<T> : IApiResponse<T> where T : class
   {

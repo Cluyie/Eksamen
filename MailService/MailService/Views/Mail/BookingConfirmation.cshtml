@@ -1,0 +1,15 @@
+﻿@model BusinessLayer.Models.TemplateViewModel
+@{
+    ViewData["Title"] = @Model.Title;
+    Layout = "_Layout";
+}
+
+<p>Hej @Model.Recipent.FirstName!</p>
+
+<br/>
+
+<p>Du har reserveret @Model.Resource.Name d. @Model.Reservation.Timeslot.FromDate.ToString("d") i tidsrummet @Model.Reservation.Timeslot.FromDate.ToString("HH:mm") til @Model.Reservation.Timeslot.ToDate.ToString("HH:mm").</p>
+
+<br/>
+
+<p>Tak fordi du bruger UCL Dream Team booking!</p>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -9,106 +10,97 @@ using System.Threading.Tasks;
 using Autofac;
 using AutoMapper;
 using Models;
+using Models.Interfaces;
+using UCLToolBox;
 using XamarinFormsApp.Model;
+using XamarinFormsApp.ViewModel;
 
 namespace XamarinFormsApp.Helpers
 {
-  public static class AutofacHelper
-  {
-    public static IContainer Container;
-
-    public static void Initialize()
+    public static class AutofacHelper
     {
-      if (Container == null)
-      {
-        //Automapper setup
-        var types = Assembly.GetExecutingAssembly().GetTypes();
-        var config = new MapperConfiguration(cfg =>
+        public static IContainer Container;
+
+        public static void Initialize()
         {
-          cfg.CreateMap(typeof(Model.Profile), typeof(User)).ReverseMap();
-          cfg.CreateMap(typeof(LoginSettings), typeof(User)).ReverseMap();
-          foreach (var type in types)
-          {
-            string viewmodelNamespace = $"{nameof(XamarinFormsApp)}.{nameof(ViewModel)}";
-            if (type.Namespace == viewmodelNamespace)
+            if (Container == null)
             {
-              string name = type.Name.Replace("ViewModel", "");
-              string modelNamespace = $"{nameof(XamarinFormsApp)}.{nameof(Model)}";
-              var modelItem = types.FirstOrDefault(t => t.Namespace == modelNamespace && t.Name == name);
-              if (modelItem != null)
-              {
-                cfg.CreateMap(type, modelItem).ReverseMap();
-              }
+                //Automapper setup
+                var types = Assembly.GetExecutingAssembly().GetTypes();
+                var config = new MapperConfiguration(cfg =>
+                {
+                    cfg.CreateMap(typeof(Model.Profile), typeof(User)).ReverseMap();
+                    cfg.CreateMap(typeof(LoginSettings), typeof(User)).ReverseMap();
+                    cfg.CreateMap(typeof(List<Resource>), typeof(ResourceViewModel));
+                    cfg.CreateMap<IResource<Reservation<ReserveTime>,ReserveTime,AvailableTime>, Resource>();
+                    foreach (var type in types)
+                    {
+                        string viewmodelNamespace = $"{nameof(XamarinFormsApp)}.{nameof(ViewModel)}";
+                        if (type.Namespace == viewmodelNamespace)
+                        {
+                            string name = type.Name.Replace("ViewModel", "");
+                            string modelNamespace = $"{nameof(XamarinFormsApp)}.{nameof(Model)}";
+                            var modelItem = types.FirstOrDefault(t => t.Namespace == modelNamespace && t.Name == name);
+                            if (modelItem != null)
+                            {
+                                cfg.CreateMap(type, modelItem).ReverseMap();
+                            }
+                        }
+                    }
+                });
+                Mapper mapper = new Mapper(config);
+
+                var client = new HttpClient
+                {
+                    BaseAddress = new Uri(FindUrl())
+                };
+
+                var builder = new ContainerBuilder();
+                builder.RegisterInstance(mapper);
+                builder.RegisterInstance(client);
+                builder.RegisterType<ApiClientProxy>();
+                builder.RegisterType<AuthService>();
+                Container = builder.Build();
             }
-          }
-        });
-        Mapper mapper = new Mapper(config);
+        }
 
-        var client = new HttpClient
-        {
-          BaseAddress = new Uri(FindUrl().Result)
-        };
-        
-
-        var builder = new ContainerBuilder();
-        builder.RegisterInstance(mapper);
-        builder.RegisterInstance(client);
-        builder.RegisterType<ApiClientProxy>();
-        builder.RegisterType<AuthService>();
-        Container = builder.Build();
-      }
-    }
-        private static async Task<string> FindUrl()
+        private static string FindUrl()
         {
             //Skal helst uptimeres
             //Offentlig base adresse: http://81.27.216.103/webAPI/
             //Intern base adresse: http://10.56.8.34/webAPI/
             //Lokal base adresse til emulator http://10.0.2.2:5000/
-#if DEBUG
-            if (await AsyncTestUrl("http://10.0.2.2:5000/User/GetProfile"))
-            {
-                return "http://10.0.2.2:5000/";
-            }
-#endif
-            //If you are not on the same Net as the server
-            if (await AsyncTestUrl("http://81.27.216.103/webAPI/User/GetProfile"))
-            {
-                return "http://81.27.216.103/webAPI/";
-            }
-            //If you are on the same Net as the server
-            if (await AsyncTestUrl("http://10.56.8.34/webAPI/User/GetProfile"))
-            {
-                return "http://10.56.8.34/webAPI/";
-            }
-            return null;
-
+//#if DEBUG
+//            if (TestUrl("http://10.0.2.2:53524/"))
+//            {
+//                return "http://10.0.2.2:53524/";
+//            }
+//#endif
+//            //If you are not on the same Net as the server
+//            if (TestUrl("http://81.27.216.103/webAPI/User/GetProfile"))
+//            {
+//                return "http://81.27.216.103/webAPI/";
+//            }
+//            //If you are on the same Net as the server
+//            if (TestUrl("http://10.56.8.34/webAPI/User/GetProfile"))
+//            {
+//                return "http://10.56.8.34/webAPI/";
+//            }
+            return "http://81.27.216.103/webAPI/";
         }
-        private static async Task<bool> AsyncTestUrl(string url)
+
+        private static bool TestUrl(string url)
         {
             try
             {
-                var myRequest = (HttpWebRequest)WebRequest.Create(url);
-                var response = (HttpWebResponse)myRequest.GetResponse();
-
-                if (response.StatusCode != HttpStatusCode.NotFound)
-                {
-                    return true;
-                    //  it's at least in some way responsive
-                    //  but may be internally broken
-                    //  as you could find out if you called one of the methods for real
-                }
-                else
-                {
-                    return false;
-                    //  well, at least it returned...
-                }
-            }catch(Exception e)
+                WebClient wc = new WebClient();
+                string HTMLSource = wc.DownloadString(url);
+                return true;
+            }
+            catch (Exception)
             {
                 return false;
             }
         }
-  }
+    }
 }
-
-
-

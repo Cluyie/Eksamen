@@ -1,21 +1,19 @@
-﻿using Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Models;
 using Models.Interfaces;
-using Xamarin.Forms;
-using XamarinFormsApp.Model;
 
-namespace XamarinFormsApp
+namespace UCLToolBox
 {
   /// <summary>
   /// This sents a http get rquest to a api
   /// if you have pre set the base url du you only need to write the rest of the url fx.
-  /// if the pre url is https://localhost5001
+  /// if the pre url is http://localhost:5000
   /// do you need to set Http to 
   /// /Auth/Login
   /// to hit the post lig in method if you need to send variablse in the url.
@@ -53,7 +51,7 @@ namespace XamarinFormsApp
     /// <param name="response"></param>
     /// <param name="result"></param>
     /// <returns></returns>
-    public string GenerateErrorMessage<T>(ApiResponse<T> result, HttpResponseMessage response = null) where T : class
+    public string GenerateErrorMessage<T>(IApiResponse<T> result, HttpResponseMessage response = null) where T : class
     {
       ApiResponseCode? statusResponseCode = null;
       if (Enum.TryParse<ApiResponseCode>(response?.StatusCode.ToString(), out var responseCode))

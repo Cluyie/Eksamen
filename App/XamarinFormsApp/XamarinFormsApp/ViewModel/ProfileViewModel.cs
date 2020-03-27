@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using XamarinFormsApp.Helpers;
 using Models;
+using UCLToolBox;
 using Models.Interfaces;
 using XamarinFormsApp.Model;
 
@@ -11,6 +12,16 @@ namespace XamarinFormsApp.ViewModel
 {
     public class ProfileViewModel : AutoMapper.Profile
     {
+
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public int? ZipCode { get; set; }
+        public string Country { get; set; }
+
+        public string ErrorMessage { get; private set; }
+
         #region Constructor
         private ApiClientProxy _proxy;
         private Mapper _mapper;
@@ -28,15 +39,6 @@ namespace XamarinFormsApp.ViewModel
             return _mapper.Map<ProfileViewModel>(_mapper.Map<Model.Profile>(user));
         }
         #endregion
-
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Address { get; set; }
-        public string City { get; set; }
-        public int? ZipCode { get; set; }
-        public string Country { get; set; }
-
-        public string ErrorMessage { get; private set; }
 
 
         public async Task<bool> UpdateProfile()

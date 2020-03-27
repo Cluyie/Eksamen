@@ -43,9 +43,16 @@ namespace Rest_API
             services.AddIdentity<User, IdentityRole<Guid>>()
             .AddEntityFrameworkStores<IdentityContext>();
 
-            /*services.Configure<IdentityOptions>(options =>            {
+            /*services.Configure<IdentityOptions>(options =>
+            {
             // Password settings
-                options.Password.RequireDigit = true;                options.Password.RequireLowercase = true;                options.Password.RequireNonAlphanumeric = false;                options.Password.RequireUppercase = true;                options.Password.RequiredLength = 6;                options.Password.RequiredUniqueChars = 1;            });*/
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+            });*/
 
             services.AddAuthentication(options =>
             {
@@ -102,7 +109,6 @@ namespace Rest_API
             });
 
             //AutoMapper setup
-
             Mapper mapper = new Mapper(new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<User, User>()

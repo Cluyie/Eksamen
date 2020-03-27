@@ -15,7 +15,7 @@ namespace Models.Interfaces
     UsernameAlreadyTaken = 1002
   }
 
-  public interface IApiResponse<T>
+  public interface IApiResponse<T> where T : class
     {
          ApiResponseCode Code { get; set; }
 
