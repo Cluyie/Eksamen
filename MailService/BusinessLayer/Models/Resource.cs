@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Models.Interfaces;
 
-namespace MailService.Models
+namespace BusinessLayer.Models
 {
     public class Resource : IResource<Reservation, ReserveTime, AvailableTime>
     {

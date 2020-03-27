@@ -1,8 +1,7 @@
-﻿using BusinessLayer.Models;
-using Models.Interfaces;
+﻿using Models.Interfaces;
 using Models.Mail;
 
-namespace MailService.Models
+namespace BusinessLayer.Models
 {
   public class TemplateViewModel : ITemplateViewModel<Reservation, ReserveTime, Resource, AvailableTime, User>
   {

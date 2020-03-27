@@ -1,7 +1,7 @@
 ﻿using System;
 using Models.Interfaces;
 
-namespace MailService.Models
+namespace BusinessLayer.Models
 {
     public class Reservation : IReservation<ReserveTime>
     {

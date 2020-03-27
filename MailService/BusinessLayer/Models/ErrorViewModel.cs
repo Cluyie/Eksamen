@@ -1,4 +1,4 @@
-namespace MailService.Models
+namespace BusinessLayer.Models
 {
   public class ErrorViewModel
   {

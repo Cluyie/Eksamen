@@ -7,7 +7,6 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using BusinessLayer;
 using BusinessLayer.Models;
-using MailService.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
@@ -39,12 +38,13 @@ namespace MailService.Controllers
         }
 
     [HttpPost]
-    public async Task<ApiResponse<string>> PostMail(ITemplateViewModel templateViewModel)
+    public async Task<ApiResponse<string>> PostMail(TemplateViewModel templateViewModel)
     {
       try
       {
+        templateViewModel.Title = templateViewModel.Template.GetAttribute<DisplayAttribute>().Name;
         string mailContent = await RenderViewToString(templateViewModel.Template.ToString(), templateViewModel);
-        MailMessage mail = _mailHelper.GenerateMail(templateViewModel.Recipient.Value, templateViewModel.Template.GetAttribute<DisplayAttribute>().Name, mailContent);
+        MailMessage mail = _mailHelper.GenerateMail(templateViewModel.Recipent, templateViewModel.Template.GetAttribute<DisplayAttribute>().Name, mailContent);
         _mailHelper.SendMail(mail);
       }
       catch (Exception e)
@@ -67,12 +67,12 @@ namespace MailService.Controllers
       // new ApiResponse<Resource>(ApiResponseCode.OK, new Resource{Name = "Hansens rengøringsservice", Reservations = new List<Reservation>{reservationResponse.Value}});
       TemplateViewModel templateViewModel = new TemplateViewModel
       {
-        Title = template.GetAttribute<DisplayAttribute>().Name,
-        User = userResponse.Value,
+        Template = template,
+        Recipent = userResponse.Value,
         Resource = resourceResponse.Value,
         Reservation = reservationResponse.Value
       };
-      return PostMail(templateViewModel);
+      return await PostMail(templateViewModel);
     }
 
         //private void Login()
