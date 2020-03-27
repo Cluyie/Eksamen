@@ -42,7 +42,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <button type="button" class="btn btn-danger" @onclick="@(() => RemoveTimeslot(timeslot.Id))">
+                            <button type="button" class="btn btn-danger" @onclick="@(() => RemoveTimeslot(timeslot))">
                                 <b>-</b> Fjern
                             </button>
                         </div>
@@ -75,13 +75,12 @@
     {
         Resource.Timeslots.Add(new TimeslotDTO()
         {
-            Id = Guid.NewGuid(),
             Available = true
         });
     }
 
-    private void RemoveTimeslot(Guid id)
+    private void RemoveTimeslot(TimeslotDTO timeslot)
     {
-        Resource.Timeslots.Remove(Resource.Timeslots.First(timeslot => timeslot.Id == id));
+        Resource.Timeslots.Remove(timeslot);
     }
 }
