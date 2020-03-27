@@ -56,7 +56,7 @@ namespace Business_Layer
             List<AvailableTime> validTimes = new List<AvailableTime>();
 
             //Finds all the valid timeslots of the resource. The duration of the reservation must be equal to, or fit into an avaliable timeslot.
-            resourceToAddTo.TimeSlots.ForEach(delegate(AvailableTime time)
+            resourceToAddTo.TimeSlots.ForEach(delegate (AvailableTime time)
             {
                 if (time.Available)
                 {
@@ -74,7 +74,7 @@ namespace Business_Layer
                 }
             });
 
-            resourceToAddTo.Reservations.ForEach(delegate(Reservation existingReservation)
+            resourceToAddTo.Reservations.ForEach(delegate (Reservation existingReservation)
             {
                 if (!(reservation.Timeslot.ToDate <= existingReservation.Timeslot.FromDate || reservation.Timeslot.FromDate >= existingReservation.Timeslot.ToDate))
                 {
@@ -91,7 +91,7 @@ namespace Business_Layer
                     _applicationContext.SaveChanges();
                     _hubConnection.SendAsync("CreateReservation", reservation);
 
-                    return new ApiResponse<Reservation>(ApiResponseCode.OK, reservation);                
+                    return new ApiResponse<Reservation>(ApiResponseCode.OK, reservation);
                 }
                 catch (Exception)
                 {
@@ -139,7 +139,7 @@ namespace Business_Layer
             {
                 //Makes sure the reservation is in the database, and asigns it.
                 var reservationToRemove = _applicationContext.Reservations.Find(guid);
-                
+
                 if (reservationToRemove != null)
                 {
                     _applicationContext.Reservations.Remove(reservationToRemove);
