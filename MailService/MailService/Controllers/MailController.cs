@@ -38,7 +38,7 @@ namespace MailService.Controllers
         }
 
         [HttpPost]
-        public async Task<ApiResponse<string>> PostMail(TemplateViewModel templateViewModel)
+        public async Task<ApiResponse<string>> PostMail([FromBody]TemplateViewModel templateViewModel)
         {
             try
             {
@@ -54,12 +54,11 @@ namespace MailService.Controllers
             return new ApiResponse<string>(ApiResponseCode.OK, "Email send");
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<ApiResponse<string>> PostMail(Template template, string recipientId, string resourceId,
           string reservationId)
         {
             Login();
-
             ApiResponse<User> userResponse = _proxy.Get<ApiResponse<User>>("User/guid=" + recipientId);
             //new ApiResponse<User>(ApiResponseCode.OK, new User{ Id = Guid.NewGuid(), UserName = "Tonur", FirstName = "Christoffer", LastName = "Pedersen", Address = "Østerbrogade 20", Email = "chriskpedersen@hotmail.com", });
             ApiResponse<Reservation> reservationResponse =
