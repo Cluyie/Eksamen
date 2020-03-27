@@ -8,12 +8,6 @@
              Title="Resource List">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-
-
-
             <ListView ItemsSource="{Binding Resources}"
               CachingStrategy="RecycleElement"
               RowHeight="60" ItemTapped="ListView_ItemTapped">
@@ -25,15 +19,12 @@
 
                                 <Label Text="{Binding Name}"
                                FontAttributes="Bold" />
-                                <Label Text="{Binding Id}"/>
+                                <Label Text="{Binding Id}" />
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-
             </ListView>
-
-
         </StackLayout>
-        </ContentPage.Content>
-    </ContentPage>
+    </ContentPage.Content>
+</ContentPage>
