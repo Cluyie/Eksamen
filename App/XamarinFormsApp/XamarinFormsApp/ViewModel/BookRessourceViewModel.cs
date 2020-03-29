@@ -132,7 +132,11 @@ namespace XamarinFormsApp.ViewModel
                     return;
                 }
                 IReservation<IReserveTime> res = new Reservation<IReserveTime>() { UserId = user.Id, Timeslot = Resevation, ResourceId = this.Id };
-                var test = proxy.Post<IReservation<IReserveTime>>("Reservation", res);
+                var responseMessage = proxy.Post<IReservation<IReserveTime>>("Reservation", res);
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    _hubConnectionRerservation.SendAsync("CreateReservation", res);
+                }
                 //Reservations.Add(res);
             }
         }
