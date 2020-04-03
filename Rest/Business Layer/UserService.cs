@@ -4,72 +4,45 @@ using Data_Access_Layer.Models;
 using Business_Layer.Models;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace Business_Layer
 {
     public class UserService
     {
         private IdentityContext _identityContext;
-        private AuthService _authService;
         private Mapper _mapper;
+        private UserManager<User> _userManager;
 
-        public UserService(IdentityContext identityContext, AuthService authService, Mapper mapper)
+        public UserService(IdentityContext identityContext, Mapper mapper, UserManager<User> userManager)
         {
             _identityContext = identityContext;
-            _authService = authService;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
-        public ApiResponse<string> Register(RegisterDTO registerDTO)
+        public async Task<ApiResponse<string>> RegisterAsync(User userToRegister)
         {
-            // The email is already in use
-            if (GetFromEmail(registerDTO.Email).Result != null)
+            var user = userToRegister;
+            var result = await _userManager.CreateAsync(user, userToRegister.PasswordHash);
+            if (result.Succeeded)
             {
-                return new ApiResponse<string>(ApiResponseCode.EmailAlreadyTaken, "");
+                return new ApiResponse<string>(ApiResponseCode.OK, "");
             }
-
-            // Username is already in use
-            if (GetFromUsername(registerDTO.Username) != null)
-            {
-                return new ApiResponse<string>(ApiResponseCode.UsernameAlreadyTaken, "");
-            }
-
-            // TODO: Create a real user in identity with hashed password
-            User user = new User
-            {
-                UserName = registerDTO.Username,
-                Email = registerDTO.Email,
-                FirstName = registerDTO.FirstName,
-                LastName = registerDTO.LastName,
-                PasswordHash = ""
-            };
-
-            _identityContext.Users.Add(user);
-            _identityContext.SaveChanges();
-
-            return new ApiResponse<string>(ApiResponseCode.OK, _authService.GetAuthToken(user));
+            return new ApiResponse<string>(ApiResponseCode.InternalServerError, "");
         }
 
         public ApiResponse<User> Update(User userData)
         {
             //Prevent changing the ID
-            userData.Id = null;
-            User userToChange = _authService.GetUser();
+            userData.Id = Guid.Empty;
+            User userToChange = GetUserFromIdAsync(userData.Id).Result;
             // Can only update an existing user
             if (userToChange == null)
             {
                 return new ApiResponse<User>(ApiResponseCode.UnAuthenticated, null);
             }
-
-
-            /* TODO: Uncomment this when authentication is working
-            // User can only update self
-            if(_authService.GetUser().Id != id.ToString())
-            {
-                return new ApiResponse<UserData>(ApiResponseCode.UnAuthenticated, null);
-            }
-            */
 
             // Update the user
             if (!string.IsNullOrWhiteSpace(userData.PasswordHash) && userData.PasswordHash != userToChange.PasswordHash)
@@ -80,76 +53,32 @@ namespace Business_Layer
             // Automapper is configured to only overwrite the fields that are not null
             _mapper.Map(userData, userToChange);
 
-
-
             _identityContext.Update(userToChange);
             _identityContext.SaveChanges();
 
             return new ApiResponse<User>(ApiResponseCode.OK, userToChange);
         }
 
-        public ApiResponse<string> Login(LoginDTO credentials)
-        {
-            // TODO: Make proper login functionality. For now it always authenticates
-            // if the username matches a user
-
-            User user = GetFromEmail(credentials.UsernameOrEmail).Result;
-
-            // Didn't find a user with that email, try to find by username
-            if (user == null)
-            {
-                user = GetFromUsername(credentials.UsernameOrEmail);
-            }
-
-            // Didn't find a user by either email or username, so login fails
-            if (user == null)
-            {
-                return new ApiResponse<string>(ApiResponseCode.BadRequest, "");
-            }
-
-            _authService.Authenticate(user);
-
-            // TODO: Send a proper token instead of just the username
-            return new ApiResponse<string>(ApiResponseCode.OK, _authService.GetAuthToken(user));
-        }
-
         // ----- Internal methods -----
 
-        private async Task<User> GetFromID(string id)
+        public async Task<User> GetUserFromUserNameAsync(string Username)
         {
-            return await _identityContext.Users.FirstOrDefaultAsync(user => user.Id == id);
+            return await _userManager.FindByNameAsync(Username);
         }
 
-        private async Task<User> GetFromEmail(string email)
+        public async Task<User> GetUserFromEmailAsync(string Email)
         {
-            //TODO Find a way to fix this garbage
-            //Cannot run linq code to check invariant culture and translate to lower case
-            //Ef core is fucking stupid
-            foreach (User identityContextUser in _identityContext.Users)
-            {
-                if (string.Equals(identityContextUser.Email, email, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return identityContextUser;
-                }
-            }
-
-            return null;
+            return await _userManager.FindByEmailAsync(Email);
         }
 
-        private User GetFromUsername(string username)
+        public async Task<IList<string>> GetUserRolesAsync(User user)
         {
-            //TODO Find a way to fix this garbage
-            //Cannot run linq code to check invariant culture and translate to lower case
-            //Ef core is fucking stupid
-            foreach (User identityContextUser in _identityContext.Users)
-            {
-                if (string.Equals(identityContextUser.UserName, username, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return identityContextUser;
-                }
-            }
+            return await _userManager.GetRolesAsync(user);
+        }
 
-            return null;
+        public async Task<User> GetUserFromIdAsync(Guid id)
+        {
+            return await _userManager.FindByIdAsync(id.ToString());
         }
     }
 }

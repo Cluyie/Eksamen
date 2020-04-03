@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
-using Data_Access_Layer.Interfaces;
+using Models.Interfaces;
 
 namespace Data_Access_Layer.Models
 {
-    public class User : IdentityUser, IUser
+    public class User : IdentityUser<Guid>, IUser
     {
+        //[Required]?
         public override string Email { get; set; }
+        //[Required]?
         public override string UserName { get; set; }
         public string FirstName { get; set; }
 

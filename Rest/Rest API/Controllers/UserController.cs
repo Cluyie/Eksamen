@@ -1,43 +1,61 @@
-﻿using Data_Access_Layer;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Business_Layer;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Business_Layer.Models;
-using Microsoft.AspNetCore.Http;
 using Data_Access_Layer.Models;
-using Rest_API.Middleware;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Rest_API.Controllers
 {
+  [Authorize]
   [Route("[controller]")]
   [ApiController]
   public class UserController : ControllerBase
   {
     private UserService _userService;
-    private AuthService _authService;
 
-    public UserController(UserService userService, AuthService authService)
+    public UserController(UserService userService)
     {
       _userService = userService;
-      _authService = authService;
     }
 
-    [HttpGet("GetProfile")]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public ApiResponse<User> GetProfile()
     {
-      var user = _authService.GetUser();
-      if (user == null)
-        return new ApiResponse<User>(ApiResponseCode.BadRequest, user);
-      return new ApiResponse<User>(ApiResponseCode.OK, user);
-    } 
+        var response = new ApiResponse<User>(ApiResponseCode.NoContent, null);
 
-    [HttpPut("UpdateProfile")]
+        var userName = User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
+
+        var userProfile = _userService.GetUserFromUserNameAsync(userName).Result;
+
+        if (userProfile != null)
+        {
+            response = new ApiResponse<User>(ApiResponseCode.OK, userProfile);
+        }
+        return response;
+    }
+
+    [HttpGet("guid={guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public ApiResponse<User> GetProfileFromGuid([FromRoute] Guid guid)
+    {
+        var response = new ApiResponse<User>(ApiResponseCode.NoContent, null);
+
+        var userProfile = _userService.GetUserFromIdAsync(guid).Result;
+
+        if (userProfile != null)
+        {
+            response = new ApiResponse<User>(ApiResponseCode.OK, _userService.GetUserFromIdAsync(guid).Result);
+        }
+        return response;
+    }
+
+    [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status304NotModified)]

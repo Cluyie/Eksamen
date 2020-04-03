@@ -43,6 +43,12 @@
                         Grid.Row="4"
                         Grid.ColumnSpan="2"
                         Clicked="LogoutButton_Clicked"/>
+                <Button Text="Ressourcer" 
+                        FontSize="Large" 
+                        CornerRadius="10"
+                        Grid.Row="4"
+                        Grid.ColumnSpan="2"
+                        Clicked="Button_Clicked"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

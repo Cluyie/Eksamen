@@ -6,9 +6,40 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200322151503_Initial.cs" />
+    <Compile Remove="Migrations\20200322151503_Initial.Designer.cs" />
+    <Compile Remove="Migrations\Application\20200311105300_Application.cs" />
+    <Compile Remove="Migrations\Application\20200311105300_Application.Designer.cs" />
+    <Compile Remove="Migrations\Application\20200316105047_ApplicationUpdate.cs" />
+    <Compile Remove="Migrations\Application\20200316105047_ApplicationUpdate.Designer.cs" />
+    <Compile Remove="Migrations\Application\20200317151455_Interface Segregation.cs" />
+    <Compile Remove="Migrations\Application\20200317151455_Interface Segregation.Designer.cs" />
+    <Compile Remove="Migrations\Application\20200317153622_Application.cs" />
+    <Compile Remove="Migrations\Application\20200317153622_Application.Designer.cs" />
+    <Compile Remove="Migrations\Application\20200320122153_GuidUpdateList.cs" />
+    <Compile Remove="Migrations\Application\20200320122153_GuidUpdateList.Designer.cs" />
+    <Compile Remove="Migrations\Application\20200320122429_InitialApplication.cs" />
+    <Compile Remove="Migrations\Application\20200320122429_InitialApplication.Designer.cs" />
+    <Compile Remove="Migrations\Application\20200322151103_UpdateForeignKey.cs" />
+    <Compile Remove="Migrations\Application\20200322151103_UpdateForeignKey.Designer.cs" />
+    <Compile Remove="Migrations\Identity\20200224102056_Initial.cs" />
+    <Compile Remove="Migrations\Identity\20200224102056_Initial.Designer.cs" />
+    <Compile Remove="Migrations\Identity\20200320122132_GuidUpdate.cs" />
+    <Compile Remove="Migrations\Identity\20200320122132_GuidUpdate.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Models\Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +55,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Migrations\Application\" />
   </ItemGroup>
 
 </Project>
