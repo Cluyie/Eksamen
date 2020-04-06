@@ -17,7 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "..\Models\Models.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices", "Microservices", "{077D19A7-2210-4E67-A268-72476D0B2753}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceMicroService", "ResourceMicroService\ResourceMicroService.csproj", "{CCEB9CA2-B183-4B2C-A5D6-8AB1FBE4F4EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResourceMicroService", "ResourceMicroService\ResourceMicroService.csproj", "{CCEB9CA2-B183-4B2C-A5D6-8AB1FBE4F4EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceMicrosDtabase", "ResourceMicrosDtabase\ResourceMicrosDtabase.csproj", "{7B23ACE2-7329-4435-9945-A91B7027358A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourcInterface", "ResourcInterface\ResourcInterface.csproj", "{4231D771-7ECF-4414-8B84-910D1B4734C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,12 +57,22 @@ Global
 		{CCEB9CA2-B183-4B2C-A5D6-8AB1FBE4F4EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCEB9CA2-B183-4B2C-A5D6-8AB1FBE4F4EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCEB9CA2-B183-4B2C-A5D6-8AB1FBE4F4EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B23ACE2-7329-4435-9945-A91B7027358A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B23ACE2-7329-4435-9945-A91B7027358A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B23ACE2-7329-4435-9945-A91B7027358A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B23ACE2-7329-4435-9945-A91B7027358A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4231D771-7ECF-4414-8B84-910D1B4734C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4231D771-7ECF-4414-8B84-910D1B4734C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4231D771-7ECF-4414-8B84-910D1B4734C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4231D771-7ECF-4414-8B84-910D1B4734C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CCEB9CA2-B183-4B2C-A5D6-8AB1FBE4F4EC} = {077D19A7-2210-4E67-A268-72476D0B2753}
+		{7B23ACE2-7329-4435-9945-A91B7027358A} = {077D19A7-2210-4E67-A268-72476D0B2753}
+		{4231D771-7ECF-4414-8B84-910D1B4734C2} = {077D19A7-2210-4E67-A268-72476D0B2753}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3FB0D61A-E0DC-493D-BC14-0EA05B4A681C}
