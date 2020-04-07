@@ -31,7 +31,7 @@ namespace RabbitMQ.Consumer
         {
             services.AddMediatR(typeof(Startup));
             services.AddControllers();
-            DependencyContainer.RegisterServices(services);
+            services.UseRabbitMq();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,13 +45,7 @@ namespace RabbitMQ.Consumer
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
-            ConfigureEventBus(app);
-        }
-
-        private void ConfigureEventBus(IApplicationBuilder app)
-        {
-            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.Subscribe<MessageCreatedEvent, MessageEventHandler>();
+            app.Subscribe<MessageCreatedEvent, MessageEventHandler>();
         }
     }
 }
