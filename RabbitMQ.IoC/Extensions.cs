@@ -15,6 +15,10 @@ using Producer.Domain.Services.Interfaces;
 using RabbitMQ.Bus.Bus;
 using RabbitMQ.Bus.Bus.Interfaces;
 using RabbitMQ.Bus.Events;
+using UCLDreamTeam.UserServiceApi.Domain.CommandHandlers;
+using UCLDreamTeam.UserServiceApi.Domain.Commands;
+using UCLDreamTeam.UserServiceApi.Domain.Services;
+using UCLDreamTeam.UserServiceApi.Domain.Services.Interfaces;
 
 namespace RabbitMQ.IoC
 {
@@ -22,6 +26,7 @@ namespace RabbitMQ.IoC
     {
         public static void AddRabbitMq(this IServiceCollection services)
         {
+
             //Domain Bus
             services.AddSingleton<IEventBus, RabbitMqBus>(sp =>
             {
@@ -29,8 +34,21 @@ namespace RabbitMQ.IoC
                 return new RabbitMqBus(sp.GetService<IMediator>(), scopeFactory);
             });
 
-            services.AddTransient<IRequestHandler<CreateMessageCommand, bool>, MessageCommandHandler>();
+            
+            #region ResourceService
+
+            #endregion
+            #region ReservationService
+
+            #endregion
+            #region AuthService
+
+            #endregion
+
+            //Template for test consumer and producer
             services.AddTransient<IMessageService, MessageService>();
+            //Message template
+            services.AddTransient<IRequestHandler<CreateMessageCommand, bool>, MessageCommandHandler>();
             services.AddTransient<IEventHandler<MessageCreatedEvent>, MessageEventHandler>();
         }
 

@@ -11,6 +11,7 @@ using Xamarin.Forms;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Linq;
+using System.Net;
 using UCLToolBox;
 using Xamarin.Forms.Internals;
 

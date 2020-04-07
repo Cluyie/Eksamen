@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using RabbitMQ.Bus.Events;
+using RabbitMQ.Bus.Commands;
 using UCLDreamTeam.UserServiceApi.Domain.Models;
 
-namespace UCLDreamTeam.UserServiceApi.Domain.Events
+namespace UCLDreamTeam.UserServiceApi.Domain.Commands
 {
-    public class UserRegisteredEvent : Event
+    public class UpdateUserCommand : Command
     {
         public User User { get; set; }
 
-        public UserRegisteredEvent(User user)
+        public UpdateUserCommand(User user)
         {
             User = user;
         }

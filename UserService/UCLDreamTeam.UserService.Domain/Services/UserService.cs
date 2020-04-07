@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Net;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Models.Interfaces;
 using RabbitMQ.Bus.Bus.Interfaces;
+using UCLDreamTeam.UserServiceApi.Domain.Commands;
 using UCLDreamTeam.UserServiceApi.Domain.Context;
 using UCLDreamTeam.UserServiceApi.Domain.Models;
 using UCLDreamTeam.UserServiceApi.Domain.Services.Interfaces;
@@ -19,7 +21,7 @@ namespace UCLDreamTeam.UserServiceApi.Domain.Services
         private readonly Mapper _mapper;
         private readonly IEventBus _eventBus;
 
-        public UserService(UserManager<User> userManager, 
+        public UserService(UserManager<User> userManager,
             IdentityContext identityContext, IEventBus eventBus)
         {
             _userManager = userManager;
@@ -33,12 +35,14 @@ namespace UCLDreamTeam.UserServiceApi.Domain.Services
             var result = await _userManager.CreateAsync(user);
             if (result.Succeeded)
             {
+                await _eventBus.SendCommand(new RegisterUserCommand(user));
                 return new ApiResponse<string>(ApiResponseCode.OK, "");
             }
+            await _eventBus.SendCommand(new RegisterUserRejectedCommand(user));
             return new ApiResponse<string>(ApiResponseCode.InternalServerError, "");
         }
 
-        public ApiResponse<User> Update(User userData)
+        public async Task<ApiResponse<User>> Update(User userData)
         {
             //Prevent changing the ID
             userData.Id = Guid.Empty;
@@ -46,7 +50,8 @@ namespace UCLDreamTeam.UserServiceApi.Domain.Services
             // Can only update an existing user
             if (userToChange == null)
             {
-                return new ApiResponse<User>(ApiResponseCode.UnAuthenticated, null);
+                await _eventBus.SendCommand(new NoUserFoundCommand(userToChange));
+                return new ApiResponse<User>(ApiResponseCode.NotFound, null);
             }
 
             // Update the user
@@ -61,6 +66,7 @@ namespace UCLDreamTeam.UserServiceApi.Domain.Services
             _identityContext.Update(userToChange);
             _identityContext.SaveChanges();
 
+            await _eventBus.SendCommand(new UpdateUserCommand(userToChange));
             return new ApiResponse<User>(ApiResponseCode.OK, userToChange);
         }
 

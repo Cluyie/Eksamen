@@ -1,4 +1,5 @@
-﻿using Models.Interfaces;
+﻿using System.Net;
+using Models.Interfaces;
 
 namespace BusinessLayer.Models
 {

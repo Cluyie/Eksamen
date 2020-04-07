@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Net;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Interfaces;
 using UCLDreamTeam.UserServiceApi.Domain.Models;
 using UCLDreamTeam.UserServiceApi.Domain.Services;
+using UCLDreamTeam.UserServiceApi.Domain.Services.Interfaces;
 
 namespace UCLDreamTeam.UserServiceApi.Controller
 {
@@ -14,9 +17,9 @@ namespace UCLDreamTeam.UserServiceApi.Controller
   [ApiController]
   public class UserController : ControllerBase
   {
-    private readonly UserService _userService;
+    private readonly IUserService _userService;
 
-    public UserController(UserService userService)
+    public UserController(IUserService userService)
     {
       _userService = userService;
     }
@@ -24,7 +27,7 @@ namespace UCLDreamTeam.UserServiceApi.Controller
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public ApiResponse<User> GetProfile()
+    public async Task<ApiResponse<User>> GetProfile()
     {
         var response = new ApiResponse<User>(ApiResponseCode.NoContent, null);
 
@@ -42,7 +45,7 @@ namespace UCLDreamTeam.UserServiceApi.Controller
     [HttpGet("guid={guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public ApiResponse<User> GetProfileFromGuid([FromRoute] Guid guid)
+    public async Task<ApiResponse<User>> GetProfileFromGuid([FromRoute] Guid guid)
     {
         var response = new ApiResponse<User>(ApiResponseCode.NoContent, null);
 
@@ -59,12 +62,12 @@ namespace UCLDreamTeam.UserServiceApi.Controller
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status304NotModified)]
-    public ApiResponse<User> UpdateProfile([FromBody] User user)
+    public async Task<ApiResponse<User>> UpdateProfile([FromBody] User user)
     {
       if (user == null || !ModelState.IsValid)
         return new ApiResponse<User>(ApiResponseCode.BadRequest, user);
 
-      return _userService.Update(user);
+      return await _userService.Update(user);
     }
   }
 }

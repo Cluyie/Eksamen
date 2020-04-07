@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using AutoMapper;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using XamarinFormsApp.Helpers;
 using Models;

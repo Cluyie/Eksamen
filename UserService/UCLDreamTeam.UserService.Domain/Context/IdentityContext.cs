@@ -9,9 +9,13 @@ namespace UCLDreamTeam.UserServiceApi.Domain.Context
 {
     public class IdentityContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
     {
-        public IdentityContext() : base() { }
+        public IdentityContext() : base()
+        {
+        }
 
-        public IdentityContext(DbContextOptions<IdentityContext> options) : base(options) { }
+        public IdentityContext(DbContextOptions<IdentityContext> options) : base(options)
+        {
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

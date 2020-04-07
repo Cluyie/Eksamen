@@ -11,7 +11,7 @@ namespace UCLDreamTeam.UserServiceApi.Domain.Services.Interfaces
     {
         Task<ApiResponse<string>> RegisterAsync(User user);
 
-        ApiResponse<User> Update(User user);
+        Task<ApiResponse<User>> Update(User user);
 
         // ----- Internal methods -----
 

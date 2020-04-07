@@ -41,7 +41,6 @@ namespace Rest_API.Controllers
         {
             if (userToRegister == null)
                 return new ApiResponse<string>(ApiResponseCode.BadRequest, "");
-
             return _userService.RegisterAsync(userToRegister).Result;
         }
 
