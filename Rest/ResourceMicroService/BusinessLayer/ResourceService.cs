@@ -3,11 +3,12 @@ using Data_Access_Layer.Context;
 using Models;
 using System.Collections.Generic;
 using System.Linq;
-using Data_Access_Layer.Models;
+using ResourcInterface;
 using Business_Layer.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.SignalR.Client;
 using System.Threading.Tasks;
+using ResourceMicroService.Models;
 
 namespace Business_Layer
 {
@@ -191,9 +192,9 @@ namespace Business_Layer
         #endregion
         #region Delete
         //Delete a resource
-        public ApiResponse<Resource> Delete(Guid guid)
+        public ApiResponse<IResource<IAvaiableTime>> Delete(Guid guid)
         {
-            Resource resourceToDelete = new Resource();
+            IResource<IAvaiableTime> resourceToDelete = new Resource<IAvaiableTime>();
 
             try
             {
