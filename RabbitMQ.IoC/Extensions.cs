@@ -20,7 +20,7 @@ namespace RabbitMQ.IoC
 {
     public static class Extensions
     {
-        public static void UseRabbitMq(this IServiceCollection services)
+        public static void AddRabbitMq(this IServiceCollection services)
         {
             //Domain Bus
             services.AddSingleton<IEventBus, RabbitMqBus>(sp =>
