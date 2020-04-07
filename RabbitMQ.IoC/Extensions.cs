@@ -15,6 +15,13 @@ using Producer.Domain.Services.Interfaces;
 using RabbitMQ.Bus.Bus;
 using RabbitMQ.Bus.Bus.Interfaces;
 using RabbitMQ.Bus.Events;
+using UCLDreamTeam.Reservation.Application.Interfaces;
+using UCLDreamTeam.Reservation.Application.Services;
+using UCLDreamTeam.Reservation.Data.Context;
+using UCLDreamTeam.Reservation.Data.Repository;
+using UCLDreamTeam.Reservation.Domain.CommandHandlers;
+using UCLDreamTeam.Reservation.Domain.Commands;
+using UCLDreamTeam.Reservation.Domain.Interfaces;
 
 namespace RabbitMQ.IoC
 {

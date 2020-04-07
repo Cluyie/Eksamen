@@ -11,6 +11,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Consumer.Domain\Consumer.Domain.csproj" />
+    <ProjectReference Include="..\Microservices\Reservation\UCLDreamTeam.Reservation.Application\UCLDreamTeam.Reservation.Application.csproj" />
+    <ProjectReference Include="..\Microservices\Reservation\UCLDreamTeam.Reservation.Data\UCLDreamTeam.Reservation.Data.csproj" />
+    <ProjectReference Include="..\Microservices\Reservation\UCLDreamTeam.Reservation.Domain\UCLDreamTeam.Reservation.Domain.csproj" />
     <ProjectReference Include="..\Producer.Domain\Producer.Domain.csproj" />
     <ProjectReference Include="..\RabbitMQ.Bus\RabbitMQ.Bus.csproj" />
   </ItemGroup>
