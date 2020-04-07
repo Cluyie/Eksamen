@@ -13,7 +13,6 @@
     <ProjectReference Include="..\Consumer.Domain\Consumer.Domain.csproj" />
     <ProjectReference Include="..\Producer.Domain\Producer.Domain.csproj" />
     <ProjectReference Include="..\RabbitMQ.Bus\RabbitMQ.Bus.csproj" />
-    <ProjectReference Include="..\UserService\UCLDreamTeam.UserService.Domain\UCLDreamTeam.UserServiceApi.Domain.csproj" />
   </ItemGroup>
 
 </Project>

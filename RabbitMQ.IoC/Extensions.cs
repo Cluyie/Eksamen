@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Consumer.Domain.EventHandlers;
+﻿using Consumer.Domain.EventHandlers;
 using Consumer.Domain.Events;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -15,10 +10,6 @@ using Producer.Domain.Services.Interfaces;
 using RabbitMQ.Bus.Bus;
 using RabbitMQ.Bus.Bus.Interfaces;
 using RabbitMQ.Bus.Events;
-using UCLDreamTeam.UserServiceApi.Domain.CommandHandlers;
-using UCLDreamTeam.UserServiceApi.Domain.Commands;
-using UCLDreamTeam.UserServiceApi.Domain.Services;
-using UCLDreamTeam.UserServiceApi.Domain.Services.Interfaces;
 
 namespace RabbitMQ.IoC
 {
