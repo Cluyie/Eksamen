@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 using System;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Rest_API
 {
