@@ -33,7 +33,7 @@ namespace UCLDreamTeam.UserServiceApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Producer Microservice", Version = "v1" }));
             services.AddMediatR(typeof(Startup));
             services.AddControllers();
-            services.RegisterRabbitMq();
+            services.AddRabbitMq();
 
         }
 

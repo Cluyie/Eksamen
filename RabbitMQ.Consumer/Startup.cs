@@ -31,7 +31,7 @@ namespace RabbitMQ.Consumer
         {
             services.AddMediatR(typeof(Startup));
             services.AddControllers();
-            services.UseRabbitMq();
+            services.AddRabbitMq();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

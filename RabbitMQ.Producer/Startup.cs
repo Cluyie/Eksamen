@@ -32,7 +32,7 @@ namespace RabbitMQ.Producer
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "Producer Microservice", Version = "v1"}));
             services.AddMediatR(typeof(Startup));
             services.AddControllers();
-            services.UseRabbitMq();
+            services.AddRabbitMq();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
