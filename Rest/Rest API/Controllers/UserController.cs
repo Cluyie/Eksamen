@@ -50,7 +50,7 @@ namespace Rest_API.Controllers
 
         if (userProfile != null)
         {
-            response = new ApiResponse<User>(ApiResponseCode.OK, _userService.GetUserFromIdAsync(guid).Result);
+            response = new ApiResponse<User>(ApiResponseCode.OK, userProfile);
         }
         return response;
     }
