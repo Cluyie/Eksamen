@@ -14,7 +14,7 @@ namespace RabbitMQ.IoC
 {
     public static class DependencyContainer
     {
-        public static void RegisterServices(IServiceCollection services)
+        public static void RegisterRabbitMq(this IServiceCollection services)
         {
             //Domain Bus
             services.AddSingleton<IEventBus, RabbitMqBus>(sp =>
