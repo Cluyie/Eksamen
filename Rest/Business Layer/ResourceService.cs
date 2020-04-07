@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Business_Layer
 {
     public class ResourceService
-    {        
+    {
         private ApplicationContext _applicationContext;
         private HubConnection _hubConnection;
 
