@@ -8,6 +8,7 @@ namespace BusinessLayer.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
         public List<Reservation> Reservations { get; set; }
         public List<AvailableTime> TimeSlots { get; set; }
     }
