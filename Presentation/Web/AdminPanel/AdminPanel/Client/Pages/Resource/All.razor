@@ -1,0 +1,56 @@
+﻿@page "/Resource/All"
+@using AdminPanel.Client.DTOs
+@using AdminPanel.Client.Services
+@using Microsoft.AspNetCore.Authorization
+@attribute[Authorize]
+@inject IResourceService ResourceService
+
+@if (_resources == null)
+{
+    <Loading/>
+}
+else
+{
+    <h1>Alle Ressourcer</h1>
+    <hr/>
+    <p>
+        <NavLink id="newRessource" class="btn btn-primary" href="Resource/Add"><b>+</b> Opret ny ressource</NavLink>
+    </p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Resource:</th>
+            <th>Antal Timeslots:</th>
+            <th>Handlinger:</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var _resourceDTO in _resources)
+        {
+            var deleteUrl = "Resource/Delete/" + _resourceDTO.Id;
+            var detailsUrl = "Resource/Details/" + _resourceDTO.Id;
+            var editUrl = "Resource/Edit/" + _resourceDTO.Id;
+            <tr id="tableRow">
+                <td id="ressourceName">
+                    <NavLink id="detailsBtn" href="@detailsUrl">@_resourceDTO.Name</NavLink>
+                </td>
+                <td>@_resourceDTO.Timeslots.Count</td>
+                <td>
+                    <NavLink id="editRessource" class="btn btn-info" href="@editUrl">Rediger</NavLink>
+                    <NavLink id="deleteRessource" class="btn btn-danger" href="@deleteUrl">Slet</NavLink>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<ResourceDTO> _resources;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _resources = await ResourceService.GetAll();
+    }
+
+}

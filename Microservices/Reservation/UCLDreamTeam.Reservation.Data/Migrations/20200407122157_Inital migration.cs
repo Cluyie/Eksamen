@@ -8,34 +8,31 @@ namespace UCLDreamTeam.Reservation.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Reservations",
-                columns: table => new
+                "Reservations",
+                table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false),
-                    ResourceId = table.Column<Guid>(nullable: false)
+                    Id = table.Column<Guid>(),
+                    UserId = table.Column<Guid>(),
+                    ResourceId = table.Column<Guid>()
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Reservations", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_Reservations", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "ReserveTime",
-                columns: table => new
+                "ReserveTime",
+                table => new
                 {
-                    ReservationId = table.Column<Guid>(nullable: false),
-                    FromDate = table.Column<DateTime>(nullable: false),
-                    ToDate = table.Column<DateTime>(nullable: false)
+                    ReservationId = table.Column<Guid>(),
+                    FromDate = table.Column<DateTime>(),
+                    ToDate = table.Column<DateTime>()
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ReserveTime", x => x.ReservationId);
                     table.ForeignKey(
-                        name: "FK_ReserveTime_Reservations_ReservationId",
-                        column: x => x.ReservationId,
-                        principalTable: "Reservations",
-                        principalColumn: "Id",
+                        "FK_ReserveTime_Reservations_ReservationId",
+                        x => x.ReservationId,
+                        "Reservations",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
         }
@@ -43,10 +40,10 @@ namespace UCLDreamTeam.Reservation.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ReserveTime");
+                "ReserveTime");
 
             migrationBuilder.DropTable(
-                name: "Reservations");
+                "Reservations");
         }
     }
 }

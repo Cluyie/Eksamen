@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using UCLDreamTeam.Reservation.Application.Interfaces;
@@ -44,7 +43,6 @@ namespace UCLDreamTeam.Reservation.Api.Controllers
                 var reservation = await _reservationService.GetByIdAsync(id);
                 if (reservation == null) return NotFound();
                 return Ok(reservation);
-
             }
             catch (Exception e)
             {
