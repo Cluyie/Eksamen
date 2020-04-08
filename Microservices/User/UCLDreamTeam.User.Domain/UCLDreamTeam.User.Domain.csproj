@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>UCLDreamTeam.User.Domain</AssemblyName>
+    <RootNamespace>UCLDreamTeam.User.Domain</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0-preview.2.20159.4" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="5.0.0-preview.2.20167.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Models\Models.csproj" />
+    <ProjectReference Include="..\..\..\Core\RabbitMQ.Bus\RabbitMQ.Bus.csproj" />
+  </ItemGroup>
+
+</Project>
