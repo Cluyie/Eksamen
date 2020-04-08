@@ -25,17 +25,6 @@ namespace RabbitMQ.IoC
                 return new RabbitMqBus(sp.GetService<IMediator>(), scopeFactory);
             });
 
-            
-            #region ResourceService
-
-            #endregion
-            #region ReservationService
-
-            #endregion
-            #region AuthService
-
-            #endregion
-
             //Template for test consumer and producer
             services.AddTransient<IMessageService, MessageService>();
             //Message template
