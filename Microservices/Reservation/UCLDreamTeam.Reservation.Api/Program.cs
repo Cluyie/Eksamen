@@ -18,6 +18,8 @@ namespace UCLDreamTeam.Reservation.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseDefaultServiceProvider(options =>
+                    options.ValidateScopes = false) //If this is not here MediatR will not work
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
