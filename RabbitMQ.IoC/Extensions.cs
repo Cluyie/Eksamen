@@ -35,10 +35,6 @@ namespace RabbitMQ.IoC
                 var scopeFactory = sp.GetRequiredService<IServiceScopeFactory>();
                 return new RabbitMqBus(sp.GetService<IMediator>(), scopeFactory);
             });
-
-            services.AddTransient<IRequestHandler<CreateMessageCommand, bool>, MessageCommandHandler>();
-            services.AddTransient<IMessageService, MessageService>();
-            services.AddTransient<IEventHandler<MessageCreatedEvent>, MessageEventHandler>();
         }
 
         public static void Subscribe<T, TH>(this IApplicationBuilder app) where T : Event where TH : IEventHandler<T>

@@ -21,15 +21,26 @@ namespace UCLDreamTeam.Reservation.Application.Services
             _reservationRepository = reservationRepository;
         }
 
-        public async Task<IEnumerable<Domain.Models.Reservation>> GetReservationsAsync()
+        public async Task<IEnumerable<Domain.Models.Reservation>> GetAsync()
         {
-            return await _reservationRepository.GetReservationsAsync();
+            return await _reservationRepository.GetAsync();
+        }
+
+        public async Task<Domain.Models.Reservation> GetByIdAsync(Guid id)
+        {
+            return await _reservationRepository.GetByIdAsync(id);
         }
 
         public async Task AddAsync(Domain.Models.Reservation reservation)
         {
-            var command = new ReservationCommand(reservation.Id, reservation.UserId, reservation.ResourceId,
+            var command = new CreateReservationCommand(reservation.Id, reservation.UserId, reservation.ResourceId,
                 reservation.Timeslot);
+            await _eventBus.SendCommand(command);
+        }
+
+        public async Task CancelById(Guid id)
+        {
+            var command = new CreateCancelReservationCommand(id);
             await _eventBus.SendCommand(command);
         }
     }

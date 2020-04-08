@@ -12,30 +12,23 @@ using UCLDreamTeam.Reservation.Domain.Interfaces;
 
 namespace UCLDreamTeam.Reservation.Domain.CommandHandlers
 {
-    public class ReservationCommandHandler : IRequestHandler<CreateReservationCommand, bool>
+    public class CancelReservationCommandHandler : IRequestHandler<CreateCancelReservationCommand, bool>
     {
         private readonly IEventBus _eventBus;
         private readonly IReservationRepository _reservationRepository;
 
-        public ReservationCommandHandler(IEventBus eventBus, IReservationRepository reservationRepository)
+        public CancelReservationCommandHandler(IEventBus eventBus, IReservationRepository reservationRepository)
         {
             _eventBus = eventBus;
             _reservationRepository = reservationRepository;
         }
 
-        public async Task<bool> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(CreateCancelReservationCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                await _reservationRepository.AddAsync(new Models.Reservation
-                {
-                    Id = request.Id,
-                    ResourceId = request.ResourceId,
-                    Timeslot = request.Timeslot,
-                    UserId = request.UserId
-                });
-                _eventBus.PublishEvent(new ReservationCreatedEvent(request.Id, request.UserId, request.ResourceId,
-                    request.Timeslot));
+                await _reservationRepository.CancelById(request.Id);
+                _eventBus.PublishEvent(new ReservationCanceledEvent(request.Id));
             }
             catch (Exception e)
             {

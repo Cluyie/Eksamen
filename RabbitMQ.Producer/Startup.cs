@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Consumer.Domain.EventHandlers;
+using Consumer.Domain.Events;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,6 +15,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.IoC;
 using MediatR;
+using Producer.Domain.CommandHandlers;
+using Producer.Domain.Commands;
+using Producer.Domain.Services;
+using Producer.Domain.Services.Interfaces;
+using RabbitMQ.Bus.Bus.Interfaces;
 
 namespace RabbitMQ.Producer
 {
@@ -33,6 +40,10 @@ namespace RabbitMQ.Producer
             services.AddMediatR(typeof(Startup));
             services.AddControllers();
             services.AddRabbitMq();
+
+            services.AddTransient<IRequestHandler<CreateMessageCommand, bool>, MessageCommandHandler>();
+            services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<IEventHandler<MessageCreatedEvent>, MessageEventHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

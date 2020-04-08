@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\RabbitMQ.Bus\RabbitMQ.Bus.csproj" />
     <ProjectReference Include="..\UCLDreamTeam.Reservation.Domain\UCLDreamTeam.Reservation.Domain.csproj" />
   </ItemGroup>
 

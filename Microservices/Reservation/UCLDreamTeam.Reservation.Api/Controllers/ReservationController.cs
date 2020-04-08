@@ -22,20 +22,59 @@ namespace UCLDreamTeam.Reservation.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Domain.Models.Reservation>>> Get()
         {
-            var reservations = await _reservationService.GetReservationsAsync();
-            if (reservations == null) return BadRequest();
-            if (!reservations.Any()) return NotFound();
-            return Ok(reservations);
+            try
+            {
+                var reservations = await _reservationService.GetAsync();
+                if (reservations == null) return BadRequest();
+                if (!reservations.Any()) return NotFound();
+                return Ok(reservations);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(503, e.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            if (id == Guid.Empty) return BadRequest();
+            try
+            {
+                var reservation = await _reservationService.GetByIdAsync(id);
+                if (reservation == null) return NotFound();
+                return Ok(reservation);
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(503, e.Message);
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Domain.Models.Reservation reservation)
+        public async Task<IActionResult> CreateReservation([FromBody] Domain.Models.Reservation reservation)
         {
             if (reservation == null) return BadRequest();
             try
             {
                 await _reservationService.AddAsync(reservation);
                 return Ok(reservation);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(503, e.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> CancelById(Guid id)
+        {
+            if (id == Guid.Empty) return BadRequest();
+            try
+            {
+                await _reservationService.CancelById(id);
+                return Ok(id);
             }
             catch (Exception e)
             {

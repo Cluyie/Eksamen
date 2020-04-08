@@ -16,8 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\RabbitMQ.IoC\RabbitMQ.IoC.csproj" />
-    <ProjectReference Include="..\UCLDreamTeam.Reservation.Application\UCLDreamTeam.Reservation.Application.csproj" />
-    <ProjectReference Include="..\UCLDreamTeam.Reservation.Data\UCLDreamTeam.Reservation.Data.csproj" />
   </ItemGroup>
 
 

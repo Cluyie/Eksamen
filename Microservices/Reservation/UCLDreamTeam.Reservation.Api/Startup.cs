@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Consumer.Domain.EventHandlers;
 using MediatR;
@@ -43,16 +44,20 @@ namespace UCLDreamTeam.Reservation.Api
             {
                 options.UseSqlServer(Configuration.GetConnectionString("ReservationDbConnection"));
             });
+
             services.AddSwaggerGen(c =>
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "Reservation Microservice", Version = "v1"}));
-            services.AddMediatR(typeof(Startup));
-            services.AddControllers();
 
+            services.AddMediatR(typeof(Startup));
+            
             services.AddRabbitMq();
-            services.AddTransient<IRequestHandler<ReservationCommand, bool>, ReservationCommandHandler>();
+
+            services.AddTransient<IRequestHandler<CreateReservationCommand, bool>, ReservationCommandHandler>();
+            services.AddTransient<IRequestHandler<CreateCancelReservationCommand, bool>, CancelReservationCommandHandler>();
             services.AddTransient<IReservationService, ReservationService>();
             services.AddTransient<IReservationRepository, ReservationRepository>();
-            services.AddTransient<ReservationDbContext>();
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

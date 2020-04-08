@@ -7,7 +7,7 @@ using RabbitMQ.Bus.Events;
 
 namespace RabbitMQ.Bus.Commands
 {
-    public class Command : Message
+    public abstract class Command : Message
     {
         public DateTime TimeStamp { get; protected set; }
 

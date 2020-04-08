@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Bus.Bus.Interfaces;
 using UCLDreamTeam.Reservation.Data.Context;
 using UCLDreamTeam.Reservation.Domain.Interfaces;
+using Z.EntityFramework.Plus;
 
 namespace UCLDreamTeam.Reservation.Data.Repository
 {
@@ -19,14 +20,26 @@ namespace UCLDreamTeam.Reservation.Data.Repository
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Domain.Models.Reservation>> GetReservationsAsync()
+        public async Task<IEnumerable<Domain.Models.Reservation>> GetAsync()
         {
             return await _dbContext.Reservations.ToListAsync();
         }
 
+        public async Task<Domain.Models.Reservation> GetByIdAsync(Guid id)
+        {
+            return await _dbContext.Reservations.FirstOrDefaultAsync(r => r.Id == id);
+        }
+
         public async Task AddAsync(Domain.Models.Reservation reservation)
         {
-            await _dbContext.AddAsync(reservation);
+            await _dbContext.Reservations.AddAsync(reservation);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task CancelById(Guid id)
+        {
+            await _dbContext.Reservations.Where(r => r.Id == id).DeleteAsync();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
