@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="XamarinFormsApp.View.ProfilePage"
+             BackgroundColor="{StaticResource PageBackgroundColor}">
+    <ContentPage.Content>
+        <StackLayout Margin="20,35,20,20">
+            <Label Text="Profil"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Center"
+                   FontSize="Title" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="1" Grid.Column="0" Text="Fornavn" FontSize="Body" VerticalTextAlignment="Center" />
+                <Entry Grid.Row="1" Grid.Column="1" Text="{Binding FirstName}" FontSize="Body"
+                       Placeholder="Indtast Fornavn" />
+
+                <Label Grid.Row="2" Grid.Column="0" Text="Efternavn" FontSize="Body" VerticalTextAlignment="Center" />
+                <Entry Grid.Row="2" Grid.Column="1" Text="{Binding LastName}" FontSize="Body"
+                       Placeholder="Indtast Efternavn" />
+
+                <Label Grid.Row="3" Grid.Column="0" Text="Adresse" FontSize="Body" VerticalTextAlignment="Center" />
+                <Entry Grid.Row="3" Grid.Column="1" Text="{Binding Address}" FontSize="Body"
+                       Placeholder="Indtast Adresse" />
+
+                <Label Grid.Row="4" Grid.Column="0" Text="By" FontSize="Body" VerticalTextAlignment="Center" />
+                <Entry Grid.Row="4" Grid.Column="1" Text="{Binding City}" FontSize="Body" Placeholder="Indtast By" />
+
+                <Label Grid.Row="5" Grid.Column="0" Text="Post Nr." FontSize="Body" VerticalTextAlignment="Center" />
+                <Entry Grid.Row="5" Grid.Column="1" Text="{Binding ZipCode}" FontSize="Body"
+                       Placeholder="Indtast Postnummer" />
+
+                <Label Grid.Row="6" Grid.Column="0" Text="Land" FontSize="Body" VerticalTextAlignment="Center" />
+                <Entry Grid.Row="6" Grid.Column="1" Text="{Binding Country}" FontSize="Body" Placeholder="Indtast Land" />
+
+                <Button Clicked="UpdateButton_Clicked" CornerRadius="10" Grid.Row="8" Grid.ColumnSpan="2"
+                        Text="Opdater profil" FontSize="Large" />
+                <Button Clicked="LoginSettingsButton_Clicked" CornerRadius="10" Grid.Row="9" Grid.ColumnSpan="2"
+                        Grid.RowSpan="2" Text="Ændre &#x0a; Loginoplysninger" FontSize="Large" />
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

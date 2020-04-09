@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="XamarinFormsApp.View.HomePage" BackgroundImageSource="">
+    <ContentPage.Content>
+        <StackLayout Margin="20,35,20,20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="18*" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="3*" />
+                </Grid.RowDefinitions>
+                <Label Text="Goddag "
+                       FontSize="Title"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       HorizontalTextAlignment="End" />
+                <Label Text="{Binding Username}"
+                       FontSize="Title"
+                       Grid.Row="1"
+                       Grid.Column="1"
+                       HorizontalTextAlignment="Start" />
+                <Button Text="Profil"
+                        FontSize="Large"
+                        CornerRadius="10"
+                        Grid.Row="3"
+                        Grid.ColumnSpan="2"
+                        Clicked="ProfileButton_Clicked" />
+                <Button Text="Log ud"
+                        FontSize="Large"
+                        CornerRadius="10"
+                        Grid.Row="4"
+                        Grid.ColumnSpan="2"
+                        Clicked="LogoutButton_Clicked" />
+                <Button Text="Ressourcer"
+                        FontSize="Large"
+                        CornerRadius="10"
+                        Grid.Row="4"
+                        Grid.ColumnSpan="2"
+                        Clicked="Button_Clicked" />
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
