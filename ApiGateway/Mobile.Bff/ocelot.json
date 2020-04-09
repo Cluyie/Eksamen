@@ -12,7 +12,7 @@
       ],
       "UpstreamPathTemplate": "/Reservation",
       "UpstreamHttpMethod": ["Get"],
-      "SwaggerKey": "Reservation"
+      //"SwaggerKey": "Reservation"
     },
     {
       "DownstreamPathTemplate": "/Reservation/{id}",
@@ -25,7 +25,7 @@
       ],
       "UpstreamPathTemplate": "/Reservation/{id}",
       "UpstreamHttpMethod": ["Get"],
-      "SwaggerKey": "Reservation"
+      //"SwaggerKey": "Reservation"
     },
     {
       "DownstreamPathTemplate": "/Reservation",
