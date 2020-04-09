@@ -1,38 +1,51 @@
-﻿using Blazored.LocalStorage;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Blazored.LocalStorage;
 
 namespace AdminPanel.Client.Services
 {
     public class AuthCredentialsKeeper
     {
-        private const string INDEX_TOKEN = "AdminPanel-Token";
-        private const string INDEX_USERNAME = "AdminPanel-Username";
+        const string INDEX_TOKEN = "AdminPanel-Token";
+        const string INDEX_USERNAME = "AdminPanel-Username";
 
-        private readonly ISyncLocalStorageService _localStorage;
+        ISyncLocalStorageService _localStorage;
+
+        string _username = null;
+        string _token = null;
+
+        public string Username
+        {
+            get => _username;
+        }
+
+        public string Token
+        {
+            get => _token;
+        }
 
         public AuthCredentialsKeeper(ISyncLocalStorageService localStorage)
         {
             _localStorage = localStorage;
 
-            Username = _localStorage.GetItem<string>(INDEX_USERNAME);
-            Token = _localStorage.GetItem<string>(INDEX_TOKEN);
+            _username = _localStorage.GetItem<string>(INDEX_USERNAME);
+            _token = _localStorage.GetItem<string>(INDEX_TOKEN);
         }
-
-        public string Username { get; private set; }
-
-        public string Token { get; private set; }
 
         public void SetCredentials(string username, string token)
         {
-            Username = username;
-            Token = token;
+            _username = username;
+            _token = token;
 
-            _localStorage.SetItem(INDEX_USERNAME, Username);
-            _localStorage.SetItem(INDEX_TOKEN, Token);
+            _localStorage.SetItem(INDEX_USERNAME, _username);
+            _localStorage.SetItem(INDEX_TOKEN, _token);
         }
 
         public bool HasCredentials()
         {
-            return Username != null && Token != null;
+            return (_username != null && _token != null);
         }
     }
 }

@@ -1,7 +1,8 @@
-﻿using System;
+﻿using AdminPanel.Client.DTOs;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using AdminPanel.Client.DTOs;
 
 namespace AdminPanel.Client.Services
 {
@@ -21,7 +22,7 @@ namespace AdminPanel.Client.Services
 
         public async Task DeleteFromId(Guid id)
         {
-            await _client.DeleteAsync<List<ResourceDTO>>("Resource/guid=" + id);
+            await _client.DeleteAsync<List<ResourceDTO>>("Resource/guid=" + id.ToString());
         }
 
         public async Task<List<ResourceDTO>> GetAll()
@@ -33,7 +34,7 @@ namespace AdminPanel.Client.Services
 
         public async Task<ResourceDTO> GetFromId(Guid id)
         {
-            var response = await _client.GetAsync<ResourceDTO>("Resource/guid=" + id);
+            var response = await _client.GetAsync<ResourceDTO>("Resource/guid=" + id.ToString());
 
             return response.Value;
         }
