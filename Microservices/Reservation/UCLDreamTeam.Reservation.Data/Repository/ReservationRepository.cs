@@ -20,12 +20,12 @@ namespace UCLDreamTeam.Reservation.Data.Repository
 
         public async Task<IEnumerable<Domain.Models.Reservation>> GetAsync()
         {
-            return await _dbContext.Reservations.ToListAsync();
+            return await _dbContext.Reservations.Include(r => r.Timeslot).ToListAsync();
         }
 
         public async Task<Domain.Models.Reservation> GetByIdAsync(Guid id)
         {
-            return await _dbContext.Reservations.FirstOrDefaultAsync(r => r.Id == id);
+            return await _dbContext.Reservations.Include(r => r.Timeslot).FirstOrDefaultAsync(r => r.Id == id);
         }
 
         public async Task AddAsync(Domain.Models.Reservation reservation)
