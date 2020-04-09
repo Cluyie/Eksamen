@@ -1,5 +1,6 @@
 {
   "ReRoutes": [
+    //Reservation Microservice Api Registrations
     {
       "DownstreamPathTemplate": "/Reservation",
       "DownstreamScheme": "https",
@@ -52,8 +53,10 @@
       "UpstreamHttpMethod": ["Delete"],
       "SwaggerKey": "Reservation"
     }
+    //---------------------------------------------
   ],
   "SwaggerEndPoints": [
+    //Reservation Microservice Api Registrations
     {
       "Key": "Reservation",
       "Config": [
@@ -64,8 +67,9 @@
         }
       ]
     }
+    //---------------------------------------------
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5001"
+    "BaseUrl": "https://localhost:5001" //Change to match url when hosted on server
   }
 }

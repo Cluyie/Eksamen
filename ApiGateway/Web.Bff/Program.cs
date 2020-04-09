@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Ocelot.Middleware;
 using Ocelot.DependencyInjection;
 using System.IO;
+using Microsoft.AspNetCore;
 
 namespace Web.Bff
 {
@@ -16,28 +17,24 @@ namespace Web.Bff
     {
         public static void Main(string[] args)
         {
-            new WebHostBuilder()
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
+            CreateWebHostBuilder(args).Build().Run();
+        }
+
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            return WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config
                         .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
                         .AddJsonFile("appsettings.json", true, true)
-                        .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true,
-                            true)
+                        .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json",
+                            true, true)
+                        .AddJsonFile($"appsettings.local.json", true, true)
                         .AddJsonFile("ocelot.json")
                         .AddEnvironmentVariables();
                 })
-                .ConfigureServices(s => { s.AddOcelot(); })
-                .ConfigureLogging((hostingContext, logging) =>
-                {
-                    //add your logging
-                })
-                .UseIISIntegration()
-                .Configure(app => { app.UseOcelot().Wait(); })
-                .Build()
-                .Run();
+                .UseStartup<Startup>();
         }
     }
 }
