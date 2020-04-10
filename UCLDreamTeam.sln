@@ -79,9 +79,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnitSignalR", "Microservic
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User", "User", "{19E9413C-D88B-4E8B-8C4F-E8A7315A2B87}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer", "Microservices\MailService\BusinessLayer\BusinessLayer.csproj", "{C11ED579-75D0-437B-AD58-59867456E32E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UCLDreamTeam.Mail.Domain", "Microservices\MailService\BusinessLayer\UCLDreamTeam.Mail.Domain.csproj", "{C11ED579-75D0-437B-AD58-59867456E32E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailService", "Microservices\MailService\MailService\MailService.csproj", "{247D679D-786D-4FF7-86C3-F1D375C03DB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UCLDreamTeam.Mail.Api", "Microservices\MailService\MailService\UCLDreamTeam.Mail.Api.csproj", "{247D679D-786D-4FF7-86C3-F1D375C03DB1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailTest", "Microservices\MailService\MailTest\MailTest.csproj", "{C0DD9942-42D1-4834-B05A-EA781620DB63}"
 EndProject

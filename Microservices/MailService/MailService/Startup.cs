@@ -1,16 +1,16 @@
-using System;
-using System.Net.Http;
 using System.Text.Json.Serialization;
 using BusinessLayer;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using UCLToolBox;
+using RabbitMQ.IoC;
+using UCLDreamTeam.Mail.Domain;
 
-namespace MailService
+namespace UCLDreamTeam.Mail.Api
 {
     public class Startup
     {
@@ -24,15 +24,12 @@ namespace MailService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var client = new HttpClient
-            {
-                BaseAddress = new Uri(Configuration["BaseAPIURL"])
-            };
 
-            services.AddSingleton(client);
-            services.AddSingleton<ApiClientProxy>();
 
-            services.AddSingleton<MailHelper>();
+            services.AddMediatR(typeof(Startup));
+            services.AddRabbitMq();
+
+            services.AddSingleton<MailService>();
             services.AddMvc();
 
             services.AddControllers().AddJsonOptions(options =>

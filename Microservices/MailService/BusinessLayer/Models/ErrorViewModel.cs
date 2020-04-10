@@ -1,4 +1,4 @@
-namespace BusinessLayer.Models
+namespace UCLDreamTeam.Mail.Domain.Models
 {
     public class ErrorViewModel
     {

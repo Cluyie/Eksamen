@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="8.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="Swashbuckle" Version="6.0.0-rc1-final" />
@@ -14,8 +16,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\Models\Models.csproj" />
+    <ProjectReference Include="..\..\..\Core\RabbitMQ.IoC\RabbitMQ.IoC.csproj" />
     <ProjectReference Include="..\..\..\Core\UCLToolBox\UCLToolBox.csproj" />
-    <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj" />
+    <ProjectReference Include="..\BusinessLayer\UCLDreamTeam.Mail.Domain.csproj" />
   </ItemGroup>
 
 

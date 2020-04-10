@@ -1,25 +1,26 @@
 using BusinessLayer;
-using BusinessLayer.Models;
 using Microsoft.OpenApi.Extensions;
 using Models.Mail;
 using NUnit.Framework;
+using UCLDreamTeam.Mail.Domain;
+using UCLDreamTeam.Mail.Domain.Models;
 
 namespace MailTest
 {
     public class Tests
     {
-        private MailHelper _mailHelper { get; set; }
+        private MailService MailService { get; set; }
 
         [SetUp]
         public void Setup()
         {
-            _mailHelper = new MailHelper();
+            MailService = new MailService();
         }
 
         [Test]
         public void Send()
         {
-            _mailHelper.SendMail(_mailHelper
+            MailService.SendMail(MailService
                 .GenerateMail(new User {Email = "krelle1010@gmail.com"}, Template.BookingConfirmation.GetDisplayName(),
                     "Hej"));
         }

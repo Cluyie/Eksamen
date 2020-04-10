@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Models.Interfaces;
 
-namespace BusinessLayer.Models
+namespace UCLDreamTeam.Mail.Domain.Models
 {
     public class Resource : IResource<Reservation, ReserveTime, AvailableTime>
     {

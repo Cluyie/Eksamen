@@ -1,7 +1,7 @@
 ﻿using Models.Interfaces;
 using Models.Mail;
 
-namespace BusinessLayer.Models
+namespace UCLDreamTeam.Mail.Domain.Models
 {
     public class TemplateViewModel : ITemplateViewModel<Reservation, ReserveTime, Resource, AvailableTime, User>
     {

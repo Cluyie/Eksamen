@@ -1,7 +1,7 @@
 ﻿using System;
 using Models.Interfaces;
 
-namespace BusinessLayer.Models
+namespace UCLDreamTeam.Mail.Domain.Models
 {
     public class ReserveTime : IReserveTime
     {

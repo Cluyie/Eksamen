@@ -1,6 +1,6 @@
 ﻿using Models.Interfaces;
 
-namespace BusinessLayer.Models
+namespace UCLDreamTeam.Mail.Domain.Models
 {
     public class ApiResponse<T> : IApiResponse<T> where T : class
     {

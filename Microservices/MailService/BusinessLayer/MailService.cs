@@ -1,18 +1,24 @@
 ﻿using System.Net;
 using System.Net.Mail;
-using BusinessLayer.Properties;
 using Models.Interfaces;
+using RabbitMQ.Bus.Bus.Interfaces;
+using UCLDreamTeam.Mail.Domain.Models;
+using UCLDreamTeam.Mail.Domain.Properties;
 
 namespace BusinessLayer
 {
-    public class MailHelper
+    public class MailService
     {
         private SmtpClient _smtpClient;
 
-        public MailHelper()
+        private readonly IEventBus _eventBus;
+
+        public MailService(IEventBus eventBus)
         {
+            _eventBus = eventBus;
             ConfigureSmtpClient();
         }
+
 
         public void ConfigureSmtpClient()
         {
@@ -46,6 +52,21 @@ namespace BusinessLayer
             mail.To.Add(new MailAddress(user.Email, user.FirstName));
 
             return mail;
+        }
+
+        public User GetUser(string recipientId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Reservation GetReservation(string reservationId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Resource GetResource(string resourceId)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
