@@ -1,8 +1,8 @@
 ﻿using System;
 using RabbitMQ.Bus.Events;
-using UCLDreamTeam.Reservation.Domain.Models;
+using UCLDreamTeam.Mail.Domain.Models;
 
-namespace UCLDreamTeam.Reservation.Domain.Events
+namespace UCLDreamTeam.Mail.Domain.Events
 {
     public class ReservationCreatedEvent : Event
     {

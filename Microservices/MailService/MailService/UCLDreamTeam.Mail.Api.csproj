@@ -18,6 +18,7 @@
     <ProjectReference Include="..\..\..\Core\Models\Models.csproj" />
     <ProjectReference Include="..\..\..\Core\RabbitMQ.IoC\RabbitMQ.IoC.csproj" />
     <ProjectReference Include="..\..\..\Core\UCLToolBox\UCLToolBox.csproj" />
+    <ProjectReference Include="..\..\..\UCLDreamTeam.Mail.Application\UCLDreamTeam.Mail.Application.csproj" />
     <ProjectReference Include="..\BusinessLayer\UCLDreamTeam.Mail.Domain.csproj" />
   </ItemGroup>
 

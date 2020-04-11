@@ -26,45 +26,22 @@ namespace UCLDreamTeam.User.Application.Services
             _eventBus = eventBus;
         }
 
-        public async Task<ApiResponse<string>> RegisterAsync(Domain.Models.User userToRegister)
+        public async Task RegisterAsync(Domain.Models.User userToRegister)
         {
-            var user = userToRegister;
-            var result = await _userManager.CreateAsync(user);
-            if (result.Succeeded)
-            {
-                await _eventBus.SendCommand(new RegisterUserCommand(user));
-                return new ApiResponse<string>(ApiResponseCode.OK, "");
-            }
-            await _eventBus.SendCommand(new RegisterUserRejectedCommand(user));
-            return new ApiResponse<string>(ApiResponseCode.InternalServerError, "");
+            await _eventBus.SendCommand(new RegisterUserCommand(userToRegister));
         }
 
-        public async Task<ApiResponse<Domain.Models.User>> Update(Domain.Models.User userData)
+        public async Task<Domain.Models.User> Update(Domain.Models.User userData)
         {
-            //Prevent changing the ID
-            userData.Id = Guid.Empty;
-            Domain.Models.User userToChange = GetUserFromIdAsync(userData.Id).Result;
-            // Can only update an existing user
-            if (userToChange == null)
-            {
-                await _eventBus.SendCommand(new NoUserFoundCommand(userToChange));
-                return new ApiResponse<Domain.Models.User>(ApiResponseCode.NoContent, null);
-            }
+            await _eventBus.SendCommand(new UpdateUserCommand(userData,
+                await _userManager.FindByIdAsync(userData.Id.ToString())));
+            return userData;
+        }
 
-            // Update the user
-            if (!string.IsNullOrWhiteSpace(userData.PasswordHash) && userData.PasswordHash != userToChange.PasswordHash)
-            {
-                //If the password is unchanged or empty, this does not update the password
-                userData.PasswordHash = userToChange.PasswordHash;
-            }
-            // Automapper is configured to only overwrite the fields that are not null
-            _mapper.Map(userData, userToChange);
-
-            _identityContext.Update(userToChange);
-            _identityContext.SaveChanges();
-
-            await _eventBus.SendCommand(new UpdateUserCommand(userToChange));
-            return new ApiResponse<Domain.Models.User>(ApiResponseCode.OK, userToChange);
+        public async Task DeleteUserFromIdAsync(Guid id)
+        {
+            var command = new DeleteUserCommand(await GetUserFromIdAsync(id));
+            await _eventBus.SendCommand(command);
         }
 
         // ----- Internal methods -----

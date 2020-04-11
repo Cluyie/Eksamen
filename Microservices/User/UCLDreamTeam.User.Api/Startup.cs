@@ -28,16 +28,17 @@ namespace UCLDreamTeam.User.Api
             services.AddAuthentication();
 
             services.AddSwaggerGen(c =>
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "User Microservice", Version = "v1" }));
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "InputUser Microservice", Version = "v1" }));
             services.AddMediatR(typeof(Startup));
             services.AddRabbitMq();
 
             #region UserService
             //Register user
             services.AddTransient<IRequestHandler<RegisterUserCommand, bool>, RegisterUserCommandHandler>();
-            services.AddTransient<IRequestHandler<RegisterUserRejectedCommand, bool>, RegisterUserRejectedCommandHandler>();
             //Update user
             services.AddTransient<IRequestHandler<UpdateUserCommand, bool>, UpdateUserCommandHandler>();
+            //Delete user
+            services.AddTransient<IRequestHandler<DeleteUserCommand, bool>, DeleteUserCommandHandler>();
             //No user found
             services.AddTransient<IRequestHandler<NoUserFoundCommand, bool>, NoUserFoundCommandHandler>();
             services.AddTransient<IUserService, UserService>();
@@ -45,7 +46,7 @@ namespace UCLDreamTeam.User.Api
 
             Mapper mapper = new Mapper(new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<User.Domain.Models.User, User.Domain.Models.User>()
+                cfg.CreateMap<Domain.Models.User, Domain.Models.User>()
                     .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
             }));
             services.AddSingleton(mapper);
