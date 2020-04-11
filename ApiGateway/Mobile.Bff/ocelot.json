@@ -11,33 +11,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Reservation",
-      "UpstreamHttpMethod": ["Get"],
-      //"SwaggerKey": "Reservation"
-    },
-    {
-      "DownstreamPathTemplate": "/Reservation/{id}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5002
-        }
-      ],
-      "UpstreamPathTemplate": "/Reservation/{id}",
-      "UpstreamHttpMethod": ["Get"],
-      //"SwaggerKey": "Reservation"
-    },
-    {
-      "DownstreamPathTemplate": "/Reservation",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5002
-        }
-      ],
-      "UpstreamPathTemplate": "/Reservation",
-      "UpstreamHttpMethod": ["Post"],
+      "UpstreamHttpMethod": ["Get", "Post"],
       "SwaggerKey": "Reservation"
     },
     {
@@ -50,7 +24,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Reservation/{id}",
-      "UpstreamHttpMethod": ["Delete"],
+      "UpstreamHttpMethod": ["Get", "Delete"],
       "SwaggerKey": "Reservation"
     }
     //---------------------------------------------
