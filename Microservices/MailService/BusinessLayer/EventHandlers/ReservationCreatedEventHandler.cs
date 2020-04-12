@@ -9,6 +9,7 @@ using RabbitMQ.Bus.Bus.Interfaces;
 using RabbitMQ.Bus.Commands;
 using UCLDreamTeam.Mail.Domain.Commands;
 using UCLDreamTeam.Mail.Domain.Events;
+using UCLDreamTeam.Mail.Domain.Interfaces;
 using UCLDreamTeam.Mail.Domain.Models;
 using UCLToolBox;
 
@@ -17,53 +18,25 @@ namespace UCLDreamTeam.Mail.Domain.EventHandlers
     public class ReservationCreatedEventHandler : IEventHandler<ReservationCreatedEvent>
     {
         private readonly IEventBus _eventBus;
+        private readonly IGenericRepository<User> _userRepository;
+        private readonly IGenericRepository<Resource> _resourceRepository;
 
-        public ReservationCreatedEventHandler(IEventBus eventBus)
+        public ReservationCreatedEventHandler(IEventBus eventBus, IGenericRepository<User> userRepository, IGenericRepository<Resource> resourceRepository)
         {
             _eventBus = eventBus;
+            _userRepository = userRepository;
+            _resourceRepository = resourceRepository;
         }
 
         public async Task Handle(ReservationCreatedEvent @event)
         {
-            var command = new SendEmailCommand(new MailModel
+            var command = new SendEmailCommand(new Reservation
             {
-                Template = Template.BookingConfirmation,
-                Title = Template.BookingConfirmation.GetAttribute<DisplayAttribute>().Name,
-                //Recipent =@event.UserId,
-                //Reservation = @event.Id,
-                //Resource = @event.ResourceId,
-            });
+                Recipent = await _userRepository.GetById(@event.UserId),
+                Resource = await _resourceRepository.GetById(@event.ResourceId),
+                Timeslot = @event.Timeslot
+            }, Template.BookingConfirmation);
             await _eventBus.SendCommand(command);
-        }
-    }
-
-    public class GetRecipientInfoCommand<T> : Command where T : class
-    {
-        public Guid EventUserId { get; }
-
-        public GetRecipientInfoCommand(Guid eventUserId)
-        {
-            EventUserId = eventUserId;
-        }
-    }
-
-    public class GetReservationInfoCommand<T> : Command where T : class
-    {
-        public Guid EventId { get; }
-
-        public GetReservationInfoCommand(Guid eventId)
-        {
-            EventId = eventId;
-        }
-    }
-
-    public class GetResourceInfoCommand<T> : Command where T : class
-    {
-        public Guid EventResourceId { get; }
-
-        public GetResourceInfoCommand(Guid eventResourceId)
-        {
-            EventResourceId = eventResourceId;
         }
     }
 }

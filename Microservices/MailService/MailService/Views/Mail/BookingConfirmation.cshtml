@@ -1,6 +1,6 @@
-﻿@model UCLDreamTeam.Mail.Domain.Models.MailModel
+﻿@model UCLDreamTeam.Mail.Domain.Models.Reservation
 @{
-    ViewData["Title"] = Model.Title;
+    ViewData["Title"] = Model.Resource.Name;
     Layout = "_Layout";
 }
 
@@ -8,7 +8,7 @@
 
 <br/>
 
-<p>Du har reserveret @Model.Resource.Name d. @Model.Reservation.Timeslot.FromDate.ToString("d") i tidsrummet @Model.Reservation.Timeslot.FromDate.ToString("HH:mm") til @Model.Reservation.Timeslot.ToDate.ToString("HH:mm").</p>
+<p>Du har reserveret @Model.Resource.Name d. @Model.Timeslot.FromDate.ToString("d") i tidsrummet @Model.Timeslot.FromDate.ToString("HH:mm") til @Model.Timeslot.ToDate.ToString("HH:mm").</p>
 
 <br/>
 

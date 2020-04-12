@@ -30,12 +30,12 @@ namespace UCLDreamTeam.Mail.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostMail([FromBody] MailModel mailModel)
+        public async Task<IActionResult> PostMail([FromBody] Domain.Models.Reservation reservation, Template template)
         {
             try
             {
-                _mailService.SendMail(mailModel);
-                return Ok(mailModel);
+                _mailService.SendMail(reservation, template);
+                return Ok(reservation);
             }
             catch (Exception e)
             {
@@ -52,14 +52,14 @@ namespace UCLDreamTeam.Mail.Api.Controllers
         //    var userResponse = _mailService.GetUser(recipientId);
         //    var reservationResponse = _mailService.GetReservation(reservationId);
         //    var resourceResponse = _mailService.GetResource(resourceId);
-        //    var mailModel = new MailModel
+        //    var reservation = new Reservation
         //    {
         //        Template = template,
         //        Recipent = userResponse,
         //        Resource = resourceResponse,
         //        Reservation = reservationResponse
         //    };
-        //    return await PostMail(mailModel);
+        //    return await PostMail(reservation);
         //}
 
         private async Task<string> RenderViewToString(string viewName, object model)

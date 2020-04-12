@@ -32,7 +32,7 @@ namespace UCLDreamTeam.Mail.Domain.CommandHandlers
             MailMessage mailMessage = null;
             try
             {
-                mailMessage = GenerateMail(request.MailModel);
+                mailMessage = GenerateMail(request.Reservation, request.Template);
                 _smtpClient.Send(mailMessage);
                 _eventBus.PublishEvent(new EmailSendSuccessEvent(mailMessage));
                 return true;
@@ -59,22 +59,22 @@ namespace UCLDreamTeam.Mail.Domain.CommandHandlers
             };
         }
 
-        public MailMessage GenerateMail(MailModel mailModel)
+        public MailMessage GenerateMail(Reservation reservation, Template template)
         {
             var mail = new MailMessage
             {
                 IsBodyHtml = true,
                 From = new MailAddress(Resources.MailService_SenderEmail, Resources.MailService_SenderName),
-                Subject = mailModel.Template.GetAttribute<DisplayAttribute>().Name,
-                Body = GenerateMailContentFromTemplate(mailModel)
+                Subject = template.GetAttribute<DisplayAttribute>().Name,
+                Body = GenerateMailContentFromTemplate(reservation, template)
             };
             //Setting To and CC
-            mail.To.Add(new MailAddress(mailModel.Recipent.Email, mailModel.Recipent.FirstName));
+            mail.To.Add(new MailAddress(reservation.Recipent.Email, reservation.Recipent.FirstName));
 
             return mail;
         }
 
-        private string GenerateMailContentFromTemplate(MailModel mailModel)
+        private string GenerateMailContentFromTemplate(Reservation reservation, Template template)
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("<!DOCTYPE html>");
@@ -92,23 +92,23 @@ namespace UCLDreamTeam.Mail.Domain.CommandHandlers
             stringBuilder.AppendLine("<div class='container'>");
             stringBuilder.AppendLine("<main role='main' class='pb-3>");
 
-            switch (mailModel.Template)
+            switch (template)
             {
                 case Template.BookingConfirmation:
-                    stringBuilder.AppendLine($"<p>Hej {mailModel.Recipent.FirstName}</p>");
+                    stringBuilder.AppendLine($"<p>Hej {reservation.Recipent.FirstName}</p>");
                     stringBuilder.AppendLine("<br/>");
                     stringBuilder.AppendLine(
-                        $"<p>Du har reserveret {mailModel.Resource.Name} d. {mailModel.Reservation.Timeslot.FromDate:d} i tidsrummet " +
-                        $"{mailModel.Reservation.Timeslot.FromDate:HH:mm} til {mailModel.Reservation.Timeslot.ToDate:HH:mm}.</p>");
+                        $"<p>Du har reserveret {reservation.Resource.Name} d. {reservation.Timeslot.FromDate:d} i tidsrummet " +
+                        $"{reservation.Timeslot.FromDate:HH:mm} til {reservation.Timeslot.ToDate:HH:mm}.</p>");
                     stringBuilder.AppendLine("<br/>");
                     stringBuilder.AppendLine("<p>Tak fordi du bruger UCL Dream Team booking!</p>");
                     break;
                 case Template.CancellationConfirmation:
-                    stringBuilder.AppendLine($"<p>Hej {mailModel.Recipent.FirstName}</p>");
+                    stringBuilder.AppendLine($"<p>Hej {reservation.Recipent.FirstName}</p>");
                     stringBuilder.AppendLine("<br/>");
                     stringBuilder.AppendLine(
-                        $"<p>Du har aflyst din reservation af {mailModel.Resource.Name} d. {mailModel.Reservation.Timeslot.FromDate:d} i tidsrummet " +
-                        $"{mailModel.Reservation.Timeslot.FromDate:HH:mm} til {mailModel.Reservation.Timeslot.ToDate:HH:mm}.</p>");
+                        $"<p>Du har aflyst din reservation af {reservation.Resource.Name} d. {reservation.Timeslot.FromDate:d} i tidsrummet " +
+                        $"{reservation.Timeslot.FromDate:HH:mm} til {reservation.Timeslot.ToDate:HH:mm}.</p>");
                     stringBuilder.AppendLine("<br/>");
                     stringBuilder.AppendLine("<p>Du kan frit reserverer en anden gang.</p>");
                     break;
@@ -126,8 +126,6 @@ namespace UCLDreamTeam.Mail.Domain.CommandHandlers
             stringBuilder.AppendLine("<script src='~/js/site.js' asp-append-version='true'></script>");
             stringBuilder.AppendLine("</body>");
             stringBuilder.AppendLine("</html>");
-
-
 
             return stringBuilder.ToString();
         }

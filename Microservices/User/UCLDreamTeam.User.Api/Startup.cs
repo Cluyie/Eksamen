@@ -32,7 +32,6 @@ namespace UCLDreamTeam.User.Api
             services.AddMediatR(typeof(Startup));
             services.AddRabbitMq();
 
-            #region UserService
             //Register user
             services.AddTransient<IRequestHandler<RegisterUserCommand, bool>, RegisterUserCommandHandler>();
             //Update user
@@ -42,7 +41,6 @@ namespace UCLDreamTeam.User.Api
             //No user found
             services.AddTransient<IRequestHandler<NoUserFoundCommand, bool>, NoUserFoundCommandHandler>();
             services.AddTransient<IUserService, UserService>();
-            #endregion
 
             Mapper mapper = new Mapper(new MapperConfiguration(cfg =>
             {

@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization @*This package NEEDS to be here, will not work without, despite Visual Studio saying that it isn't used*@
 @attribute [Authorize]
 
 <AuthorizeView>

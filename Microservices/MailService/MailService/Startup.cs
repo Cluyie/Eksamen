@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,10 +10,14 @@ using Microsoft.OpenApi.Models;
 using RabbitMQ.IoC;
 using UCLDreamTeam.Mail.Application.Interfaces;
 using UCLDreamTeam.Mail.Application.Services;
+using UCLDreamTeam.Mail.Data.Context;
+using UCLDreamTeam.Mail.Data.Repository;
 using UCLDreamTeam.Mail.Domain.CommandHandlers;
 using UCLDreamTeam.Mail.Domain.Commands;
 using UCLDreamTeam.Mail.Domain.EventHandlers;
 using UCLDreamTeam.Mail.Domain.Events;
+using UCLDreamTeam.Mail.Domain.Interfaces;
+using UCLDreamTeam.Mail.Domain.Models;
 
 namespace UCLDreamTeam.Mail.Api
 {
@@ -30,7 +35,14 @@ namespace UCLDreamTeam.Mail.Api
         {
             services.AddRabbitMq();
             services.AddMediatR(typeof(Startup));
-            services.AddSingleton<IMailService, MailService>();
+            services.AddTransient<IMailService, MailService>();
+            services.AddTransient<IGenericRepository<User>, GenericRepository<User>>();
+            services.AddTransient<IGenericRepository<Resource>, GenericRepository<Resource>>();
+
+            services.AddDbContext<MailDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("MailDbConnection"));
+            });
 
             //Command setup
             services.AddTransient<IRequestHandler<SendEmailCommand, bool>, SendEmailCommandHandler>();
@@ -63,7 +75,16 @@ namespace UCLDreamTeam.Mail.Api
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
+            //Reservation
             app.Subscribe<ReservationCreatedEvent, ReservationCreatedEventHandler>();
+            //User
+            app.Subscribe<UserCreatedEvent, UserCreatedEventHandler>();
+            app.Subscribe<UserUpdatedEvent, UserUpdatedEventHandler>();
+            app.Subscribe<UserDeletedEvent, UserDeletedEventHandler>();
+            //Resource
+            app.Subscribe<ResourceCreatedEvent, ResourceCreatedEventHandler>();
+            app.Subscribe<ResourceUpdatedEvent, ResourceUpdatedEventHandler>();
+            app.Subscribe<ResourceDeletedEvent, ResourceDeletedEventHandler>();
         }
     }
 }

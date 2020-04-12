@@ -24,9 +24,9 @@ namespace UCLDreamTeam.Mail.Application.Services
             _eventBus = eventBus;
         }
 
-        public async void SendMail(MailModel mailModel)
+        public async void SendMail(Reservation reservation, Template template)
         {
-            await _eventBus.SendCommand(new SendEmailCommand(mailModel));
+            await _eventBus.SendCommand(new SendEmailCommand(reservation, template));
         }
     }
 }

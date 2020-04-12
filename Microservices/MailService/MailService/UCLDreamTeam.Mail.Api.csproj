@@ -7,6 +7,10 @@
   <ItemGroup>
     <PackageReference Include="MediatR" Version="8.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="Swashbuckle" Version="6.0.0-rc1-final" />
@@ -19,6 +23,7 @@
     <ProjectReference Include="..\..\..\Core\RabbitMQ.IoC\RabbitMQ.IoC.csproj" />
     <ProjectReference Include="..\..\..\Core\UCLToolBox\UCLToolBox.csproj" />
     <ProjectReference Include="..\..\..\UCLDreamTeam.Mail.Application\UCLDreamTeam.Mail.Application.csproj" />
+    <ProjectReference Include="..\..\..\UCLDreamTeam.Mail.Data\UCLDreamTeam.Mail.Data.csproj" />
     <ProjectReference Include="..\BusinessLayer\UCLDreamTeam.Mail.Domain.csproj" />
   </ItemGroup>
 

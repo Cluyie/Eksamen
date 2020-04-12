@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Models.Interfaces;
+using UCLDreamTeam.Mail.Domain.Interfaces;
 
 namespace UCLDreamTeam.Mail.Domain.Models
 {
-    public class Resource : IResource<Reservation, ReserveTime, AvailableTime>
+    public class Resource : IEntity
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public List<Reservation> Reservations { get; set; }
-        public List<AvailableTime> TimeSlots { get; set; }
     }
 }
