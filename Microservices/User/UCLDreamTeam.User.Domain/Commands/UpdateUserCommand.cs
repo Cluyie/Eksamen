@@ -4,11 +4,13 @@ namespace UCLDreamTeam.User.Domain.Commands
 {
     public class UpdateUserCommand : Command
     {
-        public Models.User User { get; set; }
+        public Models.User InputUser { get; set; }
+        public Models.User UserToChange { get; set; }
 
-        public UpdateUserCommand(Models.User user)
+        public UpdateUserCommand(Models.User inputUser, Models.User userToChange)
         {
-            User = user;
+            InputUser = inputUser;
+            UserToChange = userToChange;
         }
     }
 }

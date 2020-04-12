@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="EventHandlers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Models\Models.csproj" />
+    <ProjectReference Include="..\..\..\Core\RabbitMQ.Bus\RabbitMQ.Bus.csproj" />
+  </ItemGroup>
+
+</Project>

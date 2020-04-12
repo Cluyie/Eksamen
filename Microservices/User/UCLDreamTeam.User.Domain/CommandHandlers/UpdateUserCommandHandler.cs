@@ -1,6 +1,9 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Bus.Bus.Interfaces;
 using UCLDreamTeam.User.Domain.Commands;
 using UCLDreamTeam.User.Domain.Events;
@@ -10,16 +13,51 @@ namespace UCLDreamTeam.User.Domain.CommandHandlers
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, bool>
     {
         private readonly IEventBus _eventBus;
+        private readonly DbContext _identityContext;
+        private readonly Mapper _mapper;
 
-        public UpdateUserCommandHandler(IEventBus eventBus)
+        public UpdateUserCommandHandler(IEventBus eventBus, DbContext identityContext, Mapper mapper)
         {
             _eventBus = eventBus;
+            _identityContext = identityContext;
+            _mapper = mapper;
         }
 
-        public Task<bool> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            _eventBus.PublishEvent(new UserUpdatedEvent(request.User));
-            return Task.FromResult(true);
+            try
+            {
+                //Prevent changing the ID
+                request.UserToChange.Id = Guid.Empty;
+                // Can only update an existing user
+                if (request.UserToChange == null)
+                {
+                    await _eventBus.SendCommand(new NoUserFoundCommand(request.UserToChange));
+                    return false;
+                }
+
+                // Update the user
+                if (!string.IsNullOrWhiteSpace(request.UserToChange.PasswordHash) &&
+                    request.InputUser.PasswordHash != request.UserToChange.PasswordHash)
+                {
+                    //If the password is unchanged or empty, this does not update the password
+                    request.UserToChange.PasswordHash = request.UserToChange.PasswordHash;
+                }
+                // Automapper is configured to only overwrite the fields that are not null
+                _mapper.Map(request.UserToChange, request.UserToChange);
+
+                _identityContext.Update(request.UserToChange);
+                _identityContext.SaveChanges();
+
+                _eventBus.PublishEvent(new UserUpdatedEvent(request.UserToChange));
+                return true;
+            }
+            catch (Exception e)
+            {
+                _eventBus.PublishEvent(new UserUpdateFailedEvent(request.UserToChange, e));
+                Console.WriteLine(e);
+                return false;
+            }
         }
     }
 }

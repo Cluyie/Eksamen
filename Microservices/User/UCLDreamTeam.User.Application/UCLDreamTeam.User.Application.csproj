@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -9,8 +9,7 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="5.0.0-preview.2.20167.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\UCLDreamTeam.User.Data\UCLDreamTeam.User.Data.csproj" />
-    <ProjectReference Include="..\UCLDreamTeam.User.Domain\UCLDreamTeam.User.Domain.csproj" />
+  <ItemGroup>    <ProjectReference Include="..\..\..\Core\Models\Models.csproj" />    <ProjectReference Include="..\UCLDreamTeam.User.Data\UCLDreamTeam.User.Data.csproj" />    <ProjectReference Include="..\UCLDreamTeam.User.Domain\UCLDreamTeam.User.Domain.csproj" />
+
   </ItemGroup>
 </Project>

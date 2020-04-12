@@ -13,11 +13,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Models\Models.csproj" />
-    <ProjectReference Include="..\..\..\RabbitMQ.IoC\RabbitMQ.IoC.csproj" />
-    <ProjectReference Include="..\UCLDreamTeam.User.Application\UCLDreamTeam.User.Application.csproj" />
-    <ProjectReference Include="..\UCLDreamTeam.User.Domain\UCLDreamTeam.User.Domain.csproj" />
+  <ItemGroup>    <ProjectReference Include="..\..\..\Core\Models\Models.csproj" />    <ProjectReference Include="..\..\..\Core\RabbitMQ.IoC\RabbitMQ.IoC.csproj" />    <ProjectReference Include="..\UCLDreamTeam.User.Application\UCLDreamTeam.User.Application.csproj" />    <ProjectReference Include="..\UCLDreamTeam.User.Domain\UCLDreamTeam.User.Domain.csproj" />
+
   </ItemGroup>
 
 </Project>
