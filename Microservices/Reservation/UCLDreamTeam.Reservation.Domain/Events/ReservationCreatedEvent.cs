@@ -1,4 +1,5 @@
 ﻿using System;
+using Models.Interfaces;
 using RabbitMQ.Bus.Events;
 using UCLDreamTeam.Reservation.Domain.Models;
 

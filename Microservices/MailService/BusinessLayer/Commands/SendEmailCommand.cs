@@ -9,13 +9,11 @@ namespace UCLDreamTeam.Mail.Domain.Commands
 {
     public class SendEmailCommand : Command
     {
-        public MailMessage MailMessage { get; }
-        public SmtpClient SmtpClient { get; }
+        public MailModel MailModel { get; }
 
-        public SendEmailCommand(MailMessage mailMessage, SmtpClient smtpClient)
+        public SendEmailCommand(MailModel mailModel)
         {
-            MailMessage = mailMessage;
-            SmtpClient = smtpClient;
+            MailModel = mailModel;
         }
     }
 }

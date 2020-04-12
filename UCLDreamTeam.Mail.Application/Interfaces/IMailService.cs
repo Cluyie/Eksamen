@@ -6,10 +6,6 @@ namespace UCLDreamTeam.Mail.Application.Interfaces
 {
     public interface IMailService
     {
-        public void ConfigureSmtpClient();
-
-        public void SendMail(TemplateViewModel templateViewModel);
-
-        public MailMessage GenerateMail(TemplateViewModel templateViewModel);
+        public void SendMail(MailModel mailModel);
     }
 }

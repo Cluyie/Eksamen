@@ -3,7 +3,7 @@ using Models.Mail;
 
 namespace UCLDreamTeam.Mail.Domain.Models
 {
-    public class TemplateViewModel : ITemplateViewModel<Reservation, ReserveTime, Resource, AvailableTime, User>
+    public class MailModel : ITemplateViewModel<Reservation, ReserveTime, Resource, AvailableTime, User>
     {
         public Template Template { get; set; }
 
