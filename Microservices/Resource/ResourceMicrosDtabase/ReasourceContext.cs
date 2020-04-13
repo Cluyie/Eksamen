@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ResourceMicrosDtabase
 {
-    class ReasourceContext:DbContext
+    public class ReasourceContext:DbContext
     {
         DbSet<Resource> Resources { get; set; }
         DbSet<AvaiableTime> AvaiableTimes { get; set; }

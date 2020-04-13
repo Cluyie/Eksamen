@@ -5,11 +5,11 @@ using System.Text;
 
 namespace ResourceMicrosDtabase.Models
 {
-    public class Resource<TAvaiabletime> : IResource<TAvaiabletime> where TAvaiabletime : IAvaiableTime
+    public class Resource : IResource<AvaiableTime> where TAvaiabletime : IAvaiableTime
     {
         public Guid Id { get ; set ; }
         public string Name { get ; set ; }
         public string Description { get ; set ; }
-        public List<TAvaiabletime> Avaiabletimes { get ; set ; }
+        public List<AvaiableTime> Avaiabletimes { get ; set ; }
     }
 }
