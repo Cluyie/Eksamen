@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ResourceInterface
 {
-    interface IAvaiableTime
+    public interface IAvaiableTime
     {
         Guid Id { get; set; }
         bool Recurring { get; set; }

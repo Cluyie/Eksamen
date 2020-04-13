@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ResourceInterface
 {
-    interface IResource<TAvaiablTime> where TAvaiablTime:IAvaiableTime
+    public interface IResource<TAvaiablTime> where TAvaiablTime:IAvaiableTime
     {
         Guid Id { get; set; }
         string Name { get; set; }

@@ -1,40 +1,28 @@
 ﻿using System;
-using Data_Access_Layer.Context;
-using Models;
 using System.Collections.Generic;
 using System.Linq;
-using ResourcInterface;
-using Business_Layer.Models;
+using ResourceInterface;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.SignalR.Client;
 using System.Threading.Tasks;
-using ResourceMicroService.Models;
+using ResourceMicrosDtabase;
+using Business_Layer.Models;
+using ResourceMicrosDtabase.Models;
 
 namespace Business_Layer
 {
     public class ResourceService
     {
-        private ApplicationContext _applicationContext;
-        private HubConnection _hubConnection;
+        private ReasourceContext _applicationContext;
 
-        public ResourceService(ApplicationContext applicationContext)
+        public ResourceService(ReasourceContext applicationContext)
         {
             
             _applicationContext = applicationContext;
-            _hubConnection = new HubConnectionBuilder()
-            .WithUrl($"{Properties.Resources.ResourceManager.GetString("SignalRBaseAddress")}ResourceHub")
-            .Build();
-            _ = Connect();
-        }
-
-        private async Task Connect()
-        {
-            await _hubConnection.StartAsync();
         }
 
         #region Create
         //Creates a resource
-        public ApiResponse<Resource> Create(Resource resource)
+        public ApiResponse<Resource<AvaiableTime>> Create(Resource<AvaiableTime> resource)
         {
             bool invalidDate = false;
 
@@ -42,7 +30,7 @@ namespace Business_Layer
             {
                 if (resource == null)
                 {
-                    return new ApiResponse<Resource>(ApiResponseCode.NoContent, null);
+                    return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.NoContent, null);
                 }
 
                 foreach (var timeslot in resource.TimeSlots)
@@ -51,9 +39,9 @@ namespace Business_Layer
                 }
 
                 //Checks that the timeslots do not overlap.
-                resource.TimeSlots.ForEach(delegate (AvailableTime outerTime)
+                resource.TimeSlots.ForEach(delegate (AvaiableTime outerTime)
                 {
-                    resource.TimeSlots.ForEach(delegate (AvailableTime innerTime)
+                    resource.TimeSlots.ForEach(delegate (AvaiableTime innerTime)
                     {
                         if (!(((outerTime.From <= innerTime.From) && (outerTime.To <= innerTime.From)) ||
                         ((outerTime.From >= innerTime.To) && (outerTime.To >= innerTime.To))))
@@ -70,75 +58,70 @@ namespace Business_Layer
                 {
                     _applicationContext.Add(resource);
                     _applicationContext.SaveChanges();
-                    _hubConnection.SendAsync("CreateResource", resource);
 
-                    return new ApiResponse<Resource>(ApiResponseCode.OK, resource);
+                    return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.OK, resource);
                 }
                 else
                 {
-                    return new ApiResponse<Resource>(ApiResponseCode.NotModified, null);
+                    return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.NotModified, null);
                 }
             }
             catch (Exception)
             {
-                return new ApiResponse<Resource>(ApiResponseCode.InternalServerError, null);
+                return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.InternalServerError, null);
             }
         }
         #endregion
         #region Get
         //Get all resources
-        public ApiResponse<List<Resource>> Get()
+        public ApiResponse<List<Resource<AvaiableTime>>> Get()
         {
             try
             {   //Returns a list of Resources, with all of its children
-                return new ApiResponse<List<Resource>>
+                return new ApiResponse<List<Resource<AvaiableTime>>>
                     (ApiResponseCode.OK, _applicationContext.Resources
                     .Include(resource => resource.TimeSlots)
-                    .Include(resource => resource.Reservations)
-                    .ThenInclude(reservation => reservation.Timeslot)
                     .ToList());
             }
             catch (Exception)
             {
-                return new ApiResponse<List<Resource>>(ApiResponseCode.InternalServerError, null);
+                return new ApiResponse<List<Resource<AvaiableTime>>>(ApiResponseCode.InternalServerError, null);
             }
         }
 
         //Get a specific resource from a GUID
-        public ApiResponse<Resource> Get(Guid guid)
+        public ApiResponse<Resource<AvaiableTime>> Get(Guid guid)
         {
-            Resource resourceToReturn = new Resource();
+            Resource<AvaiableTime> resourceToReturn = new Resource<AvaiableTime>();
 
             try
             {
                 //Gets a resource with all of its children
                resourceToReturn = _applicationContext.Resources
                     .Include(resource => resource.TimeSlots)
-                    .Include(resource => resource.Reservations)
-                    .ThenInclude(reservation => reservation.Timeslot)
                     .SingleOrDefault(resource => resource.Id == guid);
 
                 if (resourceToReturn == null)
                 {
-                    return new ApiResponse<Resource>(ApiResponseCode.NoContent, null);
+                    return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.NoContent, null);
                 }
                 else
                 {
-                    return new ApiResponse<Resource>(ApiResponseCode.OK, resourceToReturn);
+                    return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.OK, resourceToReturn);
                 }
             }
             catch (Exception)
             {
-                return new ApiResponse<Resource>(ApiResponseCode.InternalServerError, null);
+                return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.InternalServerError, null);
             }
         }
         #endregion
         #region Update
         //Update a resource
         //Should ignore reservations when being updated
-        public ApiResponse<Resource> Update(Resource resource)
+        public ApiResponse<Resource<AvaiableTime>> Update(Resource<AvaiableTime> resource)
         {
-            Resource resourceToUpdate = new Resource();
+            Resource<AvaiableTime> resourceToUpdate = new Resource<AvaiableTime>();
 
             bool invalidDate = false;
 
@@ -148,13 +131,13 @@ namespace Business_Layer
 
                 if (resourceToUpdate == null)
                 {
-                    return new ApiResponse<Resource>(ApiResponseCode.NoContent, null);
+                    return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.NoContent, null);
                 }
 
                 //Checks that the timeslots do not overlap. Also makes sure that he id is not the same, if the times do match.
-                resource.TimeSlots.ForEach(delegate (AvailableTime newTimeSlot)
+                resource.TimeSlots.ForEach(delegate (AvaiableTime newTimeSlot)
                 {
-                    resourceToUpdate.TimeSlots.ForEach(delegate (AvailableTime existingTimeSlot)
+                    resourceToUpdate.TimeSlots.ForEach(delegate (AvaiableTime existingTimeSlot)
                     {
                         if (!(((newTimeSlot.From <= existingTimeSlot.From) && (newTimeSlot.To <= existingTimeSlot.From)) ||
                         ((newTimeSlot.From >= existingTimeSlot.To) && (newTimeSlot.To >= existingTimeSlot.To))))
@@ -175,39 +158,36 @@ namespace Business_Layer
 
                     _applicationContext.Update(resourceToUpdate);
                     _applicationContext.SaveChanges();
-                    _hubConnection.SendAsync("UpdateResource", resourceToUpdate);
 
-                    return new ApiResponse<Resource>(ApiResponseCode.OK, resourceToUpdate);
+                    return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.OK, resourceToUpdate);
                 }
                 else
                 {
-                    return new ApiResponse<Resource>(ApiResponseCode.NotModified, null);
+                    return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.NotModified, null);
                 }
             }
             catch (Exception)
             {
-                return new ApiResponse<Resource>(ApiResponseCode.InternalServerError, null);
+                return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.InternalServerError, null);
             }
         }
         #endregion
         #region Delete
         //Delete a resource
-        public ApiResponse<IResource<IAvaiableTime>> Delete(Guid guid)
+        public ApiResponse<Resource<AvaiableTime>> Delete(Guid guid)
         {
-            IResource<IAvaiableTime> resourceToDelete = new Resource<IAvaiableTime>();
+            Resource<AvaiableTime> resourceToDelete = new Resource<AvaiableTime>();
 
             try
             {
                 //Gets the resource to be deleted. All children are tracked as well, so that they are also deleted.
                 resourceToDelete = _applicationContext.Resources
                     .Include(resource => resource.TimeSlots)
-                    .Include(resource => resource.Reservations)
-                    .ThenInclude(reservation => reservation.Timeslot)
                     .SingleOrDefault(resource => resource.Id == guid);
 
                 if (resourceToDelete == null)
                 {
-                    return new ApiResponse<Resource>(ApiResponseCode.NoContent, null);
+                    return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.NoContent, null);
                 }
                 else
                 {
@@ -215,15 +195,14 @@ namespace Business_Layer
                     _applicationContext.Resources.Remove(resourceToDelete);
 
                     _applicationContext.SaveChanges();
-                    _hubConnection.SendAsync("DeleteResource", resourceToDelete);
 
 
-                    return new ApiResponse<Resource>(ApiResponseCode.OK, null);
+                    return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.OK, null);
                 }
             }
             catch (Exception)
             {
-                return new ApiResponse<Resource>(ApiResponseCode.InternalServerError, null);
+                return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.InternalServerError, null);
             }
         }
         #endregion
