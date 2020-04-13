@@ -8,7 +8,7 @@ namespace ResourceMicrosDtabase
 {
     public class ReasourceContext:DbContext
     {
-        DbSet<Resource> Resources { get; set; }
-        DbSet<AvaiableTime> AvaiableTimes { get; set; }
+        public DbSet<Resource<AvaiableTime>> Resources { get; set; }
+        public DbSet<AvaiableTime> AvaiableTimes { get; set; }
     }
 }
