@@ -1,9 +1,13 @@
 using System;
+using System.Configuration;
+using System.Text.Json.Serialization;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
@@ -13,18 +17,29 @@ using UCLDreamTeam.User.Application.Services;
 using UCLDreamTeam.User.Data.Context;
 using UCLDreamTeam.User.Domain.CommandHandlers;
 using UCLDreamTeam.User.Domain.Commands;
+using UCLDreamTeam.User.Domain.Events;
 
 namespace UCLDreamTeam.User.Api
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IdentityContext>();
+            services.AddDbContext<IdentityDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("UserDbConnection"));
+            });
             services.AddIdentity<Domain.Models.User, IdentityRole<Guid>>()
-                .AddEntityFrameworkStores<IdentityContext>();
+                .AddEntityFrameworkStores<IdentityDbContext>();
             services.AddAuthentication();
 
             services.AddSwaggerGen(c =>

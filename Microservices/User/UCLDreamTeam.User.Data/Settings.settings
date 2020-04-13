@@ -8,10 +8,10 @@
       <DesignTimeValue Profile="(Default)">
         &lt;?xml version="1.0" encoding="utf-16"?&gt;
         &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-        &lt;ConnectionString&gt;Server=10.56.8.34;Database=APPDatabase;InputUserToChange Id=lara2;Password=Hejmeddig19;&lt;/ConnectionString&gt;
+        &lt;ConnectionString&gt;Server=10.56.8.34;Database=APPDatabase;User Id=lara2;Password=Hejmeddig19;&lt;/ConnectionString&gt;
         &lt;/SerializableConnectionString&gt;
       </DesignTimeValue>
-      <Value Profile="(Default)">Server=10.56.8.34;Database=APPDatabase;InputUserToChange Id=lara2;Password=Hejmeddig19;</Value>
+      <Value Profile="(Default)">Server=10.56.8.34;Database=APPDatabase;User Id=lara2;Password=Hejmeddig19;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

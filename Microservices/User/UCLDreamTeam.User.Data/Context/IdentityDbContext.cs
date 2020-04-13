@@ -6,13 +6,13 @@ using UCLDreamTeam.User.Domain;
 
 namespace UCLDreamTeam.User.Data.Context
 {
-    public class IdentityContext : IdentityDbContext<Domain.Models.User, IdentityRole<Guid>, Guid>
+    public class IdentityDbContext : IdentityDbContext<Domain.Models.User, IdentityRole<Guid>, Guid>
     {
-        public IdentityContext() : base()
+        public IdentityDbContext() : base()
         {
         }
 
-        public IdentityContext(DbContextOptions<IdentityContext> options) : base(options)
+        public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options)
         {
         }
 

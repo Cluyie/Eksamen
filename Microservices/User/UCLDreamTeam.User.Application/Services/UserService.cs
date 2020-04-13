@@ -14,15 +14,15 @@ namespace UCLDreamTeam.User.Application.Services
     public class UserService : IUserService
     {
         private readonly UserManager<Domain.Models.User> _userManager;
-        private readonly IdentityContext _identityContext;
+        private readonly IdentityDbContext _identityDbContext;
         private readonly Mapper _mapper;
         private readonly IEventBus _eventBus;
 
         public UserService(UserManager<Domain.Models.User> userManager,
-            IdentityContext identityContext, IEventBus eventBus)
+            IdentityDbContext identityDbContext, IEventBus eventBus)
         {
             _userManager = userManager;
-            _identityContext = identityContext;
+            _identityDbContext = identityDbContext;
             _eventBus = eventBus;
         }
 
