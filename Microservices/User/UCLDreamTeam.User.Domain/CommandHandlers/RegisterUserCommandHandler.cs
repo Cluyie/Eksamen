@@ -27,7 +27,7 @@ namespace UCLDreamTeam.User.Domain.CommandHandlers
                 _eventBus.PublishEvent(new UserRegisteredEvent(request.User));
             }
             else
-                _eventBus.PublishEvent(new UserRejectedEvent(request.User));
+                _eventBus.PublishEvent(new UserRejectedEvent(request.User, result.Errors));
 
             return true;
         }

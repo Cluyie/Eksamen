@@ -32,7 +32,7 @@ namespace UCLDreamTeam.User.Domain.CommandHandlers
                 // Can only update an existing user
                 if (request.UserToChange == null)
                 {
-                    await _eventBus.SendCommand(new NoUserFoundCommand(request.UserToChange));
+                    _eventBus.PublishEvent(new NoUserFoundEvent(request.UserToChange));
                     return false;
                 }
 

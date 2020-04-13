@@ -28,7 +28,7 @@ namespace UCLDreamTeam.User.Api
             services.AddAuthentication();
 
             services.AddSwaggerGen(c =>
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "InputUser Microservice", Version = "v1" }));
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "User Microservice", Version = "v1" }));
             services.AddMediatR(typeof(Startup));
             services.AddRabbitMq();
 
@@ -38,8 +38,7 @@ namespace UCLDreamTeam.User.Api
             services.AddTransient<IRequestHandler<UpdateUserCommand, bool>, UpdateUserCommandHandler>();
             //Delete user
             services.AddTransient<IRequestHandler<DeleteUserCommand, bool>, DeleteUserCommandHandler>();
-            //No user found
-            services.AddTransient<IRequestHandler<NoUserFoundCommand, bool>, NoUserFoundCommandHandler>();
+
             services.AddTransient<IUserService, UserService>();
 
             Mapper mapper = new Mapper(new MapperConfiguration(cfg =>

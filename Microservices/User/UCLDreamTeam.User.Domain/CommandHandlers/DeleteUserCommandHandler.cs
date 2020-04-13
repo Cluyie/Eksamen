@@ -32,9 +32,12 @@ namespace UCLDreamTeam.User.Domain.CommandHandlers
             }
             catch (Exception e)
             {
-                _eventBus.PublishEvent(new UserDeleteFailedEvent(request.User, e));
+#if DEBUG
                 Console.WriteLine(e);
-                return false;
+                throw e;
+#else
+                _eventBus.PublishEvent(new UserDeleteFailedEvent(request.User, e));
+#endif
             }
         }
     }
