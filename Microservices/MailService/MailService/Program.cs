@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace MailService
+namespace UCLDreamTeam.Mail.Api
 {
     public class Program
     {

@@ -1,9 +1,9 @@
-using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Linq;
 
 namespace AdminPanel.Server
 {
@@ -17,7 +17,7 @@ namespace AdminPanel.Server
             services.AddResponseCompression(opts =>
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-                    new[] {"application/octet-stream"});
+                    new[] { "application/octet-stream" });
             });
         }
 

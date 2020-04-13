@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>UCLDreamTeam.User.Api</AssemblyName>
+    <RootNamespace>UCLDreamTeam.User.Api</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="8.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0-preview.2.20159.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.OpenApi" Version="1.1.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0-preview.2.20160.6" />
+  </ItemGroup>
+
+  <ItemGroup>    <ProjectReference Include="..\..\..\Core\Models\Models.csproj" />    <ProjectReference Include="..\..\..\Core\RabbitMQ.IoC\RabbitMQ.IoC.csproj" />    <ProjectReference Include="..\UCLDreamTeam.User.Application\UCLDreamTeam.User.Application.csproj" />    <ProjectReference Include="..\UCLDreamTeam.User.Domain\UCLDreamTeam.User.Domain.csproj" />
+
+  </ItemGroup>
+
+</Project>

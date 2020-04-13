@@ -11,7 +11,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Reservation",
-      "UpstreamHttpMethod": ["Get"],
+      "UpstreamHttpMethod": [ "Get" ],
       "SwaggerKey": "Reservation"
     },
     {
@@ -24,7 +24,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Reservation/{id}",
-      "UpstreamHttpMethod": ["Get"],
+      "UpstreamHttpMethod": [ "Get" ],
       "SwaggerKey": "Reservation"
     },
     {
@@ -37,7 +37,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Reservation",
-      "UpstreamHttpMethod": ["Post"],
+      "UpstreamHttpMethod": [ "Post" ],
       "SwaggerKey": "Reservation"
     },
     {
@@ -50,10 +50,67 @@
         }
       ],
       "UpstreamPathTemplate": "/Reservation/{id}",
-      "UpstreamHttpMethod": ["Delete"],
+      "UpstreamHttpMethod": [ "Delete" ],
       "SwaggerKey": "Reservation"
+    },
+    //---------------------------------------------
+    //User Microservice Api Registrations
+    {
+      "DownstreamPathTemplate": "/User",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5004
+        }
+      ],
+      "UpstreamPathTemplate": "/User",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put" ],
+      "SwaggerKey": "User"
+    },
+    {
+      "DownstreamPathTemplate": "/User/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5004
+        }
+      ],
+      "UpstreamPathTemplate": "/User/{id}",
+      "UpstreamHttpMethod": [ "Get", "Delete" ],
+      "SwaggerKey": "User"
+    },
+    //---------------------------------------------
+    //Mail Microservice Api Registrations
+    {
+      "DownstreamPathTemplate": "/Mail/PostObject",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5008
+        }
+      ],
+      "UpstreamPathTemplate": "/Mail/PostObject",
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "Mail"
+    },
+    {
+      "DownstreamPathTemplate": "/Mail/PostRoute",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5008
+        }
+      ],
+      "UpstreamPathTemplate": "/Mail/PostRoute",
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "Mail"
     }
     //---------------------------------------------
+
   ],
   "SwaggerEndPoints": [
     //Reservation Microservice Api Registrations
@@ -64,6 +121,30 @@
           "Name": "Reservation API",
           "Version": "v1",
           "Url": "http://localhost:5003/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    //---------------------------------------------
+    //User Microservice Api Registrations
+    {
+      "Key": "User",
+      "Config": [
+        {
+          "Name": "User API",
+          "Version": "v1",
+          "Url": "http://localhost:5005/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    //---------------------------------------------
+    //Mail Microservice Api Registrations
+    {
+      "Key": "Mail",
+      "Config": [
+        {
+          "Name": "Mail API",
+          "Version": "v1",
+          "Url": "http://localhost:5009/swagger/v1/swagger.json"
         }
       ]
     }

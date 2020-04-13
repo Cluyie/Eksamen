@@ -2,87 +2,66 @@
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Threading.Tasks;
-using BusinessLayer;
-using BusinessLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
-using Models.Interfaces;
 using Models.Mail;
+using UCLDreamTeam.Mail.Application.Interfaces;
+using UCLDreamTeam.Mail.Domain.Models;
 using UCLToolBox;
 
-namespace MailService.Controllers
+namespace UCLDreamTeam.Mail.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     public class MailController : Controller
     {
-        private readonly ILogger<MailController> _logger;
-        private readonly MailHelper _mailHelper;
-        private readonly ApiClientProxy _proxy;
+        private readonly IMailService _mailService;
         private readonly ICompositeViewEngine _viewEngine;
+        private readonly ILogger<MailController> _logger;
 
-        public MailController(ILogger<MailController> logger, ApiClientProxy proxy, MailHelper mailHelper,
-            ICompositeViewEngine viewEngine)
+        public MailController(IMailService mailService, ICompositeViewEngine viewEngine, ILogger<MailController> logger)
         {
-            _logger = logger;
-            _proxy = proxy;
-            _mailHelper = mailHelper;
+            _mailService = mailService;
             _viewEngine = viewEngine;
+            _logger = logger;
         }
 
         [HttpPost]
-        public async Task<ApiResponse<string>> PostMail([FromBody] TemplateViewModel templateViewModel)
+        public async Task<IActionResult> PostMail([FromBody] Domain.Models.Reservation reservation, Template template)
         {
             try
             {
-                templateViewModel.Title = templateViewModel.Template.GetAttribute<DisplayAttribute>().Name;
-                var mailContent = await RenderViewToString(templateViewModel.Template.ToString(), templateViewModel);
-                var mail = _mailHelper.GenerateMail(templateViewModel.Recipent,
-                    templateViewModel.Template.GetAttribute<DisplayAttribute>().Name, mailContent);
-                _mailHelper.SendMail(mail);
+                _mailService.SendMail(reservation, template);
+                return Ok(reservation);
             }
             catch (Exception e)
             {
-                return new ApiResponse<string>(ApiResponseCode.InternalServerError, e.Message);
+                return StatusCode(503, e.Message);
             }
 
-            return new ApiResponse<string>(ApiResponseCode.OK, "Email send");
         }
 
-        [HttpPut]
-        public async Task<ApiResponse<string>> PostMail(Template template, string recipientId, string resourceId,
-            string reservationId)
-        {
-            Login();
-            var userResponse = _proxy.Get<ApiResponse<User>>("User/guid=" + recipientId);
-            //new ApiResponse<User>(ApiResponseCode.OK, new User{ Id = Guid.NewGuid(), UserName = "Tonur", FirstName = "Christoffer", LastName = "Pedersen", Address = "Østerbrogade 20", Email = "chriskpedersen@hotmail.com", });
-            var reservationResponse = _proxy.Get<ApiResponse<Reservation>>("Reservation/guid=" + reservationId);
-            //  new ApiResponse<Reservation>(ApiResponseCode.OK, new Reservation{UserId = userResponse.Value.Id, Timeslot = new ReserveTime{FromDate = DateTime.Today.AddHours(8), ToDate = DateTime.Today.AddHours(16)}});
-            var resourceResponse = _proxy.Get<ApiResponse<Resource>>("Resource/guid=" + resourceId);
-            // new ApiResponse<Resource>(ApiResponseCode.OK, new Resource{Name = "Hansens rengøringsservice", Reservations = new List<Reservation>{reservationResponse.Value}});
-            var templateViewModel = new TemplateViewModel
-            {
-                Template = template,
-                Recipent = userResponse.Value,
-                Resource = resourceResponse.Value,
-                Reservation = reservationResponse.Value
-            };
-            return await PostMail(templateViewModel);
-        }
+        //Skal ikke bruges, event skal indeholde alle informationer, så kun overstående post skal blive brugt
+        //[HttpPost("PostRoute/")]
+        //public async Task<IActionResult> PostMail([FromRoute] Template template, string recipientId, string resourceId,
+        //    string reservationId)
+        //{
+        //    var userResponse = _mailService.GetUser(recipientId);
+        //    var reservationResponse = _mailService.GetReservation(reservationId);
+        //    var resourceResponse = _mailService.GetResource(resourceId);
+        //    var reservation = new Reservation
+        //    {
+        //        Template = template,
+        //        Recipent = userResponse,
+        //        Resource = resourceResponse,
+        //        Reservation = reservationResponse
+        //    };
+        //    return await PostMail(reservation);
+        //}
 
-        private void Login()
-        {
-            var response = _proxy.PostAsync(@"Auth/Login", new Login {UsernameOrEmail = "Tonur", Password = "ole12345"})
-                .Result;
-            var result = ApiClientProxy.ReadAnswerAsync<ApiResponse<string>>(response);
-            var token = _proxy.Get<ApiResponse<string>>("Auth/Login");
-            _proxy.httpClient.DefaultRequestHeaders.Add("Authorization", token.Value);
-        }
-
-        [HttpGet]
         private async Task<string> RenderViewToString(string viewName, object model)
         {
             if (string.IsNullOrEmpty(viewName))
