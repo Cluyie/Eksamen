@@ -10,16 +10,16 @@ using UCLDreamTeam.Mail.Domain.Models;
 
 namespace UCLDreamTeam.Mail.Domain.EventHandlers
 {
-    public class UserCreatedEventHandler : IEventHandler<UserCreatedEvent>
+    public class UserRegisteredEventHandler : IEventHandler<UserRegisteredEvent>
     {
         private readonly IGenericRepository<User> _userRepository;
 
-        public UserCreatedEventHandler(IGenericRepository<User> userRepository)
+        public UserRegisteredEventHandler(IGenericRepository<User> userRepository)
         {
             _userRepository = userRepository;
         }
 
-        public async Task Handle(UserCreatedEvent @event)
+        public async Task Handle(UserRegisteredEvent @event)
         {
             await _userRepository.Create(new User
             {

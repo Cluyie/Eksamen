@@ -78,7 +78,7 @@ namespace UCLDreamTeam.Mail.Api
             //Reservation
             app.Subscribe<ReservationCreatedEvent, ReservationCreatedEventHandler>();
             //User
-            app.Subscribe<UserCreatedEvent, UserCreatedEventHandler>();
+            app.Subscribe<UserRegisteredEvent, UserRegisteredEventHandler>();
             app.Subscribe<UserUpdatedEvent, UserUpdatedEventHandler>();
             app.Subscribe<UserDeletedEvent, UserDeletedEventHandler>();
             //Resource

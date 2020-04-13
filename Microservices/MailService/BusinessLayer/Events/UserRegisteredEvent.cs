@@ -8,11 +8,11 @@ using RabbitMQ.Bus.Events;
 
 namespace UCLDreamTeam.Mail.Domain.Events
 {
-    public class UserCreatedEvent : Event
+    public class UserRegisteredEvent : Event
     {
         public IUser User { get; }
 
-        public UserCreatedEvent(IUser user)
+        public UserRegisteredEvent(IUser user)
         {
             User = user;
         }   
