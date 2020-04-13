@@ -84,7 +84,7 @@
     //---------------------------------------------
     //Mail Microservice Api Registrations
     {
-      "DownstreamPathTemplate": "/Mail/PostObject",
+      "DownstreamPathTemplate": "/Mail",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -92,20 +92,7 @@
           "Port": 5008
         }
       ],
-      "UpstreamPathTemplate": "/Mail/PostObject",
-      "UpstreamHttpMethod": [ "Post" ],
-      "SwaggerKey": "Mail"
-    },
-    {
-      "DownstreamPathTemplate": "/Mail/PostRoute",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5008
-        }
-      ],
-      "UpstreamPathTemplate": "/Mail/PostRoute",
+      "UpstreamPathTemplate": "/Mail",
       "UpstreamHttpMethod": [ "Post" ],
       "SwaggerKey": "Mail"
     }
