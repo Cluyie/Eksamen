@@ -36,7 +36,7 @@ namespace RabbitMQ.Bus.Bus
 
         public void PublishEvent<T>(T @event) where T : Event
         {
-            var factory = new ConnectionFactory {HostName = "localhost"};
+            var factory = new ConnectionFactory {HostName = "localhost", UserName = "guest", Password = "guest"};
 
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();

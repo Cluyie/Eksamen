@@ -153,7 +153,7 @@ namespace Business_Layer
                 if (!invalidDate)
                 {
                     resourceToUpdate.Name = resource.Name;
-
+                    resourceToUpdate.Description = resource.Description;
                     resourceToUpdate.TimeSlots = resource.TimeSlots;
 
                     _applicationContext.Update(resourceToUpdate);

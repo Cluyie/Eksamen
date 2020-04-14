@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Models.Interfaces;
 
 namespace UCLDreamTeam.Reservation.Application.Interfaces
 {
