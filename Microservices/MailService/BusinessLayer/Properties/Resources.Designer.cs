@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BusinessLayer.Properties {
+namespace UCLDreamTeam.Mail.Domain.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace BusinessLayer.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BusinessLayer.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("UCLDreamTeam.Mail.Domain.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -83,7 +83,7 @@ namespace BusinessLayer.Properties {
         /// </summary>
         internal static int MailService_HostPort {
             get {
-                return Convert.ToInt32(ResourceManager.GetString("MailService_HostPort", resourceCulture));
+                return int.Parse(ResourceManager.GetString("MailService_HostPort", resourceCulture));
             }
         }
         

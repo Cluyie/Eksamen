@@ -29,13 +29,15 @@ namespace UCLDreamTeam.Reservation.Domain.CommandHandlers
                 _logger.LogInformation("ReservationCommandHandler Called");
             try
             {
-                await _reservationRepository.AddAsync(new Models.Reservation
+                var reservation = new Models.Reservation
                 {
                     Id = request.Id,
                     ResourceId = request.ResourceId,
                     Timeslot = request.Timeslot,
                     UserId = request.UserId
-                });
+                };
+
+                await _reservationRepository.AddAsync(reservation);
                 _eventBus.PublishEvent(new ReservationCreatedEvent(request.Id, request.UserId, request.ResourceId,
                     request.Timeslot));
             }

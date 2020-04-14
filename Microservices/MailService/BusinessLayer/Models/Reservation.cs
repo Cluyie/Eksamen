@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using Models.Interfaces;
+using Models.Mail;
 
-namespace BusinessLayer.Models
+namespace UCLDreamTeam.Mail.Domain.Models
 {
     public class Reservation : IReservation<ReserveTime>
     {
@@ -9,5 +11,9 @@ namespace BusinessLayer.Models
         public ReserveTime Timeslot { get; set; }
         public Guid UserId { get; set; }
         public Guid ResourceId { get; set; }
+
+        //Mail local
+        public User Recipent { get; set; }
+        public Resource Resource { get; set; }
     }
 }
