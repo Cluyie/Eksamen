@@ -8,7 +8,7 @@ using ResourceMicrosDtabase;
 using Business_Layer.Models;
 using ResourceMicrosDtabase.Models;
 
-namespace Business_Layer
+namespace ResourceMicroService.BusinessLayer
 {
     public class ResourceService
     {
@@ -16,7 +16,6 @@ namespace Business_Layer
 
         public ResourceService(ReasourceContext applicationContext)
         {
-            
             _applicationContext = applicationContext;
         }
 
