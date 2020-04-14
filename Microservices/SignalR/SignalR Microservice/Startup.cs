@@ -3,7 +3,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RabbitMQ.Bus.Bus.Interfaces;
 using SignalR_Microservice.Hubs;
+using RabbitMQ.IoC;
+using SignalR.Domain;
+using SignalR.Domain.EventHandlers;
+using SignalR.Domain.Events;
 
 namespace SignalR_Microservice
 {
@@ -20,6 +25,13 @@ namespace SignalR_Microservice
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
+
+            services.AddRabbitMq();
+
+            //Handler DI
+            services.AddTransient<ReservationCreatedEventHandler>();
+            services.AddTransient<ReservationCanceledEventHandler>();
+
             services.AddCors(options =>
             {
                 //Dissable at later point to block requests from other then host
@@ -51,6 +63,10 @@ namespace SignalR_Microservice
                 endpoints.MapHub<ResourceHub>("/ResourceHub");
                 endpoints.MapHub<ReservationHub>("/ReservationHub");
             });
+
+            //Subscriptions
+            app.Subscribe<ReservationCreatedEvent, ReservationCreatedEventHandler>();
+            app.Subscribe<ReservationCanceledEvent, ReservationCanceledEventHandler>();
         }
     }
 }

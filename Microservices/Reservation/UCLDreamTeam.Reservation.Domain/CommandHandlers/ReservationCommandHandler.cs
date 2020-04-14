@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Bus.Bus.Interfaces;
 using UCLDreamTeam.Reservation.Domain.Commands;
 using UCLDreamTeam.Reservation.Domain.Events;
@@ -13,15 +14,19 @@ namespace UCLDreamTeam.Reservation.Domain.CommandHandlers
     {
         private readonly IEventBus _eventBus;
         private readonly IReservationRepository _reservationRepository;
+        private readonly ILogger<ReservationCommandHandler> _logger;
 
-        public ReservationCommandHandler(IEventBus eventBus, IReservationRepository reservationRepository)
+        public ReservationCommandHandler(IEventBus eventBus, IReservationRepository reservationRepository,
+            ILogger<ReservationCommandHandler> logger)
         {
             _eventBus = eventBus;
             _reservationRepository = reservationRepository;
+            _logger = logger;
         }
 
         public async Task<bool> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
         {
+                _logger.LogInformation("ReservationCommandHandler Called");
             try
             {
                 var reservation = new Models.Reservation
