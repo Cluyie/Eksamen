@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="NewFile.txt" />
+    <None Remove="RabitMQCommands\NewFile.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\ApiGateway\OldRest\ResourceInterface\ResourceInterface.csproj" />
+    <ProjectReference Include="..\..\..\Core\RabbitMQ.Bus\RabbitMQ.Bus.csproj" />
     <ProjectReference Include="..\..\..\Core\RabbitMQ.IoC\RabbitMQ.IoC.csproj" />
     <ProjectReference Include="..\ResourceMicrosDtabase\ResourceMicrosDtabase.csproj" />
     <ProjectReference Include="..\ResourcInterface\ResourcInterface.csproj" />
