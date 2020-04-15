@@ -36,7 +36,6 @@ namespace Producer.Api
 
             services.AddTransient<IRequestHandler<CreateMessageCommand, bool>, MessageCommandHandler>();
             services.AddTransient<IMessageService, MessageService>();
-            services.AddTransient<IEventHandler<MessageCreatedEvent>, MessageEventHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

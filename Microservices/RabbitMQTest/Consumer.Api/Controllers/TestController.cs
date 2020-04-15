@@ -7,12 +7,12 @@ namespace Consumer.Api.Controllers
     [Route("")]
     public class TestController : ControllerBase
     {
-        private readonly IMessageService _messageService;
+        //private readonly IMessageService _messageService;
 
-        public TestController(IMessageService messageService)
-        {
-            _messageService = messageService;
-        }
+        //public TestController(IMessageService messageService)
+        //{
+        //    _messageService = messageService;
+        //}
 
         [HttpGet]
         public IActionResult Get()

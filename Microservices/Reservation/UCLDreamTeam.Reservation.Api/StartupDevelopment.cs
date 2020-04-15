@@ -1,3 +1,8 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,9 +22,9 @@ using UCLDreamTeam.Reservation.Domain.Interfaces;
 
 namespace UCLDreamTeam.Reservation.Api
 {
-    public class Startup
+    public class StartupDevelopment
     {
-        public Startup(IConfiguration configuration)
+        public StartupDevelopment(IConfiguration configuration)
         {
             Configuration = configuration;
         }
@@ -29,10 +34,7 @@ namespace UCLDreamTeam.Reservation.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ReservationDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("ReservationDbConnection"));
-            });
+            services.AddDbContext<ReservationDbContext>(options => { options.UseInMemoryDatabase("Reservations"); });
 
             services.AddSwaggerGen(c =>
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "Reservation Microservice", Version = "v1"}));
