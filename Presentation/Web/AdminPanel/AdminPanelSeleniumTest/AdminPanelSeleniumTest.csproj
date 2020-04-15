@@ -20,8 +20,4 @@
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="80.0.3987.10600" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\AdminPanel\Client\AdminPanel.Client.csproj" />
-  </ItemGroup>
-
 </Project>

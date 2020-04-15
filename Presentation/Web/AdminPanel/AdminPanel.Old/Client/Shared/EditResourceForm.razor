@@ -1,0 +1,91 @@
+﻿@using AdminPanel.Client.DTOs
+<EditForm Model="@Resource" OnValidSubmit="OnValidSubmit">
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Navn</label>
+                <InputText id="inputRessourceName" class="form-control" placeholder="Navn" @bind-Value="Resource.Name"/>
+            </div>
+            <div class="form-group">
+                <label>Beskrivelse</label>
+                <InputTextArea class="form-control" placeholder="Beskrivelse" @bind-Value="Resource.Description"></InputTextArea>
+            </div>
+        </div>
+    </div>
+    <h3>Tidsperioder</h3>
+    <p>
+        <button id="addTimeslot" type="button" class="btn btn-info" @onclick="AddTimeslot"><b>+</b> Tilføj tidsperiode</button>
+    </p>
+    <div class="row">
+        @foreach (var timeslot in Resource.Timeslots)
+        {
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        Tidsperiode
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Fra</label>
+                            <InputDateTime id="dateFrom" class="form-control" @bind-Value="timeslot.From"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Til</label>
+                            <InputDateTime id="dateTo" class="form-control" @bind-Value="timeslot.To"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Tilbagevendende interval (dage)</label>
+                            <InputNumber id="recurring" class="form-control" placeholder="Tilbagevendende interval" @bind-Value="timeslot.Recurring"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Tilgængelig</label>
+                            <div>
+                                <InputCheckbox id="available" @bind-Value="timeslot.Available"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-danger" @onclick="() => RemoveTimeslot(timeslot)">
+                                <b>-</b> Fjern
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="form-group">
+        <button id="ressourceSubmit" class="btn btn-primary" type="submit">@SubmitButtonText</button>
+    </div>
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public ResourceDTO Resource { get; set; }
+
+    [Parameter]
+    public string SubmitButtonText { get; set; }
+
+    [Parameter]
+    public Action<ResourceDTO> OnEditComplete { get; set; }
+
+    private void OnValidSubmit()
+    {
+        OnEditComplete?.Invoke(Resource);
+    }
+
+    private void AddTimeslot()
+    {
+        Resource.Timeslots.Add(new TimeslotDTO
+        {
+            Available = true
+        });
+    }
+
+    private void RemoveTimeslot(TimeslotDTO timeslot)
+    {
+        Resource.Timeslots.Remove(timeslot);
+    }
+
+}

@@ -1,0 +1,23 @@
+﻿@page "/Chat"
+@using AdminPanel.Client.Components
+
+<div class="container">
+    <div class="messaging">
+        <div class="inbox_msg">
+            <ChatList />
+            <MessageContainer />
+        </div>
+    </div>
+</div>
+
+<style>
+    .messaging {
+        padding: 0 0 50px 0;
+    }
+    .inbox_msg {
+        border: 1px solid #c4c4c4;
+        clear: both;
+        overflow: hidden;
+    }
+    .container {max-width: 1170px; margin: auto;}
+</style>

@@ -1,0 +1,45 @@
+﻿@page "/Resource/Delete/{Id:guid}"
+@using AdminPanel.Client.DTOs
+@using AdminPanel.Client.Services
+@attribute [Authorize]
+@inject IResourceService ResourceService
+@inject NavigationManager NavigationManager
+
+@if (_resource == null)
+{
+    <Loading/>
+}
+else
+{
+    <h3>Slet ressource: @_resource.Name</h3>
+    <hr/>
+    <p>Er du sikker på at du vil slette denne ressource?</p>
+    <button id="confirmDelete" class="btn btn-danger" @onclick="OnConfirm">Ja</button>
+    <button class="btn btn-dark" @onclick="RedirectToOverviewPage">Nej</button>
+}
+
+@code {
+
+    [Parameter]
+    public Guid Id { get; set; }
+
+    ResourceDTO _resource;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _resource = await ResourceService.GetFromId(Id);
+    }
+
+    private async void OnConfirm()
+    {
+        await ResourceService.DeleteFromId(Id);
+
+        RedirectToOverviewPage();
+    }
+
+    private void RedirectToOverviewPage()
+    {
+        NavigationManager.NavigateTo("Resource/All");
+    }
+
+}
