@@ -25,6 +25,9 @@ namespace Consumer.Api
             services.AddMediatR(typeof(Startup));
             services.AddControllers();
             services.AddRabbitMq();
+
+            //Skal være her for at kunne trigger Subscribe fra RabbitMQ
+            services.AddTransient<MessageEventHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
