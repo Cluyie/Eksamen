@@ -16,3 +16,7 @@ Iteration: 03/04 - 01/05
 ## Architecture diagram  
 ![alt text](https://github.com/lasserasch/UCLDreamTeam/blob/master/Architecture%20diagram.png "")
 [Link til redigering](https://creately.com/diagram/k8diih3q1/Uj1fnQbfuYOHFMUdKdiTGqcOt8%3D)
+
+
+## Pattern diagram  
+![alt text](https://github.com/lasserasch/UCLDreamTeam/blob/master/Pattern%20Diagram.jpg "")
