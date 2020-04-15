@@ -6,7 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ResourceMicroService.BusinessLayer;
 using ResourceMicrosDtabase;
-
+using RabbitMQ.IoC;
+using MediatR;
 namespace ResourceMicroService
 {
     public class Startup
@@ -26,8 +27,11 @@ namespace ResourceMicroService
                 options.UseSqlServer(Configuration.GetConnectionString("ResourceDbLoacl"));
             });
 
-            services.AddScoped<ResourceService>();
 
+            services.AddMediatR(typeof(Startup));
+            services.AddRabbitMq();
+
+            services.AddScoped<ResourceService>();
             services.AddControllers();
         }
 
