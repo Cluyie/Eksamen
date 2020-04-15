@@ -1,0 +1,44 @@
+﻿<div class="chat_list active_chat">
+    <div class="chat_people">
+        @*<div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>*@
+        <div class="chat_ib">
+            <h5>@Name <span>@Date</span></h5>
+            <p>@Preview</p>
+        </div>
+    </div>
+</div>
+
+@code
+{
+    [Parameter]
+    public string Preview { get; set; }
+
+    [Parameter]
+    public string Name { get; set; }
+
+    [Parameter]
+    public string Date { get; set; }
+}
+
+<style>
+    .active_chat { background: #ebebeb; }
+    .chat_list {
+        border-bottom: 1px solid #c4c4c4;
+        margin: 0;
+        padding: 18px 16px 10px;
+    }
+    .chat_people { overflow: hidden; clear: both;}
+    /*.chat_img {
+        float: left;
+        width: 11%;
+    }*/
+    .chat_ib h5 { font-size: 15px; color: #464646; margin: 0 0 8px 0;}
+    .chat_ib h5 span { font-size: 13px; float: right;}
+    .chat_ib p { font-size: 14px; color: #989898; margin: auto}
+
+    .chat_ib {
+        float: left;
+        padding: 0 0 0 15px;
+        width: 88%;
+    }
+</style>
