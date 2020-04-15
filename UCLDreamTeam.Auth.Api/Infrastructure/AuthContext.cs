@@ -15,6 +15,13 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure
         }
 
         public DbSet<AuthUser> AuthUsers { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserRole>().HasKey(ur => new { ur.AuthUserId, ur.RoleId });
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

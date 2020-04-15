@@ -1,4 +1,4 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Rest_API": {
+    "UCLDreamTeam.Auth.Api": {
       "commandName": "Project",
       "launchUrl": "swagger/",
       "environmentVariables": {

@@ -9,11 +9,28 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using UCLDreamTeam.Auth.Api.Infrastructure.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.OpenApi.Models;
+using UCLDreamTeam.Auth.Api.Infrastructure;
+using UCLDreamTeam.Auth.Api.Models;
+using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace UCLDreamTeam.Auth.Api
 {
     public class Startup
     {
+        private const string xmlKey =
+            "<RSAKeyValue>" +
+            "<Modulus>p9ZX2CSot2aHOiIRJJz0lngezY51Z+stl/sMYGFD1rxcYZbuHDs/cZgUURDhxdlkGoLGv5VSVSyecJ15LIDsjkaKeZ5HJOT5TXVXQOtvtq8Wm/gPsOZso0qoxNIswKwEAsHclfaNOQ7zi3yvVv04Wq3AnhC6y2u/I7YhZUIZtW9oy1BWKnP+HS0PUlP+EhCSmcCro76kWNTQn0Y9lv9ouJqrlOuGmjBEobCyGXISQYfitCTMFZXTcFv9k5F8Y3Kq7FIjAakAjX90rUzl5JxY81Q+8xeOT7zzXn+CrqGuFvlQ0+QrIJLylUOf/x6OguBHlfco682RIqReVFGRwPU+db77OUlj7Yazq1s5X2aRUFn+dRIo/x7+iEin+b1OeA8JycjCrk6bqkttGpy4rKYGuZfoheRwUoJdI8KnuWwWg7D5VbxCh0TX8l9aSczQCryHNN0YZtVDbxRhU/HdOgHSzTAzKsQ8O/fJwgGcaEZs/JH3AS9BGmfurYXZbpiMnkoBEvZpe1pd64GeRenaaCnL2UYFu96Bbb/IUW62foh78+T/leuY1buTLlsiYHAu2fmZw7FBiaPa+RSJ6WXO/sPG/aFPk3AgZx6xX/9tY7Zo1UJ4BWyNw3tpxM+NTu49y9rdiaJ1hdZscPfFACpt/VFFKolgMcVauqV+OvVBZO3ZrsE=</Modulus>" +
+            "<Exponent>AQAB</Exponent>" +
+            "</RSAKeyValue>";
+
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,7 +43,8 @@ namespace UCLDreamTeam.Auth.Api
         {
             services.AddControllers();
             services.AddScoped<AuthService>();
-            services.AddScoped<UserService>();
+            services.AddScoped<AuthRepository>();
+            services.AddDbContext<AuthContext>();
 
             services.AddAuthentication(options =>
             {
@@ -36,6 +54,7 @@ namespace UCLDreamTeam.Auth.Api
             })
                 .AddJwtBearer(options =>
                 {
+                    var key = KeyService.BuildRsaSigningKey(xmlKey);
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
@@ -44,7 +63,7 @@ namespace UCLDreamTeam.Auth.Api
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = Configuration["Jwt:Issuer"],
                         ValidAudience = Configuration["Jwt:Issuer"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                        IssuerSigningKey = key
                     };
                 });
 
@@ -81,14 +100,6 @@ namespace UCLDreamTeam.Auth.Api
                     }
                 });
             });
-
-            //AutoMapper setup
-            var mapper = new Mapper(new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<User, User>()
-                    .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-            }));
-            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -118,47 +129,60 @@ namespace UCLDreamTeam.Auth.Api
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
-            CreateRoles(serviceProvider).Wait();
+            CreateRoles(serviceProvider);
         }
 
-        private async Task CreateRoles(IServiceProvider serviceProvider)
+        private void CreateRoles(IServiceProvider serviceProvider)
 
         {
             //adding custom roles
 
-            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+            var authContext = serviceProvider.GetRequiredService<AuthContext>();
 
-            var UserManager = serviceProvider.GetRequiredService<UserManager<User>>();
+            string roleName = "Admin";
 
-            string[] roleNames = { "Admin" };
+            //creating the role and seeding it to the database
+            var roleExist = authContext.Roles.Any(r => r.RoleName == roleName);
 
-            IdentityResult roleResult;
-
-            foreach (var roleName in roleNames)
+            var roleToAdd = new Role
             {
-                //creating the roles and seeding them to the database
-                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+                RoleId = Guid.NewGuid(),
+                RoleName = roleName
+            };
 
-                if (!roleExist) roleResult = await RoleManager.CreateAsync(new IdentityRole<Guid>(roleName));
-            }
+            if (!roleExist) authContext.Roles.Add(roleToAdd);
 
             //creating an admin
-            var admin = new User
+            var admin = new AuthUser
             {
+                Id = Guid.NewGuid(),
                 UserName = Configuration.GetSection("UserSettings")["UserName"],
                 Email = Configuration.GetSection("UserSettings")["UserEmail"]
             };
 
-            var UserPassword = Configuration.GetSection("UserSettings")["UserPassword"];
+            byte[] salt = new byte[128 / 8];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(salt);
+            }
 
-            var _user = await UserManager.FindByNameAsync(Configuration.GetSection("UserSettings")["UserName"]);
+            admin.PasswordSalt = Convert.ToBase64String(salt);
+
+            admin.PasswordHash =
+                Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: Configuration.GetSection("UserSettings")["UserPassword"],
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA512,
+                iterationCount: 10000,
+                numBytesRequested: 512 / 8));
+
+            var _user = authContext.AuthUsers.SingleOrDefault(u => u.UserName == Configuration.GetSection("UserSettings")["UserName"]);
 
             if (_user == null)
             {
-                var createAdmin = await UserManager.CreateAsync(admin, UserPassword);
-                if (createAdmin.Succeeded)
-                    //here we tie the new user to the "Admin" role 
-                    await UserManager.AddToRoleAsync(admin, "Admin");
+                var createAdmin = authContext.AuthUsers.Add(admin);
+                authContext.UserRoles.Add(new UserRole { AuthUser = admin, Role = roleToAdd });
+                authContext.SaveChanges();
             }
         }
     }
