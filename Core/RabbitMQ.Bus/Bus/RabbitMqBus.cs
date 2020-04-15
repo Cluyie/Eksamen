@@ -45,7 +45,6 @@ namespace RabbitMQ.Bus.Bus
             var body = Encoding.UTF8.GetBytes(message);
 
             channel.ExchangeDeclare(eventName, ExchangeType.Fanout);
-            //channel.QueueDeclare(eventName, false, false, false, null);
             channel.BasicPublish(eventName, "", null, body);
         }
 
@@ -88,7 +87,6 @@ namespace RabbitMQ.Bus.Bus
 
         private async Task Consumer_Received(object sender, BasicDeliverEventArgs @event)
         {
-            //var eventName = @event.RoutingKey;
             var eventName = @event.Exchange;
             var message = Encoding.UTF8.GetString(@event.Body);
 
