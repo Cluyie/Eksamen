@@ -19,4 +19,4 @@ Iteration: 03/04 - 01/05
 
 
 ## Pattern diagram  
-![alt text](https://github.com/lasserasch/UCLDreamTeam/blob/master/Pattern%20Diagram.jpg "")
+![alt text](https://github.com/lasserasch/UCLDreamTeam/blob/master/UCLDreamTeam%20Patterns%20Diagram.jpg "")
