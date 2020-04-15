@@ -30,7 +30,7 @@
     <None Include="Components\MessageContainer.razor" />
     <None Include="Components\MessageIncoming.razor" />
     <None Include="Components\MessageOutgoing.razor" />
-    <None Include="Components\MessageWrite.razor" />
+    <None Include="Components\MessageReply.razor" />
     <None Include="Components\Search.razor" />
     <None Include="Pages\Resource\Add.razor" />
     <None Include="Pages\Resource\All.razor" />
