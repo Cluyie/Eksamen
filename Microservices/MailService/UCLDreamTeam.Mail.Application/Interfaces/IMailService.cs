@@ -1,5 +1,4 @@
 ﻿using System.Net.Mail;
-using Models.Interfaces;
 using Models.Mail;
 using UCLDreamTeam.Mail.Domain.Models;
 

@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using Models.Mail;
 using UCLDreamTeam.Mail.Application.Interfaces;
-using UCLDreamTeam.Mail.Domain.Models;
-using UCLToolBox;
 
 namespace UCLDreamTeam.Mail.Api.Controllers
 {

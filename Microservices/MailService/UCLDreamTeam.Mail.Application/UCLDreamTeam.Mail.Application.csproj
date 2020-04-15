@@ -5,9 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\Models\Models.csproj" />
-    <ProjectReference Include="..\Core\UCLToolBox\UCLToolBox.csproj" />
-    <ProjectReference Include="..\Microservices\MailService\BusinessLayer\UCLDreamTeam.Mail.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Core\RabbitMQ.Bus\RabbitMQ.Bus.csproj" />
+    <ProjectReference Include="..\UCLDreamTeam.Mail.Domain\UCLDreamTeam.Mail.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
