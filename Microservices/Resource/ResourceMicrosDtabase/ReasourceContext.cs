@@ -10,5 +10,6 @@ namespace ResourceMicrosDtabase
     {
         public DbSet<Resource<AvaiableTime>> Resources { get; set; }
         public DbSet<AvaiableTime> AvaiableTimes { get; set; }
+        
     }
 }
