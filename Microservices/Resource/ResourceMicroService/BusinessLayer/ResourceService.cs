@@ -1,8 +1,9 @@
 ﻿using Business_Layer.Models;
 using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Bus.Bus.Interfaces;
+using Resource.Domain.Models;
+using Resource.Domain.RwbbitMQEvents;
 using ResourceMicrosDtabase;
-using ResourceMicrosDtabase.Models;
 using ResourceMicroService.RabitMQCommands;
 using System;
 using System.Collections.Generic;
@@ -60,7 +61,7 @@ namespace ResourceMicroService.BusinessLayer
                     _applicationContext.Add(resource);
                     _applicationContext.SaveChanges();
 
-                    EventBus.SendCommand(new CreatResourceCommand(resource));
+                    EventBus.PublishEvent(new ResourceCerateEvent(resource));
                     return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.OK, resource);
                 }
                 else
@@ -160,7 +161,7 @@ namespace ResourceMicroService.BusinessLayer
                     Resource<AvaiableTime> OldResourece = await _applicationContext.Resources.FirstOrDefaultAsync(x => x.Id == resourceToUpdate.Id);
                     _applicationContext.Update(resourceToUpdate);
                     _applicationContext.SaveChanges();
-                    EventBus.SendCommand(new RabbitMQUpdateRecource(resourceToUpdate, OldResourece));
+                    EventBus.PublishEvent(new ResourceUpdateEvent(_applicationContext.Resources.Find(resourceToUpdate)));
 
                     return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.OK, resourceToUpdate);
                 }
@@ -200,7 +201,7 @@ namespace ResourceMicroService.BusinessLayer
                     
                     _applicationContext.SaveChanges();
 
-                    EventBus.SendCommand(new DeleteResourceCommand(Resource));
+                    EventBus.PublishEvent(new ResourceDeleateEvent(Resource));
                     return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.OK, null);
                 }
             }

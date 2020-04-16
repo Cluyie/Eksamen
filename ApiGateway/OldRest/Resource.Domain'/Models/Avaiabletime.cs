@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using ResourceInterface;
 
-namespace ResourceMicrosDtabase.Models
+namespace Resource.Domain.Models
 {
     public class AvaiableTime : IAvaiableTime
     {

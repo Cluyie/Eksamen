@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ResourceMicrosDtabase.Models
+namespace Resource.Domain.Models
 {
     public class Resource<TAvaiablTime> : IResource<TAvaiablTime> where TAvaiablTime : IAvaiableTime
     {
