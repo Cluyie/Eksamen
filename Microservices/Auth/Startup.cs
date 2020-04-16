@@ -54,6 +54,7 @@ namespace UCLDreamTeam.Auth.Api
             services.AddMediatR(typeof(Startup));
             services.AddRabbitMq();
             services.AddTransient<UserUpdatedEventHandler>();
+            services.AddTransient<UserDeletedEventHandler>();
 
             services.AddAuthentication(options =>
             {
@@ -164,25 +165,23 @@ namespace UCLDreamTeam.Auth.Api
 
             if (!roleExist) authContext.Roles.Add(roleToAdd);
 
-            //creating an admin
-            var admin = new AuthUser
-            {
-                Id = Guid.NewGuid(),
-                UserName = Configuration.GetSection("UserSettings")["UserName"],
-                Email = Configuration.GetSection("UserSettings")["UserEmail"]
-            };
-
-            byte[] salt = hashService.GenerateSalt();
-
-            admin.PasswordSalt = Convert.ToBase64String(salt);
-
-            admin.PasswordHash = hashService.Hasher(Configuration.GetSection("UserSettings")["UserPassword"], Convert.ToBase64String(salt));
-
             var _user = authContext.AuthUsers.SingleOrDefault(u => u.UserName == Configuration.GetSection("UserSettings")["UserName"]);
 
             if (_user == null)
             {
-                var createAdmin = authContext.AuthUsers.Add(admin);
+                //creating an admin
+                var admin = new AuthUser
+                {
+                    Id = Guid.NewGuid(),
+                    UserName = Configuration.GetSection("UserSettings")["UserName"],
+                    Email = Configuration.GetSection("UserSettings")["UserEmail"]
+                };
+
+                admin.PasswordSalt = hashService.GenerateSalt();
+
+                admin.PasswordHash = hashService.GenerateHash(Configuration.GetSection("UserSettings")["UserPassword"], admin.PasswordSalt);
+
+                authContext.AuthUsers.Add(admin);
                 authContext.UserRoles.Add(new UserRole { AuthUserId = admin.Id, Role = roleToAdd });
                 authContext.SaveChanges();
             }
