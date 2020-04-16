@@ -1,4 +1,4 @@
-﻿namespace UCLDreamTeam.Auth.Api.Models
+﻿namespace UCLDreamTeam.Auth.Api.Models.DTO
 {
     public class LoginDTO
     {

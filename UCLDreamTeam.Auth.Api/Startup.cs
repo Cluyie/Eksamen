@@ -19,6 +19,11 @@ using UCLDreamTeam.Auth.Api.Models;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using RabbitMQ.Bus.Bus.Interfaces;
+using RabbitMQ.IoC;
+using MediatR;
+using UCLDreamTeam.Auth.Api.IntegrationEvents.Events;
+using UCLDreamTeam.Auth.Api.IntegrationEvents.EventHandlers;
 
 namespace UCLDreamTeam.Auth.Api
 {
@@ -43,8 +48,12 @@ namespace UCLDreamTeam.Auth.Api
         {
             services.AddControllers();
             services.AddScoped<AuthService>();
+            services.AddScoped<HashService>();
             services.AddScoped<AuthRepository>();
             services.AddDbContext<AuthContext>();
+            services.AddMediatR(typeof(Startup));
+            services.AddRabbitMq();
+            services.AddTransient<UserUpdatedEventHandler>();
 
             services.AddAuthentication(options =>
             {
@@ -114,6 +123,8 @@ namespace UCLDreamTeam.Auth.Api
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("../swagger/v1/swagger.json", "My API V1"); });
 
+            app.Subscribe<UserUpdatedEvent, UserUpdatedEventHandler>();
+
             //app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -138,6 +149,7 @@ namespace UCLDreamTeam.Auth.Api
             //adding custom roles
 
             var authContext = serviceProvider.GetRequiredService<AuthContext>();
+            var hashService = serviceProvider.GetRequiredService<HashService>();
 
             string roleName = "Admin";
 
@@ -160,21 +172,11 @@ namespace UCLDreamTeam.Auth.Api
                 Email = Configuration.GetSection("UserSettings")["UserEmail"]
             };
 
-            byte[] salt = new byte[128 / 8];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(salt);
-            }
+            byte[] salt = hashService.GenerateSalt();
 
             admin.PasswordSalt = Convert.ToBase64String(salt);
 
-            admin.PasswordHash =
-                Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: Configuration.GetSection("UserSettings")["UserPassword"],
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA512,
-                iterationCount: 10000,
-                numBytesRequested: 512 / 8));
+            admin.PasswordHash = hashService.Hasher(Configuration.GetSection("UserSettings")["UserPassword"], Convert.ToBase64String(salt));
 
             var _user = authContext.AuthUsers.SingleOrDefault(u => u.UserName == Configuration.GetSection("UserSettings")["UserName"]);
 

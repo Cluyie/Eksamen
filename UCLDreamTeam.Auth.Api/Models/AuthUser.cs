@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace UCLDreamTeam.Auth.Api.Models
 {
+    [Serializable]
     public class AuthUser
     {
         public Guid Id { get; set; }

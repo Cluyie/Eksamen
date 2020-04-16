@@ -21,5 +21,16 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure
             AuthUser authUser = await _authContext.AuthUsers.Include(u => u.UserRoles).ThenInclude(u => u.Role).SingleOrDefaultAsync(u => u.UserName == userNameOrEmail || u.Email == userNameOrEmail);
             return authUser;
         }
+
+        public async Task UpdateUser(AuthUser user)
+        {
+            _authContext.AuthUsers.Update(user);
+            await _authContext.SaveChangesAsync();
+        }
+
+        public async Task<AuthUser> GetUserFromId(Guid id)
+        {
+            return await _authContext.AuthUsers.SingleOrDefaultAsync(u => u.Id == id);
+        }
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using UCLDreamTeam.Auth.Api.Infrastructure.Services;
-using UCLDreamTeam.Auth.Api.Models;
+using UCLDreamTeam.Auth.Api.Models.DTO;
 
 namespace UCLDreamTeam.Auth.Api.Controllers
 {

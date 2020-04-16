@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Models.Interfaces;
+using UCLDreamTeam.Auth.Api.Models.DTO;
 using UCLDreamTeam.Auth.Api.Models;
 
 namespace UCLDreamTeam.Auth.Api.Infrastructure.Services
@@ -28,12 +29,14 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure.Services
             "</RSAKeyValue>";
 
         private readonly AuthRepository _authRepository;
+        private readonly HashService _hashService;
         private readonly IConfiguration _config;
 
-        public AuthService(AuthRepository authRepository, IConfiguration config)
+        public AuthService(AuthRepository authRepository, IConfiguration config, HashService hashService)
         {
             _authRepository = authRepository;
             _config = config;
+            _hashService = hashService;
         }
 
         public async Task<string> AuthenticateAsync(LoginDTO user)
@@ -42,7 +45,7 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure.Services
 
             if (userIn == null) return string.Empty;
 
-            var result = HashMatch(user.Password, userIn.PasswordHash, userIn.PasswordSalt);
+            var result = _hashService.Compare(user.Password, userIn.PasswordHash, userIn.PasswordSalt);
 
             if (result == PasswordVerificationResult.Success)
             {
@@ -52,23 +55,7 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure.Services
             return string.Empty;
         }
 
-        public PasswordVerificationResult HashMatch(string password, string dbHash, string salt)
-        {
-            string hashedPassword =
-            Convert.ToBase64String(KeyDerivation.Pbkdf2(
-            password: password,
-            salt: Convert.FromBase64String(salt),
-            prf: KeyDerivationPrf.HMACSHA512,
-            iterationCount: 10000,
-            numBytesRequested: 512 / 8));
 
-            if (string.Equals(hashedPassword, dbHash))
-            {
-               return PasswordVerificationResult.Success;
-            }
-
-            return PasswordVerificationResult.Failed;
-        }
 
         private string GenerateJSONWebToken(AuthUser authUser)
         {

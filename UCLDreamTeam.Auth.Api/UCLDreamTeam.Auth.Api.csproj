@@ -24,6 +24,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.3.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.3.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+    <PackageReference Include="MediatR" Version="8.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,5 +56,9 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Services\" />
+    <Folder Include="IntegrationEvents\" />
+    <Folder Include="IntegrationEvents\EventHandlers\" />
+    <Folder Include="IntegrationEvents\Events\" />
+    <Folder Include="Models\DTO\" />
   </ItemGroup>
 </Project>
