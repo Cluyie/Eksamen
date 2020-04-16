@@ -43,7 +43,7 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure.Services
         {
             var userIn = await _authRepository.GetUserFromUserNameOrEmailAsync(user.UsernameOrEmail);
 
-            if (userIn == null) return string.Empty;
+            if (userIn == null) return null;
 
             var result = _hashService.Compare(user.Password, userIn.PasswordHash, userIn.PasswordSalt);
 
@@ -52,7 +52,7 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure.Services
                 return GenerateJSONWebToken(userIn);
             }
 
-            return string.Empty;
+            return null;
         }
 
 
