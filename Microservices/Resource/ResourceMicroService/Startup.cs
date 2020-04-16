@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ResourceMicroService.BusinessLayer;
-
+using ResourceMicrosDtabase;
+using RabbitMQ.IoC;
+using MediatR;
 namespace ResourceMicroService
 {
     public class Startup
@@ -19,8 +22,16 @@ namespace ResourceMicroService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ResourceService>();
+            services.AddDbContext<ReasourceContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("ResourceDbLoacl"));
+            });
 
+
+            services.AddMediatR(typeof(Startup));
+            services.AddRabbitMq();
+
+            services.AddScoped<ResourceService>();
             services.AddControllers();
         }
 

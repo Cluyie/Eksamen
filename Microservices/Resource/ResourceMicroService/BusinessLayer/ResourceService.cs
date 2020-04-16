@@ -1,22 +1,24 @@
-﻿using System;
+﻿using Business_Layer.Models;
+using Microsoft.EntityFrameworkCore;
+using RabbitMQ.Bus.Bus.Interfaces;
+using ResourceMicrosDtabase;
+using ResourceMicrosDtabase.Models;
+using ResourceMicroService.RabitMQCommands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ResourceInterface;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using ResourceMicrosDtabase;
-using Business_Layer.Models;
-using ResourceMicrosDtabase.Models;
 
 namespace ResourceMicroService.BusinessLayer
 {
     public class ResourceService
     {
         private ReasourceContext _applicationContext;
-
-        public ResourceService(ReasourceContext applicationContext)
+        IEventBus EventBus { get; set; }
+        public ResourceService(ReasourceContext applicationContext, IEventBus eventBus)
         {
             _applicationContext = applicationContext;
+            EventBus = eventBus;
         }
 
         #region Create
@@ -58,6 +60,7 @@ namespace ResourceMicroService.BusinessLayer
                     _applicationContext.Add(resource);
                     _applicationContext.SaveChanges();
 
+                    EventBus.SendCommand(new CreatResourceCommand(resource));
                     return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.OK, resource);
                 }
                 else
@@ -118,7 +121,7 @@ namespace ResourceMicroService.BusinessLayer
         #region Update
         //Update a resource
         //Should ignore reservations when being updated
-        public ApiResponse<Resource<AvaiableTime>> Update(Resource<AvaiableTime> resource)
+        public async Task<ApiResponse<Resource<AvaiableTime>>> Update(Resource<AvaiableTime> resource)
         {
             Resource<AvaiableTime> resourceToUpdate = new Resource<AvaiableTime>();
 
@@ -154,9 +157,10 @@ namespace ResourceMicroService.BusinessLayer
                     resourceToUpdate.Name = resource.Name;
                     resourceToUpdate.Description = resource.Description;
                     resourceToUpdate.TimeSlots = resource.TimeSlots;
-
+                    Resource<AvaiableTime> OldResourece = await _applicationContext.Resources.FirstOrDefaultAsync(x => x.Id == resourceToUpdate.Id);
                     _applicationContext.Update(resourceToUpdate);
                     _applicationContext.SaveChanges();
+                    EventBus.SendCommand(new RabbitMQUpdateRecource(resourceToUpdate, OldResourece));
 
                     return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.OK, resourceToUpdate);
                 }
@@ -173,7 +177,7 @@ namespace ResourceMicroService.BusinessLayer
         #endregion
         #region Delete
         //Delete a resource
-        public ApiResponse<Resource<AvaiableTime>> Delete(Guid guid)
+        public async Task<ApiResponse<Resource<AvaiableTime>>> Delete(Guid guid)
         {
             Resource<AvaiableTime> resourceToDelete = new Resource<AvaiableTime>();
 
@@ -190,12 +194,13 @@ namespace ResourceMicroService.BusinessLayer
                 }
                 else
                 {
+                    var Resource = await _applicationContext.Resources.FirstOrDefaultAsync(x => x.Id == resourceToDelete.Id);
                     //This will cascade delete.
                     _applicationContext.Resources.Remove(resourceToDelete);
-
+                    
                     _applicationContext.SaveChanges();
 
-
+                    EventBus.SendCommand(new DeleteResourceCommand(Resource));
                     return new ApiResponse<Resource<AvaiableTime>>(ApiResponseCode.OK, null);
                 }
             }
