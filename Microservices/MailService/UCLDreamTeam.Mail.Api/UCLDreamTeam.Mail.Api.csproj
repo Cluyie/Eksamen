@@ -19,12 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\Models\Models.csproj" />
     <ProjectReference Include="..\..\..\Core\RabbitMQ.IoC\RabbitMQ.IoC.csproj" />
-    <ProjectReference Include="..\..\..\Core\UCLToolBox\UCLToolBox.csproj" />
-    <ProjectReference Include="..\..\..\UCLDreamTeam.Mail.Application\UCLDreamTeam.Mail.Application.csproj" />
-    <ProjectReference Include="..\..\..\UCLDreamTeam.Mail.Data\UCLDreamTeam.Mail.Data.csproj" />
-    <ProjectReference Include="..\BusinessLayer\UCLDreamTeam.Mail.Domain.csproj" />
+    <ProjectReference Include="..\UCLDreamTeam.Mail.Application\UCLDreamTeam.Mail.Application.csproj" />
+    <ProjectReference Include="..\UCLDreamTeam.Mail.Data\UCLDreamTeam.Mail.Data.csproj" />
+    <ProjectReference Include="..\UCLDreamTeam.Mail.Domain\UCLDreamTeam.Mail.Domain.csproj" />
   </ItemGroup>
 
 

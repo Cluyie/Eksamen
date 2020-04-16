@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Net.Mail;
-using Models.Mail;
 using RabbitMQ.Bus.Events;
-using UCLDreamTeam.Mail.Domain.Models;
 
 namespace UCLDreamTeam.Mail.Domain.Events
 {

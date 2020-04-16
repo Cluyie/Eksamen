@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Microservices\MailService\BusinessLayer\UCLDreamTeam.Mail.Domain.csproj" />
+    <ProjectReference Include="..\UCLDreamTeam.Mail.Domain\UCLDreamTeam.Mail.Domain.csproj" />
   </ItemGroup>
 
 </Project>

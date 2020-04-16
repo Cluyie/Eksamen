@@ -26,6 +26,8 @@ namespace Consumer.Api
             services.AddMediatR(typeof(Startup));
             services.AddControllers();
             services.AddRabbitMq();
+
+            //Skal være her for at kunne trigger Subscribe fra RabbitMQ
             services.AddTransient<MessageEventHandler>();
         }
 

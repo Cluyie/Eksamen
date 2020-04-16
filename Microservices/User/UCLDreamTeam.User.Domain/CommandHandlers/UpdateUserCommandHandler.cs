@@ -27,8 +27,12 @@ namespace UCLDreamTeam.User.Domain.CommandHandlers
         {
             try
             {
+                // Finds the user
+                var dbUser = _identityContext.Find<Models.User>(request.UserToChange.Id);
+
                 //Prevent changing the ID
                 request.UserToChange.Id = Guid.Empty;
+                
                 // Can only update an existing user
                 if (request.UserToChange == null)
                 {
@@ -44,12 +48,12 @@ namespace UCLDreamTeam.User.Domain.CommandHandlers
                     request.UserToChange.PasswordHash = request.UserToChange.PasswordHash;
                 }
                 // Automapper is configured to only overwrite the fields that are not null
-                _mapper.Map(request.UserToChange, request.UserToChange);
+                _mapper.Map(request.UserToChange, dbUser);
 
-                _identityContext.Update(request.UserToChange);
+                _identityContext.Update(dbUser);
                 _identityContext.SaveChanges();
 
-                _eventBus.PublishEvent(new UserUpdatedEvent(request.UserToChange));
+                _eventBus.PublishEvent(new UserUpdatedEvent(dbUser));
                 return true;
             }
             catch (Exception e)

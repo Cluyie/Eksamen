@@ -10,14 +10,14 @@ using UCLDreamTeam.Reservation.Domain.Interfaces;
 
 namespace UCLDreamTeam.Reservation.Domain.CommandHandlers
 {
-    public class ReservationCommandHandler : IRequestHandler<CreateReservationCommand, bool>
+    public class CreateReservationCommandHandler : IRequestHandler<CreateReservationCommand, bool>
     {
         private readonly IEventBus _eventBus;
         private readonly IReservationRepository _reservationRepository;
-        private readonly ILogger<ReservationCommandHandler> _logger;
+        private readonly ILogger<CreateReservationCommandHandler> _logger;
 
-        public ReservationCommandHandler(IEventBus eventBus, IReservationRepository reservationRepository,
-            ILogger<ReservationCommandHandler> logger)
+        public CreateReservationCommandHandler(IEventBus eventBus, IReservationRepository reservationRepository,
+            ILogger<CreateReservationCommandHandler> logger)
         {
             _eventBus = eventBus;
             _reservationRepository = reservationRepository;
@@ -26,7 +26,7 @@ namespace UCLDreamTeam.Reservation.Domain.CommandHandlers
 
         public async Task<bool> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
         {
-                _logger.LogInformation("ReservationCommandHandler Called");
+                _logger.LogInformation("CreateReservationCommandHandler Called");
             try
             {
                 var reservation = new Models.Reservation
