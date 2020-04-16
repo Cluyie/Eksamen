@@ -181,7 +181,7 @@ namespace UCLDreamTeam.Auth.Api
             if (_user == null)
             {
                 var createAdmin = authContext.AuthUsers.Add(admin);
-                authContext.UserRoles.Add(new UserRole { AuthUser = admin, Role = roleToAdd });
+                authContext.UserRoles.Add(new UserRole { AuthUserId = admin.Id, Role = roleToAdd });
                 authContext.SaveChanges();
             }
         }

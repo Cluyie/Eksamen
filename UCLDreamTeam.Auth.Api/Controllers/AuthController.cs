@@ -39,7 +39,7 @@ namespace UCLDreamTeam.Auth.Api.Controllers
 
                 if (userToken != null)
                 {
-                    return Ok(userToken);
+                    return Ok("Bearer" + " " + userToken);
                 }
 
                 return Unauthorized();

@@ -18,8 +18,7 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure
 
         public async Task<AuthUser> GetUserFromUserNameOrEmailAsync(string userNameOrEmail)
         {
-            AuthUser authUser = await _authContext.AuthUsers.Include(u => u.UserRoles).ThenInclude(u => u.Role).SingleOrDefaultAsync(u => u.UserName == userNameOrEmail) ??
-                                await _authContext.AuthUsers.Include(u => u.UserRoles).ThenInclude(u => u.Role).SingleOrDefaultAsync(u => u.Email == userNameOrEmail);
+            AuthUser authUser = await _authContext.AuthUsers.Include(u => u.UserRoles).ThenInclude(u => u.Role).SingleOrDefaultAsync(u => u.UserName == userNameOrEmail || u.Email == userNameOrEmail);
             return authUser;
         }
     }

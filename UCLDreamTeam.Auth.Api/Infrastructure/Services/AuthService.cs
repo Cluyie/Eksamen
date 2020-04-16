@@ -54,7 +54,8 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure.Services
 
         public PasswordVerificationResult HashMatch(string password, string dbHash, string salt)
         {
-            string hashedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+            string hashedPassword =
+            Convert.ToBase64String(KeyDerivation.Pbkdf2(
             password: password,
             salt: Convert.FromBase64String(salt),
             prf: KeyDerivationPrf.HMACSHA512,
