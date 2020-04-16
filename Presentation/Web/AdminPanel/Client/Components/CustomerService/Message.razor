@@ -1,0 +1,48 @@
+﻿<div class="message">
+    <div class="@(Response ? "response" : "")">
+        <p class="text">@Text</p>
+    </div>
+</div>
+<p class="@(Response ? "response-time" : "") time">@Time</p>
+
+ @code
+ {
+     [Parameter] public bool Response { get; set; } = false;
+     [Parameter] public string Text { get; set; }
+     [Parameter] public string Time { get; set; }
+ }
+
+<style>
+    .message {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+        .message .text {
+            margin: 0;
+            background-color: #f6f6f6;
+            padding: 15px;
+            border-radius: 12px;
+        }
+    
+    .time {
+        font-size: 10px;
+        color: lightgrey;
+        margin-bottom: 10px;
+    }
+
+    .response-time {
+        float: right;
+    }
+
+    .response {
+        float: right;
+        margin-right: 0px !important;
+        margin-left: auto; /* flexbox alignment rule */
+    }
+
+    .response .text {
+        background-color: #e3effd !important;
+    }
+</style>

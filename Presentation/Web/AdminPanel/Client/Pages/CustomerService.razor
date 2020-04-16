@@ -1,19 +1,10 @@
 ﻿@layout CleanLayout
 @page "/Chat"
-@using AdminPanel.Client.Components
+@using AdminPanel.Client.Components.CustomerService
 
-<div class="container app">
-    <div class="row app-one">
-        <div class="col-sm-4 side">
-            <ChatList />
-            <MessageContainer />
-        </div>
-        <Test />
-        <MessageContainer/>
-        <MessageReply />
+<div class="container-fluid">
+    <div class="row h-100">
+        <Tickets />
+        <Chat />
     </div>
 </div>
-
-<style>
-
-</style>

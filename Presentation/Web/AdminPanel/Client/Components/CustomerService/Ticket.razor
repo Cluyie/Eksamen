@@ -1,0 +1,79 @@
+﻿<div class="d-flex">
+<div class="discussion @(Active ? "message-active" : "")">
+    <div class="desc-contact">
+        <p class="name">@Name</p>
+        <p class="message">@Message</p>
+    </div>
+    <div class="timer">@Timer</div>
+</div>
+@if (Active)
+{
+    <div class="active-bar"></div>
+}
+</div>
+
+@code
+{
+    [Parameter] public bool Active { get; set; } = false;
+    [Parameter] public string Name { get; set; }
+    [Parameter] public string Message { get; set; }
+    [Parameter] public string Timer { get; set; }
+}
+
+<style>
+    .discussions .message-active {
+        width: 98.5%;
+        height: 90px;
+        background-color: #FFF;
+        border-bottom: solid 1px #E0E0E0;
+    }
+
+    .discussions .active-bar {
+        width: 1.5%;
+        height: 90px;
+        background-color: #87a3ec;
+    }
+
+    .discussion {
+        width: 100%;
+        height: 90px;
+        background-color: #FAFAFA;
+        border-bottom: solid 1px #E0E0E0;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+        .discussion .desc-contact {
+            height: 43px;
+            width: 50%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+    .desc-contact .name {
+        margin: 0 0 0 20px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 11pt;
+        color: #515151;
+    }
+
+    .desc-contact .message {
+        margin: 6px 0 0 20px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 9pt;
+        color: #515151;
+    }
+
+    .discussion .timer {
+        margin-left: 15%;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 11px;
+        padding: 3px 8px;
+        color: #BBB;
+        background-color: #FFF;
+        border: 1px solid #E5E5E5;
+        border-radius: 15px;
+    }
+</style>
