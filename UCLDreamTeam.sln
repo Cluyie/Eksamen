@@ -131,6 +131,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UCLDreamTeam.Mail.Data", "M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UCLDreamTeam.Mail.Domain", "Microservices\MailService\UCLDreamTeam.Mail.Domain\UCLDreamTeam.Mail.Domain.csproj", "{135E3863-D8A4-4CD6-95F0-69133D56C8E5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UCLDreamTeam.Auth.Api", "Microservices\Auth\UCLDreamTeam.Auth.Api.csproj", "{F12A4DB5-D52B-41FB-A302-6D9AFE54FA25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -577,6 +579,18 @@ Global
 		{135E3863-D8A4-4CD6-95F0-69133D56C8E5}.Release|iPhone.Build.0 = Release|Any CPU
 		{135E3863-D8A4-4CD6-95F0-69133D56C8E5}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{135E3863-D8A4-4CD6-95F0-69133D56C8E5}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{F12A4DB5-D52B-41FB-A302-6D9AFE54FA25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F12A4DB5-D52B-41FB-A302-6D9AFE54FA25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F12A4DB5-D52B-41FB-A302-6D9AFE54FA25}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{F12A4DB5-D52B-41FB-A302-6D9AFE54FA25}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{F12A4DB5-D52B-41FB-A302-6D9AFE54FA25}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{F12A4DB5-D52B-41FB-A302-6D9AFE54FA25}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{F12A4DB5-D52B-41FB-A302-6D9AFE54FA25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F12A4DB5-D52B-41FB-A302-6D9AFE54FA25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F12A4DB5-D52B-41FB-A302-6D9AFE54FA25}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{F12A4DB5-D52B-41FB-A302-6D9AFE54FA25}.Release|iPhone.Build.0 = Release|Any CPU
+		{F12A4DB5-D52B-41FB-A302-6D9AFE54FA25}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{F12A4DB5-D52B-41FB-A302-6D9AFE54FA25}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -641,6 +655,7 @@ Global
 		{F65C747B-AEBA-4200-B3CB-D74C40345A88} = {025230F1-EA48-4CD6-A555-DE990981D367}
 		{04999FEB-DB24-4E2E-A759-587833F3BA94} = {7C93A968-DC76-45D1-92BB-B3D85C1F8B06}
 		{135E3863-D8A4-4CD6-95F0-69133D56C8E5} = {22A21CDA-9D8E-4E54-AB69-895655B19F76}
+		{F12A4DB5-D52B-41FB-A302-6D9AFE54FA25} = {505B0573-4CE2-4F46-BE0B-7A2BC5CE1729}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {76228AC4-4F38-4FEB-B539-03D63D6C38AD}
