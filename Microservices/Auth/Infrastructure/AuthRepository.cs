@@ -16,12 +16,10 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure
             _authContext = authContext;
         }
 
-        public async Task<AuthUser> Create(AuthUser user)
+        public async Task Create(AuthUser user)
         {
             _authContext.Add(user);
             await _authContext.SaveChangesAsync();
-
-            return user;
         }
 
         public async Task<AuthUser> GetUserFromUserNameOrEmailAsync(string userNameOrEmail)
