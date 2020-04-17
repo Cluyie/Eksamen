@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RabbitMQ.Bus.Bus.Interfaces;
 using RabbitMQ.IoC;
 
 namespace Consumer.Api
@@ -25,6 +26,9 @@ namespace Consumer.Api
             services.AddMediatR(typeof(Startup));
             services.AddControllers();
             services.AddRabbitMq();
+
+            //Skal være her for at kunne trigger Subscribe fra RabbitMQ
+            services.AddTransient<MessageEventHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
