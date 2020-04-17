@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Bus.Bus.Interfaces;
 using UCLDreamTeam.User.Domain.Commands;
+using UCLDreamTeam.User.Domain.Interface;
 using UCLDreamTeam.User.Domain.Events;
 
 namespace UCLDreamTeam.User.Domain.CommandHandlers
@@ -14,19 +15,19 @@ namespace UCLDreamTeam.User.Domain.CommandHandlers
     public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, bool>
     {
         private readonly IEventBus _eventBus;
-        private readonly UserManager<Models.User> _userManager;
+        private readonly IUserRepository _userRepository;
 
-        public DeleteUserCommandHandler(IEventBus eventBus, UserManager<Models.User> userManager)
+        public DeleteUserCommandHandler(IEventBus eventBus, IUserRepository userRepository)
         {
             _eventBus = eventBus;
-            _userManager = userManager;
+            _userRepository = userRepository;
         }
 
         public async Task<bool> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                await _userManager.DeleteAsync(request.User);
+                await _userRepository.DeleteUserAsync(request.User);
                 _eventBus.PublishEvent(new UserDeletedEvent(request.User));
                 return true;
             }

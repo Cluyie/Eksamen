@@ -21,5 +21,7 @@ namespace UCLDreamTeam.Mail.Domain.Models
         public string Country { get; set; }
         [NotMapped]
         public int? ZipCode { get; set; }
+        [NotMapped]
+        public string PasswordHash { get; set; }
     }
 }
