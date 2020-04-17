@@ -29,7 +29,6 @@ namespace UCLDreamTeam.User.Api.Controllers
         {
             try
             {
-
                 var userName = User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
 
                 var userProfile = _userService.GetUserFromUserNameAsync(userName).Result;
@@ -76,7 +75,11 @@ namespace UCLDreamTeam.User.Api.Controllers
                 return BadRequest();
             try
             {
-                await _userService.Update(user);
+                if (await _userService.GetUserFromIdAsync(user.Id) != null)
+                    await _userService.Update(user);
+                else
+                    await _userService.RegisterAsync(user);
+
                 return Ok(user);
             }
             catch (Exception e)
