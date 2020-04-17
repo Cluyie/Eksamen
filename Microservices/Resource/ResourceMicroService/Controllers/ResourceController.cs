@@ -5,12 +5,11 @@ using Business_Layer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ResourceMicrosDtabase.Models;
+using Resource.Domain.Models;
 using ResourceMicroService.BusinessLayer;
 
 namespace ResourceMicroService.Controllers
 {
-    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class ResourceController : ControllerBase
@@ -22,7 +21,6 @@ namespace ResourceMicroService.Controllers
             _resourceService = resourceService;
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status304NotModified)]
@@ -30,7 +28,6 @@ namespace ResourceMicroService.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<Resource<AvaiableTime>> CreateResource([FromBody] Resource<AvaiableTime> resource)
         {
-            
             return _resourceService.Create(resource);
         }
 
@@ -51,8 +48,6 @@ namespace ResourceMicroService.Controllers
         {
             return _resourceService.Get(guid);
         }
-
-        [Authorize(Roles = "Admin")]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -63,7 +58,6 @@ namespace ResourceMicroService.Controllers
             return await _resourceService.Update(resource);
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpDelete("guid={guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

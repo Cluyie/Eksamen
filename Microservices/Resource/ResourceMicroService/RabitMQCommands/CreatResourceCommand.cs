@@ -1,5 +1,5 @@
 ﻿using RabbitMQ.Bus.Commands;
-using ResourceMicrosDtabase.Models;
+using Resource.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

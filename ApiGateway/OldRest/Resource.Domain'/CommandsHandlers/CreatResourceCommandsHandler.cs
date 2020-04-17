@@ -7,7 +7,6 @@ namespace Resource.Domain.InternealCommands
 {
     public class CreatResourceCommandsHandler : IRequestHandler<CreatResourceCommand, bool>
     {
-        public IResourceContex Contex { get; set; }
         public Task<bool> Handle(CreatResourceCommand request, CancellationToken cancellationToken)
         {
             throw new System.NotImplementedException();

@@ -8,6 +8,9 @@ using ResourceMicroService.BusinessLayer;
 using ResourceMicrosDtabase;
 using RabbitMQ.IoC;
 using MediatR;
+using Microsoft.OpenApi.Models;
+using System;
+
 namespace ResourceMicroService
 {
     public class Startup
@@ -24,7 +27,7 @@ namespace ResourceMicroService
         {
             services.AddDbContext<ReasourceContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("ResourceDbLoacl"));
+                options.UseSqlServer(Configuration.GetConnectionString("ResourceDbLocal"));
             });
 
 
@@ -33,20 +36,28 @@ namespace ResourceMicroService
 
             services.AddScoped<ResourceService>();
             services.AddControllers();
+            services.AddSwaggerGen(c =>
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "User Microservice", Version = "v1" }));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+            
 
-            app.UseHttpsRedirection();
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseRouting();
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("../swagger/v1/swagger.json", "My API V1");
+            });
         }
     }
 }

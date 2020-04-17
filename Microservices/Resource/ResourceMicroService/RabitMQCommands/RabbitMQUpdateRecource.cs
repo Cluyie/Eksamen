@@ -1,5 +1,6 @@
 ﻿using RabbitMQ.Bus.Commands;
-using ResourceMicrosDtabase.Models;
+using Resource.Domain.Models;
+
 namespace ResourceMicroService.RabitMQCommands
 {
     public class RabbitMQUpdateRecource : Command
