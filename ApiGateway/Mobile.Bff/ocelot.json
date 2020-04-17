@@ -69,6 +69,21 @@
       "UpstreamPathTemplate": "/Mail",
       "UpstreamHttpMethod": [ "Post" ],
       "SwaggerKey": "Mail"
+    },
+    //---------------------------------------------
+    //Auth Microservice Api Registrations
+    {
+      "DownstreamPathTemplate": "/Auth",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/Auth",
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "Auth"
     }
     //---------------------------------------------
 
@@ -106,6 +121,18 @@
           "Name": "Mail API",
           "Version": "v1",
           "Url": "http://localhost:5009/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    //---------------------------------------------
+    //Auth Microservice Api Registrations
+    {
+      "Key": "Auth",
+      "Config": [
+        {
+          "Name": "Auth API",
+          "Version": "v1",
+          "Url": "http://localhost:5000/swagger/v1/swagger.json"
         }
       ]
     }
