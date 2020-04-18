@@ -1,4 +1,4 @@
-﻿using Models.Interfaces;
+﻿using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.User.Domain.Models
 {

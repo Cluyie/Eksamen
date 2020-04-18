@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\Models\Models.csproj" />
+    <ProjectReference Include="..\..\..\Core\Models\UCLDreamTeam.SharedInterfaces.csproj" />
     <ProjectReference Include="..\UCLDreamTeam.Resource.Domain\UCLDreamTeam.Resource.Domain.csproj" />
   </ItemGroup>
 

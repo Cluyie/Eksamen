@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Models.Interfaces;
 using UCLDreamTeam.Auth.Api.Models.DTO;
 using UCLDreamTeam.Auth.Api.Models;
 

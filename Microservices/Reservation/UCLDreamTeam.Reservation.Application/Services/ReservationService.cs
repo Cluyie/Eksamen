@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Models.Interfaces;
 using RabbitMQ.Bus.Bus.Interfaces;
 using UCLDreamTeam.Reservation.Application.Interfaces;
 using UCLDreamTeam.Reservation.Domain.Commands;

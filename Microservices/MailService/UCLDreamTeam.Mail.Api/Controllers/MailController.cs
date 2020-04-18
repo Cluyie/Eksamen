@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
-using Models.Mail;
 using UCLDreamTeam.Mail.Application.Interfaces;
+using UCLDreamTeam.SharedInterfaces.Mail;
 
 namespace UCLDreamTeam.Mail.Api.Controllers
 {

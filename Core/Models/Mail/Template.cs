@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Models.Mail
+namespace UCLDreamTeam.SharedInterfaces.Mail
 {
     public enum Template
     {

@@ -1,5 +1,4 @@
 ﻿using System;
-using Models.Interfaces;
 using UCLDreamTeam.Reservation.Domain.Models;
 
 namespace UCLDreamTeam.Reservation.Domain.Commands

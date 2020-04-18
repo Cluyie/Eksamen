@@ -1,25 +1,18 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Models.Interfaces;
 using RabbitMQ.Bus.Bus.Interfaces;
 using UCLDreamTeam.User.Application.Interfaces;
-using UCLDreamTeam.User.Data.Context;
 using UCLDreamTeam.User.Domain.Commands;
 using UCLDreamTeam.User.Domain.Interface;
-using UCLDreamTeam.User.Domain.Models;
 
 namespace UCLDreamTeam.User.Application.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly Mapper _mapper;
         private readonly IEventBus _eventBus;
 
-        public UserService(IUserRepository userRepository,
-            UserDbContext userDbContext, IEventBus eventBus)
+        public UserService(IUserRepository userRepository, IEventBus eventBus)
         {
             _userRepository = userRepository;
             _eventBus = eventBus;

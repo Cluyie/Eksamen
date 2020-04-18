@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Models.Interfaces
+namespace UCLDreamTeam.SharedInterfaces.Interfaces
 {
     public interface IResource<TReservation, TReserveTime, TAvailableTime>
         where TReservation : IReservation<TReserveTime>

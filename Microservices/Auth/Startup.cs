@@ -78,7 +78,7 @@ namespace UCLDreamTeam.Auth.Api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Application API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth MicroService", Version = "v1" });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -121,7 +121,7 @@ namespace UCLDreamTeam.Auth.Api
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
             // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("../swagger/v1/swagger.json", "My API V1"); });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("../swagger/v1/swagger.json", "Auth API V1"); });
 
             app.Subscribe<UserUpdatedEvent, UserUpdatedEventHandler>();
 
