@@ -8,10 +8,10 @@ namespace Models.Interfaces
         where TReserveTime : IReserveTime
         where TAvailableTime : IAvailableTime
     {
-        Guid Id { get; set; }
-        string Name { get; set; }
-        string Description { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public List<TAvailableTime> TimeSlots { get; set; }
         List<TReservation> Reservations { get; set; }
-        List<TAvailableTime> TimeSlots { get; set; }
     }
 }

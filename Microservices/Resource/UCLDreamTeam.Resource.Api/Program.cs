@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace UCLDreamTeam.Mail.Api
+namespace UCLDreamTeam.Resource.Api
 {
     public class Program
     {
