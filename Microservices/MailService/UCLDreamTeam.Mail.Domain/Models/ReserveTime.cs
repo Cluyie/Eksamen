@@ -1,5 +1,5 @@
 ﻿using System;
-using Models.Interfaces;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.Mail.Domain.Models
 {

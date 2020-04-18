@@ -1,6 +1,6 @@
 ﻿using System;
-using Models.Interfaces;
 using RabbitMQ.Bus.Events;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.Mail.Domain.Events
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
-using Models.Interfaces;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.User.Domain.Models
 {

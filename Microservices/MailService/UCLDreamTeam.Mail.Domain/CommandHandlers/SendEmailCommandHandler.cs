@@ -6,12 +6,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Models.Mail;
 using RabbitMQ.Bus.Bus.Interfaces;
 using UCLDreamTeam.Mail.Domain.Commands;
 using UCLDreamTeam.Mail.Domain.Events;
 using UCLDreamTeam.Mail.Domain.Models;
 using UCLDreamTeam.Mail.Domain.Properties;
+using UCLDreamTeam.SharedInterfaces.Mail;
 using UCLToolBox;
 
 namespace UCLDreamTeam.Mail.Domain.CommandHandlers

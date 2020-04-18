@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Models.Interfaces
+namespace UCLDreamTeam.SharedInterfaces.Interfaces
 {
     public enum ApiResponseCode
     {

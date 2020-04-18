@@ -1,4 +1,4 @@
-﻿namespace Models.Interfaces
+﻿namespace UCLDreamTeam.SharedInterfaces.Interfaces
 {
     public interface IRegisterDTO
     {

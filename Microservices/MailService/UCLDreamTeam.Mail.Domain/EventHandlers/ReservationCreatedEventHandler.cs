@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Models.Mail;
 using RabbitMQ.Bus.Bus.Interfaces;
 using UCLDreamTeam.Mail.Domain.Commands;
 using UCLDreamTeam.Mail.Domain.Events;
 using UCLDreamTeam.Mail.Domain.Interfaces;
 using UCLDreamTeam.Mail.Domain.Models;
+using UCLDreamTeam.SharedInterfaces.Mail;
 
 namespace UCLDreamTeam.Mail.Domain.EventHandlers
 {

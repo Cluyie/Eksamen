@@ -1,4 +1,4 @@
-﻿namespace Models.Mail
+﻿namespace UCLDreamTeam.SharedInterfaces.Mail
 {
     public class MailContent
     {
