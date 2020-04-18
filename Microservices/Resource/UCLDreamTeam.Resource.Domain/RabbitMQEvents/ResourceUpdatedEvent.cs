@@ -5,10 +5,10 @@ using System.Text;
 
 namespace UCLDreamTeam.Resource.Domain.RabbitMQEvents
 {
-    public class ResourceUpdateEvent : Event
+    public class ResourceUpdatedEvent : Event
     {
         public Models.Resource Resource { get; set; }
-        public ResourceUpdateEvent(Models.Resource resource)
+        public ResourceUpdatedEvent(Models.Resource resource)
         {
             Resource = resource;
         }

@@ -5,11 +5,11 @@ using System.Text;
 
 namespace UCLDreamTeam.Resource.Domain.RabbitMQEvents
 {
-    public class ResourceDeleteEvent:Event
+    public class ResourceDeletedEvent:Event
     {
         public Models.Resource Resource { get; set; }
 
-        public ResourceDeleteEvent(Models.Resource resource)
+        public ResourceDeletedEvent(Models.Resource resource)
         {
             Resource = resource;
         }

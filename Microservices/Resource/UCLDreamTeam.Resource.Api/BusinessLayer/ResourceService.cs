@@ -14,11 +14,11 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
     public class ResourceService
     {
         private ResourceContext _applicationContext;
-        IEventBus EventBus { get; set; }
+        IEventBus _eventBus { get; set; }
         public ResourceService(ResourceContext applicationContext, IEventBus eventBus)
         {
             _applicationContext = applicationContext;
-            EventBus = eventBus;
+            _eventBus = eventBus;
         }
 
         #region Create
@@ -60,7 +60,7 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
                     _applicationContext.Add(resource);
                     _applicationContext.SaveChanges();
 
-                    EventBus.PublishEvent(new ResourceCreateEvent(resource));
+                    _eventBus.PublishEvent(new ResourceCreatedEvent(resource));
                     return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.OK, resource);
                 }
                 else
@@ -156,11 +156,19 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
                 {
                     resourceToUpdate.Name = resource.Name;
                     resourceToUpdate.Description = resource.Description;
+
+                    //Makes sure that new timeslots that is not in db has no ID because of Auto Assignment
+                    resource.TimeSlots.ForEach(newTimeSlot =>
+                    {
+                        if(!resourceToUpdate.TimeSlots.Contains(newTimeSlot))
+                            newTimeSlot.Id = Guid.Empty;
+                    });
                     resourceToUpdate.TimeSlots = resource.TimeSlots;
+
                     Domain.Models.Resource OldResourece = await _applicationContext.Resources.FirstOrDefaultAsync(x => x.Id == resourceToUpdate.Id);
-                    _applicationContext.Update(resourceToUpdate);
+                    _applicationContext.Resources.Update(resourceToUpdate);
                     _applicationContext.SaveChanges();
-                    EventBus.PublishEvent(new ResourceUpdateEvent(_applicationContext.Resources.Find(resourceToUpdate)));
+                    _eventBus.PublishEvent(new ResourceUpdatedEvent(resourceToUpdate));
 
                     return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.OK, resourceToUpdate);
                 }
@@ -194,13 +202,13 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
                 }
                 else
                 {
-                    var Resource = await _applicationContext.Resources.FirstOrDefaultAsync(x => x.Id == resourceToDelete.Id);
+                    var resource = await _applicationContext.Resources.FirstOrDefaultAsync(x => x.Id == resourceToDelete.Id);
                     //This will cascade delete.
                     _applicationContext.Resources.Remove(resourceToDelete);
                     
                     _applicationContext.SaveChanges();
 
-                    EventBus.PublishEvent(new ResourceDeleteEvent(Resource));
+                    _eventBus.PublishEvent(new ResourceDeletedEvent(resource));
                     return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.OK, null);
                 }
             }
