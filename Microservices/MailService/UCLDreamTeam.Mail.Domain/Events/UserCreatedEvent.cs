@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RabbitMQ.Bus.Events;
+using UCLDreamTeam.Mail.Domain.Models;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.Mail.Domain.Events
 {
-    public class UserRegisteredEvent : Event
+    public class UserCreatedEvent : Event
     {
-        public IUser User { get; }
+        public User User { get; }
 
-        public UserRegisteredEvent(IUser user)
+        public UserCreatedEvent(User user)
         {
             User = user;
         }   

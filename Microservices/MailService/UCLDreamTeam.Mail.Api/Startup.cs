@@ -49,6 +49,12 @@ namespace UCLDreamTeam.Mail.Api
 
             //Event setup
             services.AddTransient<ReservationCreatedEventHandler>();
+            services.AddTransient<ResourceCreatedEventHandler>();
+            services.AddTransient<ResourceUpdatedEventHandler>();
+            services.AddTransient<ResourceDeletedEventHandler>();
+            services.AddTransient<UserCreatedEventHandler>();
+            services.AddTransient<UserUpdatedEventHandler>();
+            services.AddTransient<UserDeletedEventHandler>();
 
             services.AddControllers().AddJsonOptions(options =>
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
@@ -78,7 +84,7 @@ namespace UCLDreamTeam.Mail.Api
             //Reservation
             app.Subscribe<ReservationCreatedEvent, ReservationCreatedEventHandler>();
             //User
-            app.Subscribe<UserRegisteredEvent, UserRegisteredEventHandler>();
+            app.Subscribe<UserCreatedEvent, UserCreatedEventHandler>();
             app.Subscribe<UserUpdatedEvent, UserUpdatedEventHandler>();
             app.Subscribe<UserDeletedEvent, UserDeletedEventHandler>();
             //Resource
