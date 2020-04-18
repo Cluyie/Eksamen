@@ -73,6 +73,7 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
                 return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.InternalServerError, null);
             }
         }
+
         #endregion
         #region Get
         //Get all resources

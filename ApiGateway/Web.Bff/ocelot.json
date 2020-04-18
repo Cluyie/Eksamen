@@ -12,7 +12,11 @@
       ],
       "UpstreamPathTemplate": "/Reservation",
       "UpstreamHttpMethod": [ "Get" ],
-      "SwaggerKey": "Reservation"
+      "SwaggerKey": "Reservation",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthenticationKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/Reservation/{id}",
@@ -25,7 +29,11 @@
       ],
       "UpstreamPathTemplate": "/Reservation/{id}",
       "UpstreamHttpMethod": [ "Get" ],
-      "SwaggerKey": "Reservation"
+      "SwaggerKey": "Reservation",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthenticationKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/Reservation",
@@ -38,7 +46,11 @@
       ],
       "UpstreamPathTemplate": "/Reservation",
       "UpstreamHttpMethod": [ "Post" ],
-      "SwaggerKey": "Reservation"
+      "SwaggerKey": "Reservation",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthenticationKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/Reservation/{id}",
@@ -51,10 +63,29 @@
       ],
       "UpstreamPathTemplate": "/Reservation/{id}",
       "UpstreamHttpMethod": [ "Delete" ],
-      "SwaggerKey": "Reservation"
+      "SwaggerKey": "Reservation",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthenticationKey",
+        "AllowedScopes": []
+      }
     },
     //---------------------------------------------
     //User Microservice Api Registrations
+    {
+      
+      "DownstreamPathTemplate": "/User",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5004
+        }
+      ],
+      "UpstreamPathTemplate": "/User",
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "User"
+      //Registration, not needed for authentication
+    },
     {
       "DownstreamPathTemplate": "/User",
       "DownstreamScheme": "https",
@@ -65,8 +96,12 @@
         }
       ],
       "UpstreamPathTemplate": "/User",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put" ],
-      "SwaggerKey": "User"
+      "UpstreamHttpMethod": [ "Get", "Put" ],
+      "SwaggerKey": "User",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthenticationKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/User/{id}",
@@ -79,7 +114,11 @@
       ],
       "UpstreamPathTemplate": "/User/{id}",
       "UpstreamHttpMethod": [ "Get", "Delete" ],
-      "SwaggerKey": "User"
+      "SwaggerKey": "User",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthenticationKey",
+        "AllowedScopes": []
+      }
     },
     //---------------------------------------------
     //Resource Microservice Api Registrations
@@ -94,7 +133,11 @@
       ],
       "UpstreamPathTemplate": "/Resource",
       "UpstreamHttpMethod": [ "Post", "Get", "Put" ],
-      "SwaggerKey": "Resource"
+      "SwaggerKey": "Resource",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthenticationKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/Resource/guid={guid}",
@@ -107,7 +150,11 @@
       ],
       "UpstreamPathTemplate": "/Resource/guid={guid}",
       "UpstreamHttpMethod": [ "Get", "Delete" ],
-      "SwaggerKey": "Resource"
+      "SwaggerKey": "Resource",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthenticationKey",
+        "AllowedScopes": []
+      }
     },
     //---------------------------------------------
     //Mail Microservice Api Registrations
@@ -122,7 +169,11 @@
       ],
       "UpstreamPathTemplate": "/Mail",
       "UpstreamHttpMethod": [ "Post" ],
-      "SwaggerKey": "Mail"
+      "SwaggerKey": "Mail",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "AuthenticationKey",
+        "AllowedScopes": []
+      }
     },
     //---------------------------------------------
     //Auth Microservice Api Registrations

@@ -25,6 +25,7 @@ namespace UCLDreamTeam.User.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         public async Task<ActionResult<IUser>> GetProfile()
         {
             try
@@ -49,6 +50,7 @@ namespace UCLDreamTeam.User.Api.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         public async Task<ActionResult<IUser>> GetById(Guid id)
         {
             if (id == Guid.Empty) return BadRequest();
@@ -65,21 +67,36 @@ namespace UCLDreamTeam.User.Api.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status304NotModified)]
-        public async Task<IActionResult> UpdateProfile([FromBody] Domain.Models.User user)
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+        public async Task<IActionResult> RegisterProfile([FromBody] Domain.Models.User user)
         {
             if (user == null || !ModelState.IsValid)
                 return BadRequest();
             try
             {
-                if (await _userService.GetUserFromIdAsync(user.Id) != null)
-                    await _userService.Update(user);
-                else
-                    await _userService.RegisterAsync(user);
+                await _userService.RegisterAsync(user);
+                return Ok(user);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(503, e.Message);
+            }
+        }
 
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+        public async Task<IActionResult> UpdateProfile([FromBody] Domain.Models.User user)
+        {
+            if (user == null || await _userService.GetUserFromIdAsync(user.Id) != null || !ModelState.IsValid)
+                return BadRequest();
+            try
+            {
+                await _userService.Update(user);
                 return Ok(user);
             }
             catch (Exception e)
@@ -89,6 +106,9 @@ namespace UCLDreamTeam.User.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         public async Task<IActionResult> DeleteById(Guid id)
         {
             if (id == Guid.Empty) return BadRequest();

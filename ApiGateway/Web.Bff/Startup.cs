@@ -40,13 +40,15 @@ namespace Web.Bff
             provider.FromXmlString(xmlKey);
             var key = new RsaSecurityKey(provider);
 
+            string authenticationKey = "AuthenticationKey";
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(options =>
+            .AddJwtBearer(authenticationKey, options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -77,6 +79,8 @@ namespace Web.Bff
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
         }
