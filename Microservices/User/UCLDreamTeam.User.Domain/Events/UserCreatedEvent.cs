@@ -2,11 +2,11 @@
 
 namespace UCLDreamTeam.User.Domain.Events
 {
-    public class UserRegisteredEvent : Event
+    public class UserCreatedEvent : Event
     {
         public Models.User User { get; set;  }
 
-        public UserRegisteredEvent(Models.User user)
+        public UserCreatedEvent(Models.User user)
         {
             User = user;
         }

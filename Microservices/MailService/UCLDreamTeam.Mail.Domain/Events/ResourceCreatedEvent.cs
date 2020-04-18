@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RabbitMQ.Bus.Events;
+using UCLDreamTeam.Mail.Domain.Models;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.Mail.Domain.Events
 {
     public class ResourceCreatedEvent : Event
     {
-        public IResource<IReservation<IReserveTime>, IReserveTime, IAvailableTime> Resource { get; }
+        public Resource Resource { get; }
 
-        public ResourceCreatedEvent(IResource<IReservation<IReserveTime>, IReserveTime, IAvailableTime> resource)
+        public ResourceCreatedEvent(Resource resource)
         {
             Resource = resource;
         }

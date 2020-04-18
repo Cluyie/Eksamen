@@ -25,7 +25,7 @@ namespace UCLDreamTeam.User.Domain.CommandHandlers
             var result = await _userRepository.CreateUserAsync(request.User);
             if (result.Succeeded)
             {
-                _eventBus.PublishEvent(new UserRegisteredEvent(request.User));
+                _eventBus.PublishEvent(new UserCreatedEvent(request.User));
             }
             else
                 _eventBus.PublishEvent(new UserRejectedEvent(request.User, result.Errors));

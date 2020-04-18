@@ -90,7 +90,7 @@ namespace UCLDreamTeam.Mail.Domain.CommandHandlers
             stringBuilder.AppendLine("<header>");
             stringBuilder.AppendLine("</header>");
             stringBuilder.AppendLine("<div class='container'>");
-            stringBuilder.AppendLine("<main role='main' class='pb-3>");
+            stringBuilder.AppendLine("<main role='main' class='pb-3'>");
 
             switch (template)
             {

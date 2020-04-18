@@ -1,14 +1,15 @@
 ﻿using System;
 using RabbitMQ.Bus.Events;
+using UCLDreamTeam.Mail.Domain.Models;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.Mail.Domain.Events
 {
     public class ResourceUpdatedEvent : Event
     {
-        public IResource<IReservation<IReserveTime>, IReserveTime, IAvailableTime> Resource { get; }
+        public Resource Resource { get; }
 
-        public ResourceUpdatedEvent(IResource<IReservation<IReserveTime>, IReserveTime, IAvailableTime> resource)
+        public ResourceUpdatedEvent(Resource resource)
         {
             Resource = resource;
         }   
