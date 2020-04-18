@@ -13,6 +13,8 @@ namespace UCLDreamTeam.Mail.Api
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
+                .UseDefaultServiceProvider(options =>
+                    options.ValidateScopes = false) //If this is not here MediatR will not work
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
         }
     }
