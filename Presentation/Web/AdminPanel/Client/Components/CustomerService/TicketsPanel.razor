@@ -1,15 +1,29 @@
-﻿<section class="discussions">
+﻿@using System.Linq
+@using AdminPanel.Client.DTOs
+@using AdminPanel.Client.Models
+
+<section class="discussions">
     <div class="header-discussions">
         <p class="name">Dummy name</p>
     </div>
-    <Ticket Name="Megan Leib" Message="9 pm at the bar if possible 😳" Timer="12 sec" Active=@true/>
-    <Ticket Name="Dave Corlew" Message="Let's meet for a coffee or something today ?" Timer="3 min"/>
-    <Ticket Name="Jerome Seiber" Message="I've sent you the annual report" Timer="42 min"/>
-    <Ticket Name="Thomas Dbtn" Message="See you tomorrow ! 🙂" Timer="2 hour"/>
-    <Ticket Name="Elsie Amador" Message="What the f**k is going on ?" Timer="1 day"/>
-    <Ticket Name="Billy Southard" Message="Ahahah 😂" Timer="4 days"/>
-    <Ticket Name="Paul Walker" Message="You can't see me" Timer="1 week"/>
+    @foreach (TicketDTO ticketDTO in TickerDTOs)
+    {
+        <div @onclick="@(() => UpdateTicket.InvokeAsync(ticketDTO))">
+            <TicketComponent
+                Name=@ticketDTO.Ticket.Name
+                Message=@ticketDTO.Ticket.Messages.First().Text
+                TimeStamp=@ticketDTO.Ticket.Messages.First().TimeStamp.ToString()
+                Active=@(ticketDTO.Ticket.Active ?? false)
+                New=@(ticketDTO.Ticket.Messages.Any(x => x.Seen == false))/>
+        </div>
+    }
 </section>
+
+@code
+{
+    [Parameter] public List<TicketDTO> TickerDTOs { get; set; }
+    [Parameter] public EventCallback<TicketDTO> UpdateTicket { get; set; }
+}
 
 <style>
     .discussions {

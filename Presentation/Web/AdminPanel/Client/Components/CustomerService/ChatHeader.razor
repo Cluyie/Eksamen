@@ -1,13 +1,20 @@
-﻿<div class="header-chat">
-    <p class="name">@Name</p>
+﻿@using AdminPanel.Client.DTOs
+@using AdminPanel.Client.Models
+<div class="header-chat">
+    <p class="name">@TicketDTO.Ticket.Name</p>
+    @if((TicketDTO.Resource != null) || (TicketDTO.Reservation != null))
+    {
+        <p class="name">@TicketDTO.Resource.Name</p>
+        <p class="name">@($"Fra: {TicketDTO.Reservation.Timeslot.FromDate} Til: {TicketDTO.Reservation.Timeslot.ToDate}")</p>
+    }
 </div>
 
 @code
 {
-    [Parameter] public string Name { get; set; }
+    [Parameter]
+    public TicketDTO TicketDTO { get; set; }
 }
-
-<style>
+    <style>
     .header-chat {
         background-color: #FFF;
         height: 90px;

@@ -1,0 +1,32 @@
+﻿@using AdminPanel.Client.DTOs
+@using AdminPanel.Client.Models
+
+<section class="chat">
+    <ChatHeader TicketDTO=@TicketDTO />
+    <div class="messages-chat">
+        @for (int i = 0; i < TicketDTO.Ticket.Messages.Count; i++)
+        {
+            <MessageComponent Text=@TicketDTO.Ticket.Messages[i].Text />
+        }
+    </div>
+    <ChatFooter />
+</section>
+
+@code
+{
+    [Parameter] public TicketDTO TicketDTO { get; set; }
+}
+
+<style>
+    .chat {
+        width: 65%;
+        max-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .chat .messages-chat {
+        padding: 25px 35px;
+        overflow-y: auto;
+    }
+</style>

@@ -4,7 +4,11 @@
         <p class="name">@Name</p>
         <p class="message">@Message</p>
     </div>
-    <div class="timer">@Timer</div>
+    <div class="timer">@TimeStamp</div>
+    @if (New)
+    {
+    <span class="badge badge-info ml-1">New</span>
+    }
 </div>
 @if (Active)
 {
@@ -14,10 +18,21 @@
 
 @code
 {
-    [Parameter] public bool Active { get; set; } = false;
-    [Parameter] public string Name { get; set; }
-    [Parameter] public string Message { get; set; }
-    [Parameter] public string Timer { get; set; }
+    [Parameter]
+    public bool Active { get; set; } = false;
+
+    [Parameter]
+    public string Name { get; set; }
+
+    [Parameter]
+    public string Message { get; set; }
+
+    [Parameter]
+
+    public string TimeStamp { get; set; }
+
+    [Parameter]
+    public bool New { get; set; } = false;
 }
 
 <style>
