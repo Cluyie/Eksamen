@@ -25,7 +25,7 @@ namespace UCLDreamTeam.User.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IUser>> GetProfile()
+        public async Task<ApiResponse<IUser>> GetProfile()
         {
             try
             {
@@ -35,33 +35,49 @@ namespace UCLDreamTeam.User.Api.Controllers
 
                 if (userProfile != null)
                 {
-                    return Ok(userProfile);
+                    //return Ok(userProfile);
+                    return new ApiResponse<IUser>(ApiResponseCode.OK, userProfile);
                 }
 
-                return NotFound(userProfile);
+                //return NotFound(userProfile);
+                return new ApiResponse<IUser>(ApiResponseCode.NotFound, null);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return StatusCode(503, e.Message);
+                //TODO Fill in exceptions
+                //if (ex.GetType() == typeof(InvalidOperationException))
+                //{
+
+                //}
+                //return StatusCode(503, ex.Message);
+                return new ApiResponse<IUser>(ApiResponseCode.ServiceUnavailable, null);
             }
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IUser>> GetById(Guid id)
+        public async Task<ApiResponse<IUser>> GetById(Guid id)
         {
-            if (id == Guid.Empty) return BadRequest();
+            if (id == Guid.Empty) return new ApiResponse<IUser>(ApiResponseCode.BadRequest, null);//return BadRequest();
             try
             {
                 var user = await _userService.GetUserFromIdAsync(id);
                 if (user != null)
-                    return Ok(user);
-                return NotFound(user);
+                    //return Ok(user);
+                    return new ApiResponse<IUser>(ApiResponseCode.OK, user);
+                //return NotFound(user);
+                return new ApiResponse<IUser>(ApiResponseCode.NotFound, null);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return StatusCode(503, e.Message);
+                //TODO Fill in exceptions
+                //if (ex.GetType() == typeof(InvalidOperationException))
+                //{
+
+                //}
+                //return StatusCode(503, ex.Message);
+                return new ApiResponse<IUser>(ApiResponseCode.ServiceUnavailable, null);
             }
         }
 
@@ -69,10 +85,9 @@ namespace UCLDreamTeam.User.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status304NotModified)]
-        public async Task<IActionResult> UpdateProfile([FromBody] Domain.Models.User user)
+        public async Task<ApiResponse<IUser>> UpdateProfile([FromBody] Domain.Models.User user)
         {
-            if (user == null || !ModelState.IsValid)
-                return BadRequest();
+            if (user == null || !ModelState.IsValid) return new ApiResponse<IUser>(ApiResponseCode.BadRequest, null); //return BadRequest();
             try
             {
                 if (await _userService.GetUserFromIdAsync(user.Id) != null)
@@ -80,26 +95,40 @@ namespace UCLDreamTeam.User.Api.Controllers
                 else
                     await _userService.RegisterAsync(user);
 
-                return Ok(user);
+                //return Ok(user);
+                return new ApiResponse<IUser>(ApiResponseCode.OK, user);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return StatusCode(503, e.Message);
+                //TODO Fill in exceptions
+                //if (ex.GetType() == typeof(InvalidOperationException))
+                //{
+
+                //}
+                //return StatusCode(503, ex.Message);
+                return new ApiResponse<IUser>(ApiResponseCode.ServiceUnavailable, null);
             }
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteById(Guid id)
+        public async Task<ApiResponse<IUser>> DeleteById(Guid id)
         {
-            if (id == Guid.Empty) return BadRequest();
+            if (id == Guid.Empty) return new ApiResponse<IUser>(ApiResponseCode.BadRequest, null);//return BadRequest();
             try
             {
                 await _userService.DeleteUserFromIdAsync(id);
-                return Ok(id);
+                //return Ok(id);
+                return new ApiResponse<IUser>(ApiResponseCode.OK, null);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return StatusCode(503, e.Message);
+                //TODO Fill in exceptions
+                //if (ex.GetType() == typeof(InvalidOperationException))
+                //{
+
+                //}
+                //return StatusCode(503, ex.Message);
+                return new ApiResponse<IUser>(ApiResponseCode.ServiceUnavailable, null);
             }
         }
     }
