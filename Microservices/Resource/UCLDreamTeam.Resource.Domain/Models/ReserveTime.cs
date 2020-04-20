@@ -1,8 +1,7 @@
 ﻿using System;
-using Models.Interfaces;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
 
-namespace AdminPanel.Client.Models
+namespace UCLDreamTeam.Resource.Domain.Models
 {
     public class ReserveTime : IReserveTime
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Models.Interfaces
+namespace UCLDreamTeam.SharedInterfaces.Interfaces
 {
     public interface IReservation<TReserveTime>
         where TReserveTime : IReserveTime

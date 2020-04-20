@@ -1,7 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Models.Interfaces
+namespace UCLDreamTeam.SharedInterfaces.Interfaces
 {
     public interface IUser
     {
@@ -18,5 +19,7 @@ namespace Models.Interfaces
         [Required] string UserName { get; set; }
 
         int? ZipCode { get; set; }
+        [NotMapped]
+        string PasswordHash { get; set; }
     }
 }
