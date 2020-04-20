@@ -9,7 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RabbitMQ.IoC;
 using UCLDreamTeam.Ticket.Data.Contexts;
+using UCLDreamTeam.Ticket.Domain.EventHandlers;
+using UCLDreamTeam.Ticket.Domain.Events;
 
 namespace UCLDreamTeam.Ticket.Api
 {
@@ -27,6 +30,12 @@ namespace UCLDreamTeam.Ticket.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<TicketDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TicketDbConnection")));
+
+            services.AddRabbitMq();
+
+            //Handler DI
+            services.AddTransient<MessageSentEventHandler>();
+            services.AddTransient<MessageSeenEventHandler>();
         }
 
 
@@ -47,6 +56,10 @@ namespace UCLDreamTeam.Ticket.Api
                     await context.Response.WriteAsync("Hello World!");
                 });
             });
+
+            //Subscriptions
+            app.Subscribe<MessageSentEvent, MessageSentEventHandler>();
+            app.Subscribe<MessageSeenEvent, MessageSeenEventHandler>();
         }
     }
 }
