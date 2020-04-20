@@ -4,13 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
-using Models.Mail;
 using RabbitMQ.Bus.Bus.Interfaces;
 using RabbitMQ.Bus.Commands;
 using UCLDreamTeam.Mail.Domain.Commands;
 using UCLDreamTeam.Mail.Domain.Events;
 using UCLDreamTeam.Mail.Domain.Interfaces;
 using UCLDreamTeam.Mail.Domain.Models;
+using UCLDreamTeam.SharedInterfaces.Mail;
 using UCLToolBox;
 
 namespace UCLDreamTeam.Mail.Domain.EventHandlers

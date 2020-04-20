@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Interfaces;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 using UCLDreamTeam.User.Application.Interfaces;
 using UCLDreamTeam.User.Domain.Models;
 

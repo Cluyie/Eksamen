@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using Models.Interfaces;
 using UCLDreamTeam.Mail.Domain.Interfaces;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.Mail.Domain.Models
 {
@@ -21,5 +21,7 @@ namespace UCLDreamTeam.Mail.Domain.Models
         public string Country { get; set; }
         [NotMapped]
         public int? ZipCode { get; set; }
+        [NotMapped]
+        public string PasswordHash { get; set; }
     }
 }

@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using Models.Interfaces;
 using RabbitMQ.Bus.Bus.Interfaces;
 using UCLDreamTeam.User.Application.Interfaces;
 using UCLDreamTeam.User.Data.Context;

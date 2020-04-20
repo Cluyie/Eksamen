@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Net.Mail;
 using System.Text;
-using Models.Mail;
 using RabbitMQ.Bus.Bus.Interfaces;
 using RabbitMQ.Bus.Commands;
 using UCLDreamTeam.Mail.Domain.Models;
+using UCLDreamTeam.SharedInterfaces.Mail;
 
 namespace UCLDreamTeam.Mail.Domain.Commands
 {
