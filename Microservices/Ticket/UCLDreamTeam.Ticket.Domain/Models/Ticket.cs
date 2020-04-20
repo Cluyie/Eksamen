@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Models;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
 
-namespace AdminPanel.Client.Models
+namespace UCLDreamTeam.Ticket.Domain.Models
 {
     public class Ticket : ITicket<Message>
     {
