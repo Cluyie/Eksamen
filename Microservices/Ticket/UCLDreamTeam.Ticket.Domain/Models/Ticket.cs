@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Models;
-using Models.Interfaces;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.Ticket.Domain.Models
 {

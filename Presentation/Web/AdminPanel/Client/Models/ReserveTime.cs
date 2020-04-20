@@ -1,5 +1,4 @@
 ﻿using System;
-using Models.Interfaces;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace AdminPanel.Client.Models
