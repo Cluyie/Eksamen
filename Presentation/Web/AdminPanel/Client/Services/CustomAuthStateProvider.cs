@@ -62,17 +62,17 @@ namespace AdminPanel.Client.Services
 
                     foreach (var parsedRole in parsedRoles)
                     {
-                        claims.Add(new Claim(ClaimTypes.Role, parsedRole));
+                        claims.Add(new Claim(ClaimTypes.Role, parsedRole.ToLower()));
                     }
                 }
                 else
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, roles.ToString()));
+                    claims.Add(new Claim(ClaimTypes.Role, roles.ToString().ToLower()));
                 }
 
                 keyValuePairs.Remove(ClaimTypes.Role);
             }
-            claims.AddRange(keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString())));
+            claims.AddRange(keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString().ToLower())));
 
             return claims;
         }

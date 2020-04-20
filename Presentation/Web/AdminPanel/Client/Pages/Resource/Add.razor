@@ -1,7 +1,7 @@
 ﻿@page "/Resource/Add"
 @using AdminPanel.Client.DTOs
 @using AdminPanel.Client.Services
-@attribute [Authorize]
+@attribute [Authorize (Roles = "admin")]
 @inject IResourceService ResourceService
 @inject NavigationManager NavigationManager;
 

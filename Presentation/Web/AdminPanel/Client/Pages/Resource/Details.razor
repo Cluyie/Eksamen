@@ -1,13 +1,13 @@
 ﻿@page "/Resource/Details/{Id:guid}"
 @using AdminPanel.Client.DTOs
 @using AdminPanel.Client.Services
-@attribute [Authorize]
+@attribute [Authorize(Roles = "admin")]
 @inject IResourceService ResourceService
 @inject NavigationManager NavigationManager
 
 @if (_resource == null)
 {
-    <Loading/>
+    <Loading />
 }
 else
 {
@@ -15,7 +15,7 @@ else
     var editUrl = "Resource/Edit/" + _resource.Id;
 
     <h1 id="ressourceDetail">Ressource: @_resource.Name</h1>
-    <hr/>
+    <hr />
     <p>
         <NavLink href="@editUrl" class="btn btn-info">Rediger</NavLink>
         <NavLink href="@deleteUrl" class="btn btn-danger">Slet</NavLink>

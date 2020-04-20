@@ -1,18 +1,18 @@
 ﻿@page "/Resource/Delete/{Id:guid}"
 @using AdminPanel.Client.DTOs
 @using AdminPanel.Client.Services
-@attribute [Authorize]
+@attribute [Authorize(Roles = "admin")]
 @inject IResourceService ResourceService
 @inject NavigationManager NavigationManager
 
 @if (_resource == null)
 {
-    <Loading/>
+    <Loading />
 }
 else
 {
     <h3>Slet ressource: @_resource.Name</h3>
-    <hr/>
+    <hr />
     <p>Er du sikker på at du vil slette denne ressource?</p>
     <button id="confirmDelete" class="btn btn-danger" @onclick="OnConfirm">Ja</button>
     <button class="btn btn-dark" @onclick="RedirectToOverviewPage">Nej</button>

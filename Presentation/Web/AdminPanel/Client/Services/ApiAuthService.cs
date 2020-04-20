@@ -40,6 +40,7 @@ namespace AdminPanel.Client.Services
         public void Logout()
         {
             _credentialsKeeper.SetCredentials(null, null);
+            
             _authStateProvider.Refresh();
         }
     }

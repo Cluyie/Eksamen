@@ -1,18 +1,18 @@
 ﻿@page "/Resource/Edit/{Id:guid}"
 @using AdminPanel.Client.DTOs
 @using AdminPanel.Client.Services
-@attribute [Authorize]
+@attribute [Authorize(Roles = "admin")]
 @inject IResourceService ResourceService
 @inject NavigationManager NavigationManager
 
 @if (_resource == null)
 {
-    <Loading/>
+    <Loading />
 }
 else
 {
     <h1>Rediger ressource: @_resource.Name</h1>
-    <hr/>
+    <hr />
 
     @if (_error)
     {
@@ -22,7 +22,7 @@ else
         </div>
     }
 
-    <EditResourceForm Resource="_resource" SubmitButtonText="Gem ressource" OnEditComplete="OnEditComplete"/>
+    <EditResourceForm Resource="_resource" SubmitButtonText="Gem ressource" OnEditComplete="OnEditComplete" />
 }
 
 @code {
