@@ -138,72 +138,116 @@
       "UpstreamPathTemplate": "/Auth",
       "UpstreamHttpMethod": [ "Post" ],
       "SwaggerKey": "Auth"
+    },
+    //---------------------------------------------
+    //Ticket Microservice Api Registrations
+    {
+      "DownstreamPathTemplate": "/Ticket/{TickedId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5014
+        }
+      ],
+      "UpstreamPathTemplate": "/Ticket/{TickedId}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "Auth"
+    },
+    {
+      "DownstreamPathTemplate": "/Ticket/User/{TickedId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5014
+        }
+      ],
+      "UpstreamPathTemplate": "/Ticket/{TickedId}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "Auth"
     }
     //---------------------------------------------
   ],
   "SwaggerEndPoints": [
-    //Reservation Microservice Api Registrations
+    //Ticket Microservice Api Registrations
     {
       "Key": "Reservation",
       "Config": [
         {
           "Name": "Reservation API",
           "Version": "v1",
-          "Url": "http://localhost:5003/swagger/v1/swagger.json"
+          "Url": "http://localhost:5014/swagger/v1/swagger.json"
         }
       ]
     },
-    //---------------------------------------------
-    //User Microservice Api Registrations
+    "SwaggerEndPoints",
+    :,
+    [
+      //Reservation Microservice Api Registrations
+      {
+        "Key": "Reservation",
+        "Config": [
+          {
+            "Name": "Reservation API",
+            "Version": "v1",
+            "Url": "http://localhost:5003/swagger/v1/swagger.json"
+          }
+        ]
+      },
+      //---------------------------------------------
+      //User Microservice Api Registrations
+      {
+        "Key": "User",
+        "Config": [
+          {
+            "Name": "User API",
+            "Version": "v1",
+            "Url": "http://localhost:5005/swagger/v1/swagger.json"
+          }
+        ]
+      },
+      //---------------------------------------------
+      //Resource Microservice Api Registrations
+      {
+        "Key": "Resource",
+        "Config": [
+          {
+            "Name": "Resource API",
+            "Version": "v1",
+            "Url": "http://localhost:5007/swagger/v1/swagger.json"
+          }
+        ]
+      },
+      //---------------------------------------------
+      //Mail Microservice Api Registrations
+      {
+        "Key": "Mail",
+        "Config": [
+          {
+            "Name": "Mail API",
+            "Version": "v1",
+            "Url": "http://localhost:5009/swagger/v1/swagger.json"
+          }
+        ]
+      },
+      //---------------------------------------------
+      //Auth Microservice Api Registrations
+      {
+        "Key": "Auth",
+        "Config": [
+          {
+            "Name": "Auth API",
+            "Version": "v1",
+            "Url": "http://localhost:5013/swagger/v1/swagger.json"
+          }
+        ]
+      }
+      //---------------------------------------------
+    ],
+    "GlobalConfiguration",
+    :,
     {
-      "Key": "User",
-      "Config": [
-        {
-          "Name": "User API",
-          "Version": "v1",
-          "Url": "http://localhost:5005/swagger/v1/swagger.json"
-        }
-      ]
-    },
-    //---------------------------------------------
-    //Resource Microservice Api Registrations
-    {
-      "Key": "Resource",
-      "Config": [
-        {
-          "Name": "Resource API",
-          "Version": "v1",
-          "Url": "http://localhost:5007/swagger/v1/swagger.json"
-        }
-      ]
-    },
-    //---------------------------------------------
-    //Mail Microservice Api Registrations
-    {
-      "Key": "Mail",
-      "Config": [
-        {
-          "Name": "Mail API",
-          "Version": "v1",
-          "Url": "http://localhost:5009/swagger/v1/swagger.json"
-        }
-      ]
-    },
-    //---------------------------------------------
-    //Auth Microservice Api Registrations
-    {
-      "Key": "Auth",
-      "Config": [
-        {
-          "Name": "Auth API",
-          "Version": "v1",
-          "Url": "http://localhost:5013/swagger/v1/swagger.json"
-        }
-      ]
+      "BaseUrl": "https://localhost:5001" //Change to match url when hosted on server
     }
-    //---------------------------------------------
-  ],
-  "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5001" //Change to match url when hosted on server
-  }
 }
