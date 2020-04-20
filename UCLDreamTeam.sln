@@ -51,10 +51,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XamarinFormsApp", "Presentation\App\XamarinFormsApp\XamarinFormsApp\XamarinFormsApp.csproj", "{ADC7B1D5-39D2-43F9-8B75-1F65EAE0AB29}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminPanel.Client", "Presentation\Web\AdminPanel\AdminPanel\Client\AdminPanel.Client.csproj", "{F04D4748-CCE4-47F8-A1CB-D0DB995235C5}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminPanel.Server", "Presentation\Web\AdminPanel\AdminPanel\Server\AdminPanel.Server.csproj", "{80E980DE-60A4-459F-8D4B-96D647A290D9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminPanelSeleniumTest", "Presentation\Web\AdminPanel\AdminPanelSeleniumTest\AdminPanelSeleniumTest.csproj", "{3F03B823-0DFF-481E-9D12-0B5521FCB8C5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateway", "ApiGateway", "{39CB7ADA-07E2-498D-B888-E357084E1EE7}"
