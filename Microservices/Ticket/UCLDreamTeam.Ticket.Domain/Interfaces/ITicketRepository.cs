@@ -11,8 +11,8 @@ namespace UCLDreamTeam.Ticket.Domain.Interfaces
     {
         Task<IEnumerable<Models.Ticket>> GetAsync();
         Task<Models.Ticket> GetByIdAsync(Guid id);
-        Task AddAsync(Models.Ticket reservation);
+        Task AddAsync(Models.Message message);
         Task ChangeStatusById(Guid id, Status status);
-        Task MessageSeen(Message message);
+        Task MessageSeen(Guid messageId, bool seen);
     }
 }

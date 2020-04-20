@@ -32,16 +32,17 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
                 .FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        public async Task AddAsync(Domain.Models.Ticket ticket)
+        public async Task AddAsync(Domain.Models.Message message)
         {
-            await _ticketDbContext.Tickets.AddAsync(ticket);
+            var ticket = await _ticketDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == message.TicketId);
+            ticket.Messages.Add(message);
             await _ticketDbContext.SaveChangesAsync();
         }
 
-        public async Task MessageSeen(Message message)
+        public async Task MessageSeen(Guid messageId, bool seen)
         {
-            var dbMessage = await _ticketDbContext.Messages.FirstOrDefaultAsync(m => m.Id == message.Id);
-            dbMessage.Seen = true;
+            var dbMessage = await _ticketDbContext.Messages.FirstOrDefaultAsync(m => m.Id == messageId);
+            dbMessage.Seen = seen;
             await _ticketDbContext.SaveChangesAsync();
         }
 
