@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using UCLDreamTeam.Ticket.Data.Contexts;
+using Microsoft.OpenApi.Models;
 
 namespace UCLDreamTeam.Ticket.Api
 {
@@ -26,7 +27,10 @@ namespace UCLDreamTeam.Ticket.Api
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TicketDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TicketDbConnection")));
+            //services.AddDbContext<TicketDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TicketDbConnection")));
+            services.AddSwaggerGen(c =>
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ticket MicroService", Version = "v1" }));
+            services.AddControllers();
         }
 
 
@@ -40,12 +44,11 @@ namespace UCLDreamTeam.Ticket.Api
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                c.SwaggerEndpoint("../swagger/v1/swagger.json", "Ticket API V1");
             });
         }
     }
