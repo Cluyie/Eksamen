@@ -36,5 +36,10 @@ namespace UCLDreamTeam.Ticket.Application.Services
         {
             await _ticketRepository.ChangeStatusById(id, status);
         }
+
+        public async Task MessageSeen(Guid messageId, bool seen)
+        {
+            await _ticketRepository.MessageSeen(messageId, seen);
+        }
     }
 }
