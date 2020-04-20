@@ -16,7 +16,6 @@
     <PackageReference Include="System.Text.Json" Version="5.0.0-preview.2.20160.6" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Core\Models\Models.csproj" />
     <ProjectReference Include="..\..\..\..\Core\Models\UCLDreamTeam.SharedInterfaces.csproj" />
     <ProjectReference Include="..\Shared\AdminPanel.Shared.csproj" />
   </ItemGroup>
@@ -32,6 +31,11 @@
     <None Include="Pages\Resource\Delete.razor" />
     <None Include="Pages\Resource\Details.razor" />
     <None Include="Pages\Resource\Edit.razor" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Models">
+      <HintPath>..\..\..\..\Microservices\MailService\UCLDreamTeam.Mail.Application\bin\Debug\netcoreapp3.1\Models.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
