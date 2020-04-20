@@ -1,5 +1,5 @@
 ﻿using System;
-using UCLDreamTeam.SharedInterfaces.Interfaces;
+using Models.Interfaces;
 
 namespace UCLDreamTeam.Ticket.Domain.Models
 {
@@ -8,6 +8,6 @@ namespace UCLDreamTeam.Ticket.Domain.Models
         public Guid Id { get; set; }
         public string Text { get; set; }
         public DateTime TimeStamp { get; set; }
-        public bool Seen { get; set; }
+        public bool Seen { get; set; } = false;
     }
 }

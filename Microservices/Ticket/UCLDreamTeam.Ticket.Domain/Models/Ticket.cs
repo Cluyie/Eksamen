@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Models;
-using UCLDreamTeam.SharedInterfaces.Interfaces;
+using Models.Interfaces;
 
 namespace UCLDreamTeam.Ticket.Domain.Models
 {
