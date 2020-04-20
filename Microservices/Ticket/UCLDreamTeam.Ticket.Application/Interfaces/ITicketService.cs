@@ -9,7 +9,7 @@ namespace UCLDreamTeam.Ticket.Application.Interfaces
     {
         Task<IEnumerable<Domain.Models.Ticket>> GetAsync();
         Task<Domain.Models.Ticket> GetByIdAsync(Guid id);
-        Task AddAsync(Domain.Models.Ticket reservation);
+        Task AddAsync(Domain.Models.Message message);
         Task ChangeStatusById(Guid id, Status status);
     }
 }

@@ -27,9 +27,9 @@ namespace UCLDreamTeam.Ticket.Application.Services
             return await _ticketRepository.GetByIdAsync(id);
         }
 
-        public async Task AddAsync(Domain.Models.Ticket reservation)
+        public async Task AddAsync(Domain.Models.Message message)
         {
-            await _ticketRepository.AddAsync(reservation);
+            await _ticketRepository.AddAsync(message);
         }
 
         public async Task ChangeStatusById(Guid id, Status status)
