@@ -1,5 +1,6 @@
 ﻿@layout CleanLayout
 @page "/Chat"
+@attribute [Authorize(Roles = "Admin, customerservice")]
 @using AdminPanel.Client.Components.CustomerService
 @using AdminPanel.Client.Models
 @using System.Linq
@@ -8,7 +9,7 @@
 
 <div class="container-fluid">
     <div class="row h-100">
-        <TicketsPanel UpdateTicket="UpdateTicket" TickerDTOs=@TicketDTOs/>
+        <TicketsPanel UpdateTicket="UpdateTicket" TickerDTOs=@TicketDTOs />
         <ChatPanel TicketDTO=@ActiveTicketDTO />
     </div>
 </div>
@@ -17,7 +18,7 @@
 {
 
     public List<TicketDTO> TicketDTOs { get; set; } = new List<TicketDTO>
-    {
+{
         new TicketDTO
         {
             Ticket = new Ticket
@@ -25,7 +26,7 @@
                 Id = Guid.NewGuid(),
                 Name = "Megan Leib",
                 Messages = new List<Message>
-                {
+            {
                     new Message
                     {
                         Text = "Hi, how are you ?",
@@ -79,7 +80,7 @@
                 Id = Guid.NewGuid(),
                 Name = "Dave Corlew",
                 Messages = new List<Message>
-                {
+            {
                     new Message
                     {
                         Text = "Let's meet for a coffee or something today ?",
@@ -97,7 +98,7 @@
                 Id = Guid.NewGuid(),
                 Name = "Jerome Seiber",
                 Messages = new List<Message>
-                {
+            {
                     new Message
                     {
                         Text = "I've sent you the annual report",
@@ -115,7 +116,7 @@
                 Id = Guid.NewGuid(),
                 Name = "Thomas Dbtn",
                 Messages = new List<Message>
-                {
+            {
                     new Message
                     {
                         Text = "See you tomorrow ! 🙂",
@@ -133,7 +134,7 @@
                 Id = Guid.NewGuid(),
                 Name = "Elsie Amador",
                 Messages = new List<Message>
-                {
+            {
                     new Message
                     {
                         Text = "What the f**k is going on ?",
@@ -151,7 +152,7 @@
                 Id = Guid.NewGuid(),
                 Name = "Billy Southard",
                 Messages = new List<Message>
-                {
+            {
                     new Message
                     {
                         Text = "Ahahah 😂",
@@ -169,7 +170,7 @@
                 Id = Guid.NewGuid(),
                 Name = "Paul Walker",
                 Messages = new List<Message>
-                {
+            {
                     new Message
                     {
                         Text = "You can't see me",
