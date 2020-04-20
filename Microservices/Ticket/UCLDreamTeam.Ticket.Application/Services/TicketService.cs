@@ -17,14 +17,14 @@ namespace UCLDreamTeam.Ticket.Application.Services
             _ticketRepository = ticketRepository;
         }
 
-        public async Task<IEnumerable<Domain.Models.Ticket>> GetAsync()
-        {
-            return await _ticketRepository.GetAsync();
-        }
-
         public async Task<Domain.Models.Ticket> GetByIdAsync(Guid id)
         {
             return await _ticketRepository.GetByIdAsync(id);
+        }
+
+        public async Task<IEnumerable<Domain.Models.Ticket>> GetByUserIdAsync(Guid id)
+        {
+            return await _ticketRepository.GetByUserIdAsync(id);
         }
 
         public async Task AddAsync(Domain.Models.Message message)

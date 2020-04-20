@@ -20,19 +20,23 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
             _ticketDbContext = ticketDbContext;
         }
 
-        public async Task<IEnumerable<Domain.Models.Ticket>> GetAsync()
-        {
-            return await _ticketDbContext.Tickets.Include(t => t.Messages)
-                .ToListAsync();
-        }
-
         public async Task<Domain.Models.Ticket> GetByIdAsync(Guid id)
         {
             return await _ticketDbContext.Tickets.Include(t => t.Messages)
                 .FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        public async Task AddAsync(Domain.Models.Message message)
+        public async Task<IEnumerable<Domain.Models.Ticket>> GetByUserIdAsync(Guid id)
+        {
+            var user  = await _ticketDbContext.Users
+                .Include(u => u.UserTickets)
+                .FirstOrDefaultAsync(u => u.Id == id);
+            var userTickets = user.UserTickets
+                .FindAll(ut => ut.UserId == id);
+            return userTickets.Select(ut => ut.Ticket);
+        }
+
+        public async Task AddAsync(Message message)
         {
             var ticket = await _ticketDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == message.TicketId);
             ticket.Messages.Add(message);

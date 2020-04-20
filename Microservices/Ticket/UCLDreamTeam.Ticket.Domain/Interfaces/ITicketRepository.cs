@@ -9,8 +9,8 @@ namespace UCLDreamTeam.Ticket.Domain.Interfaces
 {
     public interface ITicketRepository
     {
-        Task<IEnumerable<Models.Ticket>> GetAsync();
         Task<Models.Ticket> GetByIdAsync(Guid id);
+        Task<IEnumerable<Domain.Models.Ticket>> GetByUserIdAsync(Guid id);
         Task AddAsync(Models.Message message);
         Task ChangeStatusById(Guid id, Status status);
         Task MessageSeen(Guid messageId, bool seen);

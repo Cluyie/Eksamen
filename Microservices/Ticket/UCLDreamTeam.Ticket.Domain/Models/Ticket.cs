@@ -12,6 +12,7 @@ namespace UCLDreamTeam.Ticket.Domain.Models
         public string Name { get; set; }
         public Status Status { get; set; }
         public List<Message> Messages { get; set; }
+        public List<UserTicket> UserTickets { get; set; }
         public Guid ReservationId { get; set; }
     }
 }
