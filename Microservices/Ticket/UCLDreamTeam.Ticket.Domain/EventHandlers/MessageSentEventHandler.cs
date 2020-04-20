@@ -21,7 +21,7 @@ namespace UCLDreamTeam.Ticket.Domain.EventHandlers
 
         public async Task Handle(MessageSentEvent @event)
         {
-            await _ticketRepository.AddAsync(@event.Message, @event.TicketId);
+            await _ticketRepository.AddAsync(@event.Message);
         }
     }
 }

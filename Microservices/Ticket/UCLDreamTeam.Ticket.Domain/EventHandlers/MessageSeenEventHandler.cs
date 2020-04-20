@@ -19,9 +19,9 @@ namespace UCLDreamTeam.Ticket.Domain.EventHandlers
             _ticketRepository = ticketRepository;
         }
 
-        public Task Handle(MessageSeenEvent @event)
+        public async Task Handle(MessageSeenEvent @event)
         {
-            _ticketRepository.MessageSeen(@event.MessageId, @event.Seen);
+            await _ticketRepository.MessageSeen(@event.MessageId, @event.Seen);
         }
     }
 }

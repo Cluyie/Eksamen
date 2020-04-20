@@ -9,13 +9,14 @@ namespace UCLDreamTeam.Ticket.Domain.Events
 {
     public class MessageSeenEvent : Event
     {
+        public Guid MessageId { get; set; }
+        public bool Seen { get; set; }
+
         private MessageSeenEvent(Guid messageId, bool seen)
         {
             MessageId = messageId;
             Seen = seen;
         }
 
-        public Guid MessageId { get; set; }
-        public bool Seen { get; set; }
     }
 }
