@@ -1,36 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using UCLDreamTeam.SharedInterfaces;
+using UCLDreamTeam.Ticket.Data.Contexts;
 using UCLDreamTeam.Ticket.Domain.Interfaces;
+using UCLDreamTeam.Ticket.Domain.Models;
+using Z.EntityFramework.Plus;
 
 namespace UCLDreamTeam.Ticket.Data.Repositories
 {
     public class TicketRepository : ITicketRepository
     {
-        public TicketRepository()
+        private readonly TicketDbContext _ticketDbContext;
+
+        public TicketRepository(TicketDbContext ticketDbContext)
         {
-            
+            _ticketDbContext = ticketDbContext;
         }
 
-        public Task<IEnumerable<Domain.Models.Ticket>> GetAsync()
+        public async Task<IEnumerable<Domain.Models.Ticket>> GetAsync()
         {
-            throw new NotImplementedException();
+            return await _ticketDbContext.Tickets.Include(t => t.Messages)
+                .ToListAsync();
         }
 
-        public Task<Domain.Models.Ticket> GetByIdAsync(Guid id)
+        public async Task<Domain.Models.Ticket> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _ticketDbContext.Tickets.Include(t => t.Messages)
+                .FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        public Task AddAsync(Domain.Models.Ticket reservation)
+        public async Task AddAsync(Domain.Models.Message message)
         {
-            throw new NotImplementedException();
+            var ticket = await _ticketDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == message.TicketId);
+            ticket.Messages.Add(message);
+            await _ticketDbContext.SaveChangesAsync();
         }
 
-        public Task CancelById(Guid id)
+        public async Task MessageSeen(Guid messageId, bool seen)
         {
-            throw new NotImplementedException();
+            var dbMessage = await _ticketDbContext.Messages.FirstOrDefaultAsync(m => m.Id == messageId);
+            dbMessage.Seen = seen;
+            await _ticketDbContext.SaveChangesAsync();
+        }
+
+        public async Task ChangeStatusById(Guid id, Status status)
+        {
+            await _ticketDbContext.Tickets.Where(r => r.Id == id).DeleteAsync();
+            await _ticketDbContext.SaveChangesAsync();
         }
     }
 }

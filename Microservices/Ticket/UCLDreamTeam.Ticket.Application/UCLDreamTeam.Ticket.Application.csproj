@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Models\UCLDreamTeam.SharedInterfaces.csproj" />
+    <ProjectReference Include="..\UCLDreamTeam.Ticket.Domain\UCLDreamTeam.Ticket.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

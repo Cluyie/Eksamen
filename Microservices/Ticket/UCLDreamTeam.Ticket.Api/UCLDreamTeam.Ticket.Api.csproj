@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\RabbitMQ.IoC\RabbitMQ.IoC.csproj" />
     <ProjectReference Include="..\UCLDreamTeam.Ticket.Data\UCLDreamTeam.Ticket.Data.csproj" />
   </ItemGroup>
 
