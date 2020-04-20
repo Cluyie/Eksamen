@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
-using UCLDreamTeam.SharedInterfaces.Interfaces;
+using UCLDreamTeam.Resource.Domain.Interfaces;
 
 namespace UCLDreamTeam.Resource.Domain.Models
 {
