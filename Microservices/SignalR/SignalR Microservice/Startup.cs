@@ -62,6 +62,7 @@ namespace SignalR_Microservice
             {
                 endpoints.MapHub<ResourceHub>("/ResourceHub");
                 endpoints.MapHub<ReservationHub>("/ReservationHub");
+                endpoints.MapHub<ChatHub>("/ChatHub");
             });
 
             //Subscriptions
