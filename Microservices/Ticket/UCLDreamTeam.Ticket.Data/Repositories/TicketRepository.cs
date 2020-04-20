@@ -48,7 +48,8 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
 
         public async Task ChangeStatusById(Guid id, Status status)
         {
-            await _ticketDbContext.Tickets.Where(r => r.Id == id).DeleteAsync();
+            var ticket = await _ticketDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == id);
+            ticket.Status = status;
             await _ticketDbContext.SaveChangesAsync();
         }
     }
