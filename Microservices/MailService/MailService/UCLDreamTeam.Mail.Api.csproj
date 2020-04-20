@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\Models\Models.csproj" />
     <ProjectReference Include="..\..\..\Core\Models\UCLDreamTeam.SharedInterfaces.csproj" />
     <ProjectReference Include="..\..\..\Core\RabbitMQ.IoC\RabbitMQ.IoC.csproj" />
     <ProjectReference Include="..\..\..\Core\UCLToolBox\UCLToolBox.csproj" />
