@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using UCLDreamTeam.Resource.Domain.Interfaces;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.Resource.Domain.Models
 {

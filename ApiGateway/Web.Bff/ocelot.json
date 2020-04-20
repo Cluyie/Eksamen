@@ -82,6 +82,34 @@
       "SwaggerKey": "User"
     },
     //---------------------------------------------
+    //Resource Microservice Api Registrations
+    {
+      "DownstreamPathTemplate": "/Resource",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5006
+        }
+      ],
+      "UpstreamPathTemplate": "/Resource",
+      "UpstreamHttpMethod": [ "Post", "Get", "Put" ],
+      "SwaggerKey": "Resource"
+    },
+    {
+      "DownstreamPathTemplate": "/Resource/guid={guid}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5006
+        }
+      ],
+      "UpstreamPathTemplate": "/Resource/guid={guid}",
+      "UpstreamHttpMethod": [ "Get", "Delete" ],
+      "SwaggerKey": "Resource"
+    },
+    //---------------------------------------------
     //Mail Microservice Api Registrations
     {
       "DownstreamPathTemplate": "/Mail",
@@ -95,9 +123,23 @@
       "UpstreamPathTemplate": "/Mail",
       "UpstreamHttpMethod": [ "Post" ],
       "SwaggerKey": "Mail"
+    },
+    //---------------------------------------------
+    //Auth Microservice Api Registrations
+    {
+      "DownstreamPathTemplate": "/Auth/Login",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5012
+        }
+      ],
+      "UpstreamPathTemplate": "/Auth",
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "Auth"
     }
     //---------------------------------------------
-
   ],
   "SwaggerEndPoints": [
     //Reservation Microservice Api Registrations
@@ -124,6 +166,18 @@
       ]
     },
     //---------------------------------------------
+    //Resource Microservice Api Registrations
+    {
+      "Key": "Resource",
+      "Config": [
+        {
+          "Name": "Resource API",
+          "Version": "v1",
+          "Url": "http://localhost:5007/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    //---------------------------------------------
     //Mail Microservice Api Registrations
     {
       "Key": "Mail",
@@ -132,6 +186,18 @@
           "Name": "Mail API",
           "Version": "v1",
           "Url": "http://localhost:5009/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    //---------------------------------------------
+    //Auth Microservice Api Registrations
+    {
+      "Key": "Auth",
+      "Config": [
+        {
+          "Name": "Auth API",
+          "Version": "v1",
+          "Url": "http://localhost:5013/swagger/v1/swagger.json"
         }
       ]
     }

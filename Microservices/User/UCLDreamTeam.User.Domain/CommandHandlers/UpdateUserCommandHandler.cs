@@ -7,19 +7,20 @@ using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Bus.Bus.Interfaces;
 using UCLDreamTeam.User.Domain.Commands;
 using UCLDreamTeam.User.Domain.Events;
+using UCLDreamTeam.User.Domain.Interface;
 
 namespace UCLDreamTeam.User.Domain.CommandHandlers
 {
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, bool>
     {
         private readonly IEventBus _eventBus;
-        private readonly DbContext _identityContext;
+        private readonly IUserRepository _userRepository;
         private readonly Mapper _mapper;
 
-        public UpdateUserCommandHandler(IEventBus eventBus, DbContext identityContext, Mapper mapper)
+        public UpdateUserCommandHandler(IEventBus eventBus, IUserRepository userRepository, Mapper mapper)
         {
             _eventBus = eventBus;
-            _identityContext = identityContext;
+            _userRepository = userRepository;
             _mapper = mapper;
         }
 
@@ -27,29 +28,18 @@ namespace UCLDreamTeam.User.Domain.CommandHandlers
         {
             try
             {
-                //Prevent changing the ID
-                request.UserToChange.Id = Guid.Empty;
-                // Can only update an existing user
-                if (request.UserToChange == null)
+                // Finds the user
+                var dbUser = await _userRepository.GetUserAsync(request.InputUser.Id);
+
+                if (dbUser == null)
                 {
                     _eventBus.PublishEvent(new NoUserFoundEvent(request.UserToChange));
                     return false;
                 }
 
-                // Update the user
-                if (!string.IsNullOrWhiteSpace(request.UserToChange.PasswordHash) &&
-                    request.InputUser.PasswordHash != request.UserToChange.PasswordHash)
-                {
-                    //If the password is unchanged or empty, this does not update the password
-                    request.UserToChange.PasswordHash = request.UserToChange.PasswordHash;
-                }
-                // Automapper is configured to only overwrite the fields that are not null
-                _mapper.Map(request.UserToChange, request.UserToChange);
+                await _userRepository.UpdateUserAsync(request.InputUser, dbUser);
 
-                _identityContext.Update(request.UserToChange);
-                _identityContext.SaveChanges();
-
-                _eventBus.PublishEvent(new UserUpdatedEvent(request.UserToChange));
+                _eventBus.PublishEvent(new UserUpdatedEvent(dbUser));
                 return true;
             }
             catch (Exception e)

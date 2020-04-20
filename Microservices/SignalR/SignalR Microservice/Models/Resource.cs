@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Models.Interfaces;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace SignalR_Microservice.Models

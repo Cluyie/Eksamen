@@ -1,27 +1,20 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
 using RabbitMQ.Bus.Bus.Interfaces;
 using UCLDreamTeam.User.Application.Interfaces;
-using UCLDreamTeam.User.Data.Context;
 using UCLDreamTeam.User.Domain.Commands;
-using UCLDreamTeam.User.Domain.Models;
+using UCLDreamTeam.User.Domain.Interface;
 
 namespace UCLDreamTeam.User.Application.Services
 {
     public class UserService : IUserService
     {
-        private readonly UserManager<Domain.Models.User> _userManager;
-        private readonly IdentityDbContext _identityDbContext;
-        private readonly Mapper _mapper;
+        private readonly IUserRepository _userRepository;
         private readonly IEventBus _eventBus;
 
-        public UserService(UserManager<Domain.Models.User> userManager,
-            IdentityDbContext identityDbContext, IEventBus eventBus)
+        public UserService(IUserRepository userRepository, IEventBus eventBus)
         {
-            _userManager = userManager;
-            _identityDbContext = identityDbContext;
+            _userRepository = userRepository;
             _eventBus = eventBus;
         }
 
@@ -33,7 +26,7 @@ namespace UCLDreamTeam.User.Application.Services
         public async Task<Domain.Models.User> Update(Domain.Models.User userData)
         {
             await _eventBus.SendCommand(new UpdateUserCommand(userData,
-                await _userManager.FindByIdAsync(userData.Id.ToString())));
+                await _userRepository.GetUserAsync(userData.Id)));
             return userData;
         }
 
@@ -47,12 +40,12 @@ namespace UCLDreamTeam.User.Application.Services
 
         public async Task<Domain.Models.User> GetUserFromIdAsync(Guid id)
         {
-            return await _userManager.FindByIdAsync(id.ToString());
+            return await _userRepository.GetUserAsync(id);
         }
 
         public async Task<Domain.Models.User> GetUserFromUserNameAsync(string userName)
         {
-            return await _userManager.FindByNameAsync(userName);
+            return await _userRepository.GetFromUserNameAsync(userName);
         }
     }
 }

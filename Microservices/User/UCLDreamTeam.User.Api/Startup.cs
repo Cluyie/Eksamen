@@ -15,9 +15,11 @@ using RabbitMQ.IoC;
 using UCLDreamTeam.User.Application.Interfaces;
 using UCLDreamTeam.User.Application.Services;
 using UCLDreamTeam.User.Data.Context;
+using UCLDreamTeam.User.Data.Respositories;
 using UCLDreamTeam.User.Domain.CommandHandlers;
 using UCLDreamTeam.User.Domain.Commands;
 using UCLDreamTeam.User.Domain.Events;
+using UCLDreamTeam.User.Domain.Interface;
 
 namespace UCLDreamTeam.User.Api
 {
@@ -34,13 +36,14 @@ namespace UCLDreamTeam.User.Api
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<IdentityDbContext>(options =>
+            services.AddDbContext<UserDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("UserDbConnection"));
             });
-            services.AddIdentity<Domain.Models.User, IdentityRole<Guid>>()
-                .AddEntityFrameworkStores<IdentityDbContext>();
+            services.AddTransient<UserDbContext>();
             services.AddAuthentication();
+
+            services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddSwaggerGen(c =>
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "User Microservice", Version = "v1" }));

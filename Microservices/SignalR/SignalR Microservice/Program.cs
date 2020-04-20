@@ -13,6 +13,7 @@ namespace SignalR_Microservice
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
+                .UseDefaultServiceProvider(options => options.ValidateScopes = false)
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
         }
     }
