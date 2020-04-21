@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Reflection;
 using Autofac;
 using AutoMapper;
-using Models.Interfaces;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 using UCLToolBox;
 using XamarinFormsApp.Model;
 using XamarinFormsApp.ViewModel;

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Autofac;
 using Microsoft.AspNetCore.SignalR.Client;
-using Models.Interfaces;
 using SkiaSharp;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 using UCLToolBox;
 using Xamarin.Forms;
 using XamarinFormsApp.Helpers;

@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Autofac;
 using Microsoft.AspNetCore.SignalR.Client;
-using Models.Interfaces;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 using UCLToolBox;
 using XamarinFormsApp.Helpers;
 using XamarinFormsApp.Model;

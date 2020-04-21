@@ -1,4 +1,4 @@
-﻿using Models.Interfaces;
+﻿using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace XamarinFormsApp.Model
 {
