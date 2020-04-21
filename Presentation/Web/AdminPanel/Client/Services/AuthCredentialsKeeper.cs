@@ -13,39 +13,40 @@ namespace AdminPanel.Client.Services
 
         ISyncLocalStorageService _localStorage;
 
-        string _username = null;
-        string _token = null;
+        public string Username { get; private set; } = null;
 
-        public string Username
-        {
-            get => _username;
-        }
-
-        public string Token
-        {
-            get => _token;
-        }
+        public string Token { get; private set; } = null;
 
         public AuthCredentialsKeeper(ISyncLocalStorageService localStorage)
         {
             _localStorage = localStorage;
 
-            _username = _localStorage.GetItem<string>(INDEX_USERNAME);
-            _token = _localStorage.GetItem<string>(INDEX_TOKEN);
+            if (_localStorage.ContainKey(INDEX_USERNAME) && _localStorage.ContainKey(INDEX_TOKEN))
+            {
+                Username = _localStorage.GetItem<string>(INDEX_USERNAME);
+                Token = _localStorage.GetItem<string>(INDEX_TOKEN);
+            }
         }
 
         public void SetCredentials(string username, string token)
         {
-            _username = username;
-            _token = token;
+            Username = username;
+            Token = token;
 
-            _localStorage.SetItem(INDEX_USERNAME, _username);
-            _localStorage.SetItem(INDEX_TOKEN, _token);
+            _localStorage.SetItem(INDEX_USERNAME, Username);
+            _localStorage.SetItem(INDEX_TOKEN, Token);
+        }
+
+        public void ClearCredentials()
+        {
+            Username = null;
+            Token = null;
+            _localStorage.Clear();
         }
 
         public bool HasCredentials()
         {
-            return (_username != null && _token != null);
+            return (Username != null && Token != null);
         }
     }
 }
