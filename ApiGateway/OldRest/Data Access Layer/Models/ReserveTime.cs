@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Models.Interfaces;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace Data_Access_Layer.Models
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Models.Interfaces;
 using SkiaSharp;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 using XamarinFormsApp.Model;
 
 namespace XamarinFormsApp.Helpers.Graphish
