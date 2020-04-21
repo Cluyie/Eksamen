@@ -9,6 +9,7 @@ namespace UCLDreamTeam.Reservation.Domain.Interfaces
         Task<IEnumerable<Models.Reservation>> GetAsync();
         Task<Models.Reservation> GetByIdAsync(Guid id);
         Task AddAsync(Models.Reservation reservation);
+        Task UpdateAsync(Models.Reservation reservation);
         Task CancelById(Guid id);
     }
 }
