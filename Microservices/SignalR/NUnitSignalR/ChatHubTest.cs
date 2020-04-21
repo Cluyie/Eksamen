@@ -17,6 +17,7 @@ namespace NUnitSignalR
         public Mock<IHubCallerClients> mockClients { get; set; }
         public Mock<IClientProxy> mockClientProxy { get; set; }
         public Mock<HubCallerContext> navn { get; set; }
+        public Mock<IGroupManager> mockGroupManager { get; set; }
 
         [SetUp]
         public void Setup()
@@ -46,8 +47,8 @@ namespace NUnitSignalR
                 Content = "hejsa"
             };
 
-            await chatHub.AddToGroup("group1");
-            await chatHub.SendMessage(message, "group1");
+            await chatHub.JoinRoom("group1");
+            await chatHub.SendMessageToGroup(message, "group1");
 
 
             mockClients.Verify(clients => clients.Groups("group1"), Times.Once);
