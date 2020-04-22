@@ -1,5 +1,6 @@
 ﻿using Xamarin.Forms;
 using XamarinFormsApp.Helpers;
+using XamarinFormsApp.View;
 
 namespace XamarinFormsApp
 {
@@ -13,8 +14,9 @@ namespace XamarinFormsApp
 
             AutofacHelper.Initialize();
 
-            MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new ChatPage());
         }
+        public static string User = "TestUser";
 
         protected override void OnStart()
         {
