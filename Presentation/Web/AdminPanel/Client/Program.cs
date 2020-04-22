@@ -7,6 +7,7 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http;
 
 namespace AdminPanel.Client
 {
@@ -46,7 +47,7 @@ namespace AdminPanel.Client
             //builder.Services.AddSingleton<IAuthService, MockAuthService>();
             //builder.Services.AddSingleton<IResourceService, MockResourceService>();
 
-            builder.Services.AddBaseAddressHttpClient();
+            builder.Services.AddSingleton(new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
             await builder.Build().RunAsync();
         }
