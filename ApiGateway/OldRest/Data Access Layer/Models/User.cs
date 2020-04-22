@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity;
-using Models.Interfaces;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace Data_Access_Layer.Models
 {

@@ -36,6 +36,12 @@ namespace UCLDreamTeam.Reservation.Application.Services
             await _eventBus.SendCommand(command);
         }
 
+        public async Task UpdateAsync(Domain.Models.Reservation reservation)
+        {
+            var command = new CreateUpdateReservationCommand(reservation.Id, reservation.UserId, reservation.ResourceId, reservation.Timeslot);
+            await _eventBus.SendCommand(command);
+        }
+
         public async Task CancelById(Guid id)
         {
             var command = new CreateCancelReservationCommand(id);

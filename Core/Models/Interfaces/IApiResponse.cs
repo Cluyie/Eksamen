@@ -1,7 +1,7 @@
 ﻿namespace UCLDreamTeam.SharedInterfaces.Interfaces
 {
 
-    public interface IApiResponse<T> where T : class
+    public interface IApiResponse<T>
     {
         ApiResponseCode Code { get; set; }
 

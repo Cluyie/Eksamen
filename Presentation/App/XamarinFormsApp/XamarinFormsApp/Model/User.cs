@@ -1,5 +1,5 @@
 ﻿using System;
-using Models.Interfaces;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace XamarinFormsApp.Model
 {
@@ -14,5 +14,6 @@ namespace XamarinFormsApp.Model
         public string LastName { get; set; }
         public string UserName { get; set; }
         public int? ZipCode { get; set; }
+        public string PasswordHash { get; set; }
     }
 }
