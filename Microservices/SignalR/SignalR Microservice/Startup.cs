@@ -9,6 +9,8 @@ using RabbitMQ.IoC;
 using SignalR.Domain;
 using SignalR.Domain.EventHandlers;
 using SignalR.Domain.Events;
+using SignalR_Microservice.EventHandlers;
+using SignalR_Microservice.Events;
 
 namespace SignalR_Microservice
 {
@@ -31,6 +33,7 @@ namespace SignalR_Microservice
             //Handler DI
             services.AddTransient<ReservationCreatedEventHandler>();
             services.AddTransient<ReservationCanceledEventHandler>();
+            services.AddTransient<ReservationUpdatedEventHandler>();
 
             services.AddCors(options =>
             {
@@ -67,6 +70,7 @@ namespace SignalR_Microservice
             //Subscriptions
             app.Subscribe<ReservationCreatedEvent, ReservationCreatedEventHandler>();
             app.Subscribe<ReservationCanceledEvent, ReservationCanceledEventHandler>();
+            app.Subscribe<ReservationUpdatedEvent, ReservationUpdatedEventHandler>();
         }
     }
 }
