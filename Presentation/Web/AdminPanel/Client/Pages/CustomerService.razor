@@ -12,6 +12,8 @@
 @using Microsoft.AspNetCore.SignalR.Client
 @using UCLDreamTeam.SharedInterfaces
 @inject ITicketService TicketService
+@inject IReservationService ReservationService
+@inject IResourceService ResourceService
 
 <div class="container-fluid">
     <div class="row h-100">
@@ -236,11 +238,14 @@
 
         foreach (var ticket in result)
         {
+            TicketDTOs.Add(new TicketDTO { Ticket = ticket });
+
             if (ticket.ReservationId.HasValue)
             {
-                //TODO Fetch reservation and resource data
-            }        
-            TicketDTOs.Add(new TicketDTO{Ticket = ticket});
+                //Where should this go?
+                //Reservation reservation = await ReservationService.GetFromId(ticket.Id);
+                //ResourceDTO resource = await ResourceService.GetFromId(reservation.ResourceId);
+            }
         }
 
         TicketDTOs = TicketDTOs.OrderByDescending(x => x.Ticket.Messages.Min(s => s.TimeStamp)).ToList();
