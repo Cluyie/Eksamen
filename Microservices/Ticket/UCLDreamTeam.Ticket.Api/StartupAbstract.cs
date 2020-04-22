@@ -11,9 +11,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.IoC;
+using UCLDreamTeam.Ticket.Application.Interfaces;
+using UCLDreamTeam.Ticket.Application.Services;
 using UCLDreamTeam.Ticket.Data.Contexts;
+using UCLDreamTeam.Ticket.Data.Repositories;
 using UCLDreamTeam.Ticket.Domain.EventHandlers;
 using UCLDreamTeam.Ticket.Domain.Events;
+using UCLDreamTeam.Ticket.Domain.Interfaces;
 
 namespace UCLDreamTeam.Ticket.Api
 {
@@ -35,6 +39,9 @@ namespace UCLDreamTeam.Ticket.Api
             //Handler DI
             services.AddTransient<MessageSentEventHandler>();
             services.AddTransient<MessageSeenEventHandler>();
+
+            services.AddTransient<ITicketService, TicketService>();
+            services.AddTransient<ITicketRepository, TicketRepository>();
 
             services.AddSwaggerGen(c =>
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ticket MicroService", Version = "v1" }));

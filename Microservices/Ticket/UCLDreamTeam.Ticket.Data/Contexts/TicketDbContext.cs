@@ -13,7 +13,7 @@ namespace UCLDreamTeam.Ticket.Data.Contexts
         public DbSet<Domain.Models.Ticket> Tickets { get; set; }
         public DbSet<Message> Messages { get; set; }
 
-        public TicketDbContext()
+        public TicketDbContext(DbContextOptions options) : base(options)
         {
             
         }

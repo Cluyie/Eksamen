@@ -1,12 +1,17 @@
 ﻿@layout CleanLayout
 @page "/Chat"
 @attribute [Authorize(Roles = "admin, customerservice")]
+@using System
+@using System.Collections.Generic
 @using AdminPanel.Client.Components.CustomerService
 @using AdminPanel.Client.Models
 @using System.Linq
+@using System.Threading.Tasks
 @using AdminPanel.Client.DTOs
+@using AdminPanel.Client.Services
 @using Microsoft.AspNetCore.SignalR.Client
 @using UCLDreamTeam.SharedInterfaces
+@inject ITicketService TicketService
 
 <div class="container-fluid">
     <div class="row h-100">
@@ -15,17 +20,183 @@
     </div>
 </div>
 
-@*<button @onclick="Send" disabled="@(!IsConnected)">Send</button>*@
-
 @code
 {
     private HubConnection _hubConnection;
+    public List<TicketDTO> TicketDTOs { get; set; }
+    //public List<TicketDTO> TicketDTOs { get; set; } = new List<TicketDTO>
+    //{
+    //    new TicketDTO
+    //    {
+    //        Ticket = new Ticket
+    //        {
+    //            Id = Guid.NewGuid(),
+    //            Name = "Megan Leib",
+    //            Messages = new List<Message>
+    //            {
+    //                new Message
+    //                {
+    //                    Text = "Hi, how are you ?",
+    //                    TimeStamp = DateTime.Now.AddMinutes(-5),
+    //                    Seen = false
+    //                },
+    //                new Message
+    //                {
+    //                    Text = "What are you doing tonight ? Want to go take a drink ?",
+    //                    TimeStamp = DateTime.Now.AddMinutes(-4),
+    //                    Seen = true
+    //                },
+    //                new Message
+    //                {
+    //                    Text = "Hey Megan ! It's been a while 😃",
+    //                    TimeStamp = DateTime.Now.AddMinutes(-3),
+    //                    Seen = true
+    //                },
+    //                new Message
+    //                {
+    //                    Text = "When can we meet ?",
+    //                    TimeStamp = DateTime.Now.AddMinutes(-2),
+    //                    Seen = true
+    //                },
+    //                new Message
+    //                {
+    //                    Text = "9 pm at the bar if possible 😳",
+    //                    TimeStamp = DateTime.Now.AddMinutes(-1),
+    //                    Seen = true
+    //                },
+    //            },
+    //            Status = Status.Active
+    //        },
+    //        Resource = new Models.Resource
+    //        {
+    //            Name = "Test Resource"
+    //        },
+    //        Reservation = new Reservation
+    //        {
+    //            Timeslot = new ReserveTime
+    //            {
+    //                FromDate = DateTime.Now.AddHours(-12),
+    //                ToDate = DateTime.Now.AddHours(-6)
+    //            }
+    //        }
+    //    },
+    //    new TicketDTO
+    //    {
+    //        Ticket = new Ticket
+    //        {
+    //            Id = Guid.NewGuid(),
+    //            Name = "Dave Corlew",
+    //            Messages = new List<Message>
+    //            {
+    //                new Message
+    //                {
+    //                    Text = "Let's meet for a coffee or something today ?",
+    //                    TimeStamp = DateTime.Now.AddHours(-6),
+    //                    Seen = true
+    //                }
+    //            },
+    //            Status = Status.Active
+    //        },
+    //    },
+    //    new TicketDTO
+    //    {
+    //        Ticket = new Ticket
+    //        {
+    //            Id = Guid.NewGuid(),
+    //            Name = "Jerome Seiber",
+    //            Messages = new List<Message>
+    //            {
+    //                new Message
+    //                {
+    //                    Text = "I've sent you the annual report",
+    //                    TimeStamp = DateTime.Now.AddHours(-12),
+    //                    Seen = true
+    //                }
+    //            },
+    //            Status = Status.Waiting
+    //        },
+    //    },
+    //    new TicketDTO
+    //    {
+    //        Ticket = new Ticket
+    //        {
+    //            Id = Guid.NewGuid(),
+    //            Name = "Thomas Dbtn",
+    //            Messages = new List<Message>
+    //            {
+    //                new Message
+    //                {
+    //                    Text = "See you tomorrow ! 🙂",
+    //                    TimeStamp = DateTime.Now.AddDays(-1),
+    //                    Seen = true
+    //                }
+    //            },
+    //            Status = Status.Active
+    //        },
+    //    },
+    //    new TicketDTO
+    //    {
+    //        Ticket = new Ticket
+    //        {
+    //            Id = Guid.NewGuid(),
+    //            Name = "Elsie Amador",
+    //            Messages = new List<Message>
+    //            {
+    //                new Message
+    //                {
+    //                    Text = "What the f**k is going on ?",
+    //                    TimeStamp = DateTime.Now.AddDays(-2),
+    //                    Seen = true
+    //                }
+    //            },
+    //            Status = Status.Waiting
+    //        },
+    //    },
+    //    new TicketDTO
+    //    {
+    //        Ticket = new Ticket
+    //        {
+    //            Id = Guid.NewGuid(),
+    //            Name = "Billy Southard",
+    //            Messages = new List<Message>
+    //            {
+    //                new Message
+    //                {
+    //                    Text = "Ahahah 😂",
+    //                    TimeStamp = DateTime.Now.AddDays(-3),
+    //                    Seen = true
+    //                }
+    //            },
+    //            Status = Status.Active
+    //        },
+    //    },
+    //    new TicketDTO
+    //    {
+    //        Ticket = new Ticket
+    //        {
+    //            Id = Guid.NewGuid(),
+    //            Name = "Paul Walker",
+    //            Messages = new List<Message>
+    //            {
+    //                new Message
+    //                {
+    //                    Text = "You can't see me",
+    //                    TimeStamp = DateTime.Now.AddDays(-7),
+    //                    Seen = true
+    //                }
+    //            },
+    //            Status = Status.Waiting
+    //        },
+    //    }
+    //};
+    public TicketDTO ActiveTicketDTO { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        #region SignalR ChatHub Methods
         _hubConnection = new HubConnectionBuilder()
-            .WithUrl("http://81.27.216.103/SignalR/ChatHub")
-            .Build();
+        .WithUrl("http://81.27.216.103/SignalR/ChatHub")
+        .Build();
 
         await _hubConnection.StartAsync();
 
@@ -33,9 +204,12 @@
         {
             TicketDTOs.Find(x => x.Ticket.Id == message.TicketId).Ticket.Messages.Add(message);
         });
+        #endregion
+
+        InitializeTicket();
     }
 
-    #region MyRegion
+    #region SignalR ChatHub Methods
     Task JoinGroup(string groupName) =>
         _hubConnection.SendAsync("JoinGroup", groupName);
 
@@ -44,197 +218,33 @@
 
     Task SendMessageToGroup(Message message) =>
         _hubConnection.SendAsync("SendMessageToGroup", message);
-    #endregion
-
 
     public bool IsConnected =>
     _hubConnection.State == HubConnectionState.Connected;
-
-
-
-
-
-
-
-    public List<TicketDTO> TicketDTOs { get; set; } = new List<TicketDTO>
-{
-        new TicketDTO
-        {
-            Ticket = new Ticket
-            {
-                Id = Guid.NewGuid(),
-                Name = "Megan Leib",
-                Messages = new List<Message>
-            {
-                    new Message
-                    {
-                        Text = "Hi, how are you ?",
-                        TimeStamp = DateTime.Now.AddMinutes(-5),
-                        Seen = false
-                    },
-                    new Message
-                    {
-                        Text = "What are you doing tonight ? Want to go take a drink ?",
-                        TimeStamp = DateTime.Now.AddMinutes(-4),
-                        Seen = true
-                    },
-                    new Message
-                    {
-                        Text = "Hey Megan ! It's been a while 😃",
-                        TimeStamp = DateTime.Now.AddMinutes(-3),
-                        Seen = true
-                    },
-                    new Message
-                    {
-                        Text = "When can we meet ?",
-                        TimeStamp = DateTime.Now.AddMinutes(-2),
-                        Seen = true
-                    },
-                    new Message
-                    {
-                        Text = "9 pm at the bar if possible 😳",
-                        TimeStamp = DateTime.Now.AddMinutes(-1),
-                        Seen = true
-                    },
-                },
-                Status = Status.Active
-            },
-            Resource = new Models.Resource
-            {
-                Name = "Test Resource"
-            },
-            Reservation = new Reservation
-            {
-                Timeslot = new ReserveTime
-                {
-                    FromDate = DateTime.Now.AddHours(-12),
-                    ToDate = DateTime.Now.AddHours(-6)
-                }
-            }
-        },
-        new TicketDTO
-        {
-            Ticket = new Ticket
-            {
-                Id = Guid.NewGuid(),
-                Name = "Dave Corlew",
-                Messages = new List<Message>
-            {
-                    new Message
-                    {
-                        Text = "Let's meet for a coffee or something today ?",
-                        TimeStamp = DateTime.Now.AddHours(-6),
-                        Seen = true
-                    }
-                },
-                Status = Status.Active
-            },
-        },
-        new TicketDTO
-        {
-            Ticket = new Ticket
-            {
-                Id = Guid.NewGuid(),
-                Name = "Jerome Seiber",
-                Messages = new List<Message>
-            {
-                    new Message
-                    {
-                        Text = "I've sent you the annual report",
-                        TimeStamp = DateTime.Now.AddHours(-12),
-                        Seen = true
-                    }
-                },
-                Status = Status.Waiting
-            },
-        },
-        new TicketDTO
-        {
-            Ticket = new Ticket
-            {
-                Id = Guid.NewGuid(),
-                Name = "Thomas Dbtn",
-                Messages = new List<Message>
-            {
-                    new Message
-                    {
-                        Text = "See you tomorrow ! 🙂",
-                        TimeStamp = DateTime.Now.AddDays(-1),
-                        Seen = true
-                    }
-                },
-                Status = Status.Active
-            },
-        },
-        new TicketDTO
-        {
-            Ticket = new Ticket
-            {
-                Id = Guid.NewGuid(),
-                Name = "Elsie Amador",
-                Messages = new List<Message>
-            {
-                    new Message
-                    {
-                        Text = "What the f**k is going on ?",
-                        TimeStamp = DateTime.Now.AddDays(-2),
-                        Seen = true
-                    }
-                },
-                Status = Status.Waiting
-            },
-        },
-        new TicketDTO
-        {
-            Ticket = new Ticket
-            {
-                Id = Guid.NewGuid(),
-                Name = "Billy Southard",
-                Messages = new List<Message>
-            {
-                    new Message
-                    {
-                        Text = "Ahahah 😂",
-                        TimeStamp = DateTime.Now.AddDays(-3),
-                        Seen = true
-                    }
-                },
-                Status = Status.Active
-            },
-        },
-        new TicketDTO
-        {
-            Ticket = new Ticket
-            {
-                Id = Guid.NewGuid(),
-                Name = "Paul Walker",
-                Messages = new List<Message>
-            {
-                    new Message
-                    {
-                        Text = "You can't see me",
-                        TimeStamp = DateTime.Now.AddDays(-7),
-                        Seen = true
-                    }
-                },
-                Status = Status.Waiting
-            },
-        }
-    };
-
-    public TicketDTO ActiveTicketDTO { get; set; }
-
-    protected override void OnInitialized()
-    {
-        TicketDTOs = TicketDTOs.OrderByDescending(x => x.Ticket.Messages.Min(s => s.TimeStamp)).ToList();
-        TicketDTOs.First().Ticket.Active = true;
-        ActiveTicketDTO = TicketDTOs.First(x => (bool)x.Ticket.Active);
-    }
+    #endregion
 
     void UpdateTicket(TicketDTO tickerDTO)
     {
         TicketDTOs.First(x => x.Ticket.Active == true).Ticket.Active = null;
         TicketDTOs.First(x => x.Ticket.Id == tickerDTO.Ticket.Id).Ticket.Active = true;
         ActiveTicketDTO = tickerDTO;
+    }
+
+    async void InitializeTicket()
+    {
+        var result = await TicketService.GetByUserIdAsync(Guid.NewGuid());
+
+        foreach (var ticket in result)
+        {
+            if (ticket.ReservationId.HasValue)
+            {
+                //TODO Fetch reservation and resource data
+            }        
+            TicketDTOs.Add(new TicketDTO{Ticket = ticket});
+        }
+
+        TicketDTOs = TicketDTOs.OrderByDescending(x => x.Ticket.Messages.Min(s => s.TimeStamp)).ToList();
+        TicketDTOs.First().Ticket.Active = true;
+        ActiveTicketDTO = TicketDTOs.First(x => (bool) x.Ticket.Active);
     }
 }

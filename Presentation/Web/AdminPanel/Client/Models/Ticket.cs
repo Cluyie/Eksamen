@@ -15,6 +15,6 @@ namespace AdminPanel.Client.Models
         public string Name { get; set; }
         public Status Status { get; set; }
         public List<Message> Messages { get; set; }
-        public Guid ReservationId { get; set; }
+        public Guid? ReservationId { get; set; }
     }
 }
