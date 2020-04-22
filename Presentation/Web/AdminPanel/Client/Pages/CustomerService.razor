@@ -5,6 +5,7 @@
 @using AdminPanel.Client.Models
 @using System.Linq
 @using AdminPanel.Client.DTOs
+@using Microsoft.AspNetCore.SignalR.Client
 @using UCLDreamTeam.SharedInterfaces
 
 <div class="container-fluid">
@@ -14,8 +15,46 @@
     </div>
 </div>
 
+@*<button @onclick="Send" disabled="@(!IsConnected)">Send</button>*@
+
 @code
 {
+    private HubConnection _hubConnection;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl("http://81.27.216.103/SignalR/ChatHub")
+            .Build();
+
+        await _hubConnection.StartAsync();
+
+        _hubConnection.On<Message>("SendMessageToGroup", (message) =>
+        {
+            TicketDTOs.Find(x => x.Ticket.Id == message.TicketId).Ticket.Messages.Add(message);
+        });
+    }
+
+    #region MyRegion
+    Task JoinGroup(string groupName) =>
+        _hubConnection.SendAsync("JoinGroup", groupName);
+
+    Task RemoveFromGroup(string groupName) =>
+        _hubConnection.SendAsync("RemoveFromGroup", groupName);
+
+    Task SendMessageToGroup(Message message) =>
+        _hubConnection.SendAsync("SendMessageToGroup", message);
+    #endregion
+
+
+    public bool IsConnected =>
+    _hubConnection.State == HubConnectionState.Connected;
+
+
+
+
+
+
 
     public List<TicketDTO> TicketDTOs { get; set; } = new List<TicketDTO>
 {
