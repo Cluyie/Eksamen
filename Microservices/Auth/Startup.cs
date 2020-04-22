@@ -151,18 +151,28 @@ namespace UCLDreamTeam.Auth.Api
             var authContext = serviceProvider.GetRequiredService<AuthContext>();
             var hashService = serviceProvider.GetRequiredService<HashService>();
 
-            string roleName = "Admin";
+            string [] roleNames = { "admin", "customerservice" };
 
-            //creating the role and seeding it to the database
-            var roleExist = authContext.Roles.Any(r => r.RoleName == roleName);
-
-            var roleToAdd = new Role
+            foreach (var roleName in roleNames)
             {
-                RoleId = Guid.NewGuid(),
-                RoleName = roleName
-            };
+                //creating the roles and seeding them to the database
+                var roleExist = authContext.Roles.Any(r => r.RoleName == roleName);
 
-            if (!roleExist) authContext.Roles.Add(roleToAdd);
+                var roleToAdd = new Role
+                {
+                    RoleId = Guid.NewGuid(),
+                    RoleName = roleName
+                };
+
+                if (!roleExist)
+                {
+                    authContext.Roles.Add(roleToAdd);
+                    authContext.SaveChanges();
+                }
+
+            }
+
+
 
             //creating an admin
             var admin = new AuthUser
@@ -183,9 +193,38 @@ namespace UCLDreamTeam.Auth.Api
             if (_user == null)
             {
                 var createAdmin = authContext.AuthUsers.Add(admin);
+                var roleToAdd = authContext.Roles.SingleOrDefault(r => r.RoleName == "admin");
                 authContext.UserRoles.Add(new UserRole { AuthUserId = admin.Id, Role = roleToAdd });
                 authContext.SaveChanges();
             }
+
+            //creating a customerserviceone
+            var customerServiceOne = new AuthUser
+            {
+                Id = Guid.NewGuid(),
+                UserName = Configuration.GetSection("CustomerServiceUserone")["UserName"],
+                Email = Configuration.GetSection("CustomerServiceUserone")["UserEmail"]
+            };
+
+            byte[] saltTwo = hashService.GenerateSalt();
+
+            customerServiceOne.PasswordSalt = Convert.ToBase64String(saltTwo);
+
+            customerServiceOne.PasswordHash = hashService.Hasher(Configuration.GetSection("CustomerServiceUserone")["UserPassword"], Convert.ToBase64String(saltTwo));
+
+            var _customServiceOneUser = authContext.AuthUsers.SingleOrDefault(u => u.UserName == Configuration.GetSection("CustomerServiceUserone")["UserName"]);
+
+            if (_customServiceOneUser == null)
+            {
+                var createCSOne = authContext.AuthUsers.Add(customerServiceOne);
+                var roleToAdd = authContext.Roles.SingleOrDefault(r => r.RoleName == "customerservice");
+                authContext.UserRoles.Add(new UserRole { AuthUserId = customerServiceOne.Id, Role = roleToAdd });
+                authContext.SaveChanges();
+            }
+
+            
+
+
         }
     }
 }
