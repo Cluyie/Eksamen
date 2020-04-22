@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace SignalR_Microservice.Helpers
 {
-    public class RoomUsersHandler
+    public class RoomUsersHandler : IRoomUsersHandler
     {
-        public Dictionary<string,List<User>> AddUserToRoom(Dictionary<string,List<User>> roomsWithUsers, string roomName, User currentUser)
+        public Dictionary<string, List<User>> AddUserToRoom(Dictionary<string, List<User>> roomsWithUsers, string roomName, User currentUser)
         {
             if (!roomsWithUsers.ContainsKey(roomName))
             {
-                roomsWithUsers.Add(roomName, new List<User>());               
+                roomsWithUsers.Add(roomName, new List<User>());
             }
 
             if (roomsWithUsers[roomName].Any(user => user.Id == currentUser.Id))
@@ -24,6 +24,7 @@ namespace SignalR_Microservice.Helpers
             {
                 bool space = CheckIfAvailableSpace(roomsWithUsers, roomName);
 
+                //this only works for the dictionary. This logic should invoke the join method also.
                 if (space == true)
                 {
                     roomsWithUsers[roomName].Add(currentUser);
@@ -32,7 +33,7 @@ namespace SignalR_Microservice.Helpers
             return roomsWithUsers;
         }
 
-        public bool CheckIfAvailableSpace(Dictionary<string,List<User>> roomsWithUsers, string roomName)
+        public bool CheckIfAvailableSpace(Dictionary<string, List<User>> roomsWithUsers, string roomName)
         {
             bool space = false;
 
