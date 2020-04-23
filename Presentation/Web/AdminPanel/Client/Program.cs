@@ -42,6 +42,8 @@ namespace AdminPanel.Client
             // Real services
             builder.Services.AddSingleton<IAuthService, ApiAuthService>();
             builder.Services.AddSingleton<IResourceService, ApiResourceService>();
+            builder.Services.AddSingleton<IReservationService, ReservationService>();
+            builder.Services.AddSingleton<ITicketService, ApiTicketService>();
 
             // Mock services
             //builder.Services.AddSingleton<IAuthService, MockAuthService>();

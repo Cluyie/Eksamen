@@ -11,6 +11,6 @@ namespace AdminPanel.Client.DTOs
     {
         public Ticket Ticket { get; set; }
         public Reservation Reservation { get; set; }
-        public Resource Resource { get; set; }
+        public ResourceDTO Resource { get; set; }
     }
 }

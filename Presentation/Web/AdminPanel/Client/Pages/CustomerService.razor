@@ -15,12 +15,24 @@
 @inject IReservationService ReservationService
 @inject IResourceService ResourceService
 
-<div class="container-fluid">
-    <div class="row h-100">
-        <TicketsPanel UpdateTicket="UpdateTicket" TickerDTOs=@TicketDTOs />
-        <ChatPanel TicketDTO=@ActiveTicketDTO />
+@if (TicketDTOs != null)
+{
+    <div class="container-fluid">
+        <div class="row h-100">
+            <TicketsPanel UpdateTicket="UpdateTicket" TicketDTOs=@TicketDTOs />
+            <ChatPanel TicketDTO=@ActiveTicketDTO />
+        </div>
     </div>
+}
+else
+{
+<div class="jumbotron">
+    <h1>Her er tomt...</h1>
+    <p>Der er ingen support sager på nuværende tidspunkt. Kom tilbage senere.</p>
+    <p><a class="btn btn-primary btn-lg" href="" role="button">Gå tilbage til startsiden.</a></p>
 </div>
+}
+
 
 @code
 {
@@ -196,33 +208,33 @@
     protected override async Task OnInitializedAsync()
     {
         #region SignalR ChatHub Methods
-        _hubConnection = new HubConnectionBuilder()
-        .WithUrl("http://81.27.216.103/SignalR/ChatHub")
-        .Build();
+        //_hubConnection = new HubConnectionBuilder()
+        //.WithUrl("http://81.27.216.103/SignalR/ChatHub")
+        //.Build();
 
-        await _hubConnection.StartAsync();
+        //await _hubConnection.StartAsync();
 
-        _hubConnection.On<Message>("SendMessageToGroup", (message) =>
-        {
-            TicketDTOs.Find(x => x.Ticket.Id == message.TicketId).Ticket.Messages.Add(message);
-        });
+        //_hubConnection.On<Message>("SendMessageToGroup", (message) =>
+        //{
+        //    TicketDTOs.Find(x => x.Ticket.Id == message.TicketId).Ticket.Messages.Add(message);
+        //});
         #endregion
 
         InitializeTicket();
     }
 
     #region SignalR ChatHub Methods
-    Task JoinGroup(string groupName) =>
-        _hubConnection.SendAsync("JoinGroup", groupName);
+    //Task JoinGroup(string groupName) =>
+    //    _hubConnection.SendAsync("JoinGroup", groupName);
 
-    Task RemoveFromGroup(string groupName) =>
-        _hubConnection.SendAsync("RemoveFromGroup", groupName);
+    //Task RemoveFromGroup(string groupName) =>
+    //    _hubConnection.SendAsync("RemoveFromGroup", groupName);
 
-    Task SendMessageToGroup(Message message) =>
-        _hubConnection.SendAsync("SendMessageToGroup", message);
+    //Task SendMessageToGroup(Message message) =>
+    //    _hubConnection.SendAsync("SendMessageToGroup", message);
 
-    public bool IsConnected =>
-    _hubConnection.State == HubConnectionState.Connected;
+    //public bool IsConnected =>
+    //_hubConnection.State == HubConnectionState.Connected;
     #endregion
 
     void UpdateTicket(TicketDTO tickerDTO)
@@ -238,18 +250,18 @@
 
         foreach (var ticket in result)
         {
-            TicketDTOs.Add(new TicketDTO { Ticket = ticket });
+            Reservation reservation = new Reservation();
 
             if (ticket.ReservationId.HasValue)
             {
-                //Where should this go?
-                //Reservation reservation = await ReservationService.GetFromId(ticket.Id);
-                //ResourceDTO resource = await ResourceService.GetFromId(reservation.ResourceId);
+                reservation = await ReservationService.GetFromId(ticket.Id);
             }
+
+            TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation.ResourceId) ?? null });
         }
 
         TicketDTOs = TicketDTOs.OrderByDescending(x => x.Ticket.Messages.Min(s => s.TimeStamp)).ToList();
         TicketDTOs.First().Ticket.Active = true;
-        ActiveTicketDTO = TicketDTOs.First(x => (bool) x.Ticket.Active);
+        ActiveTicketDTO = TicketDTOs.First(x => (bool)x.Ticket.Active);
     }
 }
