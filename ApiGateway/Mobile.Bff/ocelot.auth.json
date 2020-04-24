@@ -1,0 +1,16 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/Auth/Login",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 1337
+        }
+      ],
+      "UpstreamPathTemplate": "/Auth",
+      "UpstreamHttpMethod": ["Post"]
+    }
+  ]
+}

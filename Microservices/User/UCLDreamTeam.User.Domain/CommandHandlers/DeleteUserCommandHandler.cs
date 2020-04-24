@@ -38,6 +38,7 @@ namespace UCLDreamTeam.User.Domain.CommandHandlers
                 throw e;
 #else
                 _eventBus.PublishEvent(new UserDeleteFailedEvent(request.User, e));
+                return false;
 #endif
             }
         }

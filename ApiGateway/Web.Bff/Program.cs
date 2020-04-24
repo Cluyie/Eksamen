@@ -17,24 +17,28 @@ namespace Web.Bff
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
-        }
-
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
-        {
-            return WebHost.CreateDefaultBuilder(args)
+            new WebHostBuilder()
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config
                         .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
                         .AddJsonFile("appsettings.json", true, true)
-                        .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json",
-                            true, true)
-                        .AddJsonFile($"appsettings.local.json", true, true)
-                        .AddJsonFile("ocelot.json")
+                        .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true,
+                            true)
+                        .AddOcelot(hostingContext.HostingEnvironment)
                         .AddEnvironmentVariables();
                 })
-                .UseStartup<Startup>();
+                .ConfigureServices(s => { s.AddOcelot(); })
+                .ConfigureLogging((hostingContext, logging) =>
+                {
+                    //add your logging
+                })
+                .UseIISIntegration()
+                .Configure(app => { app.UseOcelot().Wait(); })
+                .Build()
+                .Run();
         }
     }
 }
