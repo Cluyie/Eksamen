@@ -31,15 +31,17 @@ namespace UCLDreamTeam.User.Api.Controllers
             try
             {
                 var userName = User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
-
-                var userProfile = _userService.GetUserFromUserNameAsync(userName).Result;
-
-                if (userProfile != null)
+                if (userName != null)
                 {
-                    return Ok(userProfile);
+                    var userProfile = _userService.GetUserFromUserNameAsync(userName).Result;
+
+                    if (userProfile != null)
+                    {
+                        return Ok(userProfile);
+                    }
                 }
 
-                return NotFound(userProfile);
+                return NotFound();
             }
             catch (Exception e)
             {
