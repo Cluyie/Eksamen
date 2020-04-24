@@ -12,11 +12,7 @@
       ],
       "UpstreamPathTemplate": "/Reservation",
       "UpstreamHttpMethod": [ "Get" ],
-      "SwaggerKey": "Reservation",
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "AuthenticationKey",
-        "AllowedScopes": []
-      }
+      "SwaggerKey": "Reservation"
     },
     {
       "DownstreamPathTemplate": "/Reservation/{id}",
@@ -29,11 +25,7 @@
       ],
       "UpstreamPathTemplate": "/Reservation/{id}",
       "UpstreamHttpMethod": [ "Get" ],
-      "SwaggerKey": "Reservation",
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "AuthenticationKey",
-        "AllowedScopes": []
-      }
+      "SwaggerKey": "Reservation"
     },
     {
       "DownstreamPathTemplate": "/Reservation",
@@ -46,11 +38,7 @@
       ],
       "UpstreamPathTemplate": "/Reservation",
       "UpstreamHttpMethod": [ "Post" ],
-      "SwaggerKey": "Reservation",
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "AuthenticationKey",
-        "AllowedScopes": []
-      }
+      "SwaggerKey": "Reservation"
     },
     {
       "DownstreamPathTemplate": "/Reservation/{id}",
@@ -63,11 +51,7 @@
       ],
       "UpstreamPathTemplate": "/Reservation/{id}",
       "UpstreamHttpMethod": [ "Delete" ],
-      "SwaggerKey": "Reservation",
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "AuthenticationKey",
-        "AllowedScopes": []
-      }
+      "SwaggerKey": "Reservation"
     },
     //---------------------------------------------
     //User Microservice Api Registrations
@@ -97,11 +81,7 @@
       ],
       "UpstreamPathTemplate": "/User",
       "UpstreamHttpMethod": [ "Get", "Put" ],
-      "SwaggerKey": "User",
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "AuthenticationKey",
-        "AllowedScopes": []
-      }
+      "SwaggerKey": "User"
     },
     {
       "DownstreamPathTemplate": "/User/{id}",
@@ -114,11 +94,7 @@
       ],
       "UpstreamPathTemplate": "/User/{id}",
       "UpstreamHttpMethod": [ "Get", "Delete" ],
-      "SwaggerKey": "User",
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "AuthenticationKey",
-        "AllowedScopes": []
-      }
+      "SwaggerKey": "User"
     },
     //---------------------------------------------
     //Resource Microservice Api Registrations
@@ -133,11 +109,7 @@
       ],
       "UpstreamPathTemplate": "/Resource",
       "UpstreamHttpMethod": [ "Post", "Get", "Put" ],
-      "SwaggerKey": "Resource",
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "AuthenticationKey",
-        "AllowedScopes": []
-      }
+      "SwaggerKey": "Resource"
     },
     {
       "DownstreamPathTemplate": "/Resource/guid={guid}",
@@ -150,11 +122,7 @@
       ],
       "UpstreamPathTemplate": "/Resource/guid={guid}",
       "UpstreamHttpMethod": [ "Get", "Delete" ],
-      "SwaggerKey": "Resource",
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "AuthenticationKey",
-        "AllowedScopes": []
-      }
+      "SwaggerKey": "Resource"
     },
     //---------------------------------------------
     //Mail Microservice Api Registrations
@@ -169,11 +137,7 @@
       ],
       "UpstreamPathTemplate": "/Mail",
       "UpstreamHttpMethod": [ "Post" ],
-      "SwaggerKey": "Mail",
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "AuthenticationKey",
-        "AllowedScopes": []
-      }
+      "SwaggerKey": "Mail"
     },
     //---------------------------------------------
     //Auth Microservice Api Registrations
