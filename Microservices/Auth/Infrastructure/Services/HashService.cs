@@ -9,7 +9,7 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure.Services
     {
         public PasswordVerificationResult Compare(string password, string dbHash, string salt)
         {
-            string hashedPassword = Hasher(password, salt);
+            string hashedPassword = GenerateHash(password, salt);
 
             if (string.Equals(hashedPassword, dbHash))
             {
@@ -19,7 +19,7 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure.Services
             return PasswordVerificationResult.Failed;
         }
 
-        public string Hasher(string password, string salt)
+        public string GenerateHash(string password, string salt)
         {
             string hashedPassword =
             Convert.ToBase64String(KeyDerivation.Pbkdf2(
@@ -32,7 +32,7 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure.Services
             return hashedPassword;
         }
 
-        public byte[] GenerateSalt()
+        public string GenerateSalt()
         {
             byte[] salt = new byte[128 / 8];
             using (var rng = RandomNumberGenerator.Create())
@@ -40,7 +40,7 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure.Services
                 rng.GetBytes(salt);
             }
 
-            return salt;
+            return Convert.ToBase64String(salt);
         }
     }
 }
