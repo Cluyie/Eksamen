@@ -37,12 +37,12 @@ namespace SignalR_Microservice.Hubs
 
         public async Task SendMessageToRoom(Message message, string roomName)
         {
-            await Clients.Group(roomName).SendAsync("SendMessageToRoom", $"{message.Username}: {message.Content}");
-            
+            await Clients.Group(roomName).SendAsync("SendMessageToGroup", message);
+
             await _messageLogging.SendMessageAsync(message);
         }
 
-        public async Task JoinRoom(string roomName)
+        public async Task JoinGroup(string roomName)
         {
             currentUser.Id = Context.ConnectionId;
 
