@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
@@ -23,6 +24,7 @@ namespace UCLDreamTeam.User.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
@@ -31,15 +33,17 @@ namespace UCLDreamTeam.User.Api.Controllers
             try
             {
                 var userName = User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
-
-                var userProfile = _userService.GetUserFromUserNameAsync(userName).Result;
-
-                if (userProfile != null)
+                if (userName != null)
                 {
-                    return Ok(userProfile);
+                    var userProfile = _userService.GetUserFromUserNameAsync(userName).Result;
+
+                    if (userProfile != null)
+                    {
+                        return Ok(userProfile);
+                    }
                 }
 
-                return NotFound(userProfile);
+                return NotFound();
             }
             catch (Exception e)
             {
@@ -48,6 +52,7 @@ namespace UCLDreamTeam.User.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
@@ -87,6 +92,7 @@ namespace UCLDreamTeam.User.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
@@ -106,6 +112,7 @@ namespace UCLDreamTeam.User.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
