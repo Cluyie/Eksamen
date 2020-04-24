@@ -28,7 +28,7 @@ namespace UCLDreamTeam.Auth.Api.IntegrationEvents.EventHandlers
             userToUpdate.UserName = userIn.UserName;
             userToUpdate.Email = userIn.Email;
 
-            userToUpdate.PasswordHash = _hashService.Hasher(userToUpdate.PasswordHash, userToUpdate.PasswordSalt);
+            userToUpdate.PasswordHash = _hashService.GenerateHash(userToUpdate.PasswordHash, userToUpdate.PasswordSalt);
 
             await _authRepository.UpdateUser(userToUpdate);
 

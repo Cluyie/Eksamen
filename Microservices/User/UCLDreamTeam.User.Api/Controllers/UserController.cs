@@ -25,7 +25,8 @@ namespace UCLDreamTeam.User.Api.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ApiResponse<IUser>> GetProfile()
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+        public async Task<ActionResult<IUser>> GetProfile()
         {
             try
             {
@@ -35,100 +36,90 @@ namespace UCLDreamTeam.User.Api.Controllers
 
                 if (userProfile != null)
                 {
-                    //return Ok(userProfile);
-                    return new ApiResponse<IUser>(ApiResponseCode.OK, userProfile);
+                    return Ok(userProfile);
                 }
 
-                //return NotFound(userProfile);
-                return new ApiResponse<IUser>(ApiResponseCode.NotFound, null);
+                return NotFound(userProfile);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                //TODO Fill in exceptions
-                //if (ex.GetType() == typeof(InvalidOperationException))
-                //{
-
-                //}
-                //return StatusCode(503, ex.Message);
-                return new ApiResponse<IUser>(ApiResponseCode.ServiceUnavailable, null);
+                return StatusCode(503, e.Message);
             }
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ApiResponse<IUser>> GetById(Guid id)
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+        public async Task<ActionResult<IUser>> GetById(Guid id)
         {
-            if (id == Guid.Empty) return new ApiResponse<IUser>(ApiResponseCode.BadRequest, null);//return BadRequest();
+            if (id == Guid.Empty) return BadRequest();
             try
             {
                 var user = await _userService.GetUserFromIdAsync(id);
                 if (user != null)
-                    //return Ok(user);
-                    return new ApiResponse<IUser>(ApiResponseCode.OK, user);
-                //return NotFound(user);
-                return new ApiResponse<IUser>(ApiResponseCode.NotFound, null);
+                    return Ok(user);
+                return NotFound(user);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                //TODO Fill in exceptions
-                //if (ex.GetType() == typeof(InvalidOperationException))
-                //{
+                return StatusCode(503, e.Message);
+            }
+        }
 
-                //}
-                //return StatusCode(503, ex.Message);
-                return new ApiResponse<IUser>(ApiResponseCode.ServiceUnavailable, null);
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+        public async Task<IActionResult> RegisterProfile([FromBody] Domain.Models.User user)
+        {
+            if (user == null || !ModelState.IsValid)
+                return BadRequest();
+            try
+            {
+                await _userService.RegisterAsync(user);
+                return Ok(user);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(503, e.Message);
             }
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status304NotModified)]
-        public async Task<ApiResponse<IUser>> UpdateProfile([FromBody] Domain.Models.User user)
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+        public async Task<IActionResult> UpdateProfile([FromBody] Domain.Models.User user)
         {
-            if (user == null || !ModelState.IsValid) return new ApiResponse<IUser>(ApiResponseCode.BadRequest, null); //return BadRequest();
+            if (user == null || await _userService.GetUserFromIdAsync(user.Id) != null || !ModelState.IsValid)
+                return BadRequest();
             try
             {
-                if (await _userService.GetUserFromIdAsync(user.Id) != null)
-                    await _userService.Update(user);
-                else
-                    await _userService.RegisterAsync(user);
-
-                //return Ok(user);
-                return new ApiResponse<IUser>(ApiResponseCode.OK, user);
+                await _userService.Update(user);
+                return Ok(user);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                //TODO Fill in exceptions
-                //if (ex.GetType() == typeof(InvalidOperationException))
-                //{
-
-                //}
-                //return StatusCode(503, ex.Message);
-                return new ApiResponse<IUser>(ApiResponseCode.ServiceUnavailable, null);
+                return StatusCode(503, e.Message);
             }
         }
 
         [HttpDelete("{id}")]
-        public async Task<ApiResponse<IUser>> DeleteById(Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+        public async Task<IActionResult> DeleteById(Guid id)
         {
-            if (id == Guid.Empty) return new ApiResponse<IUser>(ApiResponseCode.BadRequest, null);//return BadRequest();
+            if (id == Guid.Empty) return BadRequest();
             try
             {
                 await _userService.DeleteUserFromIdAsync(id);
-                //return Ok(id);
-                return new ApiResponse<IUser>(ApiResponseCode.OK, null);
+                return Ok(id);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                //TODO Fill in exceptions
-                //if (ex.GetType() == typeof(InvalidOperationException))
-                //{
-
-                //}
-                //return StatusCode(503, ex.Message);
-                return new ApiResponse<IUser>(ApiResponseCode.ServiceUnavailable, null);
+                return StatusCode(503, e.Message);
             }
         }
     }
