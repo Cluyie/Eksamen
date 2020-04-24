@@ -43,31 +43,6 @@ namespace UCLDreamTeam.Mail.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRabbitMq();
-            services.AddMediatR(typeof(Startup));
-            services.AddTransient<IMailService, MailService>();
-            services.AddTransient<IGenericRepository<User>, GenericRepository<User>>();
-            services.AddTransient<IGenericRepository<Resource>, GenericRepository<Resource>>();
-
-            services.AddDbContext<MailDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("MailDbConnection"));
-            });
-
-            //Command setup
-            services.AddTransient<IRequestHandler<SendEmailCommand, bool>, SendEmailCommandHandler>();
-
-            //Event setup
-            services.AddTransient<ReservationCreatedEventHandler>();
-            services.AddTransient<ResourceCreatedEventHandler>();
-            services.AddTransient<ResourceUpdatedEventHandler>();
-            services.AddTransient<ResourceDeletedEventHandler>();
-            services.AddTransient<UserCreatedEventHandler>();
-            services.AddTransient<UserUpdatedEventHandler>();
-            services.AddTransient<UserDeletedEventHandler>();
-
-            services.AddControllers();
-
             RSACryptoServiceProvider provider = new RSACryptoServiceProvider(2048);
             provider.FromXmlString(xmlKey);
             var key = new RsaSecurityKey(provider);
@@ -91,6 +66,12 @@ namespace UCLDreamTeam.Mail.Api
                         IssuerSigningKey = key
                     };
                 });
+
+            services.AddDbContext<MailDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("MailDbConnection"));
+            });
+
 
             services.AddSwaggerGen(c =>
             {
@@ -124,6 +105,26 @@ namespace UCLDreamTeam.Mail.Api
                     }
                 });
             });
+
+            services.AddMediatR(typeof(Startup));
+            services.AddRabbitMq();
+            services.AddTransient<IMailService, MailService>();
+            services.AddTransient<IGenericRepository<User>, GenericRepository<User>>();
+            services.AddTransient<IGenericRepository<Resource>, GenericRepository<Resource>>();
+
+            //Command setup
+            services.AddTransient<IRequestHandler<SendEmailCommand, bool>, SendEmailCommandHandler>();
+
+            //Event setup
+            services.AddTransient<ReservationCreatedEventHandler>();
+            services.AddTransient<ResourceCreatedEventHandler>();
+            services.AddTransient<ResourceUpdatedEventHandler>();
+            services.AddTransient<ResourceDeletedEventHandler>();
+            services.AddTransient<UserCreatedEventHandler>();
+            services.AddTransient<UserUpdatedEventHandler>();
+            services.AddTransient<UserDeletedEventHandler>();
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
