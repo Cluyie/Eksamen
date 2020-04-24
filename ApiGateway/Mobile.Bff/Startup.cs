@@ -21,7 +21,6 @@ namespace Mobile.Bff
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOcelot();
-            services.AddSwaggerForOcelot(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -31,8 +30,7 @@ namespace Mobile.Bff
 
             app.UseStaticFiles();
 
-            app.UseSwaggerForOcelotUI(Configuration, opt => { opt.PathToSwaggerGenerator = "/swagger/docs"; })
-                .UseOcelot().Wait();
+            app.UseOcelot().Wait();
 
             app.UseHttpsRedirection();
 
