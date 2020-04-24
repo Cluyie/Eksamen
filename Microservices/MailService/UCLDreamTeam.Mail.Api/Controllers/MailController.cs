@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
@@ -14,20 +15,19 @@ namespace UCLDreamTeam.Mail.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class MailController : Controller
+    public class MailController : ControllerBase
     {
         private readonly IMailService _mailService;
-        private readonly ICompositeViewEngine _viewEngine;
         private readonly ILogger<MailController> _logger;
 
-        public MailController(IMailService mailService, ICompositeViewEngine viewEngine, ILogger<MailController> logger)
+        public MailController(IMailService mailService, ILogger<MailController> logger)
         {
             _mailService = mailService;
-            _viewEngine = viewEngine;
             _logger = logger;
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> PostMail([FromBody] Domain.Models.Reservation reservation, Template template)
         {
             try
@@ -60,31 +60,31 @@ namespace UCLDreamTeam.Mail.Api.Controllers
         //    return await PostMail(reservation);
         //}
 
-        private async Task<string> RenderViewToString(string viewName, object model)
-        {
-            if (string.IsNullOrEmpty(viewName))
-                viewName = ControllerContext.ActionDescriptor.ActionName;
+        //private async Task<string> RenderViewToString(string viewName, object model)
+        //{
+        //    if (string.IsNullOrEmpty(viewName))
+        //        viewName = ControllerContext.ActionDescriptor.ActionName;
 
-            ViewData.Model = model;
+        //    ViewData.Model = model;
 
-            using (var writer = new StringWriter())
-            {
-                var viewResult =
-                    _viewEngine.FindView(ControllerContext, viewName, false);
+        //    using (var writer = new StringWriter())
+        //    {
+        //        var viewResult =
+        //            _viewEngine.FindView(ControllerContext, viewName, false);
 
-                var viewContext = new ViewContext(
-                    ControllerContext,
-                    viewResult.View,
-                    ViewData,
-                    TempData,
-                    writer,
-                    new HtmlHelperOptions()
-                );
+        //        var viewContext = new ViewContext(
+        //            ControllerContext,
+        //            viewResult.View,
+        //            ViewData,
+        //            TempData,
+        //            writer,
+        //            new HtmlHelperOptions()
+        //        );
 
-                await viewResult.View.RenderAsync(viewContext);
+        //        await viewResult.View.RenderAsync(viewContext);
 
-                return writer.GetStringBuilder().ToString();
-            }
-        }
+        //        return writer.GetStringBuilder().ToString();
+        //    }
+        //}
     }
 }

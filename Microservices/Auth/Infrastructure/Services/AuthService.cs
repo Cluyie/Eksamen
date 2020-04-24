@@ -54,8 +54,6 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure.Services
             return null;
         }
 
-
-
         private string GenerateJSONWebToken(AuthUser authUser)
         {
             SecurityKey key = KeyService.BuildRsaSigningKey(xmlKey);

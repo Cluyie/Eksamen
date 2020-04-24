@@ -56,6 +56,7 @@
     //---------------------------------------------
     //User Microservice Api Registrations
     {
+      
       "DownstreamPathTemplate": "/User",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -65,7 +66,21 @@
         }
       ],
       "UpstreamPathTemplate": "/User",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put" ],
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "User"
+      //Registration, not needed for authentication
+    },
+    {
+      "DownstreamPathTemplate": "/User",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5004
+        }
+      ],
+      "UpstreamPathTemplate": "/User",
+      "UpstreamHttpMethod": [ "Get", "Put" ],
       "SwaggerKey": "User"
     },
     {

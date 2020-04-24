@@ -29,6 +29,11 @@ namespace UCLDreamTeam.Reservation.Application.Services
             return await _reservationRepository.GetByIdAsync(id);
         }
 
+        public async Task<IEnumerable<Domain.Models.Reservation>> GetByResourceId(Guid resourceId)
+        {
+            return await _reservationRepository.GetByResourceId(resourceId);
+        }
+
         public async Task AddAsync(Domain.Models.Reservation reservation)
         {
             var command = new CreateReservationCommand(reservation.Id, reservation.UserId, reservation.ResourceId,
