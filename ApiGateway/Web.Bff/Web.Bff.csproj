@@ -2,12 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+	<AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MMLib.SwaggerForOcelot" Version="1.10.5" />
     <PackageReference Include="Ocelot" Version="14.1.0" />
   </ItemGroup>
-
 
 </Project>

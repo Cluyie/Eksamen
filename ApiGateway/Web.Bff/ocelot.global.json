@@ -1,0 +1,5 @@
+{
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost" //Change to match url when hosted on server
+  }
+}

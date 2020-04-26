@@ -106,7 +106,8 @@ namespace UCLDreamTeam.User.Data.Respositories
 
         public async Task<Domain.Models.User> GetFromUserNameAsync(string userName)
         {
-            return await _userDbContext.Users.FirstOrDefaultAsync(u => u.UserName == userName || u.NormalizedUserName == userName.ToUpperInvariant());
+            string normalizedUserName = userName.ToUpperInvariant();
+            return await _userDbContext.Users.FirstOrDefaultAsync(u => u.UserName == userName || u.NormalizedUserName == normalizedUserName);
         }
     }
 }

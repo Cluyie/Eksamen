@@ -59,6 +59,8 @@ namespace UCLDreamTeam.Reservation.Api
 
             //app.UseHttpsRedirection();
 
+            app.UsePathBase("/ReservationService");
+
             app.UseRouting();
 
             app.UseAuthorization();
