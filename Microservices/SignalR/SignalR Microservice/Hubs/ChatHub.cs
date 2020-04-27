@@ -29,8 +29,8 @@ namespace SignalR_Microservice.Hubs
         {
             currentUser.Id = Context.ConnectionId;
 
-            roomsWithUsers = _roomUsersHandler.AddUserToRoom(roomsWithUsers, roomName, currentUser);
-
+            var response = await _roomUsersHandler.AddUserToRoom(roomsWithUsers, roomName, currentUser);
+            roomsWithUsers = response.Item1;
             await Groups.AddToGroupAsync(currentUser.Id, roomName);
             await Clients.Caller.SendAsync("CreateRoom", $"You have now created room '{roomName}'");
         }
@@ -42,16 +42,26 @@ namespace SignalR_Microservice.Hubs
             await _messageLogging.SendMessageAsync(message);
         }
 
-        public async Task JoinGroup(string roomName)
+        public async Task JoinGroup(string roomName, User nextUser)
         {
-            currentUser.Id = Context.ConnectionId;
+            
 
-            await Groups.AddToGroupAsync(currentUser.Id, roomName);
+            
 
-            roomsWithUsers = _roomUsersHandler.AddUserToRoom(roomsWithUsers, roomName, currentUser);
+            var response = await _roomUsersHandler.AddUserToRoom(roomsWithUsers, roomName, currentUser);
 
-            await Clients.OthersInGroup(roomName).SendAsync("JoinedRoom", $"{Context.ConnectionId} has entered the room {roomName}.");
-            await Clients.Caller.SendAsync("NewEnteredUser", $"You are now connected to room {roomName}");
+            roomsWithUsers = response.Item1;
+            if( response.Item2 == true) 
+            {
+
+                await Groups.AddToGroupAsync(response.Item3.Id, roomName);
+                await Clients.OthersInGroup(roomName).SendAsync("JoinedRoom", $"{response.Item3.Id} has entered the room {roomName}.");
+                await Clients.Caller.SendAsync("NewEnteredUser", $"You are now connected to room {roomName}");
+            }
+            
+
+            
+
         }
 
         //public async Task UserTyping(bool check)
