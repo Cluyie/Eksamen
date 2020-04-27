@@ -1,16 +1,29 @@
-﻿using SignalR_Microservice.Models;
+﻿using SignalR_Microservice.Hubs;
+using SignalR_Microservice.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
+
 namespace SignalR_Microservice.Helpers
 {
     public class RoomUsersHandler : IRoomUsersHandler
     {
-        public Dictionary<string, List<User>> AddUserToRoom(Dictionary<string, List<User>> roomsWithUsers, string roomName, User currentUser)
+        private QueueHub queueHub { get; set; }
+        
+        
+        public RoomUsersHandler(QueueHub queueHub)
         {
+            this.queueHub = queueHub;
+        }
+
+        public async Task< ( Dictionary<string, List<User>> , bool, User)> AddUserToRoom(Dictionary<string, List<User>> roomsWithUsers, string roomName, User currentUser)
+        {
+            User userToDequeue = new User();
+        bool Availablespace = false;
+
             if (!roomsWithUsers.ContainsKey(roomName))
             {
                 roomsWithUsers.Add(roomName, new List<User>());
@@ -28,9 +41,16 @@ namespace SignalR_Microservice.Helpers
                 if (space == true)
                 {
                     roomsWithUsers[roomName].Add(currentUser);
+                    Availablespace = true;
+                    userToDequeue = await queueHub.RemoveFromQueue();
+                }
+                else //send denne user til Userqueue
+                {
+                   await queueHub.AddToQueueGroup(currentUser);
                 }
             }
-            return roomsWithUsers;
+            
+            return (roomsWithUsers, Availablespace, userToDequeue);
         }
 
         public bool CheckIfAvailableSpace(Dictionary<string, List<User>> roomsWithUsers, string roomName)
