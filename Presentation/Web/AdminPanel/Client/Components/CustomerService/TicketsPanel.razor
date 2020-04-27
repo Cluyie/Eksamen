@@ -1,0 +1,51 @@
+﻿@using System.Linq
+@using AdminPanel.Client.DTOs
+@using AdminPanel.Client.Models
+
+<section class="discussions">
+    <div class="header-discussions">
+        <p class="name">Dummy name</p>
+    </div>
+    @foreach (TicketDTO ticketDTO in TickerDTOs)
+    {
+        <div @onclick="@(() => UpdateTicket.InvokeAsync(ticketDTO))">
+            <TicketComponent
+                Name=@ticketDTO.Ticket.Name
+                Message=@ticketDTO.Ticket.Messages.First().Text
+                TimeStamp=@ticketDTO.Ticket.Messages.First().TimeStamp.ToString()
+                Active=@(ticketDTO.Ticket.Active ?? false)
+                New=@(ticketDTO.Ticket.Messages.Any(x => x.Seen == false))/>
+        </div>
+    }
+</section>
+
+@code
+{
+    [Parameter] public List<TicketDTO> TickerDTOs { get; set; }
+    [Parameter] public EventCallback<TicketDTO> UpdateTicket { get; set; }
+}
+
+<style>
+    .discussions {
+        width: 35%;
+        max-height: 100vh;
+        box-shadow: 0px 8px 10px rgba(0,0,0,0.20);
+        overflow-y: auto;
+        display: inline-block;
+    }
+        .discussions .header-discussions {
+            background-color: #FAFAFA;
+            border-bottom: solid 1px #E0E0E0;
+            border-right: solid 0.5px #E0E0E0;
+            height: 90px;
+            display: flex;
+            align-items: center;
+        }
+            .discussions .header-discussions .name {
+                margin: 0 0 0 20px;
+                text-transform: uppercase;
+                font-family: 'Montserrat', sans-serif;
+                font-size: 13pt;
+                color: #515151;
+            }
+</style>

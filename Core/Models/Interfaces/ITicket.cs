@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UCLDreamTeam.SharedInterfaces.Interfaces
 {
@@ -13,6 +10,6 @@ namespace UCLDreamTeam.SharedInterfaces.Interfaces
         public string Name { get; set; }
         public Status Status { get; set; }
         public List<TMessage> Messages { get; set; }
-        public Guid ReservationId { get; set; }
+        public Guid? ReservationId { get; set; }
     }
 }

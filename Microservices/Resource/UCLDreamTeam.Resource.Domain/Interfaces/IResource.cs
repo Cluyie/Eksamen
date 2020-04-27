@@ -4,7 +4,7 @@ using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.Resource.Domain.Interfaces
 {
-    public interface IResource<TReservation, TReserveTime, TAvailableTime>
+    interface IResource<TReservation, TReserveTime, TAvailableTime>
         where TReservation : IReservation<TReserveTime>
         where TReserveTime : IReserveTime
         where TAvailableTime : IAvailableTime
