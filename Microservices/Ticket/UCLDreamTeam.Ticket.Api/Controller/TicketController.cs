@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
+using UCLDreamTeam.Ticket.Application.Interfaces;
 using UCLDreamTeam.Ticket.Application.Services;
 using UCLDreamTeam.Ticket.Domain.Models;
 
@@ -15,10 +16,10 @@ namespace UCLDreamTeam.Ticket.Api.Controller
     [ApiController]
     public class TicketController : ControllerBase
     {
-        TicketService TicketService { get; set; }
-        public TicketController(TicketService ticketService)
+        private readonly ITicketService _ticketService;
+        public TicketController(ITicketService ticketService)
         {
-            TicketService = ticketService;
+            _ticketService = ticketService;
         }
 
         // GET: <controller>
@@ -27,7 +28,7 @@ namespace UCLDreamTeam.Ticket.Api.Controller
         {
             try
             {
-                var ticket = await TicketService.GetByIdAsync(TickedId);
+                var ticket = await _ticketService.GetByIdAsync(TickedId);
                 if (ticket == null)
                     return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.NotFound, null); //return NotFound();
                 return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.OK, ticket); //return Ok(ticket);
@@ -44,7 +45,7 @@ namespace UCLDreamTeam.Ticket.Api.Controller
         {
             try
             {
-                var result = await TicketService.GetByUserIdAsync(userId);
+                var result = await _ticketService.GetByUserIdAsync(userId);
                 if (result == null)
                     return new ApiResponse<IEnumerable<Domain.Models.Ticket>>(ApiResponseCode.BadRequest, null); //return BadRequest();
                 if (!result.Any())

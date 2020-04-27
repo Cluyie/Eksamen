@@ -40,8 +40,8 @@ namespace UCLDreamTeam.Ticket.Api
             services.AddTransient<MessageSentEventHandler>();
             services.AddTransient<MessageSeenEventHandler>();
 
-            services.AddTransient<ITicketService, TicketService>();
             services.AddTransient<ITicketRepository, TicketRepository>();
+            services.AddTransient<ITicketService, TicketService>();
 
             services.AddSwaggerGen(c =>
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Ticket MicroService", Version = "v1" }));

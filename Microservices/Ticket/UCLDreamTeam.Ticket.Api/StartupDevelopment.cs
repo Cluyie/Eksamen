@@ -23,8 +23,8 @@ namespace UCLDreamTeam.Ticket.Api
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public override void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<TicketDbContext>(options => options.UseInMemoryDatabase("TicketDbConnection"));
             base.ConfigureServices(services);
-            services.AddDbContext<TicketDbContext>(options => options.UseInMemoryDatabase("TicketDb"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
