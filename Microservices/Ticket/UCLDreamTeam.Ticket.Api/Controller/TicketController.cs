@@ -22,13 +22,13 @@ namespace UCLDreamTeam.Ticket.Api.Controller
             _ticketService = ticketService;
         }
 
-        // GET: <controller>
-        [HttpGet("{TickedId}")]
-        public async Task<ApiResponse<Domain.Models.Ticket>> GetTicket(Guid TickedId)
+        // GET: <controller>?ticketId={id}
+        [HttpGet]
+        public async Task<ApiResponse<Domain.Models.Ticket>> GetTicket([FromQuery] Guid ticketId)
         {
             try
             {
-                var ticket = await _ticketService.GetByIdAsync(TickedId);
+                var ticket = await _ticketService.GetByIdAsync(ticketId);
                 if (ticket == null)
                     return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.NotFound, null); //return NotFound();
                 return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.OK, ticket); //return Ok(ticket);
@@ -39,9 +39,9 @@ namespace UCLDreamTeam.Ticket.Api.Controller
             }
         }
 
-        // GET api/<controller>/5
-        [HttpGet("User/{UserId}")]
-        public async Task<ApiResponse<IEnumerable<Domain.Models.Ticket>>> GetUserTicket(Guid userId)
+        // GET <controller>/User?userId={id}
+        [HttpGet("User")]
+        public async Task<ApiResponse<IEnumerable<Domain.Models.Ticket>>> GetUserTicket([FromQuery] Guid userId)
         {
             try
             {

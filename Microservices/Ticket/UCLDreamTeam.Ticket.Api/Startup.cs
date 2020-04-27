@@ -22,7 +22,8 @@ namespace UCLDreamTeam.Ticket.Api
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public override void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TicketDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TicketDbConnection")));
+            services.AddDbContext<TicketDbContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString("TicketDbConnection")));
             base.ConfigureServices(services);
         }
 

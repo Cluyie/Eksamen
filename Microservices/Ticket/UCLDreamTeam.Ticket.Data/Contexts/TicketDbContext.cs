@@ -14,7 +14,7 @@ namespace UCLDreamTeam.Ticket.Data.Contexts
         public DbSet<UserTicket> UserTickets { get; set; }
         public DbSet<Message> Messages { get; set; }
 
-        public TicketDbContext()
+        public TicketDbContext(DbContextOptions<TicketDbContext> options) : base(options)
         {
         }
 
@@ -30,11 +30,7 @@ namespace UCLDreamTeam.Ticket.Data.Contexts
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<UserTicket>().HasKey(table => new
-            {
-                table.UserId,
-                table.TicketId
-            });
+            builder.Entity<UserTicket>().HasKey(table => new {table.UserId, table.TicketId});
         }
     }
 }
