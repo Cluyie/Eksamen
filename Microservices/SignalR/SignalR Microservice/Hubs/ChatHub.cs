@@ -12,53 +12,58 @@ namespace SignalR_Microservice.Hubs
 {
     public class ChatHub : Hub
     {
-        private Dictionary<string, List<User>> roomsWithUsers = new Dictionary<string, List<User>>();
+        private Dictionary<string, List<User>> _roomsWithUsers;
         private User currentUser = new User();
         private List<User> connectedUsers = new List<User>();
 
         private IRoomUsersHandler _roomUsersHandler;
         private IChatLoggingService _messageLogging;
 
-        public ChatHub(IRoomUsersHandler roomUsersHandler, IChatLoggingService messageLogging)
+        public ChatHub(IRoomUsersHandler roomUsersHandler, IChatLoggingService messageLogging, Dictionary<string,List<User>> roomsWithUsers)
         {
             _messageLogging = messageLogging;
             _roomUsersHandler = roomUsersHandler;
+            _roomsWithUsers = roomsWithUsers;
         }
 
         public async Task CreateRoom(string roomName)
         {
             currentUser.Id = Context.ConnectionId;
 
-            var response = await _roomUsersHandler.AddUserToRoom(roomsWithUsers, roomName, currentUser);
-            roomsWithUsers = response.Item1;
+            //var response = await _roomUsersHandler.AddUserToRoom(roomsWithUsers, roomName, currentUser);
+
+            _roomsWithUsers.Add(roomName, new List<User>());
+            _roomsWithUsers[roomName].Add(currentUser);
+
             await Groups.AddToGroupAsync(currentUser.Id, roomName);
             await Clients.Caller.SendAsync("CreateRoom", $"You have now created room '{roomName}'");
         }
 
         public async Task SendMessageToRoom(Message message, string roomName)
         {
-            await Clients.Group(roomName).SendAsync("SendMessageToGroup", message);
+            await Clients.Group(roomName).SendAsync("SendMessageToRoom", message.Content);
 
-            await _messageLogging.SendMessageAsync(message);
+            //await _messageLogging.SendMessageAsync(message);
         }
 
-        public async Task JoinGroup(string roomName, User nextUser)
+        public async Task JoinGroup(string roomName)
         {
-            
+            var userId = Context.ConnectionId;
 
-            
+            var response = await _roomUsersHandler.AddUserToRoom(_roomsWithUsers, roomName, currentUser);
 
-            var response = await _roomUsersHandler.AddUserToRoom(roomsWithUsers, roomName, currentUser);
+            if(response.Item3 != null)
+            {
+                userId = response.Item3.Id;
+            }
 
-            roomsWithUsers = response.Item1;
+            _roomsWithUsers = response.Item1;
             if( response.Item2 == true) 
             {
-
-                await Groups.AddToGroupAsync(response.Item3.Id, roomName);
-                await Clients.OthersInGroup(roomName).SendAsync("JoinedRoom", $"{response.Item3.Id} has entered the room {roomName}.");
+                await Groups.AddToGroupAsync(userId, roomName);
+                await Clients.OthersInGroup(roomName).SendAsync("JoinGroup", $"{userId} has entered the room {roomName}.");
                 await Clients.Caller.SendAsync("NewEnteredUser", $"You are now connected to room {roomName}");
-            }
-            
+            }         
 
             
 

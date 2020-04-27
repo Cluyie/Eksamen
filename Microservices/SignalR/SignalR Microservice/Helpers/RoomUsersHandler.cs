@@ -43,14 +43,15 @@ namespace SignalR_Microservice.Helpers
                     roomsWithUsers[roomName].Add(currentUser);
                     Availablespace = true;
                     userToDequeue = await queueHub.RemoveFromQueue();
+                    return (roomsWithUsers, Availablespace, userToDequeue);
                 }
                 else //send denne user til Userqueue
                 {
                    await queueHub.AddToQueueGroup(currentUser);
                 }
             }
-            
-            return (roomsWithUsers, Availablespace, userToDequeue);
+
+            return (roomsWithUsers, false, null);
         }
 
         public bool CheckIfAvailableSpace(Dictionary<string, List<User>> roomsWithUsers, string roomName)

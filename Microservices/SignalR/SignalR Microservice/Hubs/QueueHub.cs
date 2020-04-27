@@ -12,28 +12,31 @@ namespace SignalR_Microservice.Hubs
 {
     public class QueueHub : Hub
     {
+        private Queue<User> _userQueue;
 
-        private User currentUser = new User();
-        private List<User> connectedUsers = new List<User>();
+        public QueueHub(Queue<User> userQueue)
+        {
+            _userQueue = userQueue;
+        }
 
-        private IRoomUsersHandler _roomUsersHandler;
-
-        private Queue<User> UserQueue = new Queue<User>();
-        
         public async Task AddToQueueGroup (User currentUser)
         {
             
             await Groups.AddToGroupAsync(currentUser.Id, "queueGroup");
-            UserQueue.Enqueue(currentUser);
+            _userQueue.Enqueue(currentUser);
 
            
         }
 
         public async Task<User> RemoveFromQueue()
         {
-            var UserDequeue = UserQueue.Dequeue();
-            await Groups.RemoveFromGroupAsync(UserDequeue.Id, "queueGroup");
-            return UserDequeue;
+            if (_userQueue.Count >= 1)
+            {
+                var UserDequeue = _userQueue.Dequeue();
+                await Groups.RemoveFromGroupAsync(UserDequeue.Id, "queueGroup");
+                return UserDequeue;
+            }
+            return null;
         }
 
     }

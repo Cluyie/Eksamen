@@ -11,9 +11,9 @@ namespace SignalR_Microservice.Models
         public string Content { get; set; }
         public string Username { get; set; }
         public Guid Id { get; set; }
-        public Guid TicketId { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string Text { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime TimeStamp { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Guid TicketId { get; set; }
+        public string Text { get; set; }
+        public DateTime TimeStamp { get; set; }
         public bool Seen { get; set; }
     }
 }

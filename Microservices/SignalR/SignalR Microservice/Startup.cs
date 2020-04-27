@@ -16,6 +16,8 @@ using MediatR;
 using SignalR_Microservice.Commands;
 using SignalR_Microservice.CommandHandlers;
 using SignalR_Microservice.Helpers;
+using System.Collections.Generic;
+using SignalR_Microservice.Models;
 
 namespace SignalR_Microservice
 {
@@ -48,6 +50,9 @@ namespace SignalR_Microservice
             //SignalR dependencies
             services.AddScoped<IChatLoggingService, ChatLoggingService>();
             services.AddScoped<IRoomUsersHandler, RoomUsersHandler>();
+            services.AddScoped<QueueHub>();
+            services.AddSingleton<Dictionary<string, List<User>>>();
+            services.AddSingleton<Queue<User>>();
 
             services.AddCors(options =>
             {
@@ -80,6 +85,7 @@ namespace SignalR_Microservice
                 endpoints.MapHub<ResourceHub>("/ResourceHub");
                 endpoints.MapHub<ReservationHub>("/ReservationHub");
                 endpoints.MapHub<ChatHub>("/ChatHub");
+                endpoints.MapHub<QueueHub>("/QueueHub");
             });
 
             //Subscriptions
