@@ -54,8 +54,6 @@ namespace XamarinFormsApp.Controls
         {
             if (IsExpandable)
                 InvalidateMeasure();
-
-
         }
 
     }

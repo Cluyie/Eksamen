@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:XamarinFormsApp.Helpers"
              xmlns:partials="clr-namespace:XamarinFormsApp.View.Partials"
              mc:Ignorable="d"
-             Title="Booking nr: 123"
+             Title="Ticket nr: xxx"
              x:Class="XamarinFormsApp.View.ChatPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Afslut"/>
