@@ -61,29 +61,14 @@ namespace XamarinFormsApp.Helpers
 
         private static string FindUrl()
         {
-                return "http://81.27.216.103/webAPI/";
             //Skal helst uptimeres
-            //Offentlig base adresse: http://81.27.216.103/webAPI/
-            //Intern base adresse: http://10.56.8.34/webAPI/
+            //Offentlig base adresse: http://81.27.216.103/AppBff/
+            //Intern base adresse: http://10.56.8.34/WebBff/
             //Lokal base adresse til emulator http://10.0.2.2:5000/
-            
-            //return "http://10.0.2.2:53524/";
-            return "http://81.27.216.103/webAPI/"; //If you are not on the same Net as the server
-            //return "http://10.56.8.34/webAPI/"; //If you are on the same Net as the server
-        }
 
-        private static bool TestUrl(string url)
-        {
-            try
-            {
-                var wc = new WebClient();
-                var HTMLSource = wc.DownloadString(url);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            //return "http://10.0.2.2:53524/";
+            return "http://81.27.216.103/AppBff/"; //If you are not on the same Net as the server
+            //return "http://10.56.8.34/AppBff/"; //If you are on the same Net as the server
         }
     }
 }
