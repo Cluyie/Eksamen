@@ -59,7 +59,7 @@ namespace UCLDreamTeam.Ticket.Api.Controller
             }
         }
 
-        // Put <controller>/User?userId={id}
+        // Put <controller>
         [HttpPut]
         public async Task<ApiResponse<Domain.Models.Ticket>> UpdateTicket([FromBody] Domain.Models.Ticket ticket)
         {
