@@ -36,7 +36,13 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
             return userTickets.Select(ut => ut.Ticket);
         }
 
-        public async Task AddAsync(Message message)
+        public async Task AddAsync(Domain.Models.Ticket ticket)
+        {
+            _ticketDbContext.Tickets.Add(ticket);
+            await _ticketDbContext.SaveChangesAsync();
+        }
+
+        public async Task AddMessageAsync(Message message)
         {
             var ticket = await _ticketDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == message.TicketId);
             ticket.Messages.Add(message);
@@ -47,6 +53,12 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
         {
             var dbMessage = await _ticketDbContext.Messages.FirstOrDefaultAsync(m => m.Id == messageId);
             dbMessage.Seen = seen;
+            await _ticketDbContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Domain.Models.Ticket ticket)
+        {
+            _ticketDbContext.Tickets.Update(ticket);
             await _ticketDbContext.SaveChangesAsync();
         }
 

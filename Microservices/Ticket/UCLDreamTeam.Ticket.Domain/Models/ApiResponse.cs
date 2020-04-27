@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UCLDreamTeam.SharedInterfaces.Interfaces;
+﻿using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.Ticket.Domain.Models
 {

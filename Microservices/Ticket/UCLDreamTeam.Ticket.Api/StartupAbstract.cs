@@ -11,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.IoC;
-using UCLDreamTeam.Ticket.Application.Interfaces;
 using UCLDreamTeam.Ticket.Application.Services;
 using UCLDreamTeam.Ticket.Data.Contexts;
 using UCLDreamTeam.Ticket.Data.Repositories;

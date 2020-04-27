@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using UCLDreamTeam.SharedInterfaces;
-using UCLDreamTeam.Ticket.Application.Interfaces;
 using UCLDreamTeam.Ticket.Domain.Interfaces;
 
 namespace UCLDreamTeam.Ticket.Application.Services
@@ -27,9 +26,19 @@ namespace UCLDreamTeam.Ticket.Application.Services
             return await _ticketRepository.GetByUserIdAsync(id);
         }
 
-        public async Task AddAsync(Domain.Models.Message message)
+        public async Task AddAsync(Domain.Models.Ticket ticket)
         {
-            await _ticketRepository.AddAsync(message);
+            await _ticketRepository.AddAsync(ticket);
+        }
+
+        public async Task UpdateAsync(Domain.Models.Ticket ticket)
+        {
+            await _ticketRepository.UpdateAsync(ticket);
+        }
+
+        public async Task AddMessageAsync(Domain.Models.Message message)
+        {
+            await _ticketRepository.AddMessageAsync(message);
         }
 
         public async Task ChangeStatusById(Guid id, Status status)

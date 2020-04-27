@@ -22,6 +22,8 @@ namespace UCLDreamTeam.Ticket.Api
             var assemblyName = typeof(Startup).GetTypeInfo().Assembly.FullName;
 
             return Host.CreateDefaultBuilder(args)
+                .UseDefaultServiceProvider(options =>
+                    options.ValidateScopes = false) //If this is not here MediatR will not work
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup(assemblyName); });
         }
     }
