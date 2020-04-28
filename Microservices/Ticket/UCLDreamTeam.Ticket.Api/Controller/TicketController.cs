@@ -59,7 +59,25 @@ namespace UCLDreamTeam.Ticket.Api.Controller
             }
         }
 
-        // Put <controller>/User?userId={id}
+        // Post <controller>
+        [HttpPost]
+        public async Task<ApiResponse<Domain.Models.Ticket>> CreateTicket([FromBody] Domain.Models.Ticket ticket)
+        {
+            try
+            {
+                if (ticket == null)
+                    return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.BadRequest, null); //return BadRequest();
+                await _ticketService.CreateAsync(ticket);
+                return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.Created, ticket); //return Created(ticket);
+            }
+            catch (Exception e)
+            {
+                return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.ServiceUnavailable,
+                    null); //return StatusCode(503, e.Message);
+            }
+        }
+
+        // Put <controller>
         [HttpPut]
         public async Task<ApiResponse<Domain.Models.Ticket>> UpdateTicket([FromBody] Domain.Models.Ticket ticket)
         {

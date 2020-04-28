@@ -28,7 +28,7 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
 
         public async Task<IEnumerable<Domain.Models.Ticket>> GetByUserIdAsync(Guid id)
         {
-            var user  = await _ticketDbContext.Users
+            var user = await _ticketDbContext.Users
                 .Include(u => u.UserTickets)
                 .FirstOrDefaultAsync(u => u.Id == id);
             var userTickets = user.UserTickets
@@ -56,11 +56,18 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
             await _ticketDbContext.SaveChangesAsync();
         }
 
+        public async Task CreateAsync(Domain.Models.Ticket ticket)
+        {
+            await _ticketDbContext.Tickets.AddAsync(ticket);
+            await _ticketDbContext.SaveChangesAsync();
+        }
+
         public async Task UpdateAsync(Domain.Models.Ticket ticket)
         {
             _ticketDbContext.Tickets.Update(ticket);
             await _ticketDbContext.SaveChangesAsync();
         }
+
 
         public async Task ChangeStatusById(Guid id, Status status)
         {
