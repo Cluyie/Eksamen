@@ -23,13 +23,20 @@ namespace XamarinFormsApp.ViewModel
         public async Task<bool> Login()
         {
             var response = await _proxy.PostAsync(@"Auth/Login", _mapper.Map<Login>(this));
-            var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<string>>(response);
-            if (response.IsSuccessStatusCode && result?.Code == ApiResponseCode.OK)
+            string token = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode && token != null)
+            {
                 //Gemmer user token
-                _authService.Login(result.Value);
+                _authService.Login(token);
+
+                return true;
+            }
             else
-                ErrorMessage = _proxy.GenerateErrorMessage(result, response);
-            return result?.Code == ApiResponseCode.OK;
+            {
+                ErrorMessage = "Noget gik galt. Fejl: " + response.StatusCode.ToString();
+
+                return false;
+            }
         }
 
         #region Constructor

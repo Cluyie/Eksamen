@@ -14,7 +14,7 @@ namespace XamarinFormsApp
 
             AutofacHelper.Initialize();
 
-            MainPage = new NavigationPage(new ReservationList());
+            MainPage = new NavigationPage(new MainPage());
         }
         public static string User = "TestUser";
 
