@@ -46,6 +46,7 @@ namespace SignalR_Microservice
             //SignalR dependencies
             services.AddScoped<IChatLoggingService, ChatLoggingService>();
             services.AddScoped<IQueueService, QueueService>();
+            services.AddScoped<QueueHub>();
             //services.AddSingleton<Dictionary<string, List<User>>>();
 
             services.AddCors(options =>
