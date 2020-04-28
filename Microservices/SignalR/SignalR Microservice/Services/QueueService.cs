@@ -8,32 +8,33 @@ namespace SignalR_Microservice.Hubs
 {
     internal class QueueService : IQueueService
     {
-        private Queue<string> connectionQueue;
+        private Queue<string> _connectionQueue;
         private readonly QueueHub _hubContext;
 
-        public QueueService(QueueHub hubContext)
+        public QueueService(QueueHub hubContext, Queue<string> connectionQueue)
         {
-            hubContext = _hubContext;
+            _hubContext = hubContext;
+            _connectionQueue = connectionQueue;
         }
 
         public async void Enqueue(string connectionId)
         {
-            connectionQueue.Enqueue(connectionId);
-            await _hubContext.GetIndex(connectionId, connectionQueue.Count);
+            _connectionQueue.Enqueue(connectionId);
+            await _hubContext.GetIndex(connectionId, _connectionQueue.Count);
         }
 
         public async Task Dequeue(string groupId)
         {
-            if (connectionQueue.Any())
+            if (_connectionQueue.Any())
             {
-                var id = connectionQueue.Dequeue();
+                var id = _connectionQueue.Dequeue();
                 await _hubContext.SendGroupId(id, groupId);
 
-                foreach (var connection in connectionQueue)
+                foreach (var connection in _connectionQueue)
                 {
                     var connectionId = connection.ToString();
                     await _hubContext.GetIndex(connectionId,
-                        Array.IndexOf(connectionQueue.ToArray(), connectionId) + 1);
+                        Array.IndexOf(_connectionQueue.ToArray(), connectionId) + 1);
                 }
             }
         }
