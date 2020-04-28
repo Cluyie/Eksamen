@@ -11,6 +11,7 @@ using UCLToolBox;
 using XamarinFormsApp.Helpers;
 using XamarinFormsApp.Model;
 using Profile = AutoMapper.Profile;
+using Newtonsoft.Json;
 
 namespace XamarinFormsApp.ViewModel
 {

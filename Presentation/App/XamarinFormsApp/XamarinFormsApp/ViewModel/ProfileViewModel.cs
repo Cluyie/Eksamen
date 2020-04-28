@@ -25,13 +25,18 @@ namespace XamarinFormsApp.ViewModel
         {
             var profile = _mapper.Map<Model.Profile>(this);
             var user = _mapper.Map<User>(profile);
-            var response = await _proxy.PutAsync(@"User/UpdateProfile", user);
-            var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<User>>(response);
-            if (response.IsSuccessStatusCode && result?.Code == ApiResponseCode.OK)
-                _authService.UpdateUser(result.Value);
+            var response = await _proxy.PutAsync(@"User", user);
+            var result = await ApiClientProxy.ReadAnswerAsync<User>(response);
+            if (response.IsSuccessStatusCode)
+            {
+                _authService.UpdateUser(result);
+                return true;
+            }
             else
-                ErrorMessage = _proxy.GenerateErrorMessage(result, response);
-            return result?.Code == ApiResponseCode.OK;
+            {
+                ErrorMessage = "Noget gik galt. Fejl: " + response.StatusCode.ToString();
+                return false;
+            }
         }
 
         #region Constructor
