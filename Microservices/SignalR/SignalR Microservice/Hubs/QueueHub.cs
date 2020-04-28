@@ -1,43 +1,39 @@
-﻿using Microsoft.AspNetCore.SignalR;
-using SignalR_Microservice.Commands;
-using SignalR_Microservice.Helpers;
-using SignalR_Microservice.Models;
-using SignalR_Microservice.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
 
 namespace SignalR_Microservice.Hubs
 {
     public class QueueHub : Hub
     {
-        private Queue<User> _userQueue;
+        private readonly IQueueService _queueService;
 
-        public QueueHub(Queue<User> userQueue)
+        public QueueHub(IQueueService queueService)
         {
-            _userQueue = userQueue;
+            _queueService = queueService;
         }
 
-        public async Task AddToQueueGroup (User currentUser)
+        public void Enqueue()
         {
-            
-            await Groups.AddToGroupAsync(currentUser.Id, "queueGroup");
-            _userQueue.Enqueue(currentUser);
-
-           
+            _queueService.Enqueue(Context.ConnectionId);
         }
 
-        public async Task<User> RemoveFromQueue()
+        public async Task GetIndex(string id, int index)
         {
-            if (_userQueue.Count >= 1)
-            {
-                var UserDequeue = _userQueue.Dequeue();
-                await Groups.RemoveFromGroupAsync(UserDequeue.Id, "queueGroup");
-                return UserDequeue;
-            }
-            return null;
+            await Clients.Client(id).SendAsync("ReceiveIndex", index);
         }
 
+        public void GetNextCustomer(string groupId)
+        {
+            _queueService.Dequeue(groupId);
+        }
+
+        public async Task SendGroupId(string id, string groupId)
+        {
+            await Clients.Client(id).SendAsync("ReceiveGroupId", groupId);
+        }
     }
 }

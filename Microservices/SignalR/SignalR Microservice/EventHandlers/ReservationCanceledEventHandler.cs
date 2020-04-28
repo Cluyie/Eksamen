@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Bus.Bus.Interfaces;
-using SignalR.Domain.Events;
+using SignalR_Microservice.Events;
 using SignalR_Microservice.Hubs;
 using SignalR_Microservice.Models;
 
-namespace SignalR.Domain.EventHandlers
+namespace SignalR_Microservice.EventHandlers
 {
     public class ReservationCanceledEventHandler : IEventHandler<ReservationCanceledEvent>
     {

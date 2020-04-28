@@ -6,16 +6,12 @@ using Microsoft.Extensions.Hosting;
 using RabbitMQ.Bus.Bus.Interfaces;
 using SignalR_Microservice.Hubs;
 using RabbitMQ.IoC;
-using SignalR.Domain;
-using SignalR.Domain.EventHandlers;
-using SignalR.Domain.Events;
 using SignalR_Microservice.EventHandlers;
 using SignalR_Microservice.Events;
 using SignalR_Microservice.Services;
 using MediatR;
 using SignalR_Microservice.Commands;
 using SignalR_Microservice.CommandHandlers;
-using SignalR_Microservice.Helpers;
 using System.Collections.Generic;
 using SignalR_Microservice.Models;
 
@@ -49,10 +45,8 @@ namespace SignalR_Microservice
 
             //SignalR dependencies
             services.AddScoped<IChatLoggingService, ChatLoggingService>();
-            services.AddScoped<IRoomUsersHandler, RoomUsersHandler>();
-            services.AddScoped<QueueHub>();
-            services.AddSingleton<Dictionary<string, List<User>>>();
-            services.AddSingleton<Queue<User>>();
+            services.AddScoped<IQueueService, QueueService>();
+            //services.AddSingleton<Dictionary<string, List<User>>>();
 
             services.AddCors(options =>
             {

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Moq;
 using NUnit.Framework;
-using SignalR_Microservice.Helpers;
 using SignalR_Microservice.Hubs;
 using SignalR_Microservice.Models;
 using SignalR_Microservice.Services;
@@ -21,7 +20,6 @@ namespace NUnitSignalR
         public Mock<HubCallerContext> navn { get; set; }
         public Mock<IGroupManager> mockGroupManager { get; set; }
         public IChatLoggingService loggingService { get; set; }
-        public IRoomUsersHandler roomUsersHandler { get; set; }
 
         [SetUp]
         public void Setup()
@@ -34,7 +32,7 @@ namespace NUnitSignalR
 
             navn.Setup(c => c.ConnectionId).Returns(Guid.NewGuid().ToString());
 
-            chatHub = new ChatHub(roomUsersHandler, loggingService)
+            chatHub = new ChatHub(loggingService)
             {
                 Clients = mockClients.Object,
                 Context = navn.Object
@@ -51,8 +49,8 @@ namespace NUnitSignalR
                 Content = "hejsa"
             };
 
-            await chatHub.JoinRoom("group1");
-            await chatHub.SendMessageToRoom(message, "group1");
+            await chatHub.JoinGroup("group1");
+            await chatHub.SendMessageToGroup(message, "group1");
 
 
             mockClients.Verify(clients => clients.Groups("group1"), Times.Once);
