@@ -32,7 +32,9 @@ namespace XamarinFormsApp.View
             //    //else
             //}
 
-            if (await _loginViewModel.Login())
+            bool success = await _loginViewModel.Login();
+
+            if (success)
                 await Navigation.PushAsync(new HomePage());
             else
                 await DisplayAlert("Alert", _loginViewModel.ErrorMessage, "OK");
