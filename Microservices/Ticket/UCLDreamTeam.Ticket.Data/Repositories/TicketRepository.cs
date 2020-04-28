@@ -51,14 +51,14 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
 
         public async Task MessageSeen(Guid messageId, bool seen)
         {
-            var dbMessage = await _ticketDbContext.Messages.FirstOrDefaultAsync(m => m.Id == messageId);
-            dbMessage.Seen = seen;
+            _ticketDbContext.Tickets.FirstOrDefault(t => t.Messages.Any(m => m.Id == messageId)).Messages
+                .Find(m => m.Id == messageId).Seen = seen;
             await _ticketDbContext.SaveChangesAsync();
         }
 
         public async Task CreateAsync(Domain.Models.Ticket ticket)
         {
-            await _ticketDbContext.Tickets.AddAsync(ticket);
+            _ticketDbContext.Tickets.Add(ticket);
             await _ticketDbContext.SaveChangesAsync();
         }
 

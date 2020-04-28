@@ -12,7 +12,6 @@ namespace UCLDreamTeam.Ticket.Data.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<Domain.Models.Ticket> Tickets { get; set; }
         public DbSet<UserTicket> UserTickets { get; set; }
-        public DbSet<Message> Messages { get; set; }
 
         public TicketDbContext(DbContextOptions<TicketDbContext> options) : base(options)
         {
@@ -20,10 +19,7 @@ namespace UCLDreamTeam.Ticket.Data.Contexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(Settings.Default.UCLDB);
-            }
+            if (!optionsBuilder.IsConfigured) optionsBuilder.UseSqlServer(Settings.Default.UCLDB);
 
             base.OnConfiguring(optionsBuilder);
         }
