@@ -49,6 +49,7 @@ namespace SignalR_Microservice.Hubs
         public async Task JoinGroup(string roomName)
         {
             var userId = Context.ConnectionId;
+            currentUser.Id = userId;
 
             var response = await _roomUsersHandler.AddUserToRoom(_roomsWithUsers, roomName, currentUser);
 
