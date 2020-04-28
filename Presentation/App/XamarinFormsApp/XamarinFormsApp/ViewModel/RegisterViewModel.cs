@@ -29,16 +29,30 @@ namespace XamarinFormsApp.ViewModel
         public async Task<bool> Register()
         {
             var registerResponse = await _proxy.PostAsync(@"User", _mapper.Map<Register>(this));
-            var registerResult = await ApiClientProxy.ReadAnswerAsync<ApiResponse<string>>(registerResponse);
-            if (registerResponse.IsSuccessStatusCode && registerResult?.Code == ApiResponseCode.OK)
+            if (registerResponse.IsSuccessStatusCode)
             {
-                var loginResponse = await _proxy.PostAsync(@"Auth/Register", _mapper.Map<Login>(this));
-                var loginResult = await ApiClientProxy.ReadAnswerAsync<ApiResponse<string>>(registerResponse);
-                _authService.Login(loginResult.Value);
+                var loginResponse = await _proxy.PostAsync(@"Auth/Login", new Login
+                {
+                    UsernameOrEmail = Username,
+                    Password = Password
+                });
+                if(loginResponse.IsSuccessStatusCode)
+                {
+                    var loginToken = await loginResponse.Content.ReadAsStringAsync();
+                    _authService.Login(loginToken);
+                    return true;
+                }
+                else
+                {
+                    ErrorMessage = "Noget gik galt. Fejl: " + loginResponse.StatusCode.ToString();
+                    return false;
+                }
             }
             else
-                ErrorMessage = _proxy.GenerateErrorMessage(registerResult, registerResponse);
-            return registerResult?.Code == ApiResponseCode.OK;
+            {
+                ErrorMessage = "Noget gik galt. Fejl: " + registerResponse.StatusCode.ToString();
+                return false;
+            }
         }
 
         #region Constructor

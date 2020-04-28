@@ -33,10 +33,7 @@ namespace XamarinFormsApp.ViewModel
             }
             else
             {
-                // Auth API no longer returns ApiResult, so we wrap the returned string into
-                // a ApiResponse object ourselves, and guess that it is an unauthorized response
-                ErrorMessage = _proxy.GenerateErrorMessage(new ApiResponse<string>(
-                    ApiResponseCode.Unauthorized, null), response);
+                ErrorMessage = "Noget gik galt. Fejl: " + response.StatusCode.ToString();
 
                 return false;
             }
