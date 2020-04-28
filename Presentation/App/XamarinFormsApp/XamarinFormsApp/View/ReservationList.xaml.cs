@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+using XamarinFormsApp.Model;
+using XamarinFormsApp.ViewModel;
+
+namespace XamarinFormsApp.View
+{
+
+
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class ReservationList : ContentPage
+    {
+        //public ObservableCollection<ReservationMock> reservations { get; set; }
+        private readonly ReservationListViewModel _reservationListViewModel;
+
+        public ReservationList()
+        {
+            InitializeComponent();
+            var reservationListViewModel = new ReservationListViewModel();           
+            _reservationListViewModel = reservationListViewModel.initialize();
+            BindingContext = _reservationListViewModel ??= reservationListViewModel;
+            //MyListView.ItemsSource = _reservationListViewModel.Reservations;
+            
+        }
+
+
+
+
+
+
+        async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+
+            if (e.Item == null)
+                return;
+
+            await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
+
+            //Deselect Item
+            ((ListView)sender).SelectedItem = null;
+        }
+    }
+}
+
+

@@ -67,7 +67,7 @@ namespace XamarinFormsApp.Helpers
             //Lokal base adresse til emulator http://10.0.2.2:5000/
 
             //return "http://10.0.2.2:53524/";
-            return "http://81.27.216.103/AppBff/"; //If you are not on the same Net as the server
+            return "http://81.27.216.103/MobileBff/"; //If you are not on the same Net as the server
             //return "http://10.56.8.34/AppBff/"; //If you are on the same Net as the server
         }
     }
