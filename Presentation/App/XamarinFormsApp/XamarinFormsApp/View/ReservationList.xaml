@@ -14,7 +14,7 @@
 
     <ContentPage.Content>
         <StackLayout>
-            <ListView ItemsSource="{Binding Reservations}"
+            <ListView ItemsSource="{Binding ReservationListItems}"
                       CachingStrategy="RecycleElement"
                       RowHeight="100" ItemTapped="ListView_ItemTapped">
 
@@ -22,12 +22,14 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Margin="8">
-
-                                <Label Text="{Binding Id}"
+                                                               
+                                <Label Text="{Binding Name}"
                                        FontAttributes="Bold" />
-                                <Label Text="{Binding To}" />
-                                <Label Text="{Binding From}" />
+                                <Label Text="{Binding Description}" />
+                                <Label Text="{Binding TimeSpan}" />
                                 
+
+
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
