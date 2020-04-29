@@ -9,7 +9,7 @@ namespace SignalR_Microservice.Services
 {
     public class QueSendService
     {
-        IHubContext<QueueHub> QueueHub;
+        public IHubContext<QueueHub> QueueHub;
         public QueSendService(IHubContext<QueueHub> hubContext)
         {
             QueueHub = hubContext;

@@ -71,7 +71,7 @@ namespace SignalR_Microservice
 
             //app.UseHttpsRedirection(); //Enable Later!
 
-            app.UseWebSockets();
+        app.UseWebSockets();
 
             app.UseRouting();
 

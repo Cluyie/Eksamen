@@ -25,7 +25,7 @@ namespace SignalR_Microservice.Hubs
             _queueService.Enqueue(Context.ConnectionId, ticketId);
         }
 
-        public async Task GetIndex(string id, int index)
+        public async Task GetIndex(int index)
         {
             await SendService.SendToReceiveIndex(Context.ConnectionId, index);
         }

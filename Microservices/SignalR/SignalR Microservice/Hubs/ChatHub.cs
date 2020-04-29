@@ -12,15 +12,17 @@ namespace SignalR_Microservice.Hubs
     public class ChatHub : Hub
     {
         private readonly IChatLoggingService _messageLogging;
-
-        public ChatHub(IChatLoggingService messageLogging)
+        ChatSenderService ChatSender { get; set; }
+        public ChatHub(IChatLoggingService messageLogging, ChatSenderService chatSender)
         {
             _messageLogging = messageLogging;
+            ChatSender = chatSender;
         }
 
         public async Task SendMessageToGroup(Message message, string roomName)
         {
-            await Clients.Group(roomName).SendAsync("SendMessageToGroup", message.Text);
+            ChatSender.SendSendMessageToGroup(message.Text, roomName);
+            //await Clients.Group(roomName).SendAsync("SendMessageToGroup", message.Text);
 
             await _messageLogging.SendMessageAsync(message);
         }
