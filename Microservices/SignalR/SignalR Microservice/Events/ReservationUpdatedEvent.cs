@@ -1,12 +1,15 @@
-﻿using System;
-using RabbitMQ.Bus.Events;
+﻿using RabbitMQ.Bus.Events;
 using SignalR_Microservice.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SignalR_Microservice.Events
 {
-    public class ReservationCreatedEvent : Event
+    public class ReservationUpdatedEvent : Event
     {
-        public ReservationCreatedEvent(Guid id, Guid userId, Guid resourceId, ReserveTime timeslot)
+        public ReservationUpdatedEvent(Guid id, Guid userId, Guid resourceId, ReserveTime timeslot)
         {
             Id = id;
             UserId = userId;

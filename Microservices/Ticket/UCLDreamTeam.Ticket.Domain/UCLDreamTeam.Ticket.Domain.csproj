@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="5.0.0-preview.2.20159.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Core\Models\UCLDreamTeam.SharedInterfaces.csproj" />
     <ProjectReference Include="..\..\..\Core\RabbitMQ.Bus\RabbitMQ.Bus.csproj" />
   </ItemGroup>

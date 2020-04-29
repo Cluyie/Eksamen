@@ -20,10 +20,7 @@ namespace UCLDreamTeam.Ticket.Data.Contexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(Settings.Default.UCLDB);
-            }
+            if (!optionsBuilder.IsConfigured) optionsBuilder.UseSqlServer(Settings.Default.UCLDB);
 
             base.OnConfiguring(optionsBuilder);
         }
