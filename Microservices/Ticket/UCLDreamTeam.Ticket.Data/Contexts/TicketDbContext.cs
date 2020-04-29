@@ -12,9 +12,9 @@ namespace UCLDreamTeam.Ticket.Data.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<Domain.Models.Ticket> Tickets { get; set; }
         public DbSet<UserTicket> UserTickets { get; set; }
-        public DbSet<Message> Messages { get; set; }
+        public DbSet<Message> Messages { get; set; }  
 
-        public TicketDbContext(DbContextOptions<TicketDbContext> options) : base(options)
+        public TicketDbContext(DbContextOptions options) : base(options)
         {
         }
 
@@ -28,9 +28,20 @@ namespace UCLDreamTeam.Ticket.Data.Contexts
             base.OnConfiguring(optionsBuilder);
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            builder.Entity<UserTicket>().HasKey(table => new {table.UserId, table.TicketId});
-        }
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+      builder.Entity<UserTicket>()
+        .HasKey(ut => new { ut.UserId, ut.TicketId });
+
+      builder.Entity<UserTicket>()
+        .HasOne(ut => ut.User)
+        .WithMany(b => b.UserTickets)
+        .HasForeignKey(bc => bc.UserId);
+
+      builder.Entity<UserTicket>()
+        .HasOne(ut => ut.Ticket)
+        .WithMany(c => c.UserTickets)
+        .HasForeignKey(bc => bc.TicketId);
     }
+  }
 }
