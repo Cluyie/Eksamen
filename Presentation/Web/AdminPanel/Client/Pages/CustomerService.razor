@@ -228,13 +228,13 @@
 
         #region SignalR QueueHub Methods
 
-        //    _queueHubConnection = new HubConnectionBuilder()
-        //.WithUrl("http://localhost:1337/QueueHub")
-        //.Build();
-
         _queueHubConnection = new HubConnectionBuilder()
-.WithUrl("http://81.27.216.103/SignalR/QueueHub")
-.Build();
+    .WithUrl("http://localhost:1337/QueueHub")
+    .Build();
+
+        //        _queueHubConnection = new HubConnectionBuilder()
+        //.WithUrl("http://81.27.216.103/SignalR/QueueHub")
+        //.Build();
 
         await _queueHubConnection.StartAsync();
 

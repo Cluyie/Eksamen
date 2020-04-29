@@ -9,7 +9,6 @@ namespace SignalR_Microservice.Hubs
     public class QueueService : IQueueService
     {
         private Queue<(string, Guid)> _connectionQueue;
-        private readonly QueueHub _hubContext;
 
         public int QueueCount
         {
@@ -17,9 +16,8 @@ namespace SignalR_Microservice.Hubs
             set => QueueCount = _connectionQueue.Count();
         }
 
-        public QueueService(QueueHub hubContext, Queue<(string, Guid)> connectionQueue)
+        public QueueService(Queue<(string, Guid)> connectionQueue)
         {
-            _hubContext = hubContext;
             _connectionQueue = connectionQueue;
         }
 

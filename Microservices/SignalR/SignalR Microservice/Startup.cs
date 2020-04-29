@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -46,8 +47,8 @@ namespace SignalR_Microservice
             //SignalR dependencies
             services.AddScoped<IChatLoggingService, ChatLoggingService>();
             services.AddScoped<IQueueService, QueueService>();
-            services.AddScoped<QueueHub>();
-            services.AddSingleton<Queue<string>>();
+            //services.AddScoped<QueueHub>();
+            services.AddSingleton<Queue<(string, Guid)>>();
             //services.AddSingleton<Dictionary<string, List<User>>>();
 
             services.AddCors(options =>

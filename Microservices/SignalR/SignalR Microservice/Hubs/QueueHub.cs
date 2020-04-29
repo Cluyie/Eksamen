@@ -10,21 +10,16 @@ namespace SignalR_Microservice.Hubs
 {
     public class QueueHub : Hub
     {
-        //private readonly IQueueService _queueService;
-        private readonly IServiceProvider _services;
+        private readonly IQueueService _queueService;
 
-
-        public QueueHub( /*IQueueService queueService, */ IServiceProvider services)
+        public QueueHub(IQueueService queueService)
         {
-            //_queueService = queueService;
-            _services = services;
+            _queueService = queueService;
         }
 
         public void Enqueue(Guid ticketId)
         {
-            var _queueService = _services.GetRequiredService<IQueueService>();
             _queueService.Enqueue(Context.ConnectionId, ticketId);
-            //_queueService.Enqueue(Context.ConnectionId);
         }
 
         public async Task GetIndex(string id, int index)
@@ -34,16 +29,12 @@ namespace SignalR_Microservice.Hubs
 
         public async Task GetQueueCount()
         {
-            var _queueService = _services.GetRequiredService<IQueueService>();
             await Clients.Caller.SendAsync("ReceiveQueueCount", _queueService.QueueCount);
         }
 
         public async Task GetNextCustomer(string groupId)
         {
-            var _queueService = _services.GetRequiredService<IQueueService>();
             var taskId = _queueService.Dequeue(groupId);
-            //_queueService.Dequeue(groupId);
-
             await Clients.Caller.SendAsync("ReceiveTaskId", taskId);
         }
 
