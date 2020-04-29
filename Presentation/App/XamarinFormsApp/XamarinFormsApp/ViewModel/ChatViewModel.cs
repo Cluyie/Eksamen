@@ -1,6 +1,8 @@
 ﻿using Autofac;
+using Microsoft.AspNetCore.SignalR.Client;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using UCLToolBox;
 using Xamarin.Forms;
@@ -10,14 +12,21 @@ using Profile = AutoMapper.Profile;
 
 namespace XamarinFormsApp.ViewModel
 {
-    public class ChatViewModel : Profile
+    public class ChatViewModel : Profile, INotifyPropertyChanged
     {
+        private readonly HubConnection _hubConnection;
         public ObservableCollection<Message> Messages { get; set; } = new ObservableCollection<Message>();
         public string TextToSend { get; set; }
         public ICommand OnSendCommand { get; set; }
 
         public ChatViewModel()
         {
+            _hubConnection = new HubConnectionBuilder().WithUrl($"{Properties.Resources.SignalRBaseAddress}ChatHub")
+                .Build();
+            Connect();
+
+            _hubConnection.On<Message>("SendMessageToRoom", message => { Messages.Add(message); });
+
             Messages.Add(new Message() { Text = "Hej, du snakker med Maria fra kundeservice. Hvad kan jeg hjælpe med?" });
 
             OnSendCommand = new Command(() =>
@@ -31,6 +40,11 @@ namespace XamarinFormsApp.ViewModel
             });
         }
 
-        //public event PropertyChangedEventHandler PropertyChanged;
+        private async Task Connect()
+        {
+            await _hubConnection.StartAsync();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
