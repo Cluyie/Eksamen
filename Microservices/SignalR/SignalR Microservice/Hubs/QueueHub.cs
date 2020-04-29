@@ -5,16 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
+using SignalR_Microservice.Services;
 
 namespace SignalR_Microservice.Hubs
 {
     public class QueueHub : Hub
     {
         private readonly IQueueService _queueService;
+        private QueSendService SendService { get; set; }
 
-        public QueueHub(IQueueService queueService)
+        public QueueHub(IQueueService queueService, QueSendService sendService)
         {
             _queueService = queueService;
+            SendService = sendService;
         }
 
         public void Enqueue(Guid ticketId)
