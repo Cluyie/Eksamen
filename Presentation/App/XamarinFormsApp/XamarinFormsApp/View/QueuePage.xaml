@@ -20,7 +20,7 @@
                    HorizontalOptions="Center"/>
             <Label FontSize="40"
                    FontAttributes="Bold"
-                   Text="{Binding }" 
+                   Text="{Binding Index}" 
                    Margin="10" 
                    HorizontalOptions="Center"/>
             <Button Text="Forlad køen" 
