@@ -12,7 +12,7 @@ using Profile = AutoMapper.Profile;
 
 namespace XamarinFormsApp.ViewModel
 {
-    public class ChatViewModel : Profile, INotifyPropertyChanged
+    public class ChatViewModel : Profile/*, INotifyPropertyChanged*/
     {
         private readonly HubConnection _hubConnection;
         public ObservableCollection<Message> Messages { get; set; } = new ObservableCollection<Message>();
@@ -25,18 +25,24 @@ namespace XamarinFormsApp.ViewModel
                 .Build();
             Connect();
 
-            _hubConnection.On<Message>("SendMessageToRoom", message => { Messages.Add(message); });
 
             Messages.Add(new Message() { Text = "Hej, du snakker med Maria fra kundeservice. Hvad kan jeg hjælpe med?" });
 
+
             OnSendCommand = new Command(() =>
             {
+                //if (!string.IsNullOrEmpty(TextToSend))
+                //{
+                //    Messages.Add(new Message() { Text = TextToSend, Username = App.User });
+                //    TextToSend = string.Empty;
+                //}
+
                 if (!string.IsNullOrEmpty(TextToSend))
                 {
-                    Messages.Add(new Message() { Text = TextToSend, Username = App.User });
+                    var messageToSend = new Message() { Text = TextToSend };
+                    _hubConnection.On<Message>("SendMessageToRoom", message => { Messages.Add(message); });
                     TextToSend = string.Empty;
                 }
-
             });
         }
 

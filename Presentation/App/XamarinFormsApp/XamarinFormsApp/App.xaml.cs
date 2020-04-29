@@ -16,8 +16,6 @@ namespace XamarinFormsApp
 
             MainPage = new NavigationPage(new ChatPage());
         }
-        //public static string User = "TestUser";
-
         protected override void OnStart()
         {
             //DependencyService.Get<HttpClient>().BaseAddress = new Uri("http://10.0.2.2:5000/Auth/");

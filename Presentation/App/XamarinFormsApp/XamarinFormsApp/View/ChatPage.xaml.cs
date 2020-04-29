@@ -13,6 +13,5 @@ namespace XamarinFormsApp.View
             InitializeComponent();
             this.BindingContext = new ChatViewModel();
         }
-        
     }
 }

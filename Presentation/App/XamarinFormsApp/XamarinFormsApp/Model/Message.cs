@@ -2,7 +2,7 @@
 
 namespace XamarinFormsApp.Model
 {
-    public class Message
+    public class Message : AutoMapper.Profile
     {
         public string Content { get; set; }
         public string Username { get; set; }
