@@ -1,7 +1,7 @@
 ﻿using RabbitMQ.Bus.Events;
-using Message = UCLDreamTeam.Ticket.Domain.Models.Message;
+using Message = SignalR_Microservice.Models.Message;
 
-namespace UCLDreamTeam.Ticket.Domain.Events
+namespace SignalR_Microservice.Events
 {
     public class MessageSentEvent : Event
     {

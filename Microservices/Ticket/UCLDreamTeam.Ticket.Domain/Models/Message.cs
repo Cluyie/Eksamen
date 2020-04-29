@@ -7,7 +7,6 @@ namespace UCLDreamTeam.Ticket.Domain.Models
     public class Message : IMessage
     {
         public Guid Id { get; set; }
-        [ForeignKey("Ticket")]
         public Guid TicketId { get; set; }
         public Guid UserId { get; set; }
         public string Text { get; set; }

@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SignalR_Microservice.Commands
 {
     public class CreateSentMessageCommand : SentMessageCommand
     {
-        public CreateSentMessageCommand(string username, string content)
+        public CreateSentMessageCommand(Guid id, Guid ticketId, Guid userId, string text, DateTime timestamp, bool seen)
         {
-            Username = username;
-            Content = content;
+            Id = id;
+            TicketId = ticketId;
+            UserId = userId;
+            Text = text;
+            TimeStamp = timestamp;
+            Seen = seen;
         }
     }
 }
