@@ -44,8 +44,10 @@ namespace UCLDreamTeam.Reservation.Api
             services.AddRabbitMq();
 
             services.AddTransient<IRequestHandler<CreateReservationCommand, bool>, CreateReservationCommandHandler>();
-            services.AddTransient<IRequestHandler<CreateCancelReservationCommand, bool>, CancelReservationCommandHandler>();
-            services.AddTransient<IRequestHandler<CreateUpdateReservationCommand, bool>, UpdateReservationCommandHandler>();
+            services
+                .AddTransient<IRequestHandler<CreateCancelReservationCommand, bool>, CancelReservationCommandHandler>();
+            services
+                .AddTransient<IRequestHandler<CreateUpdateReservationCommand, bool>, UpdateReservationCommandHandler>();
             services.AddTransient<IReservationService, ReservationService>();
             services.AddTransient<IReservationRepository, ReservationRepository>();
 

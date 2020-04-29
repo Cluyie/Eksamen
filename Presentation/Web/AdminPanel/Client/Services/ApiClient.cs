@@ -16,7 +16,8 @@ namespace AdminPanel.Client.Services
         private readonly HttpClient _httpClient;
         private readonly AuthCredentialsKeeper _credentialsKeeper;
 
-        private const string BASE_URL = "http://81.27.216.103/WebApi/";
+        private const string BASE_URL = "http://81.27.216.103/MobileBff/";
+        //private const string BASE_URL = "http://localhost:1339/";
         private const string TOKEN_HEADER_NAME = "Authorization";
 
         private bool _tokenHeaderIsSet = false;

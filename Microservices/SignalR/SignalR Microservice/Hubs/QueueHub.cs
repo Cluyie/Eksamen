@@ -12,17 +12,18 @@ namespace SignalR_Microservice.Hubs
     public class QueueHub : Hub
     {
         private readonly IQueueService _queueService;
-        private QueSendService SendService { get; set; }
+        private QueueSendService SendService { get; set; }
 
-        public QueueHub(IQueueService queueService, QueSendService sendService)
+        public QueueHub(IQueueService queueService, QueueSendService sendService)
         {
             _queueService = queueService;
             SendService = sendService;
         }
 
-        public void Enqueue(Guid ticketId)
+        public void Enqueue(string ticketId)
         {
-            _queueService.Enqueue(Context.ConnectionId, ticketId);
+            var test = Guid.Parse(ticketId);
+            _queueService.Enqueue(Context.ConnectionId, test);
         }
 
         public async Task GetIndex(int index)

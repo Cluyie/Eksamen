@@ -9,26 +9,22 @@ namespace SignalR_Microservice.Hubs
 {
     public class QueueService : IQueueService
     {
-        QueSendService QueSend { get; set; }
+        private QueueSendService QueueSend { get; set; }
         private Queue<(string, Guid)> _connectionQueue;
 
-        public int QueueCount
-        {
-            get => QueueCount;
-            set => QueueCount = _connectionQueue.Count();
-        }
+        public int QueueCount => _connectionQueue.Count();
 
-        public QueueService(Queue<(string, Guid)> connectionQueue, QueSendService queSend)
+        public QueueService(Queue<(string, Guid)> connectionQueue, QueueSendService queueSend)
         {
             _connectionQueue = connectionQueue;
-            QueSend = queSend;
+            QueueSend = queueSend;
         }
 
         public async void Enqueue(string connectionId, Guid ticketId)
         {
             _connectionQueue.Enqueue((connectionId, ticketId));
-            await QueSend.SendToReceiveIndex(connectionId, _connectionQueue.Count);
-            await QueSend.SendReceiveQueueCount(connectionId, QueueCount);
+            await QueueSend.SendToReceiveIndex(connectionId, _connectionQueue.Count);
+            await QueueSend.SendReceiveQueueCountAll(QueueCount);
         }
 
         public async Task<Guid> Dequeue(string groupId)
@@ -36,16 +32,17 @@ namespace SignalR_Microservice.Hubs
             if (_connectionQueue.Any())
             {
                 var connectionInfo = _connectionQueue.Dequeue();
-                await QueSend.SendReceiveGroupId(connectionInfo.Item1, groupId);
+                await QueueSend.SendReceiveGroupId(connectionInfo.Item1, groupId);
 
 
                 foreach (var connection in _connectionQueue)
                 {
                     var connectionId = connection.ToString();
-                    await QueSend.SendToReceiveIndex(connectionId,
+                    await QueueSend.SendToReceiveIndex(connectionId,
                         Array.IndexOf(_connectionQueue.ToArray(), connectionId) + 1);
                 }
 
+                await QueueSend.SendReceiveQueueCountAll(QueueCount);
                 return connectionInfo.Item2;
             }
 

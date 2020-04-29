@@ -47,6 +47,7 @@ namespace SignalR_Microservice
             //SignalR dependencies
             services.AddScoped<IChatLoggingService, ChatLoggingService>();
             services.AddScoped<IQueueService, QueueService>();
+            services.AddScoped<QueueSendService>();
             //services.AddScoped<QueueHub>();
             services.AddSingleton<Queue<(string, Guid)>>();
             //services.AddSingleton<Dictionary<string, List<User>>>();
@@ -71,7 +72,7 @@ namespace SignalR_Microservice
 
             //app.UseHttpsRedirection(); //Enable Later!
 
-        app.UseWebSockets();
+            app.UseWebSockets();
 
             app.UseRouting();
 
