@@ -16,7 +16,7 @@ namespace XamarinFormsApp.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ReservationList : ContentPage
     {
-        //public ObservableCollection<ReservationMock> reservations { get; set; }
+        
         private readonly ReservationListViewModel _reservationListViewModel;
 
         public ReservationList()
@@ -25,7 +25,7 @@ namespace XamarinFormsApp.View
             var reservationListViewModel = new ReservationListViewModel();           
             _reservationListViewModel = reservationListViewModel.initialize();
             BindingContext = _reservationListViewModel ??= reservationListViewModel;
-            //MyListView.ItemsSource = _reservationListViewModel.Reservations;
+          
             
         }
 
