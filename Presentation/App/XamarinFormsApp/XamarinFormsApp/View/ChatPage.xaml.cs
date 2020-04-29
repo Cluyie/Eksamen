@@ -8,14 +8,18 @@ namespace XamarinFormsApp.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ChatPage : ContentPage
     {
-        public ChatPage()
+        private readonly ChatViewModel _viewModel;
+
+        public ChatPage(string groupId)
         {
             InitializeComponent();
-            this.BindingContext = new ChatViewModel();
+            _viewModel = new ChatViewModel(groupId);
+            BindingContext = _viewModel;
         }
         private async void OnExitButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new LoginPage());
+            await _viewModel.Stop();
+            await Navigation.PushAsync(new HomePage());
         }
     }
 }

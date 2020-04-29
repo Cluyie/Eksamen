@@ -136,6 +136,7 @@
                         <TimePicker Time="{Binding StartTime}" Grid.Row="3" Grid.Column="0"
                                     PropertyChanging="TimePicker_PropertyChanged" />
                     </Grid>
+                    <Button Text="Kontakt Kundeservice" Clicked="SupportButtonClicked"/>
                     <Button Text="Reserver" Clicked="OnReseverButtonClicked" />
                 </StackLayout>
             </ScrollView>

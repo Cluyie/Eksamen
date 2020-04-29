@@ -1,6 +1,7 @@
 ﻿using Xamarin.Forms;
 using XamarinFormsApp.Model;
 using XamarinFormsApp.View;
+using System;
 
 namespace XamarinFormsApp.Helpers
 {
@@ -9,10 +10,14 @@ namespace XamarinFormsApp.Helpers
         DataTemplate incomingDataTemplate;
         DataTemplate outgoingDataTemplate;
 
+        private readonly Guid _userId;
+
         public ChatTemplateSelector()
         {
             this.incomingDataTemplate = new DataTemplate(typeof(IncomingViewCell));
             this.outgoingDataTemplate = new DataTemplate(typeof(OutgoingViewCell));
+
+            _userId = (Application.Current.Properties["UserData"] as User).Id;
         }
 
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
@@ -22,7 +27,7 @@ namespace XamarinFormsApp.Helpers
                 return null;
 
 
-            return (messageVm.Username == App.User) ? outgoingDataTemplate : incomingDataTemplate;
+            return (messageVm.UserId == _userId) ? outgoingDataTemplate : incomingDataTemplate;
         }
 
     }

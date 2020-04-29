@@ -9,11 +9,20 @@ namespace XamarinFormsApp.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class QueuePage : ContentPage
     {
-        public QueuePage()
+        public QueuePage(Guid? reservationId = null)
         {
             InitializeComponent();
 
+            var viewModel = new QueueViewModel(reservationId);
+
+            BindingContext = viewModel;
+
+            viewModel.ReceivedGroupId += (id) =>
+            {
+                Navigation.PushAsync(new ChatPage(id));
+            };
         }
+
         private void CancelButton_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new MainPage());

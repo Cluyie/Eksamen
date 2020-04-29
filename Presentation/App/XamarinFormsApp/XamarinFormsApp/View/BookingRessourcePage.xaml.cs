@@ -120,5 +120,10 @@ namespace XamarinFormsApp.View
                     break;
             }
         }
+
+        private void SupportButtonClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new QueuePage());
+        }
     }
 }
