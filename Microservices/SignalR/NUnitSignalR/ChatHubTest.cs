@@ -45,8 +45,12 @@ namespace NUnitSignalR
         {
             var message = new Message
             {
-                Username = "Hans",
-                Content = "hejsa"
+                Text = "",
+                Id = Guid.NewGuid(),
+                Seen = false,
+                TicketId = Guid.NewGuid(),
+                TimeStamp = DateTime.Now,
+                UserId = Guid.NewGuid()
             };
 
             await chatHub.JoinGroup("group1");
@@ -58,7 +62,7 @@ namespace NUnitSignalR
             mockClientProxy.Verify(
                 clientProxy => clientProxy.SendCoreAsync(
                     "SendMessage",
-                    new object[] { message },
+                    new object[] {message},
                     default),
                 Times.Once);
         }

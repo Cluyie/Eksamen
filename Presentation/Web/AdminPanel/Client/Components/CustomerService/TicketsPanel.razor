@@ -1,12 +1,11 @@
 ﻿@using System.Collections.Generic
+@using System.Diagnostics.Contracts
 @using System.Linq
 @using AdminPanel.Client.DTOs
 @using AdminPanel.Client.Models
 
 <section class="discussions">
-    <div class="header-discussions">
-        <p class="name">Dummy name</p>
-    </div>
+    <TicketHeader GetNextCustomer="GetNextCustomer" QueueCount=QueueCount />
     @foreach (TicketDTO ticketDTO in TicketDTOs)
     {
         <div @onclick="@(() => UpdateTicket.InvokeAsync(ticketDTO))">
@@ -23,7 +22,10 @@
 @code
 {
     [Parameter] public List<TicketDTO> TicketDTOs { get; set; }
+    [Parameter] public int QueueCount { get; set; }
     [Parameter] public EventCallback<TicketDTO> UpdateTicket { get; set; }
+
+    [Parameter] public EventCallback GetNextCustomer { get; set; }
 }
 
 <style>
@@ -34,19 +36,5 @@
         overflow-y: auto;
         display: inline-block;
     }
-        .discussions .header-discussions {
-            background-color: #FAFAFA;
-            border-bottom: solid 1px #E0E0E0;
-            border-right: solid 0.5px #E0E0E0;
-            height: 90px;
-            display: flex;
-            align-items: center;
-        }
-            .discussions .header-discussions .name {
-                margin: 0 0 0 20px;
-                text-transform: uppercase;
-                font-family: 'Montserrat', sans-serif;
-                font-size: 13pt;
-                color: #515151;
-            }
+
 </style>

@@ -6,29 +6,37 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace SignalR_Microservice.Hubs
 {
-    internal class QueueService : IQueueService
+    public class QueueService : IQueueService
     {
-        private Queue<string> _connectionQueue;
+        private Queue<(string, Guid)> _connectionQueue;
         private readonly QueueHub _hubContext;
 
-        public QueueService(QueueHub hubContext, Queue<string> connectionQueue)
+        public int QueueCount
+        {
+            get => QueueCount;
+            set => QueueCount = _connectionQueue.Count();
+        }
+
+        public QueueService(QueueHub hubContext, Queue<(string, Guid)> connectionQueue)
         {
             _hubContext = hubContext;
             _connectionQueue = connectionQueue;
         }
 
-        public async void Enqueue(string connectionId)
+        public async void Enqueue(string connectionId, Guid ticketId)
         {
-            _connectionQueue.Enqueue(connectionId);
+            _connectionQueue.Enqueue((connectionId, ticketId));
             await _hubContext.GetIndex(connectionId, _connectionQueue.Count);
+            await _hubContext.GetQueueCount();
         }
 
-        public async Task Dequeue(string groupId)
+        public async Task<Guid> Dequeue(string groupId)
         {
             if (_connectionQueue.Any())
             {
-                var id = _connectionQueue.Dequeue();
-                await _hubContext.SendGroupId(id, groupId);
+                var connectionInfo = _connectionQueue.Dequeue();
+                await _hubContext.SendGroupId(connectionInfo.Item1, groupId);
+
 
                 foreach (var connection in _connectionQueue)
                 {
@@ -36,7 +44,11 @@ namespace SignalR_Microservice.Hubs
                     await _hubContext.GetIndex(connectionId,
                         Array.IndexOf(_connectionQueue.ToArray(), connectionId) + 1);
                 }
+
+                return connectionInfo.Item2;
             }
+
+            return Guid.Empty;
         }
     }
 }

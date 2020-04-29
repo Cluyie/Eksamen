@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace SignalR_Microservice.Hubs
 {
     public interface IQueueService
     {
-        void Enqueue(string connectionId);
-        Task Dequeue(string groupId);
+        int QueueCount { get; set; }
+        void Enqueue(string connectionId, Guid ticketId);
+        Task<Guid> Dequeue(string groupId);
     }
 }
