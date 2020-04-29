@@ -55,7 +55,7 @@ namespace XamarinFormsApp.ViewModel
             HttpResponseMessage response = proxy.Post<Ticket>("Ticket", ticket);
             _ticketId = ApiClientProxy.ReadAnswer<Ticket>(response).Id;
 
-            new HubConnectionBuilder().WithUrl($"{Properties.Resources.SignalRBaseAddress}QueueHub")
+            _hubConnection = new HubConnectionBuilder().WithUrl($"{Properties.Resources.SignalRBaseAddress}QueueHub")
                 .Build();
 
             ConnectToHub();
@@ -70,7 +70,6 @@ namespace XamarinFormsApp.ViewModel
             _hubConnection.On<int>("ReceiveIndex", index =>
             {
                 Index = index;
-                OnPropertyChanged("Index");
             });
         }
 
