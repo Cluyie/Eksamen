@@ -23,6 +23,18 @@
       ],
       "UpstreamPathTemplate": "/Ticket/User?userId={id}",
       "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/TicketService/Ticket",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 1337
+        }
+      ],
+      "UpstreamPathTemplate": "/Ticket",
+      "UpstreamHttpMethod": [ "Post" ]
     }
   ]
 }
