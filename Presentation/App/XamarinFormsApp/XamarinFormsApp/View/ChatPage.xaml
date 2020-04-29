@@ -10,7 +10,8 @@
              Title="Ticket nr: xxx"
              x:Class="XamarinFormsApp.View.ChatPage">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Afslut"/>
+        <ToolbarItem Text="Afslut"
+                     Clicked="OnExitButtonClicked"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <ResourceDictionary>

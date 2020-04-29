@@ -13,5 +13,9 @@ namespace XamarinFormsApp.View
             InitializeComponent();
             this.BindingContext = new ChatViewModel();
         }
+        private async void OnExitButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new LoginPage());
+        }
     }
 }
