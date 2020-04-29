@@ -27,23 +27,26 @@ namespace SignalR_Microservice.Hubs
 
         public async Task GetIndex(string id, int index)
         {
-            await Clients.Client(id).SendAsync("ReceiveIndex", index);
+            await SendService.SendToReceiveIndex(Context.ConnectionId, index);
         }
 
         public async Task GetQueueCount()
         {
-            await Clients.Caller.SendAsync("ReceiveQueueCount", _queueService.QueueCount);
+            await SendService.SendReceiveQueueCount(Context.ConnectionId, _queueService.QueueCount);
+            //await Clients.Caller.SendAsync("ReceiveQueueCount");
         }
 
         public async Task GetNextCustomer(string groupId)
         {
             var taskId = _queueService.Dequeue(groupId);
-            await Clients.Caller.SendAsync("ReceiveTaskId", taskId);
+            await SendService.SendReceiveTaskId(Context.ConnectionId, await taskId);
+            //await Clients.Caller.SendAsync("ReceiveTaskId", taskId);
         }
 
-        public async Task SendGroupId(string id, string groupId)
-        {
-            await Clients.Client(id).SendAsync("ReceiveGroupId", groupId);
-        }
+        //public async Task SendGroupId(string id, string groupId)
+        //{
+        //    SendService.SendReceiveGroupId(Context.ConnectionId, );
+        //    //await Clients.Client(id).SendAsync("ReceiveGroupId", groupId);
+        //}
     }
 }
