@@ -27,7 +27,7 @@ namespace Web.Bff
                         .AddJsonFile("appsettings.json", true, true)
                         .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true,
                             true)
-                        .AddOcelot(hostingContext.HostingEnvironment)
+                        .AddOcelot($"Ocelot.{hostingContext.HostingEnvironment.EnvironmentName}", hostingContext.HostingEnvironment)
                         .AddEnvironmentVariables();
                 })
                 .ConfigureServices(s => { s.AddOcelot(); })
@@ -41,4 +41,5 @@ namespace Web.Bff
                 .Run();
         }
     }
+
 }
