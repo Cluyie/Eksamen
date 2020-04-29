@@ -34,16 +34,10 @@ namespace XamarinFormsApp.View
 
 
 
-        async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+         void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-
-            if (e.Item == null)
-                return;
-
-            await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
-
-            //Deselect Item
-            ((ListView)sender).SelectedItem = null;
+            var content = e.Item as ReservationListItem;
+            Navigation.PushAsync(new ReservationDetails(content));
         }
     }
 }

@@ -14,7 +14,7 @@ namespace XamarinFormsApp
 
             AutofacHelper.Initialize();
 
-            MainPage = new NavigationPage(new ChatPage());
+            MainPage = new NavigationPage(new MainPage());
         }
         protected override void OnStart()
         {

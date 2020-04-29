@@ -19,6 +19,8 @@
                     <RowDefinition Height="18*" />
                     <RowDefinition Height="3*" />
                     <RowDefinition Height="3*" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
                 <Label Text="Goddag "
                        FontSize="Title"
