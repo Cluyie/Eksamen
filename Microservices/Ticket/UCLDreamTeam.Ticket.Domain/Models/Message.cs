@@ -1,12 +1,10 @@
-﻿using RabbitMQ.Bus.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 
-namespace SignalR_Microservice.Commands
+namespace UCLDreamTeam.Ticket.Domain.Models
 {
-    public class SentMessageCommand : Command
+    public class Message : IMessage
     {
         public Guid Id { get; set; }
         public Guid TicketId { get; set; }

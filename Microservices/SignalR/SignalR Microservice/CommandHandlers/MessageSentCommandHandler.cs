@@ -25,11 +25,15 @@ namespace SignalR_Microservice.CommandHandlers
             {
                 var sentMessage = new Models.Message
                 {
-                    Username = request.Username,
-                    Content = request.Content
+                    Id = request.Id,
+                    Seen = request.Seen,
+                    Text = request.Text,
+                    TicketId = request.TicketId,
+                    TimeStamp = request.TimeStamp,
+                    UserId = request.UserId
                 };
 
-                _eventBus.PublishEvent(new SentMessageEvent(request.Username, request.Content));
+                _eventBus.PublishEvent(new MessageSentEvent(sentMessage));
             }
             catch (Exception e)
             {
