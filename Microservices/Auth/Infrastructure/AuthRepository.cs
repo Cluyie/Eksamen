@@ -16,6 +16,12 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure
             _authContext = authContext;
         }
 
+        public async Task Create(AuthUser user)
+        {
+            _authContext.Add(user);
+            await _authContext.SaveChangesAsync();
+        }
+
         public async Task<AuthUser> GetUserFromUserNameOrEmailAsync(string userNameOrEmail)
         {
             AuthUser authUser = await _authContext.AuthUsers.Include(u => u.UserRoles).ThenInclude(u => u.Role).SingleOrDefaultAsync(u => u.UserName == userNameOrEmail || u.Email == userNameOrEmail);
@@ -31,6 +37,12 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure
         public async Task<AuthUser> GetUserFromId(Guid id)
         {
             return await _authContext.AuthUsers.SingleOrDefaultAsync(u => u.Id == id);
+        }
+
+        public async Task Delete(AuthUser user)
+        {
+            _authContext.Remove(user);
+            await _authContext.SaveChangesAsync();
         }
     }
 }

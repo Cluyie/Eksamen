@@ -53,7 +53,9 @@ namespace UCLDreamTeam.Auth.Api
             services.AddDbContext<AuthContext>();
             services.AddMediatR(typeof(Startup));
             services.AddRabbitMq();
+            services.AddTransient<UserCreatedEventHandler>();
             services.AddTransient<UserUpdatedEventHandler>();
+            services.AddTransient<UserDeletedEventHandler>();
 
             services.AddAuthentication(options =>
             {
@@ -123,7 +125,9 @@ namespace UCLDreamTeam.Auth.Api
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("../swagger/v1/swagger.json", "Auth API V1"); });
 
+            app.Subscribe<UserCreatedEvent, UserCreatedEventHandler>();
             app.Subscribe<UserUpdatedEvent, UserUpdatedEventHandler>();
+            app.Subscribe<UserDeletedEvent, UserDeletedEventHandler>();
 
             //app.UseHttpsRedirection();
 
@@ -174,7 +178,7 @@ namespace UCLDreamTeam.Auth.Api
 
 
 
-            //creating an admin
+             //creating an admin
             var admin = new AuthUser
             {
                 Id = Guid.NewGuid(),

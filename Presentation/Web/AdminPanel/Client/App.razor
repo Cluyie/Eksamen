@@ -1,23 +1,23 @@
-ï»¿<Router AppAssembly="@typeof(Program).Assembly">
+<Router AppAssembly="@typeof(Program).Assembly">
     <Found Context="routeData">
         <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
             <NotAuthorized>
                 <h1>Ingen adgang</h1>
-                <hr/>
-                <p>Du er ikke logget ind, og har derfor ikke adgang til denne side.</p>
+                <hr />
+                <p>Du har ikke adgang til dette indhold.</p>
             </NotAuthorized>
             <Authorizing>
                 <h1>Logger ind...</h1>
-                <hr/>
-                <p>Vi forsÃ¸ger at logge dig ind...</p>
+                <hr />
+                <p>Vi forsøger at logge dig ind...</p>
             </Authorizing>
         </AuthorizeRouteView>
     </Found>
     <NotFound>
         <LayoutView Layout="@typeof(MainLayout)">
             <h1>Fejl 404</h1>
-            <hr/>
-            <p>Siden blev ikke fundet. Tjek at adressen er stavet korrekt eller prÃ¸v igen senere.</p>
+            <hr />
+            <p>Siden blev ikke fundet. Tjek at adressen er stavet korrekt eller prøv igen senere.</p>
         </LayoutView>
     </NotFound>
 </Router>

@@ -6,6 +6,7 @@ using UCLDreamTeam.Mail.Domain.Events;
 using UCLDreamTeam.Mail.Domain.Interfaces;
 using UCLDreamTeam.Mail.Domain.Models;
 using UCLDreamTeam.SharedInterfaces.Mail;
+using UCLToolBox;
 
 namespace UCLDreamTeam.Mail.Domain.EventHandlers
 {

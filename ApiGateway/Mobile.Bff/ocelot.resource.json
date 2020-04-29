@@ -1,0 +1,28 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/ResourceService/Resource",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 1337
+        }
+      ],
+      "UpstreamPathTemplate": "/Resource",
+      "UpstreamHttpMethod": [ "Post", "Get", "Put" ]
+    },
+    {
+      "DownstreamPathTemplate": "/ResourceService/Resource/guid={guid}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 1337
+        }
+      ],
+      "UpstreamPathTemplate": "/Resource/guid={guid}",
+      "UpstreamHttpMethod": [ "Get", "Delete" ]
+    }
+  ]
+}

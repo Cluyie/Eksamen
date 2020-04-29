@@ -1,0 +1,28 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/TicketService/Ticket?ticketId={ticketId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 1337
+        }
+      ],
+      "UpstreamPathTemplate": "/Ticket?ticketId={ticketId}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/TicketService/Ticket/User?userId={userId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 1337
+        }
+      ],
+      "UpstreamPathTemplate": "/Ticket/User?userId={userId}",
+      "UpstreamHttpMethod": [ "Get" ]
+    }
+  ]
+}

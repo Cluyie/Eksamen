@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AdminPanel\Client\AdminPanel.Client.csproj" />
+    <ProjectReference Include="..\Client\AdminPanel.Client.csproj" />
   </ItemGroup>
 
 </Project>

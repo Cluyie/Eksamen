@@ -1,0 +1,59 @@
+﻿@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+@page "/Login"
+@using AdminPanel.Client.DTOs
+@using AdminPanel.Client.Services
+<h1>Log ind</h1>
+<hr/>
+
+<div class="col-md-6">
+    @if (_invalidLogin)
+    {
+        <div class="alert alert-danger">
+            <b>Fejl!</b> De indtastede oplysninger kunne ikke matches til en bruger, eller også har brugeren ikke
+            administrator-rettigheder.
+        </div>
+    }
+
+    <EditForm Model="@_loginDTO" OnValidSubmit="OnValidSubmit">
+
+        <div class="form-group">
+            <label>Brugernavn eller E-mail-adresse</label>
+            <InputText id="login-username" class="form-control" placeholder="Brugernavn" @bind-Value="_loginDTO.UsernameOrEmail"/>
+        </div>
+
+        <div class="form-group">
+            <label>Adgangskode</label>
+            <InputText id="login-password" class="form-control" placeholder="********" type="password" @bind-Value="_loginDTO.Password"/>
+        </div>
+
+        <div class="form-group">
+            <button id="loginSubmit" class="btn btn-primary" type="submit">Log ind</button>
+        </div>
+
+    </EditForm>
+</div>
+
+
+@code {
+    private readonly LoginDTO _loginDTO = new LoginDTO();
+
+    private bool _invalidLogin;
+
+    private async void OnValidSubmit()
+    {
+        _invalidLogin = false;
+        StateHasChanged();
+
+        if (await AuthService.Login(_loginDTO))
+        {
+            NavigationManager.NavigateTo("");
+        }
+        else
+        {
+            _invalidLogin = true;
+            StateHasChanged();
+        }
+    }
+
+}
