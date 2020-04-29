@@ -25,20 +25,20 @@ namespace UCLDreamTeam.Ticket.Data.Contexts
             base.OnConfiguring(optionsBuilder);
         }
 
-    protected override void OnModelCreating(ModelBuilder builder)
-    {
-      builder.Entity<UserTicket>()
-        .HasKey(ut => new { ut.UserId, ut.TicketId });
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+          builder.Entity<UserTicket>()
+            .HasKey(ut => new { ut.UserId, ut.TicketId });
 
-      builder.Entity<UserTicket>()
-        .HasOne(ut => ut.User)
-        .WithMany(b => b.UserTickets)
-        .HasForeignKey(bc => bc.UserId);
+          builder.Entity<UserTicket>()
+            .HasOne(ut => ut.User)
+            .WithMany(b => b.UserTickets)
+            .HasForeignKey(bc => bc.UserId);
 
-      builder.Entity<UserTicket>()
-        .HasOne(ut => ut.Ticket)
-        .WithMany(c => c.UserTickets)
-        .HasForeignKey(bc => bc.TicketId);
+          builder.Entity<UserTicket>()
+            .HasOne(ut => ut.Ticket)
+            .WithMany(c => c.UserTickets)
+            .HasForeignKey(bc => bc.TicketId);
+        }
     }
-  }
 }
