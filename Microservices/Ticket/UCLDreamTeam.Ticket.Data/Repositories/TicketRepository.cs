@@ -11,69 +11,77 @@ using Z.EntityFramework.Plus;
 
 namespace UCLDreamTeam.Ticket.Data.Repositories
 {
-    public class TicketRepository : ITicketRepository
+  public class TicketRepository : ITicketRepository
+  {
+    private readonly TicketDbContext _ticketDbContext;
+
+    public TicketRepository(TicketDbContext ticketDbContext)
     {
-        private readonly TicketDbContext _ticketDbContext;
-
-        public TicketRepository(TicketDbContext ticketDbContext)
-        {
-            _ticketDbContext = ticketDbContext;
-        }
-
-        public async Task<Domain.Models.Ticket> GetByIdAsync(Guid id)
-        {
-            return await _ticketDbContext.Tickets.Include(t => t.Messages)
-                .FirstOrDefaultAsync(r => r.Id == id);
-        }
-
-        public async Task<IEnumerable<Domain.Models.Ticket>> GetByUserIdAsync(Guid id)
-        {
-            var user = await _ticketDbContext.Users
-                .Include(u => u.UserTickets)
-                .FirstOrDefaultAsync(u => u.Id == id);
-            var userTickets = user.UserTickets
-                .FindAll(ut => ut.UserId == id);
-            return userTickets.Select(ut => ut.Ticket);
-        }
-
-        public async Task AddAsync(Domain.Models.Ticket ticket)
-        {
-            _ticketDbContext.Tickets.Add(ticket);
-            await _ticketDbContext.SaveChangesAsync();
-        }
-
-        public async Task AddMessageAsync(Message message)
-        {
-            var ticket = await _ticketDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == message.TicketId);
-            ticket.Messages.Add(message);
-            await _ticketDbContext.SaveChangesAsync();
-        }
-
-        public async Task MessageSeen(Guid messageId, bool seen)
-        {
-            _ticketDbContext.Tickets.FirstOrDefault(t => t.Messages.Any(m => m.Id == messageId)).Messages
-                .Find(m => m.Id == messageId).Seen = seen;
-            await _ticketDbContext.SaveChangesAsync();
-        }
-
-        public async Task CreateAsync(Domain.Models.Ticket ticket)
-        {
-            _ticketDbContext.Tickets.Add(ticket);
-            await _ticketDbContext.SaveChangesAsync();
-        }
-
-        public async Task UpdateAsync(Domain.Models.Ticket ticket)
-        {
-            _ticketDbContext.Tickets.Update(ticket);
-            await _ticketDbContext.SaveChangesAsync();
-        }
-
-
-        public async Task ChangeStatusById(Guid id, Status status)
-        {
-            var ticket = await _ticketDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == id);
-            ticket.Status = status;
-            await _ticketDbContext.SaveChangesAsync();
-        }
+      _ticketDbContext = ticketDbContext;
     }
+
+    public async Task<Domain.Models.Ticket> GetByIdAsync(Guid id)
+    {
+      return await _ticketDbContext.Tickets.Include(t => t.Messages)
+          .FirstOrDefaultAsync(r => r.Id == id);
+    }
+
+    public async Task<IEnumerable<Domain.Models.Ticket>> GetByUserIdAsync(Guid id)
+    {
+      var user = await _ticketDbContext.Users
+          .Include(u => u.UserTickets)
+          .FirstOrDefaultAsync(u => u.Id == id);
+      var userTickets = user.UserTickets
+          .FindAll(ut => ut.UserId == id);
+      return userTickets.Select(ut => ut.Ticket);
+    }
+
+    public async Task AddAsync(Domain.Models.Ticket ticket)
+    {
+      _ticketDbContext.Tickets.Add(ticket);
+      await _ticketDbContext.SaveChangesAsync();
+    }
+
+    public async Task AddMessageAsync(Message message)
+    {
+      var ticket = await _ticketDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == message.TicketId);
+      ticket.Messages.Add(message);
+      await _ticketDbContext.SaveChangesAsync();
+    }
+
+    public async Task MessageSeen(Guid messageId, bool seen)
+    {
+      var dbMessage = await _ticketDbContext.Messages.FirstOrDefaultAsync(m => m.Id == messageId);
+      dbMessage.Seen = seen;
+      await _ticketDbContext.SaveChangesAsync();
+    }
+
+    public async Task CreateAsync(Domain.Models.Ticket ticket)
+    {
+      var users = ticket.UserTickets.Select(ut => ut.User);
+
+      ticket.UserTickets.ForEach(ut =>
+      {
+        ut.User = null;
+        ut.Ticket = null;
+      });
+
+      await _ticketDbContext.Tickets.AddAsync(ticket);
+      await _ticketDbContext.SaveChangesAsync();
+    }
+
+    public async Task UpdateAsync(Domain.Models.Ticket ticket)
+    {
+      _ticketDbContext.Tickets.Update(ticket);
+      await _ticketDbContext.SaveChangesAsync();
+    }
+
+
+    public async Task ChangeStatusById(Guid id, Status status)
+    {
+      var ticket = await _ticketDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == id);
+      ticket.Status = status;
+      await _ticketDbContext.SaveChangesAsync();
+    }
+  }
 }
