@@ -42,11 +42,15 @@ namespace XamarinFormsApp.ViewModel
             
 
             
-            var user = (User) Application.Current.Properties["UserData"];
+            /*var user = (User) Application.Current.Properties["UserData"]*/;
+            var user = _proxy.Get<User>("User");
             var response = _proxy.Get<ApiResponse<List<Reservation<ReserveTime>>>>($"Reservation/{user.Id}");
             if (response?.Code == ApiResponseCode.OK)
             {
-                var reservationsList = response.Value;
+                foreach (var item in response.Value)
+                {
+                     reservationsList.Add(item);
+                }
                 ReservationListItems = new ObservableCollection<ReservationListItem>();
 
                 foreach (Reservation<ReserveTime> reservation in reservationsList)
