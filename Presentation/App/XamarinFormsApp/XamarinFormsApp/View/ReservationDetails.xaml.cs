@@ -19,5 +19,16 @@ namespace XamarinFormsApp.View
             InitializeComponent();
             BindingContext = listItem;
         }
+        private void SuportButton_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new QueuePage());
+        }
+        private async void DeleteButton_Clicked(object sender, EventArgs e)
+        {
+            if (await ())
+                await Navigation.PushAsync(new ReservationList())
+
+//            Navigation.PushAsync(new ReservationList());
+        }
     }
 }
