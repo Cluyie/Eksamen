@@ -16,7 +16,7 @@ namespace AdminPanel.Client.Services
 
         public async Task<Ticket> GetByIdAsync(Guid id)
         {
-            var response = await _client.GetAsync<Ticket>($"Ticket/{id.ToString()}");
+            var response = await _client.GetAsync<Ticket>($"/Ticket?ticketId={id.ToString()}");
            
             return response.Value;
         }

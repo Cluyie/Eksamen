@@ -215,7 +215,7 @@
         //.Build();
 
         _chatHubConnection = new HubConnectionBuilder()
-.WithUrl("http://localhost:1337/ChatHub")
+.WithUrl("http://localhost:5017/ChatHub")
 .Build();
 
         await _chatHubConnection.StartAsync();
@@ -229,7 +229,7 @@
         #region SignalR QueueHub Methods
 
         _queueHubConnection = new HubConnectionBuilder()
-    .WithUrl("http://localhost:1337/QueueHub")
+    .WithUrl("http://localhost:5017/QueueHub")
     .Build();
 
         //        _queueHubConnection = new HubConnectionBuilder()
@@ -241,15 +241,22 @@
         _queueHubConnection.On<Guid>("ReceiveTaskId", async (ticketId) =>
         {
             var ticket = await TicketService.GetByIdAsync(ticketId);
-
-            Reservation reservation = new Reservation();
-
-            if (ticket.ReservationId.HasValue)
+            try
             {
-                reservation = await ReservationService.GetFromId(ticket.Id);
-            }
+                Reservation reservation = new Reservation();
 
-            TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation.ResourceId) ?? null });
+                if (ticket.ReservationId.HasValue)
+                {
+                    reservation = await ReservationService.GetFromId(ticket.Id);
+                }
+
+                TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation.ResourceId) ?? null });
+
+            }
+            catch (Exception)
+            {
+                TicketDTOs.Add(new TicketDTO { Ticket = ticket });
+            }
 
             SetActiveTicket();
         });
@@ -323,5 +330,6 @@
         TicketDTOs = TicketDTOs.OrderByDescending(x => x.Ticket.Messages.Min(s => s.TimeStamp)).ToList();
         TicketDTOs.First().Ticket.Active = true;
         ActiveTicketDTO = TicketDTOs.First(x => (bool) x.Ticket.Active);
+        StateHasChanged();
     }
 }

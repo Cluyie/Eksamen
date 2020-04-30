@@ -34,7 +34,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Ticket",
-      "UpstreamHttpMethod": ["Put"]
+      "UpstreamHttpMethod": ["Put", "Post"]
     }
   ]
 }

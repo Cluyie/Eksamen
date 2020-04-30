@@ -27,13 +27,8 @@ namespace Mobile.Bff
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
-            app.UseRouting();
-
-            app.UseCors(builder => builder
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
             app.UseStaticFiles();
+            app.UseRouting();
         }
     }
 }

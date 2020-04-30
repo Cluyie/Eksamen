@@ -58,11 +58,11 @@ namespace UCLDreamTeam.Auth.Api
             services.AddTransient<UserDeletedEventHandler>();
 
             services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(options =>
                 {
                     var key = KeyService.BuildRsaSigningKey(xmlKey);
@@ -80,7 +80,7 @@ namespace UCLDreamTeam.Auth.Api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth MicroService", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Auth MicroService", Version = "v1"});
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -133,8 +133,7 @@ namespace UCLDreamTeam.Auth.Api
 
             app.UseRouting();
 
-            app.UseCors(builder => builder
-                .AllowAnyOrigin()
+            app.UseCors(builder => builder.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
 
@@ -155,7 +154,7 @@ namespace UCLDreamTeam.Auth.Api
             var authContext = serviceProvider.GetRequiredService<AuthContext>();
             var hashService = serviceProvider.GetRequiredService<HashService>();
 
-            string roleName = "Admin";
+            var roleName = "Admin";
 
             //creating the role and seeding it to the database
             var roleExist = authContext.Roles.Any(r => r.RoleName == roleName);
@@ -168,7 +167,8 @@ namespace UCLDreamTeam.Auth.Api
 
             if (!roleExist) authContext.Roles.Add(roleToAdd);
 
-            var _user = authContext.AuthUsers.SingleOrDefault(u => u.UserName == Configuration.GetSection("UserSettings")["UserName"]);
+            var _user = authContext.AuthUsers.SingleOrDefault(u =>
+                u.UserName == Configuration.GetSection("UserSettings")["UserName"]);
 
             if (_user == null)
             {
@@ -182,10 +182,11 @@ namespace UCLDreamTeam.Auth.Api
 
                 admin.PasswordSalt = hashService.GenerateSalt();
 
-                admin.PasswordHash = hashService.GenerateHash(Configuration.GetSection("UserSettings")["UserPassword"], admin.PasswordSalt);
+                admin.PasswordHash = hashService.GenerateHash(Configuration.GetSection("UserSettings")["UserPassword"],
+                    admin.PasswordSalt);
 
                 authContext.AuthUsers.Add(admin);
-                authContext.UserRoles.Add(new UserRole { AuthUserId = admin.Id, Role = roleToAdd });
+                authContext.UserRoles.Add(new UserRole {AuthUserId = admin.Id, Role = roleToAdd});
                 authContext.SaveChanges();
             }
         }

@@ -10,7 +10,7 @@ using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.Reservation.Api.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[Controller]")]
     public class ReservationController : ControllerBase
@@ -109,18 +109,23 @@ namespace UCLDreamTeam.Reservation.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ApiResponse<Domain.Models.Reservation>> UpdateReservation([FromBody] Domain.Models.Reservation reservation)
+        public async Task<ApiResponse<Domain.Models.Reservation>> UpdateReservation(
+            [FromBody] Domain.Models.Reservation reservation)
         {
-            if (reservation == null || !ModelState.IsValid) return new ApiResponse<Domain.Models.Reservation>(ApiResponseCode.BadRequest, reservation); //return BadRequest();
+            if (reservation == null || !ModelState.IsValid)
+                return new ApiResponse<Domain.Models.Reservation>(ApiResponseCode.BadRequest,
+                    reservation); //return BadRequest();
 
             try
             {
                 await _reservationService.UpdateAsync(reservation);
-                return new ApiResponse<Domain.Models.Reservation>(ApiResponseCode.OK, reservation); //return Ok(reservation);
+                return new ApiResponse<Domain.Models.Reservation>(ApiResponseCode.OK,
+                    reservation); //return Ok(reservation);
             }
             catch (Exception e)
             {
-                return new ApiResponse<Domain.Models.Reservation>(ApiResponseCode.ServiceUnavailable, null); //return StatusCode(503);
+                return new ApiResponse<Domain.Models.Reservation>(ApiResponseCode.ServiceUnavailable,
+                    null); //return StatusCode(503);
             }
         }
 

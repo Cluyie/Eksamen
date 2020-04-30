@@ -16,15 +16,15 @@ namespace AdminPanel.Client.Services
         private readonly HttpClient _httpClient;
         private readonly AuthCredentialsKeeper _credentialsKeeper;
 
-        private const string BASE_URL = "http://81.27.216.103/MobileBff/";
-        //private const string BASE_URL = "http://localhost:1339/";
+        //private const string BASE_URL = "http://81.27.216.103/MobileBff/";
+        private const string BASE_URL = "http://localhost:5001/";
         private const string TOKEN_HEADER_NAME = "Authorization";
 
         private bool _tokenHeaderIsSet = false;
 
         private readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions
         {
-            PropertyNameCaseInsensitive = true,
+            PropertyNameCaseInsensitive = true
         };
 
         public ApiClient(HttpClient httpClient, AuthCredentialsKeeper credentialsKeeper)
@@ -40,7 +40,9 @@ namespace AdminPanel.Client.Services
             var response = await _httpClient.GetAsync(WrapUrl(url));
 
             using (var responseContent = await response.Content.ReadAsStreamAsync())
+            {
                 return await JsonSerializer.DeserializeAsync<ApiResponseDTO<T>>(responseContent, _jsonOptions);
+            }
         }
 
         public async Task<ApiResponseDTO<T>> DeleteAsync<T>(string url)
@@ -50,7 +52,9 @@ namespace AdminPanel.Client.Services
             var response = await _httpClient.DeleteAsync(WrapUrl(url));
 
             using (var responseContent = await response.Content.ReadAsStreamAsync())
+            {
                 return await JsonSerializer.DeserializeAsync<ApiResponseDTO<T>>(responseContent, _jsonOptions);
+            }
         }
 
         public async Task<ApiResponseDTO<T>> PostAsync<T>(string url, object data)
@@ -62,7 +66,9 @@ namespace AdminPanel.Client.Services
             var response = await _httpClient.PostAsync(WrapUrl(url), httpContent);
 
             using (var responseContent = await response.Content.ReadAsStreamAsync())
+            {
                 return await JsonSerializer.DeserializeAsync<ApiResponseDTO<T>>(responseContent, _jsonOptions);
+            }
         }
 
         public async Task<ApiResponseDTO<T>> PutAsync<T>(string url, object data)
@@ -74,7 +80,9 @@ namespace AdminPanel.Client.Services
             var response = await _httpClient.PutAsync(WrapUrl(url), httpContent);
 
             using (var responseContent = await response.Content.ReadAsStreamAsync())
+            {
                 return await JsonSerializer.DeserializeAsync<ApiResponseDTO<T>>(responseContent, _jsonOptions);
+            }
         }
 
         private string WrapUrl(string url)
@@ -84,12 +92,12 @@ namespace AdminPanel.Client.Services
 
         private void SetTokenHeader()
         {
-            if(_tokenHeaderIsSet && !_credentialsKeeper.HasCredentials())
+            if (_tokenHeaderIsSet && !_credentialsKeeper.HasCredentials())
             {
                 _httpClient.DefaultRequestHeaders.Remove(TOKEN_HEADER_NAME);
                 _tokenHeaderIsSet = false;
             }
-            else if(!_tokenHeaderIsSet && _credentialsKeeper.HasCredentials())
+            else if (!_tokenHeaderIsSet && _credentialsKeeper.HasCredentials())
             {
                 _httpClient.DefaultRequestHeaders.Add(TOKEN_HEADER_NAME, _credentialsKeeper.Token);
                 _tokenHeaderIsSet = true;
