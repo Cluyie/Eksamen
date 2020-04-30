@@ -71,14 +71,7 @@ namespace XamarinFormsApp.ViewModel
 
 
             }
-            
-
-
-
-
             return this;
-
-
         }
     }
 

@@ -26,6 +26,14 @@
             <Label Text="Reserveret til:"             
                 FontAttributes="Bold" />
             <Label Text="{Binding To}"/>
+            <Button Text="Suport" 
+                    CornerRadius="10" 
+                    FontSize="Large" 
+                    Clicked="SuportButton_Clicked"/>
+            <Button Text="Slet Reservation" 
+                    CornerRadius="10" 
+                    FontSize="Large" 
+                    Clicked="DeleteButton_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
