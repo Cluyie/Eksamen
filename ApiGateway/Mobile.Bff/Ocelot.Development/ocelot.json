@@ -3,7 +3,7 @@
     {
       "DownstreamPathTemplate": "/Auth/Login",
       "UpstreamPathTemplate": "/Auth/Login",
-      "UpstreamHttpMethod": ["Post"],
+      "UpstreamHttpMethod": [ "Post" ],
       "DownstreamHttpMethod": null,
       "AddHeadersToRequest": {},
       "UpstreamHeaderTransform": {},
@@ -13,7 +13,10 @@
       "AddQueriesToRequest": {},
       "ChangeDownstreamPathTemplate": {},
       "RequestIdKey": null,
-      "FileCacheOptions": { "TtlSeconds": 0, "Region": null },
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
       "ReRouteIsCaseSensitive": false,
       "ServiceName": null,
       "ServiceNamespace": null,
@@ -23,7 +26,11 @@
         "DurationOfBreak": 0,
         "TimeoutValue": 0
       },
-      "LoadBalancerOptions": { "Type": null, "Key": null, "Expiry": 0 },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
       "RateLimitOptions": {
         "ClientWhitelist": [],
         "EnableRateLimiting": false,
@@ -42,20 +49,28 @@
         "UseProxy": true,
         "MaxConnectionsPerServer": 2147483647
       },
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5003 }],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
       "UpstreamHost": null,
       "Key": null,
       "DelegatingHandlers": [],
       "Priority": 1,
       "Timeout": 0,
       "DangerousAcceptAnyServerCertificateValidator": false,
-      "SecurityOptions": { "IPAllowedList": [], "IPBlockedList": [] },
+      "SecurityOptions": {
+        "IPAllowedList": [],
+        "IPBlockedList": []
+      },
       "DownstreamHttpVersion": null
     },
     {
       "DownstreamPathTemplate": "/Mail",
       "UpstreamPathTemplate": "/Mail",
-      "UpstreamHttpMethod": ["Post"],
+      "UpstreamHttpMethod": [ "Post" ],
       "DownstreamHttpMethod": null,
       "AddHeadersToRequest": {},
       "UpstreamHeaderTransform": {},
@@ -65,7 +80,10 @@
       "AddQueriesToRequest": {},
       "ChangeDownstreamPathTemplate": {},
       "RequestIdKey": null,
-      "FileCacheOptions": { "TtlSeconds": 0, "Region": null },
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
       "ReRouteIsCaseSensitive": false,
       "ServiceName": null,
       "ServiceNamespace": null,
@@ -75,7 +93,11 @@
         "DurationOfBreak": 0,
         "TimeoutValue": 0
       },
-      "LoadBalancerOptions": { "Type": null, "Key": null, "Expiry": 0 },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
       "RateLimitOptions": {
         "ClientWhitelist": [],
         "EnableRateLimiting": false,
@@ -94,20 +116,28 @@
         "UseProxy": true,
         "MaxConnectionsPerServer": 2147483647
       },
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5015 }],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5015
+        }
+      ],
       "UpstreamHost": null,
       "Key": null,
       "DelegatingHandlers": [],
       "Priority": 1,
       "Timeout": 0,
       "DangerousAcceptAnyServerCertificateValidator": false,
-      "SecurityOptions": { "IPAllowedList": [], "IPBlockedList": [] },
+      "SecurityOptions": {
+        "IPAllowedList": [],
+        "IPBlockedList": []
+      },
       "DownstreamHttpVersion": null
     },
     {
       "DownstreamPathTemplate": "/Reservation",
       "UpstreamPathTemplate": "/Reservation",
-      "UpstreamHttpMethod": ["Get", "Post"],
+      "UpstreamHttpMethod": [ "Get", "Post" ],
       "DownstreamHttpMethod": null,
       "AddHeadersToRequest": {},
       "UpstreamHeaderTransform": {},
@@ -117,7 +147,10 @@
       "AddQueriesToRequest": {},
       "ChangeDownstreamPathTemplate": {},
       "RequestIdKey": null,
-      "FileCacheOptions": { "TtlSeconds": 0, "Region": null },
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
       "ReRouteIsCaseSensitive": false,
       "ServiceName": null,
       "ServiceNamespace": null,
@@ -127,7 +160,11 @@
         "DurationOfBreak": 0,
         "TimeoutValue": 0
       },
-      "LoadBalancerOptions": { "Type": null, "Key": null, "Expiry": 0 },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
       "RateLimitOptions": {
         "ClientWhitelist": [],
         "EnableRateLimiting": false,
@@ -146,20 +183,28 @@
         "UseProxy": true,
         "MaxConnectionsPerServer": 2147483647
       },
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5011 }],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5011
+        }
+      ],
       "UpstreamHost": null,
       "Key": null,
       "DelegatingHandlers": [],
       "Priority": 1,
       "Timeout": 0,
       "DangerousAcceptAnyServerCertificateValidator": false,
-      "SecurityOptions": { "IPAllowedList": [], "IPBlockedList": [] },
+      "SecurityOptions": {
+        "IPAllowedList": [],
+        "IPBlockedList": []
+      },
       "DownstreamHttpVersion": null
     },
     {
       "DownstreamPathTemplate": "/Reservation/{id}",
       "UpstreamPathTemplate": "/Reservation/{id}",
-      "UpstreamHttpMethod": ["Get", "Delete"],
+      "UpstreamHttpMethod": [ "Get", "Delete" ],
       "DownstreamHttpMethod": null,
       "AddHeadersToRequest": {},
       "UpstreamHeaderTransform": {},
@@ -169,7 +214,10 @@
       "AddQueriesToRequest": {},
       "ChangeDownstreamPathTemplate": {},
       "RequestIdKey": null,
-      "FileCacheOptions": { "TtlSeconds": 0, "Region": null },
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
       "ReRouteIsCaseSensitive": false,
       "ServiceName": null,
       "ServiceNamespace": null,
@@ -179,7 +227,11 @@
         "DurationOfBreak": 0,
         "TimeoutValue": 0
       },
-      "LoadBalancerOptions": { "Type": null, "Key": null, "Expiry": 0 },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
       "RateLimitOptions": {
         "ClientWhitelist": [],
         "EnableRateLimiting": false,
@@ -198,20 +250,28 @@
         "UseProxy": true,
         "MaxConnectionsPerServer": 2147483647
       },
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5011 }],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5011
+        }
+      ],
       "UpstreamHost": null,
       "Key": null,
       "DelegatingHandlers": [],
       "Priority": 1,
       "Timeout": 0,
       "DangerousAcceptAnyServerCertificateValidator": false,
-      "SecurityOptions": { "IPAllowedList": [], "IPBlockedList": [] },
+      "SecurityOptions": {
+        "IPAllowedList": [],
+        "IPBlockedList": []
+      },
       "DownstreamHttpVersion": null
     },
     {
       "DownstreamPathTemplate": "/Resource",
       "UpstreamPathTemplate": "/Resource",
-      "UpstreamHttpMethod": ["Post", "Get", "Put"],
+      "UpstreamHttpMethod": [ "Post", "Get", "Put" ],
       "DownstreamHttpMethod": null,
       "AddHeadersToRequest": {},
       "UpstreamHeaderTransform": {},
@@ -221,7 +281,10 @@
       "AddQueriesToRequest": {},
       "ChangeDownstreamPathTemplate": {},
       "RequestIdKey": null,
-      "FileCacheOptions": { "TtlSeconds": 0, "Region": null },
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
       "ReRouteIsCaseSensitive": false,
       "ServiceName": null,
       "ServiceNamespace": null,
@@ -231,7 +294,11 @@
         "DurationOfBreak": 0,
         "TimeoutValue": 0
       },
-      "LoadBalancerOptions": { "Type": null, "Key": null, "Expiry": 0 },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
       "RateLimitOptions": {
         "ClientWhitelist": [],
         "EnableRateLimiting": false,
@@ -250,20 +317,28 @@
         "UseProxy": true,
         "MaxConnectionsPerServer": 2147483647
       },
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5009 }],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5009
+        }
+      ],
       "UpstreamHost": null,
       "Key": null,
       "DelegatingHandlers": [],
       "Priority": 1,
       "Timeout": 0,
       "DangerousAcceptAnyServerCertificateValidator": false,
-      "SecurityOptions": { "IPAllowedList": [], "IPBlockedList": [] },
+      "SecurityOptions": {
+        "IPAllowedList": [],
+        "IPBlockedList": []
+      },
       "DownstreamHttpVersion": null
     },
     {
       "DownstreamPathTemplate": "/Resource/guid={guid}",
       "UpstreamPathTemplate": "/Resource/guid={guid}",
-      "UpstreamHttpMethod": ["Get", "Delete"],
+      "UpstreamHttpMethod": [ "Get", "Delete" ],
       "DownstreamHttpMethod": null,
       "AddHeadersToRequest": {},
       "UpstreamHeaderTransform": {},
@@ -273,7 +348,10 @@
       "AddQueriesToRequest": {},
       "ChangeDownstreamPathTemplate": {},
       "RequestIdKey": null,
-      "FileCacheOptions": { "TtlSeconds": 0, "Region": null },
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
       "ReRouteIsCaseSensitive": false,
       "ServiceName": null,
       "ServiceNamespace": null,
@@ -283,7 +361,11 @@
         "DurationOfBreak": 0,
         "TimeoutValue": 0
       },
-      "LoadBalancerOptions": { "Type": null, "Key": null, "Expiry": 0 },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
       "RateLimitOptions": {
         "ClientWhitelist": [],
         "EnableRateLimiting": false,
@@ -302,20 +384,28 @@
         "UseProxy": true,
         "MaxConnectionsPerServer": 2147483647
       },
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5009 }],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5009
+        }
+      ],
       "UpstreamHost": null,
       "Key": null,
       "DelegatingHandlers": [],
       "Priority": 1,
       "Timeout": 0,
       "DangerousAcceptAnyServerCertificateValidator": false,
-      "SecurityOptions": { "IPAllowedList": [], "IPBlockedList": [] },
+      "SecurityOptions": {
+        "IPAllowedList": [],
+        "IPBlockedList": []
+      },
       "DownstreamHttpVersion": null
     },
     {
       "DownstreamPathTemplate": "/Ticket?ticketId={ticketId}",
       "UpstreamPathTemplate": "/Ticket?ticketId={ticketId}",
-      "UpstreamHttpMethod": ["Get"],
+      "UpstreamHttpMethod": [ "Get" ],
       "DownstreamHttpMethod": null,
       "AddHeadersToRequest": {},
       "UpstreamHeaderTransform": {},
@@ -325,7 +415,10 @@
       "AddQueriesToRequest": {},
       "ChangeDownstreamPathTemplate": {},
       "RequestIdKey": null,
-      "FileCacheOptions": { "TtlSeconds": 0, "Region": null },
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
       "ReRouteIsCaseSensitive": false,
       "ServiceName": null,
       "ServiceNamespace": null,
@@ -335,7 +428,11 @@
         "DurationOfBreak": 0,
         "TimeoutValue": 0
       },
-      "LoadBalancerOptions": { "Type": null, "Key": null, "Expiry": 0 },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
       "RateLimitOptions": {
         "ClientWhitelist": [],
         "EnableRateLimiting": false,
@@ -354,20 +451,28 @@
         "UseProxy": true,
         "MaxConnectionsPerServer": 2147483647
       },
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5013 }],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5013
+        }
+      ],
       "UpstreamHost": null,
       "Key": null,
       "DelegatingHandlers": [],
       "Priority": 1,
       "Timeout": 0,
       "DangerousAcceptAnyServerCertificateValidator": false,
-      "SecurityOptions": { "IPAllowedList": [], "IPBlockedList": [] },
+      "SecurityOptions": {
+        "IPAllowedList": [],
+        "IPBlockedList": []
+      },
       "DownstreamHttpVersion": null
     },
     {
       "DownstreamPathTemplate": "/Ticket/User?ticketId={userId}",
       "UpstreamPathTemplate": "/Ticket/User?userId={userId}",
-      "UpstreamHttpMethod": ["Get"],
+      "UpstreamHttpMethod": [ "Get" ],
       "DownstreamHttpMethod": null,
       "AddHeadersToRequest": {},
       "UpstreamHeaderTransform": {},
@@ -377,7 +482,10 @@
       "AddQueriesToRequest": {},
       "ChangeDownstreamPathTemplate": {},
       "RequestIdKey": null,
-      "FileCacheOptions": { "TtlSeconds": 0, "Region": null },
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
       "ReRouteIsCaseSensitive": false,
       "ServiceName": null,
       "ServiceNamespace": null,
@@ -387,7 +495,11 @@
         "DurationOfBreak": 0,
         "TimeoutValue": 0
       },
-      "LoadBalancerOptions": { "Type": null, "Key": null, "Expiry": 0 },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
       "RateLimitOptions": {
         "ClientWhitelist": [],
         "EnableRateLimiting": false,
@@ -406,20 +518,28 @@
         "UseProxy": true,
         "MaxConnectionsPerServer": 2147483647
       },
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5013 }],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5013
+        }
+      ],
       "UpstreamHost": null,
       "Key": null,
       "DelegatingHandlers": [],
       "Priority": 1,
       "Timeout": 0,
       "DangerousAcceptAnyServerCertificateValidator": false,
-      "SecurityOptions": { "IPAllowedList": [], "IPBlockedList": [] },
+      "SecurityOptions": {
+        "IPAllowedList": [],
+        "IPBlockedList": []
+      },
       "DownstreamHttpVersion": null
     },
     {
       "DownstreamPathTemplate": "/Ticket",
       "UpstreamPathTemplate": "/Ticket",
-      "UpstreamHttpMethod": ["Put"],
+      "UpstreamHttpMethod": [ "Put" ],
       "DownstreamHttpMethod": null,
       "AddHeadersToRequest": {},
       "UpstreamHeaderTransform": {},
@@ -429,7 +549,10 @@
       "AddQueriesToRequest": {},
       "ChangeDownstreamPathTemplate": {},
       "RequestIdKey": null,
-      "FileCacheOptions": { "TtlSeconds": 0, "Region": null },
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
       "ReRouteIsCaseSensitive": false,
       "ServiceName": null,
       "ServiceNamespace": null,
@@ -439,7 +562,11 @@
         "DurationOfBreak": 0,
         "TimeoutValue": 0
       },
-      "LoadBalancerOptions": { "Type": null, "Key": null, "Expiry": 0 },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
       "RateLimitOptions": {
         "ClientWhitelist": [],
         "EnableRateLimiting": false,
@@ -458,20 +585,28 @@
         "UseProxy": true,
         "MaxConnectionsPerServer": 2147483647
       },
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5013 }],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5013
+        }
+      ],
       "UpstreamHost": null,
       "Key": null,
       "DelegatingHandlers": [],
       "Priority": 1,
       "Timeout": 0,
       "DangerousAcceptAnyServerCertificateValidator": false,
-      "SecurityOptions": { "IPAllowedList": [], "IPBlockedList": [] },
+      "SecurityOptions": {
+        "IPAllowedList": [],
+        "IPBlockedList": []
+      },
       "DownstreamHttpVersion": null
     },
     {
       "DownstreamPathTemplate": "/User",
       "UpstreamPathTemplate": "/User",
-      "UpstreamHttpMethod": ["Get", "Post", "Put"],
+      "UpstreamHttpMethod": [ "Get", "Post", "Put" ],
       "DownstreamHttpMethod": null,
       "AddHeadersToRequest": {},
       "UpstreamHeaderTransform": {},
@@ -481,7 +616,10 @@
       "AddQueriesToRequest": {},
       "ChangeDownstreamPathTemplate": {},
       "RequestIdKey": null,
-      "FileCacheOptions": { "TtlSeconds": 0, "Region": null },
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
       "ReRouteIsCaseSensitive": false,
       "ServiceName": null,
       "ServiceNamespace": null,
@@ -491,7 +629,11 @@
         "DurationOfBreak": 0,
         "TimeoutValue": 0
       },
-      "LoadBalancerOptions": { "Type": null, "Key": null, "Expiry": 0 },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
       "RateLimitOptions": {
         "ClientWhitelist": [],
         "EnableRateLimiting": false,
@@ -510,20 +652,28 @@
         "UseProxy": true,
         "MaxConnectionsPerServer": 2147483647
       },
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5007 }],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5007
+        }
+      ],
       "UpstreamHost": null,
       "Key": null,
       "DelegatingHandlers": [],
       "Priority": 1,
       "Timeout": 0,
       "DangerousAcceptAnyServerCertificateValidator": false,
-      "SecurityOptions": { "IPAllowedList": [], "IPBlockedList": [] },
+      "SecurityOptions": {
+        "IPAllowedList": [],
+        "IPBlockedList": []
+      },
       "DownstreamHttpVersion": null
     },
     {
       "DownstreamPathTemplate": "/User/{id}",
       "UpstreamPathTemplate": "/User/{id}",
-      "UpstreamHttpMethod": ["Get", "Delete"],
+      "UpstreamHttpMethod": [ "Get", "Delete" ],
       "DownstreamHttpMethod": null,
       "AddHeadersToRequest": {},
       "UpstreamHeaderTransform": {},
@@ -533,7 +683,10 @@
       "AddQueriesToRequest": {},
       "ChangeDownstreamPathTemplate": {},
       "RequestIdKey": null,
-      "FileCacheOptions": { "TtlSeconds": 0, "Region": null },
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
       "ReRouteIsCaseSensitive": false,
       "ServiceName": null,
       "ServiceNamespace": null,
@@ -543,7 +696,11 @@
         "DurationOfBreak": 0,
         "TimeoutValue": 0
       },
-      "LoadBalancerOptions": { "Type": null, "Key": null, "Expiry": 0 },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
       "RateLimitOptions": {
         "ClientWhitelist": [],
         "EnableRateLimiting": false,
@@ -562,14 +719,22 @@
         "UseProxy": true,
         "MaxConnectionsPerServer": 2147483647
       },
-      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5007 }],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5007
+        }
+      ],
       "UpstreamHost": null,
       "Key": null,
       "DelegatingHandlers": [],
       "Priority": 1,
       "Timeout": 0,
       "DangerousAcceptAnyServerCertificateValidator": false,
-      "SecurityOptions": { "IPAllowedList": [], "IPBlockedList": [] },
+      "SecurityOptions": {
+        "IPAllowedList": [],
+        "IPBlockedList": []
+      },
       "DownstreamHttpVersion": null
     }
   ],
@@ -598,8 +763,12 @@
       "DurationOfBreak": 0,
       "TimeoutValue": 0
     },
-    "BaseUrl": "http://localhost:5000",
-    "LoadBalancerOptions": { "Type": null, "Key": null, "Expiry": 0 },
+    "BaseUrl": "http://localhost:5001",
+    "LoadBalancerOptions": {
+      "Type": null,
+      "Key": null,
+      "Expiry": 0
+    },
     "DownstreamScheme": null,
     "HttpHandlerOptions": {
       "AllowAutoRedirect": false,
