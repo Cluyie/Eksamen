@@ -27,5 +27,10 @@ namespace AdminPanel.Client.Services
             
             return response.Value;
         }
+
+        public async Task UpdateTicket(Ticket ticket)
+        {
+            await _client.PutAsync<Ticket>($"Ticket", ticket);
+        }
     }
 }

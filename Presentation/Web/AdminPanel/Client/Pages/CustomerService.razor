@@ -14,13 +14,14 @@
 @inject ITicketService TicketService
 @inject IReservationService ReservationService
 @inject IResourceService ResourceService
+@inject ApiTicketService ApiTicketService
 
 <div class="container-fluid">
     <div class="row h-100">
         <TicketsPanel UpdateTicket="UpdateTicket" GetNextCustomer="@(() => GetNextCustomer(Guid.NewGuid().ToString()))" TicketDTOs=@(TicketDTOs ?? new List<TicketDTO>()) QueueCount=QueueCount />
         @if (TicketDTOs != null)
         {
-            <ChatPanel TicketDTO=@ActiveTicketDTO />
+            <ChatPanel TicketDTO=@ActiveTicketDTO UpdateStatus="@((Status status) => UpdateStatus(status))"/>
         }
         else
         {
@@ -299,11 +300,11 @@
 
     #endregion
 
-    void UpdateTicket(TicketDTO tickerDTO)
+    void UpdateTicket(TicketDTO ticketDTO)
     {
         TicketDTOs.First(x => x.Ticket.Active == true).Ticket.Active = null;
-        TicketDTOs.First(x => x.Ticket.Id == tickerDTO.Ticket.Id).Ticket.Active = true;
-        ActiveTicketDTO = tickerDTO;
+        TicketDTOs.First(x => x.Ticket.Id == ticketDTO.Ticket.Id).Ticket.Active = true;
+        ActiveTicketDTO = ticketDTO;
     }
 
     async void InitializeTicket()
@@ -331,5 +332,11 @@
         TicketDTOs.First().Ticket.Active = true;
         ActiveTicketDTO = TicketDTOs.First(x => (bool) x.Ticket.Active);
         StateHasChanged();
+    }
+
+    private void UpdateStatus(Status status)
+    {
+        ActiveTicketDTO.Ticket.Status = status;
+        ApiTicketService.UpdateTicket(ActiveTicketDTO.Ticket);
     }
 }

@@ -1,9 +1,10 @@
 ﻿@using System
 @using AdminPanel.Client.DTOs
 @using AdminPanel.Client.Models
+@using UCLDreamTeam.SharedInterfaces
 
 <section class="chat">
-    <ChatHeader TicketDTO=@TicketDTO />
+    <ChatHeader TicketDTO=@TicketDTO UpdateStatus="@UpdateStatus" />
     <div class="messages-chat">
         @for (int i = 0; i < TicketDTO.Ticket.Messages.Count; i++)
         {
@@ -16,6 +17,8 @@
 @code
 {
     [Parameter] public TicketDTO TicketDTO { get; set; }
+
+    [Parameter] public EventCallback<Status> UpdateStatus { get; set; }
 }
 
 <style>
