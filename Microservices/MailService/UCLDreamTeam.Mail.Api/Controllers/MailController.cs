@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using UCLDreamTeam.Mail.Application.Interfaces;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 using UCLDreamTeam.SharedInterfaces.Mail;
 
 namespace UCLDreamTeam.Mail.Api.Controllers
@@ -34,6 +36,22 @@ namespace UCLDreamTeam.Mail.Api.Controllers
             {
                 _mailService.SendMail(reservation, template);
                 return Ok(reservation);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(503, e.Message);
+            }
+
+        }
+
+        [HttpPost("SendChatLog")]
+        [Authorize]
+        public async Task<IActionResult> SendChatLog([FromBody] IEnumerable<IMessage> messages, Template template)
+        {
+            try
+            {
+                _mailService.SendChatLog(messages, template);
+                return Ok(messages);
             }
             catch (Exception e)
             {

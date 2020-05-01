@@ -14,14 +14,15 @@
 @inject ITicketService TicketService
 @inject IReservationService ReservationService
 @inject IResourceService ResourceService
-@inject ApiTicketService ApiTicketService
+@inject ITicketService TicketService
+@inject IMailService MailService
 
 <div class="container-fluid">
     <div class="row h-100">
         <TicketsPanel UpdateTicket="UpdateTicket" GetNextCustomer="@(() => GetNextCustomer(Guid.NewGuid().ToString()))" TicketDTOs=@(TicketDTOs ?? new List<TicketDTO>()) QueueCount=QueueCount />
         @if (TicketDTOs != null)
         {
-            <ChatPanel TicketDTO=@ActiveTicketDTO UpdateStatus="@((Status status) => UpdateStatus(status))"/>
+            <ChatPanel TicketDTO=@ActiveTicketDTO UpdateStatus="@((Status status) => UpdateStatus(status))" />
         }
         else
         {
@@ -330,13 +331,17 @@
     {
         TicketDTOs = TicketDTOs.OrderByDescending(x => x.Ticket.Messages.Min(s => s.TimeStamp)).ToList();
         TicketDTOs.First().Ticket.Active = true;
-        ActiveTicketDTO = TicketDTOs.First(x => (bool) x.Ticket.Active);
+        ActiveTicketDTO = TicketDTOs.First(x => (bool)x.Ticket.Active);
         StateHasChanged();
     }
 
-    private void UpdateStatus(Status status)
+    private async void UpdateStatus(Status status, bool sendChatLog = false)
     {
+        if (sendChatLog && status == Status.Closed)
+        {
+            MailService.SendChatLog(ActiveTicketDTO.Ticket.Messages);
+        }
         ActiveTicketDTO.Ticket.Status = status;
-        ApiTicketService.UpdateTicket(ActiveTicketDTO.Ticket);
+        await TicketService.UpdateTicket(ActiveTicketDTO.Ticket);
     }
 }
