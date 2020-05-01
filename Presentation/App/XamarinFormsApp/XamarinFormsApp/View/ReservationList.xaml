@@ -16,7 +16,7 @@
         <StackLayout>
             <ListView ItemsSource="{Binding ReservationListItems}"
                       CachingStrategy="RecycleElement"
-                      RowHeight="100" ItemTapped="ListView_ItemTapped">
+                      RowHeight="150" ItemTapped="ListView_ItemTapped">
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
