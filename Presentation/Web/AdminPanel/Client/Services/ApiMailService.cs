@@ -1,4 +1,5 @@
-﻿using AdminPanel.Client.Models;
+﻿using AdminPanel.Client.DTOs;
+using AdminPanel.Client.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,9 @@ namespace AdminPanel.Client.Services
             _client = client;
         }
 
-        public async Task SendChatLog(List<Message> messages)
+        public async Task SendChatLog(TicketDTO ticketDTO)
         {
-            await _client.PostAsync<List<Message>>("Mail/SendChatLog", messages);
+            await _client.PostAsync<List<Message>>("Mail/SendChatLog", ticketDTO);
         }
     }
 }

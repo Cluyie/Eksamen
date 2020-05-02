@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using UCLDreamTeam.Mail.Application.Interfaces;
+using UCLDreamTeam.Mail.Domain.Models;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
 using UCLDreamTeam.SharedInterfaces.Mail;
 
@@ -28,13 +29,13 @@ namespace UCLDreamTeam.Mail.Api.Controllers
             _logger = logger;
         }
 
-        [HttpPost]
+        [HttpPost("[action]")]
         [Authorize]
-        public async Task<IActionResult> PostMail([FromBody] Domain.Models.Reservation reservation, Template template)
+        public async Task<IActionResult> SendReservationNotification([FromBody] Reservation reservation, Template template)
         {
             try
             {
-                _mailService.SendMail(reservation, template);
+                await _mailService.SendMail(reservation, template);
                 return Ok(reservation);
             }
             catch (Exception e)
@@ -44,14 +45,14 @@ namespace UCLDreamTeam.Mail.Api.Controllers
 
         }
 
-        [HttpPost("SendChatLog")]
+        [HttpPost("[action]")]
         [Authorize]
-        public async Task<IActionResult> SendChatLog([FromBody] IEnumerable<IMessage> messages, Template template)
+        public async Task<IActionResult> SendChatLog([FromBody] TicketDTO ticketDTO)
         {
             try
             {
-                _mailService.SendChatLog(messages, template);
-                return Ok(messages);
+                await _mailService.SendChatLog(ticketDTO);
+                return Ok();
             }
             catch (Exception e)
             {

@@ -1,5 +1,6 @@
 ﻿using RabbitMQ.Bus.Commands;
 using System.Collections.Generic;
+using UCLDreamTeam.Mail.Domain.Models;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
 using UCLDreamTeam.SharedInterfaces.Mail;
 
@@ -7,13 +8,11 @@ namespace UCLDreamTeam.Mail.Domain.Commands
 {
     public class SendChatLogCommand : Command
     {
-        public IEnumerable<IMessage> Messages { get; }
-        public Template Template { get; }
+        public TicketDTO TicketDTO { get; set; }
 
-        public SendChatLogCommand(IEnumerable<IMessage> messages, Template template)
+        public SendChatLogCommand(TicketDTO ticketDTO)
         {
-            Messages = messages;
-            Template = template;
+            TicketDTO = ticketDTO;
         }
     }
 }

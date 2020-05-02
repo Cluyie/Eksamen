@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using RabbitMQ.Bus.Bus.Interfaces;
 using UCLDreamTeam.Mail.Application.Interfaces;
 using UCLDreamTeam.Mail.Domain.Commands;
@@ -18,14 +19,14 @@ namespace UCLDreamTeam.Mail.Application.Services
             _eventBus = eventBus;
         }
 
-        public async void SendMail(Reservation reservation, Template template)
+        public async Task SendMail(Reservation reservation, Template template)
         {
             await _eventBus.SendCommand(new SendEmailCommand(reservation, template));
         }
 
-        public async void SendChatLog(IEnumerable<IMessage> messages, Template template)
+        public async Task SendChatLog(TicketDTO ticketDTO)
         {
-            await _eventBus.SendCommand(new SendChatLogCommand(messages, template));
+            await _eventBus.SendCommand(new SendChatLogCommand(ticketDTO));
         }
     }
 }

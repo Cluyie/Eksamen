@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -10,6 +11,7 @@ using MediatR;
 using RabbitMQ.Bus.Bus.Interfaces;
 using UCLDreamTeam.Mail.Domain.Commands;
 using UCLDreamTeam.Mail.Domain.Events;
+using UCLDreamTeam.Mail.Domain.Interfaces;
 using UCLDreamTeam.Mail.Domain.Models;
 using UCLDreamTeam.Mail.Domain.Properties;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
@@ -18,23 +20,25 @@ using UCLToolBox;
 
 namespace UCLDreamTeam.Mail.Domain.CommandHandlers
 {
-    public class SendChatHubCommandHandler : IRequestHandler<SendEmailCommand, bool>
+    public class SendChatHubCommandHandler : IRequestHandler<SendChatLogCommand, bool>
     {
         private readonly IEventBus _eventBus;
+        private readonly IGenericRepository<User> _userRepository;
         private readonly SmtpClient _smtpClient;
 
-        public SendChatHubCommandHandler(IEventBus eventBus)
+        public SendChatHubCommandHandler(IEventBus eventBus, IGenericRepository<User> userRepository)
         {
             _eventBus = eventBus;
+            _userRepository = userRepository;
             _smtpClient = ConfigureSmtpClient();
         }
 
-        public async Task<bool> Handle(SendEmailCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(SendChatLogCommand request, CancellationToken cancellationToken)
         {
             MailMessage mailMessage = null;
             try
             {
-                mailMessage = GenerateMail(request.Reservation, request.Template);
+                mailMessage = await GenerateMail(request.TicketDTO);
                 _smtpClient.Send(mailMessage);
                 _eventBus.PublishEvent(new EmailSendSuccessEvent(mailMessage));
                 return true;
@@ -61,37 +65,23 @@ namespace UCLDreamTeam.Mail.Domain.CommandHandlers
             };
         }
 
-        public MailMessage GenerateMail(Reservation reservation, Template template)
+        public async Task<MailMessage> GenerateMail(TicketDTO ticketDTO)
         {
             var mail = new MailMessage
             {
                 IsBodyHtml = true,
                 From = new MailAddress(Resources.MailService_SenderEmail, Resources.MailService_SenderName),
-                Subject = template.GetAttribute<DisplayAttribute>().Name,
-                Body = GenerateMailContentFromTemplate(reservation, template)
+                Subject = "Chatlog",
+                Body = GenerateMailContentFromTemplate(ticketDTO)
             };
             //Setting To and CC
-            mail.To.Add(new MailAddress(reservation.Recipent.Email, reservation.Recipent.FirstName));
+            var user = await _userRepository.GetById(ticketDTO.Reservation.UserId);
+            mail.To.Add(new MailAddress(user.Email, $"{user.FirstName} {user.LastName}"));
 
             return mail;
         }
 
-        public MailMessage GenerateMail(IEnumerable<IMessage> messages, string email, Template template)
-        {
-            var mail = new MailMessage
-            {
-                IsBodyHtml = true,
-                From = new MailAddress(Resources.MailService_SenderEmail, Resources.MailService_SenderName),
-                Subject = template.GetAttribute<DisplayAttribute>().Name,
-                Body = GenerateMailContentFromTemplate(messages, template)
-            };
-            //Setting To and CC
-            mail.To.Add(new MailAddress(email, "email"));
-
-            return mail;
-        }
-
-        private string GenerateMailContentFromTemplate(IEnumerable<IMessage> messages, Template template)
+        private string GenerateMailContentFromTemplate(TicketDTO ticketDTO)
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("<!DOCTYPE html>");
@@ -108,13 +98,17 @@ namespace UCLDreamTeam.Mail.Domain.CommandHandlers
             stringBuilder.AppendLine("</header>");
             stringBuilder.AppendLine("<div class='container'>");
             stringBuilder.AppendLine("<main role='main' class='pb-3'>");
-            stringBuilder.AppendLine("<p>Start på chat log</p>");
+
+            stringBuilder.AppendLine($"<p>Support chat omkring {ticketDTO.Resource.Name}.</p>");
+            stringBuilder.AppendLine($"<p>Omkring reservation d. {ticketDTO.Reservation.Timeslot.FromDate:d} fra {ticketDTO.Reservation.Timeslot.FromDate:hh:mm} til {ticketDTO.Reservation.Timeslot.FromDate:hh:mm}.</p>");
+
+            stringBuilder.AppendLine($"<p>Start på chat log d. {ticketDTO.Ticket.Messages.FirstOrDefault().TimeStamp:d}</p>");
             stringBuilder.AppendLine("</br>");
 
-            foreach (var message in messages)
+            foreach (var message in ticketDTO.Ticket.Messages)
             {
 
-                stringBuilder.AppendLine($"<p>From {message.UserId}: {message.TimeStamp:d} - {message.Text}</p>");
+                stringBuilder.AppendLine($"<p>From {message.UserId}: {message.TimeStamp:hh:mm} - {message.Text}</p>");
                 stringBuilder.AppendLine("</br>");
 
                 return stringBuilder.ToString();

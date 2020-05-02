@@ -1,4 +1,5 @@
-﻿using AdminPanel.Client.Models;
+﻿using AdminPanel.Client.DTOs;
+using AdminPanel.Client.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,6 @@ namespace AdminPanel.Client.Services
 {
     public interface IMailService
     {
-        public Task SendChatLog(List<Message> messages);
+        public Task SendChatLog(TicketDTO ticketDTO);
     }
 }

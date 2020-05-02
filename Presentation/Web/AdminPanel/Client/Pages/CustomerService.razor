@@ -339,7 +339,7 @@
     {
         if (sendChatLog && status == Status.Closed)
         {
-            MailService.SendChatLog(ActiveTicketDTO.Ticket.Messages);
+            await MailService.SendChatLog(ActiveTicketDTO);
         }
         ActiveTicketDTO.Ticket.Status = status;
         await TicketService.UpdateTicket(ActiveTicketDTO.Ticket);
