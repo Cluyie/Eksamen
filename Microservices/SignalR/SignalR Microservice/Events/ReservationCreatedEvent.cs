@@ -1,10 +1,11 @@
 ﻿using System;
 using RabbitMQ.Bus.Events;
 using SignalR_Microservice.Models;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace SignalR_Microservice.Events
 {
-    public class ReservationCreatedEvent : Event
+    public class ReservationCreatedEvent : Event, IReservation<ReserveTime>
     {
         public ReservationCreatedEvent(Guid id, Guid userId, Guid resourceId, ReserveTime timeslot)
         {

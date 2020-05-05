@@ -8,7 +8,6 @@ namespace RabbitMQ.Bus.Events
         {
             TimeStamp = DateTime.Now;
         }
-
         public DateTime TimeStamp { get; protected set; }
     }
 }

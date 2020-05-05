@@ -53,7 +53,7 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
 
         public async Task AddMessageAsync(Message message)
         {
-            var ticket = await _ticketDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == message.TicketId);
+            var ticket = await _ticketDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == message.GroopId);
             ticket.Messages.Add(message);
             await _ticketDbContext.SaveChangesAsync();
         }

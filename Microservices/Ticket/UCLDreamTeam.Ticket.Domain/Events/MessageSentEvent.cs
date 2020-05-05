@@ -1,13 +1,13 @@
 ﻿using RabbitMQ.Bus.Events;
-using Message = UCLDreamTeam.Ticket.Domain.Models.Message;
+using MessageEvent = UCLDreamTeam.Ticket.Domain.Models.MessageEvent;
 
 namespace UCLDreamTeam.Ticket.Domain.Events
 {
     public class MessageSentEvent : Event
     {
-        public Message Message { get; set; }
+        public MessageEvent Message { get; set; }
 
-        public MessageSentEvent(Message message)
+        public MessageSentEvent(MessageEvent message)
         {
             Message = message;
         }

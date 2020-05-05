@@ -7,7 +7,6 @@ namespace UCLDreamTeam.SharedInterfaces.Interfaces
     {
         public Guid Id { get; set; }
         public bool? Active { get; set; }
-        public string Name { get; set; }
         public Status Status { get; set; }
         public List<TMessage> Messages { get; set; }
         public Guid? ReservationId { get; set; }

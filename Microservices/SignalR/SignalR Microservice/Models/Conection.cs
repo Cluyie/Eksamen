@@ -6,11 +6,8 @@ using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace SignalR_Microservice.Models
 {
-    public class Message : IMessage
+    public class Conection : IConection
     {
-        public Guid Id { get; set; }
         public string GroopId { get; set; }
-        public string Text { get; set; }
-        public DateTime TimeStamp { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Bus.Bus.Interfaces;
@@ -23,7 +24,7 @@ namespace SignalR_Microservice.EventHandlers
         public async Task Handle(ReservationCanceledEvent @event)
         {
             _logger.LogInformation("ReservationCanceledEventHandler Called");
-            await _hubContext.Clients.All.SendAsync("DeleteReservation", new Reservation {Id = @event.Id});
+            await _hubContext.Clients.All.SendAsync("DeleteReservation", @event.Id);
         }
     }
 }

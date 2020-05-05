@@ -12,7 +12,7 @@ namespace AdminPanel.Client.Models
     {
         public Guid Id { get; set; }
         [ForeignKey("Ticket")]
-        public Guid TicketId { get; set; }
+        public Guid GroopId { get; set; }
         public Guid UserId { get; set; }
         public string Text { get; set; }
         public DateTime TimeStamp { get; set; }

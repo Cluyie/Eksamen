@@ -26,11 +26,9 @@ namespace SignalR_Microservice.CommandHandlers
                 var sentMessage = new Models.Message
                 {
                     Id = request.Id,
-                    Seen = request.Seen,
                     Text = request.Text,
-                    TicketId = request.TicketId,
+                    GroopId = request.TicketId.ToString(),
                     TimeStamp = request.TimeStamp,
-                    UserId = request.UserId
                 };
 
                 _eventBus.PublishEvent(new MessageSentEvent(sentMessage));

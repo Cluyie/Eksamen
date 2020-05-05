@@ -1,11 +1,10 @@
-﻿using RabbitMQ.Bus.Events;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
 
-namespace UCLDreamTeam.Ticket.Domain.Models
+namespace UCLDreamTeam.Ticket.Domain.Models.Event
 {
-    public class Message : IMessage
+    public class MessageEvent : RabbitMQ.Bus.Events.Event, IMessage
     {
         public Guid Id { get; set; }
         public Guid GroopId { get; set; }

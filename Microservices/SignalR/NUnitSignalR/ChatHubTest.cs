@@ -48,7 +48,7 @@ namespace NUnitSignalR
                 Text = "",
                 Id = Guid.NewGuid(),
                 Seen = false,
-                TicketId = Guid.NewGuid(),
+                GroopId = Guid.NewGuid(),
                 TimeStamp = DateTime.Now,
                 UserId = Guid.NewGuid()
             };

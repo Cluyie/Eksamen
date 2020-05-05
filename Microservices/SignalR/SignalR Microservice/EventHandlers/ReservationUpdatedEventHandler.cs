@@ -26,13 +26,7 @@ namespace SignalR_Microservice.EventHandlers
         public async Task Handle(ReservationUpdatedEvent @event)
         {
             _logger.LogInformation("ReservationUpdatedEventHandler Called");
-            await _hubContext.Clients.All.SendAsync("UpdateReservation", new Reservation
-            {
-                Id = @event.Id,
-                ResourceId = @event.ResourceId,
-                Timeslot = @event.Timeslot,
-                UserId = @event.UserId
-            });
+            await _hubContext.Clients.All.SendAsync("UpdateReservation", @event);
         }
     }
 }

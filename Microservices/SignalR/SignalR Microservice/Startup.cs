@@ -35,7 +35,6 @@ namespace SignalR_Microservice
             services.AddRabbitMq();
 
             services.AddMediatR(typeof(Startup));
-
             //Handler DI
             services.AddTransient<ReservationCreatedEventHandler>();
             services.AddTransient<ReservationCanceledEventHandler>();
@@ -48,9 +47,8 @@ namespace SignalR_Microservice
             services.AddScoped<IChatLoggingService, ChatLoggingService>();
             services.AddScoped<IQueueService, QueueService>();
             services.AddScoped<QueueSendService>();
-            //services.AddScoped<QueueHub>();
             services.AddSingleton<Queue<(string, Guid)>>();
-            //services.AddSingleton<Dictionary<string, List<User>>>();
+            services.AddSingleton<List<ServiceQue>>();
 
             services.AddCors(options =>
             {
@@ -84,6 +82,7 @@ namespace SignalR_Microservice
                 endpoints.MapHub<ReservationHub>("/ReservationHub");
                 endpoints.MapHub<ChatHub>("/ChatHub");
                 endpoints.MapHub<QueueHub>("/QueueHub");
+                endpoints.MapHub<SuportHub>("/ServiceHub");
             });
 
             //Subscriptions
