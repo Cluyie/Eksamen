@@ -1,5 +1,5 @@
 ﻿using RabbitMQ.Bus.Events;
-using MessageEvent = UCLDreamTeam.Ticket.Domain.Models.MessageEvent;
+using MessageEvent = UCLDreamTeam.Ticket.Domain.Models.Message;
 
 namespace UCLDreamTeam.Ticket.Domain.Events
 {

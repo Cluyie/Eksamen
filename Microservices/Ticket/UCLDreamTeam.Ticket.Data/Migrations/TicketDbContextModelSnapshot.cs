@@ -25,17 +25,23 @@ namespace UCLDreamTeam.Ticket.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("GroopId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("Seen")
                         .HasColumnType("bit");
 
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("TicketId")
+                    b.Property<Guid?>("TicketId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -50,13 +56,13 @@ namespace UCLDreamTeam.Ticket.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool?>("Active")
-                        .HasColumnType("bit");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ReservationId")
+                    b.Property<Guid?>("ResourceId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
@@ -99,20 +105,18 @@ namespace UCLDreamTeam.Ticket.Data.Migrations
                 {
                     b.HasOne("UCLDreamTeam.Ticket.Domain.Models.Ticket", null)
                         .WithMany("Messages")
-                        .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TicketId");
                 });
 
             modelBuilder.Entity("UCLDreamTeam.Ticket.Domain.Models.UserTicket", b =>
                 {
-                    b.HasOne("UCLDreamTeam.Ticket.Domain.Models.Ticket", "Ticket")
+                    b.HasOne("UCLDreamTeam.Ticket.Domain.Models.Ticket", null)
                         .WithMany("UserTickets")
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UCLDreamTeam.Ticket.Domain.Models.User", "User")
+                    b.HasOne("UCLDreamTeam.Ticket.Domain.Models.User", null)
                         .WithMany("UserTickets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

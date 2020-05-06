@@ -8,7 +8,10 @@ namespace SignalR_Microservice.Models
     public class ServiceQue
     {
         public string SignelRId { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
-        public string ObjctId { get; set; }
+        public Guid ObjctId { get; set; }
+        public Guid guid { get; set; }
+        public Guid UserId { get; set; }
     }
 }

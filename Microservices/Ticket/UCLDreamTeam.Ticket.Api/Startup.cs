@@ -23,7 +23,7 @@ namespace UCLDreamTeam.Ticket.Api
         public override void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<TicketDbContext>(options => 
-                options.UseSqlServer(Configuration.GetConnectionString("TicketDbConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("TicketDbLocal")));
             base.ConfigureServices(services);
         }
 

@@ -22,9 +22,9 @@ namespace SignalR_Microservice.Services
 
         public async Task SendMessageAsync(Message message)
         {
-            var command = new CreateSentMessageCommand(message.Id, message.GroopId, message.UserId, message.Text,
-                message.TimeStamp, message.Seen);
-            await _eventBus.SendCommand(command);
+            //var command = new CreateSentMessageCommand(message.Id, message.GroopId, message.UserId, message.Text,
+            //    message.TimeStamp, message.Seen);
+            //await _eventBus.SendCommand(command);
         }
     }
 }

@@ -24,11 +24,12 @@ namespace SignalR_Microservice.Hubs
         public SuportHub(List<ServiceQue> que, IEventBus eventBus)
         {
             Que = que;
+            QueLog = new object();
             EventBus = eventBus;
         }
-        public void FindService(string Description, string ObjctId)
+        public void GetSuport(string name, string description, Guid objctId, Guid userId)
         {
-            Que.Add(new ServiceQue { SignelRId = Context.ConnectionId, Description = Description, ObjctId = ObjctId });
+            Que.Add(new ServiceQue { Name = name, SignelRId = Context.ConnectionId, Description = description, ObjctId = objctId, UserId = userId });
             Clients.Caller.SendAsync("CorrentInQue", Que.Count);
         }
         public async Task Reconect(string GroopId)
@@ -36,9 +37,9 @@ namespace SignalR_Microservice.Hubs
             await Groups.AddToGroupAsync(Context.ConnectionId, GroopId);
             await Clients.Group(GroopId).SendAsync("ConectionCreadet", GroopId);
         }
-        public async Task NextInQue()
+        public async Task NextInQue(Guid SuporderId)
         {
-            string GroopId = Guid.NewGuid().ToString();
+            Guid GroopId = Guid.NewGuid();
             ServiceQue Needhelper = null;
             lock(QueLog)
             {
@@ -50,17 +51,17 @@ namespace SignalR_Microservice.Hubs
             }
             if(Needhelper != null)
             {
-                await Groups.AddToGroupAsync(Needhelper.SignelRId, GroopId);
-                await Groups.AddToGroupAsync(Context.ConnectionId, GroopId);
-                await Clients.Group(GroopId).SendAsync("ConectionCreadet", GroopId);
+                await Groups.AddToGroupAsync(Needhelper.SignelRId, GroopId.ToString());
+                await Groups.AddToGroupAsync(Context.ConnectionId, GroopId.ToString());
+                await Clients.Group(GroopId.ToString()).SendAsync("ConectionCreadet", GroopId);
                 await Clients.All.SendAsync("GroopPosisionDown");
-                EventBus.PublishEvent(new ConectionCreadetEvent(new Conection() { GroopId = GroopId }));
+                EventBus.PublishEvent(new ConectionCreadetEvent(new Conection() { GroopId = GroopId,Name = Needhelper.Name, ResourceId = Needhelper.ObjctId,SuportId = SuporderId, KundeId = Needhelper.UserId, Description = Needhelper.Description }));
             }
         }
-        public async Task SendMessage(string GroopId,string Message)
+        public async Task SendMessage(Guid GroopId, Message Message)
         {
-            await Clients.Group(GroopId).SendAsync("NewMessage", Message);
-            EventBus.PublishEvent(new MessageSentEvent(new Message() {Text = Message, GroopId = GroopId, TimeStamp = DateTime.UtcNow }));
+            await Clients.Group(GroopId.ToString()).SendAsync("NewMessage", Message.Text);
+            EventBus.PublishEvent(new MessageSentEvent(Message));
         }
         public override async Task OnDisconnectedAsync(Exception exception)
         {

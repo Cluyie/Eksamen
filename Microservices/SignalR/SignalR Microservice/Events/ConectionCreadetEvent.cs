@@ -1,7 +1,7 @@
 ﻿using RabbitMQ.Bus.Events;
 using SignalR_Microservice.Models;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
-using Message = SignalR_Microservice.Models.Message;
+using Conection = SignalR_Microservice.Models.Conection;
 
 namespace SignalR_Microservice.Events
 {

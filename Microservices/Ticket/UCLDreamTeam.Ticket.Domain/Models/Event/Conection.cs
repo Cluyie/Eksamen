@@ -11,5 +11,6 @@ namespace UCLDreamTeam.Ticket.Domain.Models.Event
         public Guid ResourceId { get; set; }
         public Guid KundeId { get; set; }
         public Guid SuportId { get; set; }
+        public string Description { get; set; }
     }
 }

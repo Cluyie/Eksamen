@@ -3,6 +3,7 @@
 @using System.Linq
 @using AdminPanel.Client.DTOs
 @using AdminPanel.Client.Models
+@using UCLDreamTeam.SharedInterfaces;
 
 <section class="discussions">
     <TicketHeader GetNextCustomer="GetNextCustomer" QueueCount=QueueCount />
@@ -13,7 +14,6 @@
                 Name=@ticketDTO.Ticket.Name
                 Message=@ticketDTO.Ticket.Messages.First().Text
                 TimeStamp=@ticketDTO.Ticket.Messages.First().TimeStamp.ToString()
-                Active=@(ticketDTO.Ticket.Active ?? false)
                 New=@(ticketDTO.Ticket.Messages.Any(x => x.Seen == false))/>
         </div>
     }

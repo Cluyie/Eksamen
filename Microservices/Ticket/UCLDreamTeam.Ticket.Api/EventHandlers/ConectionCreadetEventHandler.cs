@@ -20,9 +20,9 @@ namespace UCLDreamTeam.Ticket.Api.EventHandlers
             await TicketService.AddAsync(new Domain.Models.Ticket()
             {
                 Id = @event.GroopId,
-                Active = true,
                 Status = Status.Active,
-                ReservationId = @event.ResourceId,
+                Description = @event.Description,
+                ResourceId = @event.ResourceId,
                 UserTickets =
                 new List<UserTicket>
                 {

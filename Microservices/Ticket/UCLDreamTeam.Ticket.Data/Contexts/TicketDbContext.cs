@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using UCLDreamTeam.Ticket.Domain.Models;
+using UCLDreamTeam.Ticket.Domain.Models.Event;
 
 namespace UCLDreamTeam.Ticket.Data.Contexts
 {
@@ -12,10 +13,11 @@ namespace UCLDreamTeam.Ticket.Data.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<Domain.Models.Ticket> Tickets { get; set; }
         public DbSet<UserTicket> UserTickets { get; set; }
-        public DbSet<MessageEvent> Messages { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         public TicketDbContext(DbContextOptions options) : base(options)
         {
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

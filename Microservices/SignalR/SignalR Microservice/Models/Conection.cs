@@ -8,6 +8,11 @@ namespace SignalR_Microservice.Models
 {
     public class Conection : IConection
     {
-        public string GroopId { get; set; }
+        public Guid GroopId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public Guid ResourceId { get; set; }
+        public Guid KundeId { get; set; }
+        public Guid SuportId { get; set; }
     }
 }

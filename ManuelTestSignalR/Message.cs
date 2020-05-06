@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
 
-namespace SignalR_Microservice.Models
+namespace ManuelTestSignalR
 {
     public class Message : IMessage
     {
@@ -13,6 +13,5 @@ namespace SignalR_Microservice.Models
         public Guid GroopId { get; set; }
         public string Text { get; set; }
         public DateTime TimeStamp { get; set; }
-        public bool Seen { get; set; }
     }
 }

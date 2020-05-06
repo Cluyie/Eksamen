@@ -27,7 +27,7 @@ namespace SignalR_Microservice.CommandHandlers
                 {
                     Id = request.Id,
                     Text = request.Text,
-                    GroopId = request.TicketId.ToString(),
+                    GroopId = request.TicketId,
                     TimeStamp = request.TimeStamp,
                 };
 
