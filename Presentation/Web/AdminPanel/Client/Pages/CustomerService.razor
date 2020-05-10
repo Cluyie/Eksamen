@@ -14,7 +14,6 @@
 @inject ITicketService TicketService
 @inject IReservationService ReservationService
 @inject IResourceService ResourceService
-@inject ITicketService TicketService
 @inject IMailService MailService
 @*Todo: Reamake Ticekt Panel*@
 <div class="container-fluid">
@@ -27,13 +26,14 @@
 @code
 {
     private HubConnection SuportHubConection;
-    public List<TicketDTO> TicketDTOs { get; set; }
+    public List<Ticket> TicketDTOs { get; set; }
     public TicketDTO ActiveTicketDTO { get; set; }
     public int QueueCount { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-
+        TicketDTOs = (await TicketService.GetByUserIdAsync(Guid.Empty)).ToList();
+        TicketDTOs.FirstOrDefault();
     }
 
     async void InitializeTicket()

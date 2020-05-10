@@ -1,5 +1,4 @@
-﻿using RabbitMQ.Bus.Events;
-using SignalR_Microservice.Models;
+﻿using SignalR_Microservice.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SignalR_Microservice.Events
 {
-    public class ReservationUpdatedEvent : Event
+    public class ReservationUpdatedEvent 
     {
         public ReservationUpdatedEvent(Guid id, Guid userId, Guid resourceId, ReserveTime timeslot)
         {

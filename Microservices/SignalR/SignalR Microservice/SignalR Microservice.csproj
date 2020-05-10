@@ -11,7 +11,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\Models\UCLDreamTeam.SharedInterfaces.csproj" />
-    <ProjectReference Include="..\..\..\Core\RabbitMQ.IoC\RabbitMQ.IoC.csproj" />
+    <ProjectReference Include="..\..\..\Core\RabitMQEasyExtensions\RabitMQEasyExtensions.csproj" />
+    <ProjectReference Include="..\..\..\Core\RabitMQEasy\RabitMQEasy.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\" />
   </ItemGroup>
 
 

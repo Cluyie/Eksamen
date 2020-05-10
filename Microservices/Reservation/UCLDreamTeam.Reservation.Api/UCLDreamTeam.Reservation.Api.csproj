@@ -19,7 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\RabbitMQ.IoC\RabbitMQ.IoC.csproj" />
+    <ProjectReference Include="..\..\..\Core\RabitMQEasyExtensions\RabitMQEasyExtensions.csproj" />
+    <ProjectReference Include="..\..\..\Core\RabitMQEasy\RabitMQEasy.csproj" />
     <ProjectReference Include="..\UCLDreamTeam.Reservation.Application\UCLDreamTeam.Reservation.Application.csproj" />
     <ProjectReference Include="..\UCLDreamTeam.Reservation.Data\UCLDreamTeam.Reservation.Data.csproj" />
     <ProjectReference Include="..\UCLDreamTeam.Reservation.Domain\UCLDreamTeam.Reservation.Domain.csproj" />

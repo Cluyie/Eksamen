@@ -1,6 +1,4 @@
-﻿using RabbitMQ.Bus.Bus.Interfaces;
-using RabbitMQ.Bus.Events;
-using SignalR_Microservice.Commands;
+﻿using RabitMQEasy;
 using SignalR_Microservice.Models;
 using System;
 using System.Collections.Generic;
@@ -13,9 +11,9 @@ namespace SignalR_Microservice.Services
 {
     public class ChatLoggingService : IChatLoggingService
     {
-        private readonly IEventBus _eventBus;
+        private readonly RabitMQPublicer _eventBus;
 
-        public ChatLoggingService(IEventBus eventBus)
+        public ChatLoggingService(RabitMQPublicer eventBus)
         {
             _eventBus = eventBus;
         }

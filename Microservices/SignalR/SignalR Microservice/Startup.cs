@@ -4,17 +4,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using RabbitMQ.Bus.Bus.Interfaces;
 using SignalR_Microservice.Hubs;
-using RabbitMQ.IoC;
 using SignalR_Microservice.EventHandlers;
 using SignalR_Microservice.Events;
 using SignalR_Microservice.Services;
 using MediatR;
-using SignalR_Microservice.Commands;
-using SignalR_Microservice.CommandHandlers;
 using System.Collections.Generic;
 using SignalR_Microservice.Models;
+using RabitMQEasyExtensions.DependencyInjection;
 
 namespace SignalR_Microservice
 {
@@ -32,16 +29,13 @@ namespace SignalR_Microservice
         {
             services.AddSignalR();
 
-            services.AddRabbitMq();
+            services.AddRabitMQ();
 
             services.AddMediatR(typeof(Startup));
             //Handler DI
             services.AddTransient<ReservationCreatedEventHandler>();
             services.AddTransient<ReservationCanceledEventHandler>();
             services.AddTransient<ReservationUpdatedEventHandler>();
-
-            //SignalR Handlers
-            services.AddTransient<IRequestHandler<CreateSentMessageCommand, bool>, CreateSentMessageCommandHandler>();
 
             //SignalR dependencies
             services.AddScoped<IChatLoggingService, ChatLoggingService>();
@@ -86,9 +80,9 @@ namespace SignalR_Microservice
             });
 
             //Subscriptions
-            app.Subscribe<ReservationCreatedEvent, ReservationCreatedEventHandler>();
-            app.Subscribe<ReservationCanceledEvent, ReservationCanceledEventHandler>();
-            app.Subscribe<ReservationUpdatedEvent, ReservationUpdatedEventHandler>();
+            app.AddLissener<ReservationCreatedEventHandler, ReservationCreatedEvent>();
+            app.AddLissener<ReservationCanceledEventHandler, ReservationCanceledEvent>();
+            app.AddLissener<ReservationUpdatedEventHandler, ReservationUpdatedEvent>();
         }
     }
 }

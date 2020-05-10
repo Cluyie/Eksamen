@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RabbitMQ.Bus.Bus.Interfaces;
-using RabbitMQ.Bus.Events;
+﻿using System.Threading.Tasks;
+using RabitMQEasy;
 using UCLDreamTeam.Ticket.Domain.Events;
 using UCLDreamTeam.Ticket.Domain.Interfaces;
 
 namespace UCLDreamTeam.Ticket.Domain.EventHandlers
 {
-    public class MessageSeenEventHandler : IEventHandler<MessageSeenEvent>
+    public class MessageSeenEventHandler : ILissener<MessageSeenEvent>
     {
         private readonly ITicketRepository _ticketRepository;
 
@@ -19,9 +14,9 @@ namespace UCLDreamTeam.Ticket.Domain.EventHandlers
             _ticketRepository = ticketRepository;
         }
 
-        public async Task Handle(MessageSeenEvent @event)
+        public async Task action(MessageSeenEvent Obj)
         {
-            await _ticketRepository.MessageSeen(@event.MessageId, @event.Seen);
+            await _ticketRepository.MessageSeen(Obj.MessageId, Obj.Seen);
         }
     }
 }

@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using RabbitMQ.Bus.Bus.Interfaces;
+using RabbitMQ.Bus.Events;
+using RabitMQEasy;
 using UCLDreamTeam.Resource.Api.Models;
 using UCLDreamTeam.Resource.Data.Context;
 using UCLDreamTeam.Resource.Domain.Models;
 using UCLDreamTeam.Resource.Domain.RabbitMQEvents;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.Resource.Api.BusinessLayer
 {
     public class ResourceService
     {
         private ResourceContext _applicationContext;
-        IEventBus _eventBus { get; set; }
-        public ResourceService(ResourceContext applicationContext, IEventBus eventBus)
+        RabitMQPublicer _eventBus { get; set; }
+        public ResourceService(ResourceContext applicationContext, RabitMQPublicer eventBus)
         {
             _applicationContext = applicationContext;
             _eventBus = eventBus;
@@ -31,7 +33,7 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
             {
                 if (resource == null)
                 {
-                    return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.NoContent, null);
+                    return new ApiResponse<Domain.Models.Resource>(Models.ApiResponseCode.NoContent, null);
                 }
 
                 foreach (var timeslot in resource.TimeSlots)
@@ -59,18 +61,18 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
                 {
                     _applicationContext.Add(resource);
                     _applicationContext.SaveChanges();
-
-                    _eventBus.PublishEvent(new ResourceCreatedEvent(resource));
-                    return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.OK, resource);
+                    _eventBus.PunlicEvent( Events.NewObject, resource);
+                    _eventBus.PunlicObject(new ResourceCreatedEvent(resource));
+                    return new ApiResponse<Domain.Models.Resource>(Models.ApiResponseCode.OK, resource);
                 }
                 else
                 {
-                    return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.NotModified, null);
+                    return new ApiResponse<Domain.Models.Resource>(Models.ApiResponseCode.NotModified, null);
                 }
             }
             catch (Exception)
             {
-                return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.InternalServerError, null);
+                return new ApiResponse<Domain.Models.Resource>(Models.ApiResponseCode.InternalServerError, null);
             }
         }
 
@@ -82,13 +84,13 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
             try
             {   //Returns a list of Resources, with all of its children
                 return new ApiResponse<List<UCLDreamTeam.Resource.Domain.Models.Resource>>
-                    (ApiResponseCode.OK, _applicationContext.Resources
+                    (Models.ApiResponseCode.OK, _applicationContext.Resources
                     .Include(resource => resource.TimeSlots)
                     .ToList());
             }
             catch (Exception)
             {
-                return new ApiResponse<List<Domain.Models.Resource>>(ApiResponseCode.InternalServerError, null);
+                return new ApiResponse<List<Domain.Models.Resource>>(Models.ApiResponseCode.InternalServerError, null);
             }
         }
 
@@ -106,16 +108,16 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
 
                 if (resourceToReturn == null)
                 {
-                    return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.NoContent, null);
+                    return new ApiResponse<Domain.Models.Resource>(Models.ApiResponseCode.NoContent, null);
                 }
                 else
                 {
-                    return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.OK, resourceToReturn);
+                    return new ApiResponse<Domain.Models.Resource>(Models.ApiResponseCode.OK, resourceToReturn);
                 }
             }
             catch (Exception)
             {
-                return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.InternalServerError, null);
+                return new ApiResponse<Domain.Models.Resource>(Models.ApiResponseCode.InternalServerError, null);
             }
         }
         #endregion
@@ -134,7 +136,7 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
 
                 if (resourceToUpdate == null)
                 {
-                    return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.NoContent, null);
+                    return new ApiResponse<Domain.Models.Resource>(Models.ApiResponseCode.NoContent, null);
                 }
 
                 //Checks that the timeslots do not overlap. Also makes sure that he id is not the same, if the times do match.
@@ -169,18 +171,19 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
                     Domain.Models.Resource OldResourece = await _applicationContext.Resources.FirstOrDefaultAsync(x => x.Id == resourceToUpdate.Id);
                     _applicationContext.Resources.Update(resourceToUpdate);
                     _applicationContext.SaveChanges();
-                    _eventBus.PublishEvent(new ResourceUpdatedEvent(resourceToUpdate));
+                    _eventBus.PunlicEvent(Events.UpdateObject , resourceToUpdate);
+                    _eventBus.PunlicObject(new ResourceUpdatedEvent(resourceToUpdate));
 
-                    return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.OK, resourceToUpdate);
+                    return new ApiResponse<Domain.Models.Resource>(Models.ApiResponseCode.OK, resourceToUpdate);
                 }
                 else
                 {
-                    return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.NotModified, null);
+                    return new ApiResponse<Domain.Models.Resource>(Models.ApiResponseCode.NotModified, null);
                 }
             }
             catch (Exception)
             {
-                return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.InternalServerError, null);
+                return new ApiResponse<Domain.Models.Resource>(Models.ApiResponseCode.InternalServerError, null);
             }
         }
         #endregion
@@ -199,7 +202,7 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
 
                 if (resourceToDelete == null)
                 {
-                    return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.NoContent, null);
+                    return new ApiResponse<Domain.Models.Resource>(Models.ApiResponseCode.NoContent, null);
                 }
                 else
                 {
@@ -209,13 +212,14 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
                     
                     _applicationContext.SaveChanges();
 
-                    _eventBus.PublishEvent(new ResourceDeletedEvent(resource));
-                    return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.OK, null);
+                    _eventBus.PunlicEvent(Events.DeleateObject, resource);
+                    _eventBus.PunlicObject(new ResourceDeletedEvent(resource));
+                    return new ApiResponse<Domain.Models.Resource>(Models.ApiResponseCode.OK, null);
                 }
             }
             catch (Exception)
             {
-                return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.InternalServerError, null);
+                return new ApiResponse<Domain.Models.Resource>(Models.ApiResponseCode.InternalServerError, null);
             }
         }
         #endregion

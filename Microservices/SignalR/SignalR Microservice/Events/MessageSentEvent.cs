@@ -1,9 +1,8 @@
-﻿using RabbitMQ.Bus.Events;
-using Message = SignalR_Microservice.Models.Message;
+﻿using Message = SignalR_Microservice.Models.Message;
 
 namespace SignalR_Microservice.Events
 {
-    public class MessageSentEvent : Event
+    public class MessageSentEvent
     {
         public Message Message { get; set; }
 

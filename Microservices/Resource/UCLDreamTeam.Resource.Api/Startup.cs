@@ -8,13 +8,14 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MediatR;
-using RabbitMQ.IoC;
+using RabitMQEasy;
 using UCLDreamTeam.Resource.Api.BusinessLayer;
 using UCLDreamTeam.Resource.Data;
 using UCLDreamTeam.Resource.Data.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
+using RabitMQEasyExtensions.DependencyInjection;
 
 namespace UCLDreamTeam.Resource.Api
 {
@@ -46,7 +47,7 @@ namespace UCLDreamTeam.Resource.Api
             });
 
             services.AddMediatR(typeof(Startup));
-            services.AddRabbitMq();
+            services.AddRabitMQ();
 
             services.AddScoped<ResourceService>();
             services.AddControllers();

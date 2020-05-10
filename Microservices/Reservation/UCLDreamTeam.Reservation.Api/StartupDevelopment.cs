@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.IoC;
+using RabitMQEasyExtensions.DependencyInjection;
 using UCLDreamTeam.Reservation.Application.Interfaces;
 using UCLDreamTeam.Reservation.Application.Services;
 using UCLDreamTeam.Reservation.Data.Context;
@@ -41,7 +42,7 @@ namespace UCLDreamTeam.Reservation.Api
 
             services.AddMediatR(typeof(Startup));
 
-            services.AddRabbitMq();
+            services.AddRabitMQ();
 
             services.AddTransient<IRequestHandler<CreateReservationCommand, bool>, CreateReservationCommandHandler>();
             services

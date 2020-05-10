@@ -1,8 +1,8 @@
-﻿using SignalR_Microservice.Models;
+﻿using RabbitMQ.Bus.Events;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
-using Conection = SignalR_Microservice.Models.Conection;
+using UCLDreamTeam.Ticket.Domain.Models.Event;
 
-namespace SignalR_Microservice.Events
+namespace UCLDreamTeam.Ticket.Domain.Events
 {
     public class ConectionCreadetEvent
     {

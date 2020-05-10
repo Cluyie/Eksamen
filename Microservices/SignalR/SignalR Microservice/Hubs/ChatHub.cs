@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using SignalR_Microservice.Commands;
 using SignalR_Microservice.Models;
 using SignalR_Microservice.Services;
 using System;

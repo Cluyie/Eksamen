@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\RabbitMQ.Bus\RabbitMQ.Bus.csproj" />
-    <ProjectReference Include="..\..\..\Core\RabbitMQ.IoC\RabbitMQ.IoC.csproj" />
+    <ProjectReference Include="..\..\..\Core\RabitMQEasyExtensions\RabitMQEasyExtensions.csproj" />
+    <ProjectReference Include="..\..\..\Core\RabitMQEasy\RabitMQEasy.csproj" />
     <ProjectReference Include="..\UCLDreamTeam.Resource.Data\UCLDreamTeam.Resource.Data.csproj" />
   </ItemGroup>
 

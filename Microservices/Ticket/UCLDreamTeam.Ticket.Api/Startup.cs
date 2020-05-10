@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UCLDreamTeam.Ticket.Data.Contexts;
 using Microsoft.OpenApi.Models;
-using RabbitMQ.IoC;
 using UCLDreamTeam.Ticket.Domain.EventHandlers;
 using UCLDreamTeam.Ticket.Domain.Events;
 
