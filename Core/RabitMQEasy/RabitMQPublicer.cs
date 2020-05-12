@@ -22,7 +22,8 @@ namespace RabitMQEasy
                     Type obj = typeof(T);
                     if (obj.IsInterface)
                     {
-                        eventName += obj.ToString();
+                        string name = obj.ToString();
+                        eventName += name.Remove(name.IndexOf("["));
                     }
                     else
                     {
@@ -43,7 +44,8 @@ namespace RabitMQEasy
                     Type obj = typeof(T);
                     if (obj.IsInterface)
                     {
-                        eventName = obj.ToString();
+                        string name = obj.ToString();
+                        eventName += name.Remove(name.IndexOf("["));
                     }
                     else
                     {
@@ -54,6 +56,7 @@ namespace RabitMQEasy
                 }
             }
         }
+
         public void PunlicObject<T>(string publicKey , T @object) where T : class
         {
             using (IConnection connection = Factory.CreateConnection())
@@ -72,11 +75,6 @@ namespace RabitMQEasy
             var message = JsonSerializer.Serialize(Object);
             var body = Encoding.UTF8.GetBytes(message);
             return body;
-        }
-
-        public void PublishEvent(Events updateObject, global::UCLDreamTeam.Resource.Domain.Models.Resource resourceToUpdate)
-        {
-            throw new NotImplementedException();
         }
     }
 }

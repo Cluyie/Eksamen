@@ -1,8 +1,6 @@
-﻿using RabbitMQ.Bus.Events;
-
-namespace UCLDreamTeam.User.Domain.Events
+﻿namespace UCLDreamTeam.User.Domain.Events
 {
-    public class UserCreatedEvent : Event
+    public class UserCreatedEvent
     {
         public Models.User User { get; set;  }
 

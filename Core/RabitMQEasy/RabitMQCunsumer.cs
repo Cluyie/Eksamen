@@ -24,7 +24,10 @@ namespace RabitMQEasy
             Type obj = typeof(TR);
             if (obj.IsInterface)
             {
-                eventName += obj.ToString();
+                string name = obj.ToString();
+                int i = name.IndexOf("[");
+                eventName += i > 0? name.Remove(i): name;
+                
             }
             else
             {
@@ -40,7 +43,8 @@ namespace RabitMQEasy
             Type obj = typeof(TR);
             if (obj.IsInterface)
             {
-                eventName += obj.ToString();
+                string name = obj.ToString();
+                eventName += name.Remove(name.IndexOf("["));
             }
             else
             {

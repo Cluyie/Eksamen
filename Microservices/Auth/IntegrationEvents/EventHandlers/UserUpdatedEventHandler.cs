@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
-using RabbitMQ.Bus.Bus.Interfaces;
+using RabitMQEasy;
 using UCLDreamTeam.Auth.Api.Infrastructure;
 using UCLDreamTeam.Auth.Api.Infrastructure.Services;
-using UCLDreamTeam.Auth.Api.IntegrationEvents.Events;
 using UCLDreamTeam.Auth.Api.Models;
 using UCLDreamTeam.Auth.Api.Models.DTO;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.Auth.Api.IntegrationEvents.EventHandlers
 {
-    public class UserUpdatedEventHandler : IEventHandler<UserUpdatedEvent>
+    public class UserUpdatedEventHandler : IEventHandler<CreateUserCredentialsDTO, IUser>
     {
         private readonly HashService _hashService;
         private readonly AuthRepository _authRepository;
@@ -20,9 +20,11 @@ namespace UCLDreamTeam.Auth.Api.IntegrationEvents.EventHandlers
             _authRepository = authRepository;
         }
 
-        async Task IEventHandler<UserUpdatedEvent>.Handle(UserUpdatedEvent @event)
+        public Events events { get; set; } = Events.UpdateObject;
+
+        public async Task action(IUser Obj)
         {
-            UpdateUserCredentialsDTO userIn = @event.User;
+            CreateUserCredentialsDTO userIn = (CreateUserCredentialsDTO)Obj;
             AuthUser userToUpdate = await _authRepository.GetUserFromId(userIn.Id);
 
             userToUpdate.UserName = userIn.UserName;

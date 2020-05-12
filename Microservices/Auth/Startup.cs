@@ -19,11 +19,12 @@ using UCLDreamTeam.Auth.Api.Models;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using RabbitMQ.Bus.Bus.Interfaces;
-using RabbitMQ.IoC;
 using MediatR;
-using UCLDreamTeam.Auth.Api.IntegrationEvents.Events;
 using UCLDreamTeam.Auth.Api.IntegrationEvents.EventHandlers;
+using RabitMQEasyExtensions.DependencyInjection;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
+using UCLDreamTeam.Auth.Api.Models.DTO;
+using RabitMQEasy;
 
 namespace UCLDreamTeam.Auth.Api
 {
@@ -51,11 +52,11 @@ namespace UCLDreamTeam.Auth.Api
             services.AddScoped<HashService>();
             services.AddScoped<AuthRepository>();
             services.AddDbContext<AuthContext>();
-            services.AddMediatR(typeof(Startup));
-            services.AddRabbitMq();
-            services.AddTransient<UserCreatedEventHandler>();
-            services.AddTransient<UserUpdatedEventHandler>();
-            services.AddTransient<UserDeletedEventHandler>();
+            //services.AddMediatR(typeof(Startup));
+            services.AddScoped<UserCreatedEventHandler>();
+            services.AddScoped<UserUpdatedEventHandler>();
+            services.AddScoped<UserDeletedEventHandler>();
+            services.AddRabitMQ();
 
             services.AddAuthentication(options =>
                 {
@@ -125,9 +126,9 @@ namespace UCLDreamTeam.Auth.Api
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("../swagger/v1/swagger.json", "Auth API V1"); });
 
-            app.Subscribe<UserCreatedEvent, UserCreatedEventHandler>();
-            app.Subscribe<UserUpdatedEvent, UserUpdatedEventHandler>();
-            app.Subscribe<UserDeletedEvent, UserDeletedEventHandler>();
+            app.AddEvent<UserCreatedEventHandler, CreateUserCredentialsDTO, IUser>();
+            app.AddEvent<UserUpdatedEventHandler, CreateUserCredentialsDTO, IUser>();
+            app.AddEvent<UserDeletedEventHandler, CreateUserCredentialsDTO, IUser>();
 
             //app.UseHttpsRedirection();
 

@@ -10,14 +10,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using RabbitMQ.IoC;
 using RabitMQEasyExtensions.DependencyInjection;
 using UCLDreamTeam.Reservation.Application.Interfaces;
 using UCLDreamTeam.Reservation.Application.Services;
 using UCLDreamTeam.Reservation.Data.Context;
 using UCLDreamTeam.Reservation.Data.Repository;
-using UCLDreamTeam.Reservation.Domain.CommandHandlers;
-using UCLDreamTeam.Reservation.Domain.Commands;
 using UCLDreamTeam.Reservation.Domain.Interfaces;
 
 namespace UCLDreamTeam.Reservation.Api
@@ -106,12 +103,6 @@ namespace UCLDreamTeam.Reservation.Api
             services.AddMediatR(typeof(Startup));
 
             services.AddRabitMQ();
-
-            services.AddTransient<IRequestHandler<CreateReservationCommand, bool>, CreateReservationCommandHandler>();
-            services
-                .AddTransient<IRequestHandler<CreateCancelReservationCommand, bool>, CancelReservationCommandHandler>();
-            services
-                .AddTransient<IRequestHandler<CreateUpdateReservationCommand, bool>, UpdateReservationCommandHandler>();
             services.AddTransient<IReservationService, ReservationService>();
             services.AddTransient<IReservationRepository, ReservationRepository>();
 

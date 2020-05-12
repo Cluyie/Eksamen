@@ -15,13 +15,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using RabbitMQ.IoC;
+using RabitMQEasyExtensions.DependencyInjection;
 using UCLDreamTeam.User.Application.Interfaces;
 using UCLDreamTeam.User.Application.Services;
 using UCLDreamTeam.User.Data.Context;
 using UCLDreamTeam.User.Data.Respositories;
-using UCLDreamTeam.User.Domain.CommandHandlers;
-using UCLDreamTeam.User.Domain.Commands;
 using UCLDreamTeam.User.Domain.Events;
 using UCLDreamTeam.User.Domain.Interface;
 
@@ -109,18 +107,12 @@ namespace UCLDreamTeam.User.Api
                 });
             });
             services.AddMediatR(typeof(Startup));
-            services.AddRabbitMq();
+            services.AddRabitMQ();
 
             services.AddTransient<UserDbContext>();
 
             services.AddTransient<IUserRepository, UserRepository>();
 
-            //Register user
-            services.AddTransient<IRequestHandler<RegisterUserCommand, bool>, RegisterUserCommandHandler>();
-            //Update user
-            services.AddTransient<IRequestHandler<UpdateUserCommand, bool>, UpdateUserCommandHandler>();
-            //Delete user
-            services.AddTransient<IRequestHandler<DeleteUserCommand, bool>, DeleteUserCommandHandler>();
 
             services.AddTransient<IUserService, UserService>();
 

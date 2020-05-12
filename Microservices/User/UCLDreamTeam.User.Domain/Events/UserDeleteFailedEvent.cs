@@ -1,9 +1,8 @@
 ﻿using System;
-using RabbitMQ.Bus.Events;
 
 namespace UCLDreamTeam.User.Domain.Events
 {
-    public class UserDeleteFailedEvent : Event
+    public class UserDeleteFailedEvent 
     {
         public Models.User User { get; }
         public Exception Exception { get; }

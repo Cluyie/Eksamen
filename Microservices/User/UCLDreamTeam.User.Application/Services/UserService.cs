@@ -1,8 +1,8 @@
-﻿using System;
+﻿using RabitMQEasy;
+using System;
 using System.Threading.Tasks;
-using RabbitMQ.Bus.Bus.Interfaces;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 using UCLDreamTeam.User.Application.Interfaces;
-using UCLDreamTeam.User.Domain.Commands;
 using UCLDreamTeam.User.Domain.Interface;
 
 namespace UCLDreamTeam.User.Application.Services
@@ -10,9 +10,9 @@ namespace UCLDreamTeam.User.Application.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IEventBus _eventBus;
+        private readonly RabitMQPublicer _eventBus;
 
-        public UserService(IUserRepository userRepository, IEventBus eventBus)
+        public UserService(IUserRepository userRepository, RabitMQPublicer eventBus)
         {
             _userRepository = userRepository;
             _eventBus = eventBus;
@@ -20,20 +20,54 @@ namespace UCLDreamTeam.User.Application.Services
 
         public async Task RegisterAsync(Domain.Models.User userToRegister)
         {
-            await _eventBus.SendCommand(new RegisterUserCommand(userToRegister));
+            var result = await _userRepository.CreateUserAsync(userToRegister);
+            if (result.Succeeded)
+            {
+                _eventBus.PunlicEvent<IUser>(Events.NewObject, userToRegister);
+            }
+            else
+            {
+                _eventBus.PunlicEvent<IUser>(Events.NewObject, userToRegister);
+            }
         }
 
         public async Task<Domain.Models.User> Update(Domain.Models.User userData)
         {
-            await _eventBus.SendCommand(new UpdateUserCommand(userData,
-                await _userRepository.GetUserAsync(userData.Id)));
-            return userData;
+            var dbUser = await _userRepository.GetUserAsync(userData.Id);
+            try
+            {
+                // Finds the user
+
+
+                await _userRepository.UpdateUserAsync(userData, dbUser);
+
+                _eventBus.PunlicEvent<IUser>(Events.UpdateObject , await _userRepository.GetUserAsync(userData.Id));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            return dbUser;
         }
 
         public async Task DeleteUserFromIdAsync(Guid id)
         {
-            var command = new DeleteUserCommand(await GetUserFromIdAsync(id));
-            await _eventBus.SendCommand(command);
+            var command = await GetUserFromIdAsync(id);
+            try
+            {
+                await _userRepository.DeleteUserAsync(command);
+                _eventBus.PunlicEvent<IUser>(Events.DeleateObject, command);
+            }
+            catch (Exception e)
+            {
+#if DEBUG
+                Console.WriteLine(e);
+                throw e;
+#else
+                _eventBus.PublishEvent(new UserDeleteFailedEvent(request.User, e));
+                return false;
+#endif
+            }
         }
 
         // ----- Internal methods -----
