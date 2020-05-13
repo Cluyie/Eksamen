@@ -83,8 +83,8 @@ namespace RabbitMQ.Bus.Bus
             channel.ExchangeDeclare(eventName, ExchangeType.Fanout);
             channel.QueueBind(queueName, eventName, "");
             
-            var consumer = new AsyncEventingBasicConsumer(channel);
-            consumer.Received += Consumer_Received;
+            var consumer = new EventingBasicConsumer(channel);
+            consumer.Received += ((sender, @event) => Consumer_Received(sender, @event));
             channel.BasicConsume(queueName, true, consumer);
         }
 

@@ -43,7 +43,7 @@ namespace UCLDreamTeam.Resource.Api
 
             services.AddDbContext<ResourceContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("ResourceDbConnection"));
+                options.UseSqlServer(Configuration.GetConnectionString("ResourceDbLocal"));
             });
 
             services.AddMediatR(typeof(Startup));

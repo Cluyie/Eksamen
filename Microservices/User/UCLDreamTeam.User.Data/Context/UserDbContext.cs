@@ -16,10 +16,6 @@ namespace UCLDreamTeam.User.Data.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(Settings.Default.UCLDB);
-            }
         }
     }
 }

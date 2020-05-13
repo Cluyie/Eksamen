@@ -23,12 +23,14 @@ namespace RabitMQEasy
                     if (obj.IsInterface)
                     {
                         string name = obj.ToString();
-                        eventName += name.Remove(name.IndexOf("["));
+                        int i = name.IndexOf("[");
+                        eventName += i > 0 ? name.Remove(i) : name;
                     }
                     else
                     {
                         eventName += obj.Name;
                     }
+                    Console.WriteLine("New Event Publiced: " + eventName);
                     channel.ExchangeDeclare(eventName, ExchangeType.Fanout);
                     channel.BasicPublish(eventName, "", null, Serlicere(@object));
                 }
@@ -45,7 +47,8 @@ namespace RabitMQEasy
                     if (obj.IsInterface)
                     {
                         string name = obj.ToString();
-                        eventName += name.Remove(name.IndexOf("["));
+                        int i = name.IndexOf("[");
+                        eventName += i > 0 ? name.Remove(i) : name;
                     }
                     else
                     {

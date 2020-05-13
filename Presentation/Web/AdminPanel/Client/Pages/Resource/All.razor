@@ -50,6 +50,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         _resources = await ResourceService.GetAll();
+        Console.WriteLine(_resources.Count);
     }
 
 }

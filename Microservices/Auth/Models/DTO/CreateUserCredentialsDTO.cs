@@ -14,16 +14,16 @@ namespace UCLDreamTeam.Auth.Api.Models.DTO
 
         public string Email { get; set; }
         [NotMapped]
-        public string Address { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Address { get; set; }
         [NotMapped]
-        public string City { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string City { get; set; }
         [NotMapped]
-        public string Country { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Country { get; set; }
         [NotMapped]
-        public string FirstName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string FirstName { get; set; }
         [NotMapped]
-        public string LastName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string LastName { get; set ; }
         [NotMapped]
-        public int? ZipCode { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int? ZipCode { get; set; }
     }
 }

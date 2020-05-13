@@ -11,7 +11,7 @@ namespace UCLDreamTeam.User.Application.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly RabitMQPublicer _eventBus;
-
+            
         public UserService(IUserRepository userRepository, RabitMQPublicer eventBus)
         {
             _userRepository = userRepository;
@@ -22,10 +22,6 @@ namespace UCLDreamTeam.User.Application.Services
         {
             var result = await _userRepository.CreateUserAsync(userToRegister);
             if (result.Succeeded)
-            {
-                _eventBus.PunlicEvent<IUser>(Events.NewObject, userToRegister);
-            }
-            else
             {
                 _eventBus.PunlicEvent<IUser>(Events.NewObject, userToRegister);
             }
