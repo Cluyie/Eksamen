@@ -24,6 +24,7 @@ using RabbitMQ.IoC;
 using MediatR;
 using UCLDreamTeam.Auth.Api.IntegrationEvents.Events;
 using UCLDreamTeam.Auth.Api.IntegrationEvents.EventHandlers;
+using Microsoft.EntityFrameworkCore;
 
 namespace UCLDreamTeam.Auth.Api
 {
@@ -49,8 +50,12 @@ namespace UCLDreamTeam.Auth.Api
             services.AddControllers();
             services.AddScoped<AuthService>();
             services.AddScoped<HashService>();
+            services.AddDbContext<AuthContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("AuthDbConnection"));
+            });
+            services.AddScoped<AuthContext>();
             services.AddScoped<AuthRepository>();
-            services.AddDbContext<AuthContext>();
             services.AddMediatR(typeof(Startup));
             services.AddRabbitMq();
             services.AddTransient<UserCreatedEventHandler>();
@@ -80,7 +85,7 @@ namespace UCLDreamTeam.Auth.Api
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Auth MicroService", Version = "v1"});
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth MicroService", Version = "v1" });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -147,7 +152,6 @@ namespace UCLDreamTeam.Auth.Api
         }
 
         private void CreateRoles(IServiceProvider serviceProvider)
-
         {
             //adding custom roles
 
@@ -186,7 +190,7 @@ namespace UCLDreamTeam.Auth.Api
                     admin.PasswordSalt);
 
                 authContext.AuthUsers.Add(admin);
-                authContext.UserRoles.Add(new UserRole {AuthUserId = admin.Id, Role = roleToAdd});
+                authContext.UserRoles.Add(new UserRole { AuthUserId = admin.Id, Role = roleToAdd });
                 authContext.SaveChanges();
             }
         }

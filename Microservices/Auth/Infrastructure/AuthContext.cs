@@ -9,7 +9,6 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure
 {
     public class AuthContext : DbContext
     {
-
         public AuthContext(DbContextOptions<AuthContext> options) : base(options)
         {
         }
