@@ -10,7 +10,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Ticket?ticketId={ticketId}",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamHttpMethod": ["Get"]
     },
     {
       "DownstreamPathTemplate": "/TicketService/Ticket/User?ticketId={userId}",
@@ -22,7 +22,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Ticket/User?userId={userId}",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamHttpMethod": ["Get"]
     },
     {
       "DownstreamPathTemplate": "/TicketService/Ticket",
@@ -34,7 +34,7 @@
         }
       ],
       "UpstreamPathTemplate": "/Ticket",
-      "UpstreamHttpMethod": [ "Put" ]
+      "UpstreamHttpMethod": ["Put", "Post"]
     }
   ]
 }

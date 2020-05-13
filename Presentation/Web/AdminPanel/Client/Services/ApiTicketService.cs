@@ -16,7 +16,7 @@ namespace AdminPanel.Client.Services
 
         public async Task<Ticket> GetByIdAsync(Guid id)
         {
-            var response = await _client.GetAsync<Ticket>($"Ticket/{id.ToString()}");
+            var response = await _client.GetAsync<Ticket>($"/Ticket?ticketId={id.ToString()}");
            
             return response.Value;
         }
@@ -26,6 +26,11 @@ namespace AdminPanel.Client.Services
             var response = await _client.GetAsync<IEnumerable<Ticket>>($"Ticket/User/{userId.ToString()}");
             
             return response.Value;
+        }
+
+        public async Task UpdateTicket(Ticket ticket)
+        {
+            await _client.PutAsync<Ticket>($"Ticket", ticket);
         }
     }
 }
