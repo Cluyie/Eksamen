@@ -15,7 +15,7 @@ namespace UCLDreamTeam.Ticket.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
+                .HasAnnotation("ProductVersion", "5.0.0-preview.3.20181.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -65,6 +65,8 @@ namespace UCLDreamTeam.Ticket.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tickets");
+
+                    b.HasCheckConstraint("CK_Tickets_Status_Enum_Constraint", "[Status] IN(0, 1, 2)");
                 });
 
             modelBuilder.Entity("UCLDreamTeam.Ticket.Domain.Models.User", b =>

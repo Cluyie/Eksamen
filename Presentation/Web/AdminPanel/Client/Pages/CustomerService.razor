@@ -14,29 +14,32 @@
 @inject ITicketService TicketService
 @inject IReservationService ReservationService
 @inject IResourceService ResourceService
+@inject ITicketService TicketService
+@inject IMailService MailService
 
-@if (TicketDTOs != null)
-{
-    <div class="container-fluid">
-        <div class="row h-100">
-            <TicketsPanel UpdateTicket="UpdateTicket" TicketDTOs=@TicketDTOs />
-            <ChatPanel TicketDTO=@ActiveTicketDTO />
-        </div>
+<div class="container-fluid">
+    <div class="row h-100">
+        <TicketsPanel UpdateTicket="UpdateTicket" GetNextCustomer="@(() => GetNextCustomer(Guid.NewGuid().ToString()))" TicketDTOs=@(TicketDTOs ?? new List<TicketDTO>()) QueueCount=QueueCount />
+        @if (TicketDTOs != null)
+        {
+            <ChatPanel TicketDTO=@ActiveTicketDTO UpdateStatus="@((Status status) => UpdateStatus(status))" />
+        }
+        else
+        {
+            <div class="jumbotron">
+                <h1>Her er tomt...</h1>
+                <p>Der er ingen support sager på nuværende tidspunkt. Kom tilbage senere.</p>
+                <p><a class="btn btn-primary btn-lg" href="" role="button">Gå tilbage til startsiden.</a></p>
+            </div>
+        }
     </div>
-}
-else
-{
-<div class="jumbotron">
-    <h1>Her er tomt...</h1>
-    <p>Der er ingen support sager på nuværende tidspunkt. Kom tilbage senere.</p>
-    <p><a class="btn btn-primary btn-lg" href="" role="button">Gå tilbage til startsiden.</a></p>
 </div>
-}
 
 
 @code
 {
-    private HubConnection _hubConnection;
+    private HubConnection _chatHubConnection;
+    private HubConnection _queueHubConnection;
     public List<TicketDTO> TicketDTOs { get; set; }
     //public List<TicketDTO> TicketDTOs { get; set; } = new List<TicketDTO>
     //{
@@ -81,7 +84,7 @@ else
     //            },
     //            Status = Status.Active
     //        },
-    //        Resource = new Models.Resource
+    //        Resource = new DTOs.ResourceDTO
     //        {
     //            Name = "Test Resource"
     //        },
@@ -204,64 +207,141 @@ else
     //    }
     //};
     public TicketDTO ActiveTicketDTO { get; set; }
+    public int QueueCount { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         #region SignalR ChatHub Methods
-        //_hubConnection = new HubConnectionBuilder()
+        //_chatHubConnection = new HubConnectionBuilder()
         //.WithUrl("http://81.27.216.103/SignalR/ChatHub")
         //.Build();
 
-        //await _hubConnection.StartAsync();
+        _chatHubConnection = new HubConnectionBuilder()
+.WithUrl("http://localhost:5017/ChatHub")
+.Build();
 
-        //_hubConnection.On<Message>("SendMessageToGroup", (message) =>
-        //{
-        //    TicketDTOs.Find(x => x.Ticket.Id == message.TicketId).Ticket.Messages.Add(message);
-        //});
+        await _chatHubConnection.StartAsync();
+
+        _chatHubConnection.On<Message>("SendMessageToGroup", (message) =>
+        {
+            TicketDTOs.Find(x => x.Ticket.Id == message.TicketId).Ticket.Messages.Add(message);
+        });
+        #endregion
+
+        #region SignalR QueueHub Methods
+
+        _queueHubConnection = new HubConnectionBuilder()
+    .WithUrl("http://localhost:5017/QueueHub")
+    .Build();
+
+        //        _queueHubConnection = new HubConnectionBuilder()
+        //.WithUrl("http://81.27.216.103/SignalR/QueueHub")
+        //.Build();
+
+        await _queueHubConnection.StartAsync();
+
+        _queueHubConnection.On<Guid>("ReceiveTaskId", async (ticketId) =>
+        {
+            var ticket = await TicketService.GetByIdAsync(ticketId);
+            try
+            {
+                Reservation reservation = new Reservation();
+
+                if (ticket.ReservationId.HasValue)
+                {
+                    reservation = await ReservationService.GetFromId(ticket.Id);
+                }
+
+                TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation.ResourceId) ?? null });
+
+            }
+            catch (Exception)
+            {
+                TicketDTOs.Add(new TicketDTO { Ticket = ticket });
+            }
+
+            SetActiveTicket();
+        });
+
+        _queueHubConnection.On<int>("ReceiveQueueCount", (queueCount) =>
+        {
+            QueueCount = queueCount;
+            StateHasChanged();
+        });
+
         #endregion
 
         InitializeTicket();
+        await GetQueueCount();
     }
 
     #region SignalR ChatHub Methods
-    //Task JoinGroup(string groupName) =>
-    //    _hubConnection.SendAsync("JoinGroup", groupName);
+    async Task JoinGroup(string groupId) =>
+        await _chatHubConnection.SendAsync("JoinGroup", groupId);
 
-    //Task RemoveFromGroup(string groupName) =>
-    //    _hubConnection.SendAsync("RemoveFromGroup", groupName);
+    Task SendMessageToGroup(Message message) =>
+        _chatHubConnection.SendAsync("SendMessageToGroup", message);
 
-    //Task SendMessageToGroup(Message message) =>
-    //    _hubConnection.SendAsync("SendMessageToGroup", message);
-
-    //public bool IsConnected =>
-    //_hubConnection.State == HubConnectionState.Connected;
+    public bool IsChatConnected =>
+        _chatHubConnection.State == HubConnectionState.Connected;
     #endregion
 
-    void UpdateTicket(TicketDTO tickerDTO)
+    #region SignalR QueueHub Methods
+
+    async Task GetNextCustomer(string groupId)
+    {
+        await _queueHubConnection.SendAsync("GetNextCustomer", groupId);
+        await JoinGroup(groupId);
+    }
+
+    async Task GetQueueCount() => await _queueHubConnection.SendAsync("GetQueueCount");
+
+    public bool IsQueueConnected =>
+        _queueHubConnection.State == HubConnectionState.Connected;
+
+    #endregion
+
+    void UpdateTicket(TicketDTO ticketDTO)
     {
         TicketDTOs.First(x => x.Ticket.Active == true).Ticket.Active = null;
-        TicketDTOs.First(x => x.Ticket.Id == tickerDTO.Ticket.Id).Ticket.Active = true;
-        ActiveTicketDTO = tickerDTO;
+        TicketDTOs.First(x => x.Ticket.Id == ticketDTO.Ticket.Id).Ticket.Active = true;
+        ActiveTicketDTO = ticketDTO;
     }
 
     async void InitializeTicket()
     {
-        var result = await TicketService.GetByUserIdAsync(Guid.NewGuid());
+        //var result = await TicketService.GetByUserIdAsync(Guid.NewGuid());
 
-        foreach (var ticket in result)
-        {
-            Reservation reservation = new Reservation();
+        //foreach (var ticket in result)
+        //{
+        //    Reservation reservation = new Reservation();
 
-            if (ticket.ReservationId.HasValue)
-            {
-                reservation = await ReservationService.GetFromId(ticket.Id);
-            }
+        //    if (ticket.ReservationId.HasValue)
+        //    {
+        //        reservation = await ReservationService.GetFromId(ticket.Id);
+        //    }
 
-            TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation.ResourceId) ?? null });
-        }
+        //    TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation.ResourceId) ?? null });
+        //}
 
+        //SetActiveTicket();
+    }
+
+    private void SetActiveTicket()
+    {
         TicketDTOs = TicketDTOs.OrderByDescending(x => x.Ticket.Messages.Min(s => s.TimeStamp)).ToList();
         TicketDTOs.First().Ticket.Active = true;
         ActiveTicketDTO = TicketDTOs.First(x => (bool)x.Ticket.Active);
+        StateHasChanged();
+    }
+
+    private async void UpdateStatus(Status status, bool sendChatLog = false)
+    {
+        if (sendChatLog && status == Status.Closed)
+        {
+            await MailService.SendChatLog(ActiveTicketDTO);
+        }
+        ActiveTicketDTO.Ticket.Status = status;
+        await TicketService.UpdateTicket(ActiveTicketDTO.Ticket);
     }
 }

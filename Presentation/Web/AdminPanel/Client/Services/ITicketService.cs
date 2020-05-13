@@ -11,5 +11,6 @@ namespace AdminPanel.Client.Services
     {
         Task<Ticket> GetByIdAsync(Guid id);
         Task<IEnumerable<Ticket>> GetByUserIdAsync(Guid userId);
+        Task UpdateTicket(Ticket ticket);
     }
 }

@@ -8,15 +8,6 @@
     }
   },
   "profiles": {
-    "Ticket.Api": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Release"
-      },
-      "applicationUrl": "https://localhost:1336;http://localhost:1337"
-    },
     "Ticket.Api.LocalHost": {
       "commandName": "Project",
       "launchBrowser": true,
@@ -25,6 +16,15 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "https://localhost:5012;http://localhost:5013"
+    },
+    "Ticket.Api": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Release"
+      },
+      "applicationUrl": "https://localhost:1336;http://localhost:1337"
     }
   }
 }

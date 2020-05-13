@@ -11,7 +11,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using UCLDreamTeam.Auth.Api.Infrastructure.Services;
+using UCLDreamTeam.Auth.Api.Models;
 using UCLDreamTeam.Auth.Api.Models.DTO;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.Auth.Api.Controllers
 {
@@ -28,9 +30,9 @@ namespace UCLDreamTeam.Auth.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginAsync([FromBody] LoginDTO login)
+        public async Task<ApiResponse<string>> LoginAsync([FromBody] LoginDTO login)
         {
-            if (login == null) return BadRequest();
+            if (login == null) return new ApiResponse<string>(ApiResponseCode.BadRequest, "");
 
             try
             {
@@ -38,14 +40,14 @@ namespace UCLDreamTeam.Auth.Api.Controllers
 
                 if (userToken != null)
                 {
-                    return Ok("Bearer" + " " + userToken);
+                    return new ApiResponse<string>(ApiResponseCode.OK, "Bearer" + " " + userToken);
                 }
 
-                return Unauthorized();
+                return new ApiResponse<string>(ApiResponseCode.Unauthorized, "");
             }
             catch (Exception e)
             {
-                return StatusCode(500, e);
+                return new ApiResponse<string>(ApiResponseCode.InternalServerError, e.ToString());
             }
         }
     }

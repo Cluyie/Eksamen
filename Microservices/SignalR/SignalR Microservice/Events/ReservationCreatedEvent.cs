@@ -2,7 +2,7 @@
 using RabbitMQ.Bus.Events;
 using SignalR_Microservice.Models;
 
-namespace SignalR.Domain.Events
+namespace SignalR_Microservice.Events
 {
     public class ReservationCreatedEvent : Event
     {
