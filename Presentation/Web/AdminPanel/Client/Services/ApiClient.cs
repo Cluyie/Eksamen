@@ -60,8 +60,9 @@ namespace AdminPanel.Client.Services
         public async Task<ApiResponseDTO<T>> PostAsync<T>(string url, object data)
         {
             SetTokenHeader();
-
-            var httpContent = new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
+            string s = JsonSerializer.Serialize(data);
+            Console.WriteLine(s);
+            var httpContent = new StringContent(s, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync(WrapUrl(url), httpContent);
 

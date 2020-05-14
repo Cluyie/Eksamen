@@ -48,7 +48,7 @@ namespace AdminPanel.Client
             // Mock services
             //builder.Services.AddSingleton<IAuthService, MockAuthService>();
             //builder.Services.AddSingleton<IResourceService, MockResourceService>();
-
+            Console.WriteLine(builder.HostEnvironment.BaseAddress);
             builder.Services.AddSingleton(new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
             await builder.Build().RunAsync();

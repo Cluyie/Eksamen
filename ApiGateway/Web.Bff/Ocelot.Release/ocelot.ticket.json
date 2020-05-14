@@ -6,7 +6,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 1337
+          "Port": 5013
         }
       ],
       "UpstreamPathTemplate": "/Ticket?ticketId={ticketId}",
@@ -18,7 +18,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 1337
+          "Port": 5013
         }
       ],
       "UpstreamPathTemplate": "/Ticket/User?userId={userId}",
@@ -30,7 +30,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 1337
+          "Port": 5013
         }
       ],
       "UpstreamPathTemplate": "/Ticket",

@@ -8,6 +8,7 @@ namespace AdminPanel.Client.Services
 {
     public class MockResourceService : IResourceService
     {
+            Guid Resource;
         private readonly List<ResourceDTO> _resources = new List<ResourceDTO>
         {
             new ResourceDTO
@@ -19,10 +20,9 @@ namespace AdminPanel.Client.Services
                     new TimeslotDTO
                     {
                         Id = Guid.NewGuid(),
-                        Available = true,
+                        Recurring = true,
                         From = new DateTime(2020, 1, 1, 1, 1, 1),
-                        To = new DateTime(2020, 1, 1, 2, 2, 2),
-                        Recurring = 1
+                        To = new DateTime(2020, 1, 1, 2, 2, 2)
                     }
                 }
             },
@@ -35,18 +35,16 @@ namespace AdminPanel.Client.Services
                     new TimeslotDTO
                     {
                         Id = Guid.NewGuid(),
-                        Available = true,
+                        Recurring = true,
                         From = new DateTime(2020, 1, 1, 1, 1, 1),
-                        To = new DateTime(2020, 1, 1, 2, 2, 2),
-                        Recurring = 1
+                        To = new DateTime(2020, 1, 1, 2, 2, 2)
                     },
                     new TimeslotDTO
                     {
                         Id = Guid.NewGuid(),
-                        Available = true,
+                        Recurring = true,
                         From = new DateTime(2020, 1, 1, 3, 1, 1),
-                        To = new DateTime(2020, 1, 1, 4, 2, 2),
-                        Recurring = 1
+                        To = new DateTime(2020, 1, 1, 4, 2, 2)
                     }
                 }
             },
@@ -59,10 +57,9 @@ namespace AdminPanel.Client.Services
                     new TimeslotDTO
                     {
                         Id = Guid.NewGuid(),
-                        Available = true,
+                        Recurring = true,
                         From = new DateTime(2020, 1, 1, 1, 1, 1),
-                        To = new DateTime(2020, 1, 1, 2, 2, 2),
-                        Recurring = 1
+                        To = new DateTime(2020, 1, 1, 2, 2, 2)
                     }
                 }
             }

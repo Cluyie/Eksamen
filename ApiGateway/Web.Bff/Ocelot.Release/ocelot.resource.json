@@ -6,7 +6,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 1337
+          "Port": 5009
         }
       ],
       "UpstreamPathTemplate": "/Resource",
@@ -18,7 +18,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 1337
+          "Port": 5009
         }
       ],
       "UpstreamPathTemplate": "/Resource/guid={guid}",

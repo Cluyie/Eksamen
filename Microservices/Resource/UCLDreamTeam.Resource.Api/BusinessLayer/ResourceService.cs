@@ -35,10 +35,11 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
                 {
                     return new ApiResponse<Domain.Models.Resource>(Models.ApiResponseCode.NoContent, null);
                 }
-
+                resource.Id = Guid.Empty;
                 foreach (var timeslot in resource.TimeSlots)
                 {
                     timeslot.Id = Guid.NewGuid();
+                    timeslot.ResourceId = resource.Id;
                 }
 
                 //Checks that the timeslots do not overlap.

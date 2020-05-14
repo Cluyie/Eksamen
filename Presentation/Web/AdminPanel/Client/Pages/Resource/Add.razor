@@ -36,7 +36,7 @@
         try
         {
             await ResourceService.Add(resource);
-
+            
             NavigationManager.NavigateTo("Resource/Details/" + resource.Id);
         }
         catch (Exception e)

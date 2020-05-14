@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\Models\UCLDreamTeam.SharedInterfaces.csproj" />
     <ProjectReference Include="..\..\..\Core\RabitMQEasyExtensions\RabitMQEasyExtensions.csproj" />
     <ProjectReference Include="..\..\..\Core\RabitMQEasy\RabitMQEasy.csproj" />
     <ProjectReference Include="..\UCLDreamTeam.Resource.Data\UCLDreamTeam.Resource.Data.csproj" />

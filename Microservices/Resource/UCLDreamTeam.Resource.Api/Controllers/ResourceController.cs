@@ -10,7 +10,7 @@ using UCLDreamTeam.Resource.Api.Models;
 namespace UCLDreamTeam.Resource.Api.Controllers
 {
     [Route("[controller]")]
-    [Authorize]
+    [AllowAnonymous]
     [ApiController]
     public class ResourceController : ControllerBase
     {
@@ -22,7 +22,7 @@ namespace UCLDreamTeam.Resource.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status304NotModified)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -50,7 +50,7 @@ namespace UCLDreamTeam.Resource.Api.Controllers
             return _resourceService.Get(guid);
         }
         [HttpPut]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status304NotModified)]
@@ -61,7 +61,7 @@ namespace UCLDreamTeam.Resource.Api.Controllers
         }
 
         [HttpDelete("guid={guid}")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status304NotModified)]

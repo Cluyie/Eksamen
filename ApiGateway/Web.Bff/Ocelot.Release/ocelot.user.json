@@ -6,7 +6,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 1337
+          "Port": 5007
         }
       ],
       "UpstreamPathTemplate": "/User",
@@ -18,7 +18,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 1337
+          "Port": 5007
         }
       ],
       "UpstreamPathTemplate": "/User/{id}",
