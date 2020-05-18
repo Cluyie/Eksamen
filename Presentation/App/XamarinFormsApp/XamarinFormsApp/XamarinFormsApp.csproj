@@ -38,7 +38,7 @@
     <Compile Update="View\RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="View\ResourceView.xaml.cs">
+    <Compile Update="ViewModel\ResourceView.xaml.cs">
       <DependentUpon>ResourceView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>

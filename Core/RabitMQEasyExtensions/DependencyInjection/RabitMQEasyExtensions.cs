@@ -32,6 +32,19 @@ namespace RabitMQEasyExtensions.DependencyInjection
         {
             App.ApplicationServices.GetService<RabitMQCunsumer>().SubscribeOnEvent(App.ApplicationServices.GetService<T>()).Wait();
         }
+        public static async Task AddEventAsync<T, TInstance>(this IApplicationBuilder App)where T : IEventHandler<TInstance>  where TInstance : class
+        {
+            await App.ApplicationServices.GetService<RabitMQCunsumer>().SubscribeOnEvent(App.ApplicationServices.GetService<T>());
+        }
+        public static void AddEvent<T, TInstance>(this IApplicationBuilder App) where T : IEventHandler<TInstance> where TInstance : class
+        {
+            App.ApplicationServices.GetService<RabitMQCunsumer>().SubscribeOnEvent(App.ApplicationServices.GetService<T>()).Wait();
+        }
+
+
+
+
+
         public static async Task AddLissenerAsync<T, TInstance, TInterface>(this IApplicationBuilder App) where T : ILissener<TInstance, TInterface> where TInstance : class, TInterface
         {
             await App.ApplicationServices.GetService<RabitMQCunsumer>().SubscribeOnObject(App.ApplicationServices.GetService<T>());

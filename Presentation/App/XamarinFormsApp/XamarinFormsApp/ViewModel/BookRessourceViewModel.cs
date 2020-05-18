@@ -32,8 +32,7 @@ namespace XamarinFormsApp.ViewModel
             _hubConnectionRerservation = new HubConnectionBuilder()
                 .WithUrl($"{Resources.SignalRBaseAddress}ReservationHub").Build();
             _hubConnectionRerservation.StartAsync();
-            _hubConnectionResource =
-                new HubConnectionBuilder().WithUrl($"{Resources.SignalRBaseAddress}ResourceHub").Build();
+            _hubConnectionResource = new HubConnectionBuilder().WithUrl($"{Resources.SignalRBaseAddress}ResourceHub").Build();
             _hubConnectionResource.StartAsync();
 
             //SignalR Client methods for Reservation
@@ -65,6 +64,7 @@ namespace XamarinFormsApp.ViewModel
                     }
 
                     foreach (var timeslot in resource.TimeSlots)
+                    {
                         if (TimeSlots.Find(r => r.Id == timeslot.Id) != null)
                         {
                             TimeSlots[TimeSlots.FindIndex(r => r.Id == timeslot.Id)] = timeslot;
@@ -75,6 +75,7 @@ namespace XamarinFormsApp.ViewModel
                             TimeSlots.Add(timeslot);
                             reftesh();
                         }
+                    }
                 }
             });
         }
@@ -136,17 +137,15 @@ namespace XamarinFormsApp.ViewModel
             var availablesFound = new List<IAvailableTime>();
             foreach (IAvailableTime Available in TimeSlots)
             {
-                if (!Available.Available) continue;
-                if (Available.Recurring == null)
+                if (Available.Recurring)
                 {
                     if (date.DayOfYear == Available.From.DayOfYear) availablesFound.Add(Available);
                 }
-                else if ((DayOfWeek) ((Available.Recurring + 1) % 7) == date.DayOfWeek)
+                else if (Available.From.DayOfWeek == date.DayOfWeek)
                 {
                     availablesFound.Add(Available);
                 }
             }
-
             return availablesFound;
         }
 

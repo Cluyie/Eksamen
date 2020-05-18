@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace UCLDreamTeam.Resource.Domain.Interfaces
+namespace UCLDreamTeam.SharedInterfaces.Interfaces
 {
     public interface IAvailableTime
     {

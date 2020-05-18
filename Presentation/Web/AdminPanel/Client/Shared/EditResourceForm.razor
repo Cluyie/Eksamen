@@ -29,14 +29,14 @@
                         <div class="form-group">
                             <label>Fra</label>
                             <input class="form-control" type="datetime-local" id="meeting-time"
-                                   name="meeting-time" value="@DateValue(DateTime.Now)"
-                                   @onchange="(x => updateTime(x.Value.ToString(), timeslot ))">
+                                   name="meeting-time" value="@DateValue(timeslot.From)"
+                                   @onchange="(x => updateTimeFrom(x.Value.ToString(), timeslot ))">
                         </div>
                         <div class="form-group">
                             <label>Til</label>
                             <input class="form-control" type="datetime-local" id="meeting-time"
-                                   name="meeting-time" value="@DateValue(DateTime.Now)"
-                                   @onchange="(x => updateTime(x.Value.ToString(), timeslot ))">
+                                   name="meeting-time" value="@DateValue(timeslot.To)"
+                                   @onchange="(x => updateTimeTo(x.Value.ToString(), timeslot ))">
                         </div>
                         <div class="form-group">
                             <label>Tilgængelig</label>
@@ -70,20 +70,13 @@
 
     [Parameter]
     public Action<ResourceDTO> OnEditComplete { get; set; }
-    protected override async Task OnInitializedAsync()
-    {
-        Console.WriteLine(DateTime.Today.ToString("o"));
-    }
     public string DateValue(DateTime time)
     {
-        string minvalue = DateTime.Now.ToString("o");
-        minvalue = minvalue.Remove(minvalue.IndexOf(".")-3);
-        Console.WriteLine(minvalue);
+        string minvalue = time.ToString("yyyy-MM-ddTHH:mm");
         return minvalue;
     }
     private void OnValidSubmit()
     {
-        Console.WriteLine();
         OnEditComplete?.Invoke(Resource);
     }
 
@@ -97,11 +90,18 @@
         Resource.Timeslots.Remove(timeslot);
     }
 
-    private void updateTime(string x, TimeslotDTO timeslot )
+    private void updateTimeFrom(string x, TimeslotDTO timeslot )
     {
         if(DateTime.TryParse(x, out DateTime time))
         {
             timeslot.From = time;
+        }
+    }
+    private void updateTimeTo(string x, TimeslotDTO timeslot )
+    {
+        if(DateTime.TryParse(x, out DateTime time))
+        {
+            timeslot.To = time;
         }
     }
 

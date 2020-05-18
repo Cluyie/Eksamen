@@ -1,5 +1,5 @@
 ﻿using System;
-using UCLDreamTeam.Resource.Domain.Interfaces;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace AdminPanel.Client.DTOs
 {

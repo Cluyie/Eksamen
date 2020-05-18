@@ -12,6 +12,7 @@ using MediatR;
 using System.Collections.Generic;
 using SignalR_Microservice.Models;
 using RabitMQEasyExtensions.DependencyInjection;
+using System.Runtime.Versioning;
 
 namespace SignalR_Microservice
 {
@@ -36,6 +37,9 @@ namespace SignalR_Microservice
             services.AddTransient<ReservationCreatedEventHandler>();
             services.AddTransient<ReservationCanceledEventHandler>();
             services.AddTransient<ReservationUpdatedEventHandler>();
+            services.AddTransient<ResourveCreadetEventHandler>();
+            services.AddTransient<ResourceUpdateEventHandler>();
+            services.AddTransient<ResourceDeleadetEventHandler>();
 
             //SignalR dependencies
             services.AddScoped<IChatLoggingService, ChatLoggingService>();
@@ -83,6 +87,9 @@ namespace SignalR_Microservice
             app.AddLissener<ReservationCreatedEventHandler, ReservationCreatedEvent>();
             app.AddLissener<ReservationCanceledEventHandler, ReservationCanceledEvent>();
             app.AddLissener<ReservationUpdatedEventHandler, ReservationUpdatedEvent>();
+            app.AddEvent<ResourveCreadetEventHandler, Resource>();
+            app.AddEvent<ResourceUpdateEventHandler, Resource>();
+            app.AddEvent<ResourceDeleadetEventHandler, Resource>();
         }
     }
 }

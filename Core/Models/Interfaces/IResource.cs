@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UCLDreamTeam.Resource.Domain.Interfaces;
 
 namespace UCLDreamTeam.SharedInterfaces.Interfaces
 {

@@ -6,6 +6,11 @@ namespace SignalR_Microservice.Hubs
 {
     public class ResourceHub : Hub
     {
+        public override Task OnConnectedAsync()
+        {
+            System.Console.WriteLine(Context.ConnectionId);
+            return base.OnConnectedAsync();
+        }
         public async Task CreateResource(Resource resource)
         {
             await Clients.All.SendAsync("CreateResource", resource);

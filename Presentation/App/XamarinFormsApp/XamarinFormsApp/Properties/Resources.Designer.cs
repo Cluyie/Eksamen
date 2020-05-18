@@ -71,7 +71,7 @@ namespace XamarinFormsApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://81.27.216.103/SignalR/.
+        ///   Looks up a localized string similar to http://10.0.2.2:5017/.
         /// </summary>
         internal static string SignalRBaseAddress {
             get {
