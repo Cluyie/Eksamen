@@ -10,7 +10,7 @@ using UCLDreamTeam.Auth.Api.Infrastructure;
 namespace UCLDreamTeam.Auth.Api.Migrations
 {
     [DbContext(typeof(AuthContext))]
-    [Migration("20200415210446_Initial")]
+    [Migration("20200521060922_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,7 +75,7 @@ namespace UCLDreamTeam.Auth.Api.Migrations
 
             modelBuilder.Entity("UCLDreamTeam.Auth.Api.Models.UserRole", b =>
                 {
-                    b.HasOne("UCLDreamTeam.Auth.Api.Models.AuthUser", "AuthUser")
+                    b.HasOne("UCLDreamTeam.Auth.Api.Models.AuthUser", null)
                         .WithMany("UserRoles")
                         .HasForeignKey("AuthUserId")
                         .OnDelete(DeleteBehavior.Cascade)

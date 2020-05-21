@@ -31,6 +31,13 @@ namespace UCLDreamTeam.Mail.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Resources");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("fdeb2144-e949-4db9-9019-cd5918cb248e"),
+                            Name = "Hegnet's Sure Sokker"
+                        });
                 });
 
             modelBuilder.Entity("UCLDreamTeam.Mail.Domain.Models.User", b =>
@@ -51,6 +58,15 @@ namespace UCLDreamTeam.Mail.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("efe2f55b-a038-42e3-98ff-57a5e906880a"),
+                            Email = "DreamTeamUCL@gmail.com",
+                            FirstName = "Admin",
+                            LastName = "Adminsen"
+                        });
                 });
 #pragma warning restore 612, 618
         }

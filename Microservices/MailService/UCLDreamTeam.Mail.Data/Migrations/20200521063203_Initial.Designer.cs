@@ -5,36 +5,48 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using UCLDreamTeam.User.Data.Context;
+using UCLDreamTeam.Mail.Data.Context;
 
-namespace UCLDreamTeam.User.Data.Migrations
+namespace UCLDreamTeam.Mail.Data.Migrations
 {
-    [DbContext(typeof(UserDbContext))]
-    [Migration("20200417124047_Initial")]
+    [DbContext(typeof(MailDbContext))]
+    [Migration("20200521063203_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.0-preview.2.20159.4")
+                .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("UCLDreamTeam.User.Domain.Models.User", b =>
+            modelBuilder.Entity("UCLDreamTeam.Mail.Domain.Models.Resource", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Address")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Id");
 
-                    b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
+                    b.ToTable("Resources");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("fdeb2144-e949-4db9-9019-cd5918cb248e"),
+                            Name = "Hegnet's Sure Sokker"
+                        });
+                });
+
+            modelBuilder.Entity("UCLDreamTeam.Mail.Domain.Models.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -45,15 +57,18 @@ namespace UCLDreamTeam.User.Data.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ZipCode")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("efe2f55b-a038-42e3-98ff-57a5e906880a"),
+                            Email = "DreamTeamUCL@gmail.com",
+                            FirstName = "Admin",
+                            LastName = "Adminsen"
+                        });
                 });
 #pragma warning restore 612, 618
         }

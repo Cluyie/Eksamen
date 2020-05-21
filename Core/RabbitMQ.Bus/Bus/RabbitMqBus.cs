@@ -36,10 +36,7 @@ namespace RabbitMQ.Bus.Bus
 
         public void PublishEvent<T>(T @event) where T : Event
         {
-            var factory = new ConnectionFactory
-            {
-                Uri = new Uri(@"amqp://uuwjhqtb:FIaXRCFlumGxOENo0TGLM-M8c6T850uK@hawk.rmq.cloudamqp.com/uuwjhqtb")
-            };
+            var factory = new ConnectionFactory { HostName = "localhost", UserName = "guest", Password = "guest" };
 
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();

@@ -10,8 +10,8 @@ using UCLDreamTeam.Reservation.Data.Context;
 namespace UCLDreamTeam.Reservation.Data.Migrations
 {
     [DbContext(typeof(ReservationDbContext))]
-    [Migration("20200407122157_Inital migration")]
-    partial class Initalmigration
+    [Migration("20200521060111_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

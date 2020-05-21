@@ -73,7 +73,7 @@ namespace UCLDreamTeam.Auth.Api.Migrations
 
             modelBuilder.Entity("UCLDreamTeam.Auth.Api.Models.UserRole", b =>
                 {
-                    b.HasOne("UCLDreamTeam.Auth.Api.Models.AuthUser", "AuthUser")
+                    b.HasOne("UCLDreamTeam.Auth.Api.Models.AuthUser", null)
                         .WithMany("UserRoles")
                         .HasForeignKey("AuthUserId")
                         .OnDelete(DeleteBehavior.Cascade)

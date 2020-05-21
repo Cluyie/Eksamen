@@ -10,7 +10,7 @@ using UCLDreamTeam.Resource.Data.Context;
 namespace UCLDreamTeam.Resource.Data.Migrations
 {
     [DbContext(typeof(ResourceContext))]
-    [Migration("20200418165433_Initial")]
+    [Migration("20200521060154_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -10,8 +10,8 @@ using UCLDreamTeam.User.Data.Context;
 namespace UCLDreamTeam.User.Data.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20200417125023_NormalizedUserName")]
-    partial class NormalizedUserName
+    [Migration("20200521060735_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

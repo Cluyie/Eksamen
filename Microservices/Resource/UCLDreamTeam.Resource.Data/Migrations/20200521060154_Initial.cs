@@ -25,8 +25,8 @@ namespace UCLDreamTeam.Resource.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    ResourceId = table.Column<Guid>(nullable: false),
                     Recurring = table.Column<bool>(nullable: false),
+                    ResourceId = table.Column<Guid>(nullable: false),
                     From = table.Column<DateTime>(nullable: false),
                     To = table.Column<DateTime>(nullable: false)
                 },
