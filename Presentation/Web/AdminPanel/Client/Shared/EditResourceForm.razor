@@ -5,7 +5,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label>Navn</label>
-                <InputText id="inputRessourceName" class="form-control" placeholder="Navn" @bind-Value="Resource.Name"/>
+                <InputText id="inputRessourceName" class="form-control" placeholder="Navn" @bind-Value="Resource.Name" />
             </div>
             <div class="form-group">
                 <label>Beskrivelse</label>
@@ -18,7 +18,7 @@
         <button id="addTimeslot" type="button" class="btn btn-info" @onclick="AddTimeslot"><b>+</b> Tilføj tidsperiode</button>
     </p>
     <div class="row">
-        @foreach (var timeslot in Resource.Timeslots)
+        @foreach (TimeslotDTO timeslot in Resource.Timeslots)
         {
             <div class="col-md-6 col-xl-4">
                 <div class="card mb-3">
@@ -28,20 +28,20 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label>Fra</label>
-                            <InputDateTime id="dateFrom" class="form-control" @bind-Value="timeslot.From"/>
+                            <input class="form-control" type="datetime-local" id="meeting-time"
+                                   name="meeting-time" value="@DateValue(timeslot.From)"
+                                   @onchange="(x => updateTimeFrom(x.Value.ToString(), timeslot ))">
                         </div>
                         <div class="form-group">
                             <label>Til</label>
-                            <InputDateTime id="dateTo" class="form-control" @bind-Value="timeslot.To"/>
-                        </div>
-                        <div class="form-group">
-                            <label>Tilbagevendende interval (dage)</label>
-                            <InputNumber id="recurring" class="form-control" placeholder="Tilbagevendende interval" @bind-Value="timeslot.Recurring"/>
+                            <input class="form-control" type="datetime-local" id="meeting-time"
+                                   name="meeting-time" value="@DateValue(timeslot.To)"
+                                   @onchange="(x => updateTimeTo(x.Value.ToString(), timeslot ))">
                         </div>
                         <div class="form-group">
                             <label>Tilgængelig</label>
                             <div>
-                                <InputCheckbox id="available" @bind-Value="timeslot.Available"/>
+                                <InputNumber id="available" @bind-Value="timeslot.Recurring" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -60,7 +60,8 @@
 </EditForm>
 
 @code {
-
+    private TimeSpan Time;
+    public string TimeProxy { get => Time.ToString(); set => TimeSpan.TryParse(value, out Time); }
     [Parameter]
     public ResourceDTO Resource { get; set; }
 
@@ -70,6 +71,12 @@
     [Parameter]
     public Action<ResourceDTO> OnEditComplete { get; set; }
 
+    public string DateValue(DateTime time)
+    {
+        string minvalue = time.ToString("yyyy-MM-ddTHH:mm");
+        return minvalue;
+    }
+
     private void OnValidSubmit()
     {
         OnEditComplete?.Invoke(Resource);
@@ -77,15 +84,27 @@
 
     private void AddTimeslot()
     {
-        Resource.Timeslots.Add(new TimeslotDTO
-        {
-            Available = true
-        });
+        Resource.Timeslots.Add(new TimeslotDTO() { });
     }
 
     private void RemoveTimeslot(TimeslotDTO timeslot)
     {
         Resource.Timeslots.Remove(timeslot);
+    }
+
+    private void updateTimeFrom(string x, TimeslotDTO timeslot)
+    {
+        if (DateTime.TryParse(x, out DateTime time))
+        {
+            timeslot.From = time;
+        }
+    }
+    private void updateTimeTo(string x, TimeslotDTO timeslot)
+    {
+        if (DateTime.TryParse(x, out DateTime time))
+        {
+            timeslot.To = time;
+        }
     }
 
 }
