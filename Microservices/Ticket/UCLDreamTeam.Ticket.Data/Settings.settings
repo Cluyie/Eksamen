@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="UCLDB" Type="(Connection string)" Scope="Application">
-      <Value Profile="(Default)">Server=10.56.8.34;Database=TicketService;User ID=lara2;Password=Hejmeddig19;</Value>
+      <Value Profile="(Default)">Server=tcp:ucldreamteam.database.windows.net,1433;Database=TicketService;User ID=lara2;Password=Hejmeddig19;</Value>
     </Setting>
   </Settings>
 </SettingsFile>
