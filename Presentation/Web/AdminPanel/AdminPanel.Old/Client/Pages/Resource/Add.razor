@@ -1,0 +1,50 @@
+﻿@page "/Resource/Add"
+@using AdminPanel.Client.DTOs
+@using AdminPanel.Client.Services
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+@inject IResourceService ResourceService
+@inject NavigationManager NavigationManager;
+
+<h1>Opret ny ressource</h1>
+<hr/>
+
+@if (_error)
+{
+    <div class="alert alert-danger">
+        <b>Der opstod en fejl!</b> Tjek at du har udfyldt alle felter rigtigt, og at tidsperioderne ikke overlapper.
+        Problemet kan også skyldes din internetforbindelse.
+    </div>
+}
+
+<EditResourceForm Resource="_resource" SubmitButtonText="Opret ressource" OnEditComplete="OnEditComplete"/>
+
+@code {
+
+    private ResourceDTO _resource = new ResourceDTO
+    {
+        Id = Guid.NewGuid(),
+        Timeslots = new List<TimeslotDTO>()
+    };
+
+    private bool _error;
+
+    private async void OnEditComplete(ResourceDTO resource)
+    {
+        _error = false;
+        StateHasChanged();
+
+        try
+        {
+            await ResourceService.Add(resource);
+
+            NavigationManager.NavigateTo("Resource/Details/" + resource.Id);
+        }
+        catch (Exception e)
+        {
+            _error = true;
+            StateHasChanged();
+        }
+    }
+
+}

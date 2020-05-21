@@ -1,0 +1,36 @@
+﻿@using System
+@using AdminPanel.Client.DTOs
+@using AdminPanel.Client.Models
+@using UCLDreamTeam.SharedInterfaces
+
+<section class="chat">
+    <ChatHeader TicketDTO=@TicketDTO UpdateStatus="@UpdateStatus" />
+    <div class="messages-chat">
+        @for (int i = 0; i < TicketDTO.Ticket.Messages.Count; i++)
+        {
+            <MessageComponent Text=@TicketDTO.Ticket.Messages[i].Text Response=@(TicketDTO.Ticket.Messages[i].UserId != Guid.Empty)/> //Change to Active User ID
+        }
+    </div>
+    <ChatFooter />
+</section>
+
+@code
+{
+    [Parameter] public TicketDTO TicketDTO { get; set; }
+
+    [Parameter] public EventCallback<Status> UpdateStatus { get; set; }
+}
+
+<style>
+    .chat {
+        width: 65%;
+        max-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .chat .messages-chat {
+        padding: 25px 35px;
+        overflow-y: auto;
+    }
+</style>
