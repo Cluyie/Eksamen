@@ -20,5 +20,10 @@ namespace SignalR_Microservice.Hubs
         {
             await Clients.All.SendAsync("DeleteResource", resource);
         }
+        public override Task OnConnectedAsync()
+        {
+            System.Console.WriteLine("Ny forbindelse: " + Context.ConnectionId);
+            return base.OnConnectedAsync();
+        }
     }
 }

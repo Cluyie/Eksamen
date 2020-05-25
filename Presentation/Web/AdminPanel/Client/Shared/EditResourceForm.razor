@@ -39,9 +39,9 @@
                                    @onchange="(x => updateTimeTo(x.Value.ToString(), timeslot ))">
                         </div>
                         <div class="form-group">
-                            <label>Tilgængelig</label>
+                            <label>Gentagende</label>
                             <div>
-                                <InputNumber id="available" @bind-Value="timeslot.Recurring" />
+                                <InputCheckbox id="recurring" @bind-Value="timeslot.Recurring" />
                             </div>
                         </div>
                         <div class="form-group">
