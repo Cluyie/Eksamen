@@ -39,9 +39,14 @@ namespace SignalR_Microservice.Hubs
 
         public async Task GetNextCustomer(string groupId)
         {
-            var taskId = _queueService.Dequeue(groupId);
-            await SendService.SendReceiveTaskId(Context.ConnectionId, await taskId);
-            //await Clients.Caller.SendAsync("ReceiveTaskId", taskId);
+            if (_queueService.QueueCount != 0)
+            {
+                var taskId = await _queueService.Dequeue(groupId);
+
+                await SendService.SendReceiveTaskId(Context.ConnectionId, taskId);
+                //await Clients.Caller.SendAsync("ReceiveTaskId", taskId);
+
+            }
         }
 
         //public async Task SendGroupId(string id, string groupId)

@@ -29,7 +29,6 @@ namespace AdminPanel.Client.Services
         private async Task<User> GetUser()
         {
             ApiResponseDTO<User> response = await _client.GetAsync<User>("User");
-            Console.WriteLine(_credentialsKeeper?.Token);
             return response.Value;
         }
 

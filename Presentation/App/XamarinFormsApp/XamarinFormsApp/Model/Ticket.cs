@@ -6,7 +6,7 @@ using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace XamarinFormsApp.Model
 {
-    public class Ticket : ITicket<IMessage>
+    public class Ticket : ITicket<IMessage, UserTicket>
     {
         public Guid Id { get; set; }
         public bool? Active { get; set; }
@@ -14,6 +14,8 @@ namespace XamarinFormsApp.Model
         public Status Status { get; set; }
 
         public List<IMessage> Messages { get; set; }
+
+        public List<UserTicket> UserTickets { get; set; }
 
         public Guid? ReservationId { get; set; }
     }

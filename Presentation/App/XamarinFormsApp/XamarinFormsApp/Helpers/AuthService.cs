@@ -23,7 +23,7 @@ namespace XamarinFormsApp.Helpers
 
         public void UpdateUser(User user = null)
         {
-            Application.Current.Properties["UserData"] = _proxy.Get<User>("User");
+            Application.Current.Properties["UserData"] = _proxy.Get<ApiResponse<User>>("User").Value;
         }
     }
 }

@@ -78,6 +78,7 @@
 
         _queueHubConnection.On<Guid>("ReceiveTaskId", async (ticketId) =>
         {
+            Console.WriteLine("Forbindelse oprettet med id: " + ticketId);
             var ticket = await TicketService.GetByIdAsync(ticketId);
             try
             {
@@ -130,6 +131,7 @@
         Console.WriteLine(groupId);
         await _queueHubConnection.SendAsync("GetNextCustomer", groupId);
         await JoinGroup(groupId);
+        InitializeTicket();
     }
 
     async Task GetQueueCount() => await _queueHubConnection.SendAsync("GetQueueCount");
@@ -148,8 +150,8 @@
 
     async void InitializeTicket()
     {
+        Console.WriteLine(AuthService.CurrentUser?.Id);
         var result = await TicketService.GetByUserIdAsync(AuthService.CurrentUser?.Id ?? Guid.Empty);
-
 
         if (result != null)
         {

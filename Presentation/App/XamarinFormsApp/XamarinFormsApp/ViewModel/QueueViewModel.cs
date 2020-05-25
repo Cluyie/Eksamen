@@ -49,11 +49,25 @@ namespace XamarinFormsApp.ViewModel
                 Active = true,
                 Name = (Application.Current.Properties["UserData"] as User).UserName,
                 ReservationId = reservationId,
-                Status = UCLDreamTeam.SharedInterfaces.Status.Active
+                Status = UCLDreamTeam.SharedInterfaces.Status.Active,
+                
+
             };
 
-            HttpResponseMessage response = proxy.Post<Ticket>("Ticket", ticket);
-            _ticketId = ApiClientProxy.ReadAnswer<Ticket>(response).Id;
+            var user = Application.Current.Properties["UserData"] as User;
+
+            ticket.UserTickets = new List<UserTicket> 
+            { 
+                new UserTicket 
+                { 
+                    TicketId = ticket.Id, 
+                    UserId = user.Id 
+                }
+            };
+
+            HttpResponseMessage response = proxy.Post("Ticket", ticket);
+
+            _ticketId = ticket.Id;
 
             _hubConnection = new HubConnectionBuilder().WithUrl($"{Properties.Resources.SignalRBaseAddress}QueueHub")
                 .Build();
