@@ -1,7 +1,7 @@
 ﻿using System;
 using RabbitMQ.Bus.Events;
 
-namespace SignalR.Domain.Events
+namespace SignalR_Microservice.Events
 {
     public class ReservationCanceledEvent : Event
     {

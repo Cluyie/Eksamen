@@ -15,7 +15,7 @@ namespace UCLDreamTeam.Ticket.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
+                .HasAnnotation("ProductVersion", "5.0.0-preview.3.20181.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -36,6 +36,9 @@ namespace UCLDreamTeam.Ticket.Data.Migrations
 
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -65,6 +68,8 @@ namespace UCLDreamTeam.Ticket.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tickets");
+
+                    b.HasCheckConstraint("CK_Tickets_Status_Enum_Constraint", "[Status] IN(0, 1, 2)");
                 });
 
             modelBuilder.Entity("UCLDreamTeam.Ticket.Domain.Models.User", b =>
@@ -104,13 +109,13 @@ namespace UCLDreamTeam.Ticket.Data.Migrations
 
             modelBuilder.Entity("UCLDreamTeam.Ticket.Domain.Models.UserTicket", b =>
                 {
-                    b.HasOne("UCLDreamTeam.Ticket.Domain.Models.Ticket", "Ticket")
+                    b.HasOne("UCLDreamTeam.Ticket.Domain.Models.Ticket", null)
                         .WithMany("UserTickets")
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UCLDreamTeam.Ticket.Domain.Models.User", "User")
+                    b.HasOne("UCLDreamTeam.Ticket.Domain.Models.User", null)
                         .WithMany("UserTickets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

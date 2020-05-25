@@ -1,0 +1,131 @@
+/*
+    This is a configuration file for the SwitchStartupProject Visual Studio Extension
+    See https://bitbucket.org/thirteen/switchstartupproject/src/tip/Configuration.md
+*/
+{
+  /*  Configuration File Version  */
+  "Version": 3,
+
+  /*  Create an item in the dropdown list for each project in the solution?  */
+  "ListAllProjects": false,
+
+  "MultiProjectConfigurations": {
+    "MicroServices": {
+      "Projects": {
+        "Mobile.Bff": {
+          "ProfileName": "Mobile.Bff"
+        },
+        "Web.Bff": {
+          "ProfileName": "Web.Bff"
+        },
+        "SignalR Microservice": {
+          "ProfileName": "SignalR_Microservice"
+        },
+        "UCLDreamTeam.Reservation.Api": {
+          "ProfileName": "Reservation.Api"
+        },
+        "UCLDreamTeam.Resource.Api": {
+          "ProfileName": "Resource.Api"
+        },
+        "UCLDreamTeam.Ticket.Api": {
+          "ProfileName": "Ticket.Api"
+        },
+        "UCLDreamTeam.User.Api": {
+          "ProfileName": "User.Api"
+        },
+        "UCLDreamTeam.Auth.Api": {
+          "ProfileName": "Auth.Api"
+        }
+      }
+    },
+    "MicroServicesWithAdminPanel": {
+      "Projects": {
+        "AdminPanel.Server": {
+        },
+        "Mobile.Bff": {
+          "ProfileName": "Mobile.Bff"
+        },
+        "Web.Bff": {
+          "ProfileName": "Web.Bff"
+        },
+        "SignalR Microservice": {
+          "ProfileName": "SignalR_Microservice"
+        },
+        "UCLDreamTeam.Reservation.Api": {
+          "ProfileName": "Reservation.Api"
+        },
+        "UCLDreamTeam.Resource.Api": {
+          "ProfileName": "Resource.Api"
+        },
+        "UCLDreamTeam.Ticket.Api": {
+          "ProfileName": "Ticket.Api"
+        },
+        "UCLDreamTeam.User.Api": {
+          "ProfileName": "User.Api"
+        },
+        "UCLDreamTeam.Auth.Api": {
+          "ProfileName": "Auth.Api"
+        }
+      }
+    },
+    "MicroServicesWithApp": {
+      "Projects": {
+        "XamarinFormsApp.Android": {},
+        "Mobile.Bff": {
+          "ProfileName": "Mobile.Bff"
+        },
+        "Web.Bff": {
+          "ProfileName": "Web.Bff"
+        },
+        "SignalR Microservice": {
+          "ProfileName": "SignalR_Microservice"
+        },
+        "UCLDreamTeam.Reservation.Api": {
+          "ProfileName": "Reservation.Api"
+        },
+        "UCLDreamTeam.Resource.Api": {
+          "ProfileName": "Resource.Api"
+        },
+        "UCLDreamTeam.Ticket.Api": {
+          "ProfileName": "Ticket.Api"
+        },
+        "UCLDreamTeam.User.Api": {
+          "ProfileName": "User.Api"
+        },
+        "UCLDreamTeam.Auth.Api": {
+          "ProfileName": "Auth.Api"
+        }
+      }
+    },
+    "MicroServicesWithAdminPanelAndApp": {
+      "Projects": {
+        "AdminPanel.Server": {},
+        "XamarinFormsApp.Android": {},
+        "Mobile.Bff": {
+          "ProfileName": "Mobile.Bff"
+        },
+        "Web.Bff": {
+          "ProfileName": "Web.Bff"
+        },
+        "SignalR Microservice": {
+          "ProfileName": "SignalR_Microservice"
+        },
+        "UCLDreamTeam.Reservation.Api": {
+          "ProfileName": "Reservation.Api"
+        },
+        "UCLDreamTeam.Resource.Api": {
+          "ProfileName": "Resource.Api"
+        },
+        "UCLDreamTeam.Ticket.Api": {
+          "ProfileName": "Ticket.Api"
+        },
+        "UCLDreamTeam.User.Api": {
+          "ProfileName": "User.Api"
+        },
+        "UCLDreamTeam.Auth.Api": {
+          "ProfileName": "Auth.Api"
+        }
+      }
+    }
+  }
+}

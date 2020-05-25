@@ -28,12 +28,21 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
 
         public async Task<IEnumerable<Domain.Models.Ticket>> GetByUserIdAsync(Guid id)
         {
-            var user  = await _ticketDbContext.Users
+            var userTickets = _ticketDbContext.Users
                 .Include(u => u.UserTickets)
-                .FirstOrDefaultAsync(u => u.Id == id);
-            var userTickets = user.UserTickets
-                .FindAll(ut => ut.UserId == id);
-            return userTickets.Select(ut => ut.Ticket);
+                .FirstOrDefaultAsync(u => u.Id == id).Result.UserTickets;
+
+            //var userTickets = user.UserTickets
+            //    .FindAll(ut => ut.UserId == id);
+
+            var tickets = new List<Domain.Models.Ticket>();
+            foreach (var userTicket in userTickets)
+            {
+                var ticket = await _ticketDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == userTicket.TicketId);
+                if (ticket != null) tickets.Add(ticket);
+            }
+
+            return tickets;
         }
 
         public async Task AddAsync(Domain.Models.Ticket ticket)
@@ -56,11 +65,18 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
             await _ticketDbContext.SaveChangesAsync();
         }
 
+        public async Task CreateAsync(Domain.Models.Ticket ticket)
+        {
+            await _ticketDbContext.Tickets.AddAsync(ticket);
+            await _ticketDbContext.SaveChangesAsync();
+        }
+
         public async Task UpdateAsync(Domain.Models.Ticket ticket)
         {
             _ticketDbContext.Tickets.Update(ticket);
             await _ticketDbContext.SaveChangesAsync();
         }
+
 
         public async Task ChangeStatusById(Guid id, Status status)
         {

@@ -36,7 +36,7 @@ namespace RabbitMQ.Bus.Bus
 
         public void PublishEvent<T>(T @event) where T : Event
         {
-            var factory = new ConnectionFactory {HostName = "localhost", UserName = "guest", Password = "guest"};
+            var factory = new ConnectionFactory { HostName = "localhost", UserName = "guest", Password = "guest" };
 
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
@@ -66,11 +66,7 @@ namespace RabbitMQ.Bus.Bus
 
         private void StartBasicConsume<T>() where T : Event
         {
-            var factory = new ConnectionFactory
-            {
-                HostName = "localhost",
-                DispatchConsumersAsync = true
-            };
+            var factory = new ConnectionFactory { HostName = "localhost", UserName = "guest", Password = "guest" };
 
             var connection = factory.CreateConnection();
             var channel = connection.CreateModel();
@@ -80,12 +76,12 @@ namespace RabbitMQ.Bus.Bus
             channel.ExchangeDeclare(eventName, ExchangeType.Fanout);
             channel.QueueBind(queueName, eventName, "");
             
-            var consumer = new AsyncEventingBasicConsumer(channel);
+            var consumer = new EventingBasicConsumer(channel);
             consumer.Received += Consumer_Received;
             channel.BasicConsume(queueName, true, consumer);
         }
 
-        private async Task Consumer_Received(object sender, BasicDeliverEventArgs @event)
+        private async void Consumer_Received(object sender, BasicDeliverEventArgs @event)
         {
             var eventName = @event.Exchange;
             var message = Encoding.UTF8.GetString(@event.Body);

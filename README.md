@@ -12,3 +12,11 @@ Iteration: 03/04 - 01/05
 - App udvikling: Anders L, Jonas, Christian, Frederik, Hegnet og Sebastian
 - Api: Steffen, Ricardo, Simon, Andreas, Simone, Oleksii
 - Web: Anders J, Christoffer, Tobias, Alex, Henrik, Caspar og Skov
+
+## Architecture diagram  
+![alt text](https://github.com/lasserasch/UCLDreamTeam/blob/master/Architecture%20diagram.png "")
+[Link til redigering](https://creately.com/diagram/k8diih3q1/Uj1fnQbfuYOHFMUdKdiTGqcOt8%3D)
+
+
+## Pattern diagram  
+![alt text](https://github.com/lasserasch/UCLDreamTeam/blob/master/UCLDreamTeam%20Patterns%20Diagram.jpg "")

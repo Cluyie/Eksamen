@@ -18,11 +18,11 @@ namespace UCLToolBox
     /// </summary>
     public class ApiClientProxy
     {
-        public HttpClient httpClient;
+        public HttpClient HttpClient;
 
         public ApiClientProxy(HttpClient http)
         {
-            httpClient = http;
+            HttpClient = http;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace UCLToolBox
         public returnObj Get<returnObj>(string Http) where returnObj : class
         {
             returnObj obj;
-            using (var response = httpClient.GetAsync(Http).Result)
+            using (var response = HttpClient.GetAsync(Http).Result)
             {
                 obj = ReadAnswer<returnObj>(response);
             }
@@ -75,7 +75,7 @@ namespace UCLToolBox
             var buffer = Encoding.UTF8.GetBytes(myContent);
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            return httpClient.PutAsync(Http, byteContent).Result;
+            return HttpClient.PutAsync(Http, byteContent).Result;
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace UCLToolBox
             var buffer = Encoding.UTF8.GetBytes(myContent);
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            return httpClient.PostAsync(Http, byteContent).Result;
+            return HttpClient.PostAsync(Http, byteContent).Result;
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace UCLToolBox
         /// <returns></returns>
         public HttpResponseMessage Delete(string Http)
         {
-            return httpClient.DeleteAsync(Http).Result;
+            return HttpClient.DeleteAsync(Http).Result;
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace UCLToolBox
         public async Task<returnObj> GetAsync<returnObj>(string Http) where returnObj : class
         {
             returnObj obj;
-            using (var response = await httpClient.GetAsync(Http))
+            using (var response = await HttpClient.GetAsync(Http))
             {
                 obj = await ReadAnswerAsync<returnObj>(response);
             }
@@ -168,7 +168,7 @@ namespace UCLToolBox
             var buffer = Encoding.UTF8.GetBytes(myContent);
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            return await httpClient.PutAsync(Http, byteContent);
+            return await HttpClient.PutAsync(Http, byteContent);
         }
 
         /// <summary>
@@ -176,15 +176,15 @@ namespace UCLToolBox
         ///     returnObj is the object you expect to get in return
         /// </summary>
         /// <typeparam name="returnObj"></typeparam>
-        /// <param name="Http"></param>
+        /// <param name="http"></param>
         /// <returns></returns>
-        public async Task<HttpResponseMessage> PostAsync<returnObj>(string Http, returnObj obj) where returnObj : class
+        public async Task<HttpResponseMessage> PostAsync<returnObj>(string http, returnObj obj) where returnObj : class
         {
             var myContent = JsonConvert.SerializeObject(obj);
             var buffer = Encoding.UTF8.GetBytes(myContent);
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            return await httpClient.PostAsync(Http, byteContent);
+            return await HttpClient.PostAsync(http, byteContent);
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace UCLToolBox
         /// <returns></returns>
         public async Task<HttpResponseMessage> DeleteAsync(string Http)
         {
-            return await httpClient.DeleteAsync(Http);
+            return await HttpClient.DeleteAsync(Http);
         }
     }
 }

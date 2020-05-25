@@ -1,5 +1,7 @@
 ﻿@using AdminPanel.Client.DTOs
 @using AdminPanel.Client.Models
+@using UCLDreamTeam.SharedInterfaces
+
 <div class="header-chat">
     <p class="name">@TicketDTO.Ticket.Name</p>
     @if((TicketDTO.Resource != null) || (TicketDTO.Reservation != null))
@@ -7,12 +9,27 @@
         <p class="name">@TicketDTO.Resource.Name</p>
         <p class="name">@($"Fra: {TicketDTO.Reservation.Timeslot.FromDate} Til: {TicketDTO.Reservation.Timeslot.ToDate}")</p>
     }
+
+    <div class="input-group ml-auto mr-4 w-25">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Status</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01" @onchange="@((ChangeEventArgs e) => UpdateStatus.InvokeAsync(Enum.Parse<Status>(e.Value.ToString())))">
+            <option selected>Choose...</option>
+            <option value="1">Active</option>
+            <option value="2">Waiting</option>
+            <option value="3">Closed</option>
+        </select>
+    </div>
 </div>
 
 @code
 {
     [Parameter]
     public TicketDTO TicketDTO { get; set; }
+
+    [Parameter]
+    public EventCallback<Status> UpdateStatus { get; set; }
 }
     <style>
     .header-chat {

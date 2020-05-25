@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Threading.Tasks;
@@ -8,7 +9,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
+using UCLDreamTeam.Mail.Api.Models;
 using UCLDreamTeam.Mail.Application.Interfaces;
+using UCLDreamTeam.Mail.Domain.Models;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 using UCLDreamTeam.SharedInterfaces.Mail;
 
 namespace UCLDreamTeam.Mail.Api.Controllers
@@ -26,18 +30,34 @@ namespace UCLDreamTeam.Mail.Api.Controllers
             _logger = logger;
         }
 
-        [HttpPost]
+        [HttpPost("[action]")]
         [Authorize]
-        public async Task<IActionResult> PostMail([FromBody] Domain.Models.Reservation reservation, Template template)
+        public async Task<ApiResponse<Reservation>> SendReservationNotification([FromBody] Reservation reservation, Template template)
         {
             try
             {
-                _mailService.SendMail(reservation, template);
-                return Ok(reservation);
+                await _mailService.SendMail(reservation, template);
+                return new ApiResponse<Reservation>(ApiResponseCode.OK, reservation);//Ok(reservation);
             }
             catch (Exception e)
             {
-                return StatusCode(503, e.Message);
+                return new ApiResponse<Reservation>(ApiResponseCode.InternalServerError, null);
+            }
+
+        }
+
+        [HttpPost("[action]")]
+        [Authorize]
+        public async Task<ApiResponse<string>> SendChatLog([FromBody] TicketDTO ticketDTO)
+        {
+            try
+            {
+                await _mailService.SendChatLog(ticketDTO);
+                return new ApiResponse<string>(ApiResponseCode.OK, null);//Ok();
+            }
+            catch (Exception e)
+            {
+                return new ApiResponse<string>(ApiResponseCode.InternalServerError, e.Message);
             }
 
         }

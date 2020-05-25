@@ -26,7 +26,8 @@ namespace XamarinFormsApp.ViewModel
             _proxy = AutofacHelper.Container.Resolve<ApiClientProxy>();
 
             Resources = new ObservableCollection<Resource>();
-            _hubConnection = new HubConnectionBuilder().WithUrl($"{Properties.Resources.SignalRBaseAddress}ResourceHub")
+            _hubConnection = new HubConnectionBuilder()
+                .WithUrl($"{Properties.Resources.SignalRBaseAddress}ResourceHub")
                 .Build();
             Connect();
 

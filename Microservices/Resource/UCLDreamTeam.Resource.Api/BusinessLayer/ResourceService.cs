@@ -68,7 +68,7 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
                     return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.NotModified, null);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.InternalServerError, null);
             }

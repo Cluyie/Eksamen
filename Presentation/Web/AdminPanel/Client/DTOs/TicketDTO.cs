@@ -10,7 +10,7 @@ namespace AdminPanel.Client.DTOs
     public class TicketDTO
     {
         public Ticket Ticket { get; set; }
-        public Reservation Reservation { get; set; }
-        public ResourceDTO Resource { get; set; }
+        public Reservation? Reservation { get; set; }
+        public ResourceDTO? Resource { get; set; }
     }
 }

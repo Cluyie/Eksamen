@@ -15,6 +15,4 @@
     <ProjectReference Include="..\..\..\Core\Models\UCLDreamTeam.SharedInterfaces.csproj" />
     <ProjectReference Include="..\UCLDreamTeam.User.Domain\UCLDreamTeam.User.Domain.csproj" />
   </ItemGroup>
-
-
 </Project>

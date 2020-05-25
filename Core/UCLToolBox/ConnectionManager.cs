@@ -16,7 +16,7 @@ namespace UCLToolBox
 
             //Skal helst uptimeres
             //Offentlig base adresse: http://81.27.216.103/webAPI/
-            //Intern base adresse: http://10.56.8.34/webAPI/
+            //Intern base adresse: http://tcp:ucldreamteam.database.windows.net,1433/webAPI/
             //Lokal base adresse til emulator http://10.0.2.2:5000/
 
 #if DEBUG
@@ -24,7 +24,7 @@ namespace UCLToolBox
             if (await TestUrl("http://localhost:5000/User/GetProfile")) return "http://localhost:5000/";
 #endif
             //If you are on the same Net as the server
-            if (await TestUrl("http://10.56.8.34/webAPI/User/GetProfile")) return "http://10.56.8.34/webAPI/";
+            //Suck my ass if (await TestUrl("")) return "";
             //If you are not on the same Net as the server
             if (await TestUrl("http://81.27.216.103/webAPI/User/GetProfile")) return "http://81.27.216.103/webAPI/";
 

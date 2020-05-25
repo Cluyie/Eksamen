@@ -14,23 +14,31 @@ namespace UCLDreamTeam.Ticket.Data.Contexts
         public DbSet<UserTicket> UserTickets { get; set; }
         public DbSet<Message> Messages { get; set; }
 
-        public TicketDbContext(DbContextOptions<TicketDbContext> options) : base(options)
+        public TicketDbContext(DbContextOptions options) : base(options)
         {
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(Settings.Default.UCLDB);
-            }
+            if (!optionsBuilder.IsConfigured) optionsBuilder.UseSqlServer(Settings.Default.UCLDB);
 
             base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<UserTicket>().HasKey(table => new {table.UserId, table.TicketId});
+            builder.Entity<UserTicket>()
+                .HasKey(ut => new {ut.UserId, ut.TicketId});
+
+            //builder.Entity<UserTicket>()
+            //  .HasOne(ut => ut.User)
+            //  .WithMany(b => b.UserTickets)
+            //  .HasForeignKey(bc => bc.UserId);
+
+            //builder.Entity<UserTicket>()
+            //  .HasOne(ut => ut.Ticket)
+            //  .WithMany(c => c.UserTickets)
+            //  .HasForeignKey(bc => bc.TicketId);
         }
     }
 }

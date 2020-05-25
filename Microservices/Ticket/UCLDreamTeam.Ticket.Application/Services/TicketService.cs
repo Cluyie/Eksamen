@@ -31,6 +31,11 @@ namespace UCLDreamTeam.Ticket.Application.Services
             await _ticketRepository.AddAsync(ticket);
         }
 
+        public async Task CreateAsync(Domain.Models.Ticket ticket)
+        {
+            await _ticketRepository.CreateAsync(ticket);
+        }
+
         public async Task UpdateAsync(Domain.Models.Ticket ticket)
         {
             await _ticketRepository.UpdateAsync(ticket);

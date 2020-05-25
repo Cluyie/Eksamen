@@ -42,6 +42,12 @@ namespace UCLDreamTeam.Reservation.Data.Repository
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task UpdateAsync(Domain.Models.Reservation reservation)
+        {
+            _dbContext.Reservations.Update(reservation);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task CancelById(Guid id)
         {
             await _dbContext.Reservations.Where(r => r.Id == id).DeleteAsync();

@@ -136,8 +136,6 @@ namespace XamarinFormsApp.ViewModel
             var availablesFound = new List<IAvailableTime>();
             foreach (IAvailableTime Available in TimeSlots)
             {
-                if (!Available.Available) continue;
-                if (!Available.Recurring)
                 {
                     if (date.DayOfYear == Available.From.DayOfYear) availablesFound.Add(Available);
                 }
