@@ -28,20 +28,23 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
 
         public async Task<IEnumerable<Domain.Models.Ticket>> GetByUserIdAsync(Guid id)
         {
-            var userTickets = _ticketDbContext.Users
+            var user = await _ticketDbContext.Users
                 .Include(u => u.UserTickets)
-                .FirstOrDefaultAsync(u => u.Id == id).Result.UserTickets;
+                .FirstOrDefaultAsync(u => u.Id == id);
+            var userTickets = user?.UserTickets;
 
             //var userTickets = user.UserTickets
             //    .FindAll(ut => ut.UserId == id);
 
             var tickets = new List<Domain.Models.Ticket>();
-            foreach (var userTicket in userTickets)
+            if (userTickets != null)
             {
-                var ticket = await _ticketDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == userTicket.TicketId);
-                if (ticket != null) tickets.Add(ticket);
+                foreach (var userTicket in userTickets)
+                {
+                    var ticket = await _ticketDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == userTicket.TicketId);
+                    if (ticket != null) tickets.Add(ticket);
+                }
             }
-
             return tickets;
         }
 

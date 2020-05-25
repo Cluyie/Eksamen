@@ -16,6 +16,7 @@
 @inject IResourceService ResourceService
 @inject ITicketService TicketService
 @inject IMailService MailService
+@inject IAuthService AuthService
 
 <div class="container-fluid">
     <div class="row h-100">
@@ -41,171 +42,6 @@
     private HubConnection _chatHubConnection;
     private HubConnection _queueHubConnection;
     public List<TicketDTO> TicketDTOs { get; set; }
-    //public List<TicketDTO> TicketDTOs { get; set; } = new List<TicketDTO>
-    //{
-    //    new TicketDTO
-    //    {
-    //        Ticket = new Ticket
-    //        {
-    //            Id = Guid.NewGuid(),
-    //            Name = "Megan Leib",
-    //            Messages = new List<Message>
-    //            {
-    //                new Message
-    //                {
-    //                    Text = "Hi, how are you ?",
-    //                    TimeStamp = DateTime.Now.AddMinutes(-5),
-    //                    Seen = false
-    //                },
-    //                new Message
-    //                {
-    //                    Text = "What are you doing tonight ? Want to go take a drink ?",
-    //                    TimeStamp = DateTime.Now.AddMinutes(-4),
-    //                    Seen = true
-    //                },
-    //                new Message
-    //                {
-    //                    Text = "Hey Megan ! It's been a while 😃",
-    //                    TimeStamp = DateTime.Now.AddMinutes(-3),
-    //                    Seen = true
-    //                },
-    //                new Message
-    //                {
-    //                    Text = "When can we meet ?",
-    //                    TimeStamp = DateTime.Now.AddMinutes(-2),
-    //                    Seen = true
-    //                },
-    //                new Message
-    //                {
-    //                    Text = "9 pm at the bar if possible 😳",
-    //                    TimeStamp = DateTime.Now.AddMinutes(-1),
-    //                    Seen = true
-    //                },
-    //            },
-    //            Status = Status.Active
-    //        },
-    //        Resource = new DTOs.ResourceDTO
-    //        {
-    //            Name = "Test Resource"
-    //        },
-    //        Reservation = new Reservation
-    //        {
-    //            Timeslot = new ReserveTime
-    //            {
-    //                FromDate = DateTime.Now.AddHours(-12),
-    //                ToDate = DateTime.Now.AddHours(-6)
-    //            }
-    //        }
-    //    },
-    //    new TicketDTO
-    //    {
-    //        Ticket = new Ticket
-    //        {
-    //            Id = Guid.NewGuid(),
-    //            Name = "Dave Corlew",
-    //            Messages = new List<Message>
-    //            {
-    //                new Message
-    //                {
-    //                    Text = "Let's meet for a coffee or something today ?",
-    //                    TimeStamp = DateTime.Now.AddHours(-6),
-    //                    Seen = true
-    //                }
-    //            },
-    //            Status = Status.Active
-    //        },
-    //    },
-    //    new TicketDTO
-    //    {
-    //        Ticket = new Ticket
-    //        {
-    //            Id = Guid.NewGuid(),
-    //            Name = "Jerome Seiber",
-    //            Messages = new List<Message>
-    //            {
-    //                new Message
-    //                {
-    //                    Text = "I've sent you the annual report",
-    //                    TimeStamp = DateTime.Now.AddHours(-12),
-    //                    Seen = true
-    //                }
-    //            },
-    //            Status = Status.Waiting
-    //        },
-    //    },
-    //    new TicketDTO
-    //    {
-    //        Ticket = new Ticket
-    //        {
-    //            Id = Guid.NewGuid(),
-    //            Name = "Thomas Dbtn",
-    //            Messages = new List<Message>
-    //            {
-    //                new Message
-    //                {
-    //                    Text = "See you tomorrow ! 🙂",
-    //                    TimeStamp = DateTime.Now.AddDays(-1),
-    //                    Seen = true
-    //                }
-    //            },
-    //            Status = Status.Active
-    //        },
-    //    },
-    //    new TicketDTO
-    //    {
-    //        Ticket = new Ticket
-    //        {
-    //            Id = Guid.NewGuid(),
-    //            Name = "Elsie Amador",
-    //            Messages = new List<Message>
-    //            {
-    //                new Message
-    //                {
-    //                    Text = "What the f**k is going on ?",
-    //                    TimeStamp = DateTime.Now.AddDays(-2),
-    //                    Seen = true
-    //                }
-    //            },
-    //            Status = Status.Waiting
-    //        },
-    //    },
-    //    new TicketDTO
-    //    {
-    //        Ticket = new Ticket
-    //        {
-    //            Id = Guid.NewGuid(),
-    //            Name = "Billy Southard",
-    //            Messages = new List<Message>
-    //            {
-    //                new Message
-    //                {
-    //                    Text = "Ahahah 😂",
-    //                    TimeStamp = DateTime.Now.AddDays(-3),
-    //                    Seen = true
-    //                }
-    //            },
-    //            Status = Status.Active
-    //        },
-    //    },
-    //    new TicketDTO
-    //    {
-    //        Ticket = new Ticket
-    //        {
-    //            Id = Guid.NewGuid(),
-    //            Name = "Paul Walker",
-    //            Messages = new List<Message>
-    //            {
-    //                new Message
-    //                {
-    //                    Text = "You can't see me",
-    //                    TimeStamp = DateTime.Now.AddDays(-7),
-    //                    Seen = true
-    //                }
-    //            },
-    //            Status = Status.Waiting
-    //        },
-    //    }
-    //};
     public TicketDTO ActiveTicketDTO { get; set; }
     public int QueueCount { get; set; }
 
@@ -272,6 +108,7 @@
         #endregion
 
         InitializeTicket();
+
         await GetQueueCount();
     }
 
@@ -290,6 +127,7 @@
 
     async Task GetNextCustomer(string groupId)
     {
+        Console.WriteLine(groupId);
         await _queueHubConnection.SendAsync("GetNextCustomer", groupId);
         await JoinGroup(groupId);
     }
@@ -310,21 +148,25 @@
 
     async void InitializeTicket()
     {
-        //var result = await TicketService.GetByUserIdAsync(Guid.NewGuid());
+        var result = await TicketService.GetByUserIdAsync(AuthService.CurrentUser?.Id ?? Guid.Empty);
 
-        //foreach (var ticket in result)
-        //{
-        //    Reservation reservation = new Reservation();
 
-        //    if (ticket.ReservationId.HasValue)
-        //    {
-        //        reservation = await ReservationService.GetFromId(ticket.Id);
-        //    }
+        if (result != null)
+        {
+            foreach (var ticket in result)
+            {
+                Reservation reservation = new Reservation();
 
-        //    TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation.ResourceId) ?? null });
-        //}
+                if (ticket.ReservationId.HasValue)
+                {
+                    reservation = await ReservationService.GetFromId(ticket.Id);
+                }
 
-        //SetActiveTicket();
+                TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation.ResourceId) ?? null });
+            }
+
+            SetActiveTicket();
+        }
     }
 
     private void SetActiveTicket()

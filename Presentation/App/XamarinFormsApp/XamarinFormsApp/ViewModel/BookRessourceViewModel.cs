@@ -98,7 +98,7 @@ namespace XamarinFormsApp.ViewModel
         {
             if (Application.Current.Properties.ContainsKey("UserData"))
             {
-                var user = (User) Application.Current.Properties["UserData"];
+                var user = (User)Application.Current.Properties["UserData"];
                 var Resevation = GetCorrentSelected();
                 var availables = FindAllAvailableTime(Resevation.FromDate);
                 var valid = false;
@@ -124,7 +124,7 @@ namespace XamarinFormsApp.ViewModel
 
                 if (!valid) return;
                 IReservation<IReserveTime> res = new Reservation<IReserveTime>
-                    {UserId = user.Id, Timeslot = Resevation, ResourceId = Id};
+                { UserId = user.Id, Timeslot = Resevation, ResourceId = Id };
                 var responseMessage = proxy.Post("Reservation", res);
                 if (responseMessage.IsSuccessStatusCode) _hubConnectionRerservation.SendAsync("CreateReservation", res);
                 //Reservations.Add(res);
@@ -136,9 +136,7 @@ namespace XamarinFormsApp.ViewModel
             var availablesFound = new List<IAvailableTime>();
             foreach (IAvailableTime Available in TimeSlots)
             {
-                {
-                    if (date.DayOfYear == Available.From.DayOfYear) availablesFound.Add(Available);
-                }
+                if (date.DayOfYear == Available.From.DayOfYear) availablesFound.Add(Available);
                 else if (Available.From.DayOfWeek == date.DayOfWeek)
                 {
                     availablesFound.Add(Available);
@@ -175,12 +173,12 @@ namespace XamarinFormsApp.ViewModel
         public void DrawDay(SKCanvas canvas, int wtidth, int height, DateTime date)
         {
             var FoundRes = FindAllReservationer(date);
-            IUser user = new User {Id = Guid.Empty};
+            IUser user = new User { Id = Guid.Empty };
             if (Application.Current.Properties.ContainsKey("UserData"))
-                user = (User) Application.Current.Properties["UserData"];
+                user = (User)Application.Current.Properties["UserData"];
             if (date.DayOfYear == Date.DayOfYear && date.Year == Date.Year)
                 FoundRes.Add(new Reservation<ReserveTime>
-                    {Id = Guid.Empty, UserId = user.Id, Timeslot = GetCorrentSelected(), ResourceId = Id});
+                { Id = Guid.Empty, UserId = user.Id, Timeslot = GetCorrentSelected(), ResourceId = Id });
             drawBookning.DrawDay(canvas, wtidth, height, FindAllAvailableTime(date), FoundRes, user.Id);
         }
     }

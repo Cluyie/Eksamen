@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AdminPanel.Client.DTOs;
+using AdminPanel.Client.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 
 namespace AdminPanel.Client.Services
@@ -8,6 +9,8 @@ namespace AdminPanel.Client.Services
     {
         private readonly CustomAuthStateProvider _authStateProvider;
         private readonly AuthCredentialsKeeper _credentialsKeeper;
+
+        public User CurrentUser => throw new System.NotImplementedException();
 
         public MockAuthService(AuthenticationStateProvider authStateProvider,
             AuthCredentialsKeeper credentialsKeeper)

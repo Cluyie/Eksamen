@@ -71,6 +71,8 @@ namespace XamarinFormsApp.ViewModel
             {
                 Index = index;
             });
+
+            _hubConnection.SendAsync("Enqueue", _ticketId);
         }
 
         private async void ConnectToHub()

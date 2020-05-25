@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
+using AdminPanel.Client.Models;
 
 namespace AdminPanel.Client.Services
 {
@@ -13,12 +15,22 @@ namespace AdminPanel.Client.Services
         private readonly AuthCredentialsKeeper _credentialsKeeper;
         private readonly ApiClient _client;
 
+        public User CurrentUser { get; private set; }
+
         public ApiAuthService(AuthenticationStateProvider authStateProvider,
             AuthCredentialsKeeper credentialsKeeper, ApiClient client)
         {
             _authStateProvider = (CustomAuthStateProvider)authStateProvider;
             _credentialsKeeper = credentialsKeeper;
             _client = client;
+            
+        }
+
+        private async Task<User> GetUser()
+        {
+            ApiResponseDTO<User> response = await _client.GetAsync<User>("User");
+            Console.WriteLine(_credentialsKeeper?.Token);
+            return response.Value;
         }
 
         public async Task<bool> Login(LoginDTO loginDTO)
@@ -33,6 +45,7 @@ namespace AdminPanel.Client.Services
             {
                 _credentialsKeeper.SetCredentials(loginDTO.UsernameOrEmail, response.Value);
                 _authStateProvider.Refresh();
+                CurrentUser = await GetUser();
                 return true;
             }
         }
