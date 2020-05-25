@@ -22,7 +22,7 @@ namespace AdminPanel.Client.Services
                         Available = true,
                         From = new DateTime(2020, 1, 1, 1, 1, 1),
                         To = new DateTime(2020, 1, 1, 2, 2, 2),
-                        Recurring = 1
+                        Recurring = true
                     }
                 }
             },
@@ -38,7 +38,7 @@ namespace AdminPanel.Client.Services
                         Available = true,
                         From = new DateTime(2020, 1, 1, 1, 1, 1),
                         To = new DateTime(2020, 1, 1, 2, 2, 2),
-                        Recurring = 1
+                        Recurring = true
                     },
                     new TimeslotDTO
                     {
@@ -46,7 +46,7 @@ namespace AdminPanel.Client.Services
                         Available = true,
                         From = new DateTime(2020, 1, 1, 3, 1, 1),
                         To = new DateTime(2020, 1, 1, 4, 2, 2),
-                        Recurring = 1
+                        Recurring = true
                     }
                 }
             },
@@ -62,7 +62,7 @@ namespace AdminPanel.Client.Services
                         Available = true,
                         From = new DateTime(2020, 1, 1, 1, 1, 1),
                         To = new DateTime(2020, 1, 1, 2, 2, 2),
-                        Recurring = 1
+                        Recurring = true
                     }
                 }
             }

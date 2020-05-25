@@ -38,7 +38,7 @@ namespace UCLDreamTeam.Mail.Data.Context
                     {
                         From = new DateTime(2020, 06, 11, 08, 00, 00),
                         To = new DateTime(2020, 06, 12, 16, 00, 00),
-                        Recurring = 1
+                        Recurring = true
                     }
                 }
             };

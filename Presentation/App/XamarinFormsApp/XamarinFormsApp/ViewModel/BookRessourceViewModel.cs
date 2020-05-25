@@ -137,11 +137,11 @@ namespace XamarinFormsApp.ViewModel
             foreach (IAvailableTime Available in TimeSlots)
             {
                 if (!Available.Available) continue;
-                if (Available.Recurring == null)
+                if (Available.Recurring)
                 {
                     if (date.DayOfYear == Available.From.DayOfYear) availablesFound.Add(Available);
                 }
-                else if ((DayOfWeek) ((Available.Recurring + 1) % 7) == date.DayOfWeek)
+                else if (Available.From.DayOfWeek == date.DayOfWeek)
                 {
                     availablesFound.Add(Available);
                 }

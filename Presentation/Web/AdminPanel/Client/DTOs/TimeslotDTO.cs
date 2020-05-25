@@ -8,7 +8,7 @@ namespace AdminPanel.Client.DTOs
 
         public bool Available { get; set; }
 
-        public int? Recurring { get; set; }
+        public bool Recurring { get; set; }
 
         public DateTime From { get; set; }
 
