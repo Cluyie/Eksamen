@@ -19,6 +19,8 @@
                     <RowDefinition Height="18*" />
                     <RowDefinition Height="3*" />
                     <RowDefinition Height="3*" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
                 <Label Text="Goddag "
                        FontSize="Title"
@@ -39,7 +41,7 @@
                 <Button Text="Log ud"
                         FontSize="Large"
                         CornerRadius="10"
-                        Grid.Row="4"
+                        Grid.Row="6"
                         Grid.ColumnSpan="2"
                         Clicked="LogoutButton_Clicked" />
                 <Button Text="Ressourcer"
@@ -48,6 +50,12 @@
                         Grid.Row="4"
                         Grid.ColumnSpan="2"
                         Clicked="Button_Clicked" />
+                <Button Text="Mine Reservationer"
+                        FontSize="Large"
+                        CornerRadius="10"
+                        Grid.Row="5"
+                        Grid.ColumnSpan="2"
+                        Clicked="Reservationer_Clicked" />
             </Grid>
         </StackLayout>
     </ContentPage.Content>

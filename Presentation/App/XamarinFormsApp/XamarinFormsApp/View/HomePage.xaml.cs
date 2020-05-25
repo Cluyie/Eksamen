@@ -23,6 +23,11 @@ namespace XamarinFormsApp.View
             Navigation.PushAsync(new ResourceView());
         }
 
+        private void Reservationer_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new ReservationList());
+        }
+
         #region Constructor
 
         private HomeViewModel _homeViewModel;

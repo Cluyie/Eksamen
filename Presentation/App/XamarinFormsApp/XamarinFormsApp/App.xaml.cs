@@ -1,5 +1,6 @@
 ﻿using Xamarin.Forms;
 using XamarinFormsApp.Helpers;
+using XamarinFormsApp.View;
 
 namespace XamarinFormsApp
 {
@@ -15,11 +16,11 @@ namespace XamarinFormsApp
 
             MainPage = new NavigationPage(new MainPage());
         }
-
         protected override void OnStart()
         {
             //DependencyService.Get<HttpClient>().BaseAddress = new Uri("http://10.0.2.2:5000/Auth/");
         }
+        public static string User = "TestUser";
 
         protected override void OnSleep()
         {

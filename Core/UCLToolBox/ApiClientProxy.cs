@@ -129,7 +129,11 @@ namespace UCLToolBox
         /// <returns></returns>
         public static returnObj ReadAnswer<returnObj>(HttpResponseMessage responseMessage) where returnObj : class
         {
-            if (responseMessage.IsSuccessStatusCode) return responseMessage.Content.ReadAsAsync<returnObj>().Result;
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                string content = responseMessage.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<returnObj>(content);
+            }
             return null;
         }
 
