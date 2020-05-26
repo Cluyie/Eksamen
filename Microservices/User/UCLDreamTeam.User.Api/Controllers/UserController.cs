@@ -35,7 +35,7 @@ namespace UCLDreamTeam.User.Api.Controllers
                 var userName = User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
                 if (userName != null)
                 {
-                    var userProfile = _userService.GetUserFromUserNameAsync(userName).Result;
+                    var userProfile = await _userService.GetUserFromUserNameAsync(userName);
 
                     if (userProfile != null)
                     {

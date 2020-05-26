@@ -39,7 +39,6 @@ namespace UCLDreamTeam.User.Data.Respositories
                 {
                     Description = e.Message
                 });
-                Console.WriteLine(e);
                 throw;
             }
         }

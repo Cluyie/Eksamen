@@ -48,7 +48,7 @@ namespace UCLDreamTeam.User.Application.Services
 
         public async Task DeleteUserFromIdAsync(Guid id)
         {
-            var command = await GetUserFromIdAsync(id);
+            Domain.Models.User command = await GetUserFromIdAsync(id);
             try
             {
                 await _userRepository.DeleteUserAsync(command);
@@ -60,7 +60,7 @@ namespace UCLDreamTeam.User.Application.Services
                 Console.WriteLine(e);
                 throw e;
 #else
-                _eventBus.PublishEvent(new UserDeleteFailedEvent(request.User, e));
+                //_eventBus.PublishEvent(new UserDeleteFailedEvent(request.User, e));
                 return false;
 #endif
             }

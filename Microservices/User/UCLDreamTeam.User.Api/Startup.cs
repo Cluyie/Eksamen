@@ -106,13 +106,11 @@ namespace UCLDreamTeam.User.Api
                     }
                 });
             });
-            services.AddMediatR(typeof(Startup));
             services.AddRabitMQ();
 
-            services.AddTransient<UserDbContext>();
+            //services.AddTransient<UserDbContext>();
 
             services.AddTransient<IUserRepository, UserRepository>();
-
 
             services.AddTransient<IUserService, UserService>();
 
