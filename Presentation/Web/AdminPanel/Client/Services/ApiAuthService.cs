@@ -15,8 +15,6 @@ namespace AdminPanel.Client.Services
         private readonly AuthCredentialsKeeper _credentialsKeeper;
         private readonly ApiClient _client;
 
-        public User CurrentUser { get; private set; }
-
         public ApiAuthService(AuthenticationStateProvider authStateProvider,
             AuthCredentialsKeeper credentialsKeeper, ApiClient client)
         {
@@ -26,7 +24,7 @@ namespace AdminPanel.Client.Services
             
         }
 
-        private async Task<User> GetUser()
+        public async Task<User> GetCurrentUser()
         {
             ApiResponseDTO<User> response = await _client.GetAsync<User>("User");
             return response.Value;
@@ -44,7 +42,6 @@ namespace AdminPanel.Client.Services
             {
                 _credentialsKeeper.SetCredentials(loginDTO.UsernameOrEmail, response.Value);
                 _authStateProvider.Refresh();
-                CurrentUser = await GetUser();
                 return true;
             }
         }

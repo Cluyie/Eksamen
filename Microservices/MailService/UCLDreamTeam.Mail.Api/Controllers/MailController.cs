@@ -41,7 +41,7 @@ namespace UCLDreamTeam.Mail.Api.Controllers
             }
             catch (Exception e)
             {
-                return new ApiResponse<Reservation>(ApiResponseCode.InternalServerError, null);
+                return new ApiResponse<Reservation>(ApiResponseCode.InternalServerError) { Exception = e };
             }
 
         }
@@ -57,7 +57,7 @@ namespace UCLDreamTeam.Mail.Api.Controllers
             }
             catch (Exception e)
             {
-                return new ApiResponse<string>(ApiResponseCode.InternalServerError, e.Message);
+                return new ApiResponse<string>(ApiResponseCode.InternalServerError) { Exception = e };
             }
 
         }

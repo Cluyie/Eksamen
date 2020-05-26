@@ -51,7 +51,6 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
         public async Task AddAsync(Domain.Models.Ticket ticket)
         {
             _ticketDbContext.Tickets.Add(ticket);
-            ticket?.UserTickets?.ForEach(u => _ticketDbContext.Users.Add(new User { Id = u.UserId }));
             
             await _ticketDbContext.SaveChangesAsync();
         }

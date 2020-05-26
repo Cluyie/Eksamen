@@ -1,5 +1,9 @@
-﻿using Xamarin.Forms;
+﻿using Autofac;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
+using UCLToolBox;
+using Xamarin.Forms;
 using XamarinFormsApp.Helpers;
+using XamarinFormsApp.Model;
 using XamarinFormsApp.View;
 
 namespace XamarinFormsApp
@@ -14,7 +18,16 @@ namespace XamarinFormsApp
 
             AutofacHelper.Initialize();
 
-            MainPage = new NavigationPage(new MainPage());
+            //TODO remove in future
+            var authService = AutofacHelper.Container.Resolve<AuthService>();
+            var api = AutofacHelper.Container.Resolve<ApiClientProxy>();
+            var response = api.Post("Auth/Login", new Login { UsernameOrEmail="test", Password = "P@ssw0rd" });
+            var token = ApiClientProxy.ReadAnswer<ApiResponse<string>>(response).Value;
+            authService.Login(token);
+
+            MainPage = new NavigationPage(new ResourceView());
+
+            //MainPage = new NavigationPage(new MainPage());
         }
         protected override void OnStart()
         {

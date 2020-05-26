@@ -1,16 +1,19 @@
-﻿using UCLDreamTeam.SharedInterfaces.Interfaces;
+﻿using System;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace XamarinFormsApp.Model
 {
-    public class ApiResponse<T> : IApiResponse<T> where T : class
+    public class ApiResponse<T> : IApiResponse<T>
     {
-        public ApiResponse(ApiResponseCode code, T value)
-        {
-            Code = code;
-            Value = value;
-        }
-
         public ApiResponseCode Code { get; set; }
         public T Value { get; set; }
+        public Exception Exception { get; set; }
+
+        public ApiResponse(ApiResponseCode code, T value = default) 
+        { 
+            Code = code;
+            Value = value; 
+        }
+
     }
 }

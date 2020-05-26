@@ -41,12 +41,14 @@
 {
     private HubConnection _chatHubConnection;
     private HubConnection _queueHubConnection;
+    private User CurrentUser;
     public List<TicketDTO> TicketDTOs { get; set; }
     public TicketDTO ActiveTicketDTO { get; set; }
     public int QueueCount { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        CurrentUser = await AuthService.GetCurrentUser();
         #region SignalR ChatHub Methods
         //_chatHubConnection = new HubConnectionBuilder()
         //.WithUrl("http://81.27.216.103/SignalR/ChatHub")
@@ -78,18 +80,24 @@
 
         _queueHubConnection.On<Guid>("ReceiveTaskId", async (ticketId) =>
         {
-            Console.WriteLine("Forbindelse oprettet med id: " + ticketId);
+
             var ticket = await TicketService.GetByIdAsync(ticketId);
             try
             {
                 Reservation reservation = new Reservation();
+                Console.WriteLine("Dette er en ticket");
+                Console.WriteLine(ticket);
 
                 if (ticket.ReservationId.HasValue)
                 {
                     reservation = await ReservationService.GetFromId(ticket.Id);
                 }
 
-                TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation.ResourceId) ?? null });
+                Console.WriteLine(reservation?.ResourceId);
+
+                TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation?.ResourceId ?? Guid.Empty) ?? null });
+                Console.WriteLine(TicketDTOs);
+                Console.WriteLine(TicketDTOs.Count);
 
             }
             catch (Exception)
@@ -128,7 +136,6 @@
 
     async Task GetNextCustomer(string groupId)
     {
-        Console.WriteLine(groupId);
         await _queueHubConnection.SendAsync("GetNextCustomer", groupId);
         await JoinGroup(groupId);
         InitializeTicket();
@@ -150,8 +157,7 @@
 
     async void InitializeTicket()
     {
-        Console.WriteLine(AuthService.CurrentUser?.Id);
-        var result = await TicketService.GetByUserIdAsync(AuthService.CurrentUser?.Id ?? Guid.Empty);
+        var result = await TicketService.GetByUserIdAsync(CurrentUser?.Id ?? Guid.Empty);
 
         if (result != null)
         {
@@ -166,6 +172,8 @@
 
                 TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation.ResourceId) ?? null });
             }
+
+            Console.WriteLine(TicketDTOs);
 
             SetActiveTicket();
         }

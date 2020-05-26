@@ -1,6 +1,6 @@
-﻿using System;
+﻿using RabbitMQ.Bus.Bus.Interfaces;
+using System;
 using System.Threading.Tasks;
-using RabbitMQ.Bus.Bus.Interfaces;
 using UCLDreamTeam.User.Application.Interfaces;
 using UCLDreamTeam.User.Domain.Commands;
 using UCLDreamTeam.User.Domain.Interface;

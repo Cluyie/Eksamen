@@ -7,7 +7,7 @@ namespace AdminPanel.Client.Services
 {
     public interface IAuthService
     {
-        User CurrentUser { get; }
+        Task<User> GetCurrentUser();
 
         Task<bool> Login(LoginDTO loginDTO);
 

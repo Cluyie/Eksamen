@@ -50,8 +50,6 @@ namespace XamarinFormsApp.ViewModel
                 Name = (Application.Current.Properties["UserData"] as User).UserName,
                 ReservationId = reservationId,
                 Status = UCLDreamTeam.SharedInterfaces.Status.Active,
-                
-
             };
 
             var user = Application.Current.Properties["UserData"] as User;

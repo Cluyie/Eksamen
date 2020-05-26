@@ -175,7 +175,7 @@ namespace XamarinFormsApp.ViewModel
             var FoundRes = FindAllReservationer(date);
             IUser user = new User { Id = Guid.Empty };
             if (Application.Current.Properties.ContainsKey("UserData"))
-                user = (User)Application.Current.Properties["UserData"];
+                user = Application.Current.Properties["UserData"] as User;
             if (date.DayOfYear == Date.DayOfYear && date.Year == Date.Year)
                 FoundRes.Add(new Reservation<ReserveTime>
                 { Id = Guid.Empty, UserId = user.Id, Timeslot = GetCorrentSelected(), ResourceId = Id });

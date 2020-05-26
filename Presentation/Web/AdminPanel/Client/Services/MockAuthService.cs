@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AdminPanel.Client.DTOs;
 using AdminPanel.Client.Models;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -10,13 +11,16 @@ namespace AdminPanel.Client.Services
         private readonly CustomAuthStateProvider _authStateProvider;
         private readonly AuthCredentialsKeeper _credentialsKeeper;
 
-        public User CurrentUser => throw new System.NotImplementedException();
-
         public MockAuthService(AuthenticationStateProvider authStateProvider,
             AuthCredentialsKeeper credentialsKeeper)
         {
             _authStateProvider = (CustomAuthStateProvider) authStateProvider;
             _credentialsKeeper = credentialsKeeper;
+        }
+
+        public async Task<User> GetCurrentUser()
+        {
+            return await Task.FromResult(new User { Id = Guid.NewGuid(), FirstName = "Test", LastName = "Tester", UserName = "Test" });
         }
 
         public void Logout()

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using UCLDreamTeam.User.Domain.Models;
 
 namespace UCLDreamTeam.User.Application.Interfaces
 {
