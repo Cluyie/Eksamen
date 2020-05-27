@@ -50,9 +50,6 @@
     {
         CurrentUser = await AuthService.GetCurrentUser();
         #region SignalR ChatHub Methods
-        //_chatHubConnection = new HubConnectionBuilder()
-        //.WithUrl("http://81.27.216.103/SignalR/ChatHub")
-        //.Build();
 
         _chatHubConnection = new HubConnectionBuilder()
 .WithUrl("http://localhost:5017/ChatHub")
@@ -72,38 +69,32 @@
     .WithUrl("http://localhost:5017/QueueHub")
     .Build();
 
-        //        _queueHubConnection = new HubConnectionBuilder()
-        //.WithUrl("http://81.27.216.103/SignalR/QueueHub")
-        //.Build();
-
         await _queueHubConnection.StartAsync();
 
         _queueHubConnection.On<Guid>("ReceiveTaskId", async (ticketId) =>
         {
-
             var ticket = await TicketService.GetByIdAsync(ticketId);
             try
             {
                 Reservation reservation = new Reservation();
-                Console.WriteLine("Dette er en ticket");
-                Console.WriteLine(ticket);
+                Console.WriteLine("Dette er en ticket " + ticket.Id.ToString());
 
                 if (ticket.ReservationId.HasValue)
                 {
-                    reservation = await ReservationService.GetFromId(ticket.Id);
+                    reservation = await ReservationService.GetFromResourceById(ticket.ReservationId ?? Guid.NewGuid());
                 }
 
                 Console.WriteLine(reservation?.ResourceId);
 
                 TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation?.ResourceId ?? Guid.Empty) ?? null });
-                Console.WriteLine(TicketDTOs);
-                Console.WriteLine(TicketDTOs.Count);
 
             }
             catch (Exception)
             {
                 TicketDTOs.Add(new TicketDTO { Ticket = ticket });
             }
+
+            Console.WriteLine(TicketDTOs);
 
             SetActiveTicket();
         });

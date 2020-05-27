@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XamarinFormsApp.Model;
@@ -18,7 +17,6 @@ namespace XamarinFormsApp.View
         private readonly ReservationDetailsViewModel _DetailVieWModel;
         public ReservationDetails(ReservationListItem listItem)
         {
-           
             InitializeComponent();
             _DetailVieWModel = new ReservationDetailsViewModel();
             _listItem = listItem;
@@ -26,7 +24,7 @@ namespace XamarinFormsApp.View
         }
         private void SuportButton_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new QueuePage());
+            Navigation.PushAsync(new QueuePage(_listItem.Id));
         }
         private async void DeleteButton_Clicked(object sender, EventArgs e)
         {

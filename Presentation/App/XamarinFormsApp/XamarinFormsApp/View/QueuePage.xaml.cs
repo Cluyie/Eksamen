@@ -25,7 +25,7 @@ namespace XamarinFormsApp.View
 
         private void CancelButton_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new MainPage());
+            Navigation.PushAsync(new HomePage());
         }
     }
 }

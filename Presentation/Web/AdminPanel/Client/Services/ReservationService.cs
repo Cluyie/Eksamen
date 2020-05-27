@@ -19,5 +19,12 @@ namespace AdminPanel.Client.Services
 
             return response.Value;
         }
+
+        public async Task<Reservation> GetFromResourceById(Guid id)
+        {
+            var response = await _apiClient.GetAsync<Reservation>($"Reservation/GetByResourceId/{id.ToString()}");
+
+            return response.Value;
+        }
     }
 }

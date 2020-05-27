@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Autofac;
 using Microsoft.AspNetCore.SignalR.Client;
-using UCLDreamTeam.SharedInterfaces.Interfaces;
 using UCLToolBox;
 using XamarinFormsApp.Helpers;
 using XamarinFormsApp.Model;
