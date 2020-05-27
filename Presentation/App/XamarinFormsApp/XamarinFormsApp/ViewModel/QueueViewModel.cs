@@ -45,7 +45,7 @@ namespace XamarinFormsApp.ViewModel
                 Id = Guid.NewGuid(),
                 Active = true,
                 Name = (Application.Current.Properties["UserData"] as User).UserName,
-                ReservationId = reservationId,
+                ReservationId = reservationId ?? Guid.Empty,
                 Status = UCLDreamTeam.SharedInterfaces.Status.Active,
             };
 

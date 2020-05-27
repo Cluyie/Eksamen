@@ -19,17 +19,15 @@ namespace XamarinFormsApp.View
     public partial class BookingRessourcePage : ContentPage
     {
         private readonly BookRessourceViewModel page;
-        private readonly Guid _reservationId;
 
-        public BookingRessourcePage(Guid Id)
+        public BookingRessourcePage(Guid resourceId)
         {
             InitializeComponent();
             var proxy = AutofacHelper.Container.Resolve<ApiClientProxy>();
             var _mapper = AutofacHelper.Container.Resolve<Mapper>();
-            BindingContext = page = proxy.Get<ApiResponse<BookRessourceViewModel>>($"Resource/Guid={Id}").Value;
-            page.Reservations = proxy.Get<ApiResponse<List<Reservation<ReserveTime>>>>($"Reservation/GetByResourceId/{Id}").Value;
+            BindingContext = page = proxy.Get<ApiResponse<BookRessourceViewModel>>($"Resource/Guid={resourceId}").Value;
+            page.Reservations = proxy.Get<ApiResponse<List<Reservation>>>($"Reservation/GetByResourceId/{resourceId}").Value;
             page.reftesh = Refresh;
-            //_reservationId = page.Reservations.
         }
 
         private void PaintSurface(object sender, SKPaintSurfaceEventArgs e)
@@ -126,7 +124,7 @@ namespace XamarinFormsApp.View
 
         private void SupportButtonClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new QueuePage(_reservationId));
+            Navigation.PushAsync(new QueuePage());
         }
     }
 }

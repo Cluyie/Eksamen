@@ -28,7 +28,7 @@ namespace XamarinFormsApp.ViewModel
 
         }
 
-        public List<Reservation<ReserveTime>> reservationsList;
+        public List<Reservation> reservationsList;
         public ObservableCollection<ReservationListItem> ReservationListItems { get; set; }
         public ReservationListViewModel initialize()
         {
@@ -42,15 +42,15 @@ namespace XamarinFormsApp.ViewModel
             
 
             
-            /*var user = (User) Application.Current.Properties["UserData"]*/;
-            var user = _proxy.Get<User>("User");
-            var response = _proxy.Get<ApiResponse<List<Reservation<ReserveTime>>>>($"Reservation/User/{user.Id}");
+            var user = (User) Application.Current.Properties["UserData"];
+            //var user = _proxy.Get<User>("User");
+            var response = _proxy.Get<ApiResponse<List<Reservation>>>($"Reservation/User/{user.Id}");
             if (response?.Code == ApiResponseCode.OK)
             {
                 reservationsList = response.Value;
                 ReservationListItems = new ObservableCollection<ReservationListItem>();
 
-                foreach (Reservation<ReserveTime> reservation in reservationsList)
+                foreach (Reservation reservation in reservationsList)
                 {
                     var apiResponse = _proxy.Get<ApiResponse<Resource>>($"Resource/Guid={reservation.ResourceId}");
                     if (apiResponse?.Code == ApiResponseCode.OK)

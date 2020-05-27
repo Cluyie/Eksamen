@@ -29,7 +29,7 @@ namespace XamarinFormsApp.Helpers
                     cfg.CreateMap(typeof(Profile), typeof(User)).ReverseMap();
                     cfg.CreateMap(typeof(LoginSettings), typeof(User)).ReverseMap();
                     cfg.CreateMap(typeof(List<Resource>), typeof(ResourceViewModel));
-                    cfg.CreateMap<IResource<Reservation<ReserveTime>, ReserveTime, AvailableTime>, Resource>();
+                    cfg.CreateMap<IResource<Reservation, ReserveTime, AvailableTime>, Resource>();
 
                     foreach (var type in types)
                     {

@@ -17,5 +17,7 @@ namespace UCLDreamTeam.Ticket.Domain.Interfaces
         Task MessageSeen(Guid messageId, bool seen);
         Task CreateAsync(Models.Ticket ticket);
         Task UpdateAsync(Models.Ticket ticket);
+        Task AddUserAsync(User user);
+        Task DeleteUserAsync(User user);
     }
 }

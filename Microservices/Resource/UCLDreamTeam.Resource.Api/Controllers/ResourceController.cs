@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UCLDreamTeam.Resource.Api.BusinessLayer;
-using UCLDreamTeam.Resource.Api.Models;
+using UCLDreamTeam.Resource.Domain.Interfaces;
+using UCLDreamTeam.Resource.Domain.Models;
 
 namespace UCLDreamTeam.Resource.Api.Controllers
 {
@@ -14,11 +15,11 @@ namespace UCLDreamTeam.Resource.Api.Controllers
     [ApiController]
     public class ResourceController : ControllerBase
     {
-        private readonly ResourceService _resourceService;
+        private readonly IResourceService _ResourceService;
 
-        public ResourceController(ResourceService resourceService)
+        public ResourceController(IResourceService ResourceService)
         {
-            _resourceService = resourceService;
+            _ResourceService = ResourceService;
         }
 
         [HttpPost]
@@ -27,9 +28,9 @@ namespace UCLDreamTeam.Resource.Api.Controllers
         [ProducesResponseType(StatusCodes.Status304NotModified)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ApiResponse<Domain.Models.Resource> CreateResource([FromBody] Domain.Models.Resource resource)
+        public ApiResponse<Domain.Models.Resource> CreateResource([FromBody] Domain.Models.Resource Resource)
         {
-            return _resourceService.Create(resource);
+            return _ResourceService.Create(Resource);
         }
 
         [HttpGet]
@@ -38,7 +39,7 @@ namespace UCLDreamTeam.Resource.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<List<Domain.Models.Resource>> GetResources()
         {
-            return _resourceService.Get();
+            return _ResourceService.Get();
         }
 
         [HttpGet("guid={guid}")]
@@ -47,7 +48,7 @@ namespace UCLDreamTeam.Resource.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ApiResponse<Domain.Models.Resource> GetResourceById([FromRoute] Guid guid)
         {
-            return _resourceService.Get(guid);
+            return _ResourceService.Get(guid);
         }
         [HttpPut]
         [Authorize(Roles = "Admin")]
@@ -55,9 +56,9 @@ namespace UCLDreamTeam.Resource.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status304NotModified)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ApiResponse<Domain.Models.Resource>> UpdateResource([FromBody] Domain.Models.Resource resource)
+        public async Task<ApiResponse<Domain.Models.Resource>> UpdateResource([FromBody] Domain.Models.Resource Resource)
         {
-            return await _resourceService.Update(resource);
+            return await _ResourceService.Update(Resource);
         }
 
         [HttpDelete("guid={guid}")]
@@ -68,7 +69,7 @@ namespace UCLDreamTeam.Resource.Api.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ApiResponse<Domain.Models.Resource>> DeleteResource([FromRoute] Guid guid)
         {
-            return await _resourceService.Delete(guid);
+            return await _ResourceService.Delete(guid);
         }
     }
 }

@@ -9,12 +9,12 @@ namespace XamarinFormsApp.Model
     public class ReservationMock
     {
         User user;
-        List<Reservation<ReserveTime>> reservations;
+        List<Reservation> reservations;
 
         public ReservationMock(User _user)
         {
             user = _user;
-            reservations = new List<Reservation<ReserveTime>>();
+            reservations = new List<Reservation>();
             CreateReservations();
         }
 
@@ -53,7 +53,7 @@ namespace XamarinFormsApp.Model
 
             foreach (Resource r in resources)
             {
-                reservations.Add(new Reservation<ReserveTime>()
+                reservations.Add(new Reservation()
                 {
                     Id = Guid.NewGuid(),
                     UserId = user.Id,
@@ -69,7 +69,7 @@ namespace XamarinFormsApp.Model
             return resources.SingleOrDefault(resource => resource.Id == resourceId);
         }
 
-        public List<Reservation<ReserveTime>> GetReservationsByUserId(Guid userId)
+        public List<Reservation> GetReservationsByUserId(Guid userId)
         {
             return reservations.Where(r => r.UserId == userId).ToList();
         }

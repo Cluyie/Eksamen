@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Security.Cryptography;
@@ -70,10 +70,20 @@ namespace UCLDreamTeam.User.Api
                     };
                 });
 
-            services.AddDbContext<UserDbContext>(options =>
+            if (Configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
-                options.UseSqlServer(Configuration.GetConnectionString("UserDbConnection"));
-            });
+                services.AddDbContext<UserDbContext>(options =>
+                {
+                    options.UseInMemoryDatabase("UserDb");
+                });
+            }
+            else
+            {
+                services.AddDbContext<UserDbContext>(options =>
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("UserDbConnection"));
+                });
+            }
 
             services.AddSwaggerGen(c =>
             {

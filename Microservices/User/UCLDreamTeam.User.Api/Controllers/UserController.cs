@@ -76,13 +76,15 @@ namespace UCLDreamTeam.User.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-        public async Task<ApiResponse<IUser>> RegisterProfile([FromBody] Domain.Models.User user)
+        public async Task<ApiResponse<IUser>> RegisterProfile([FromBody] Domain.Models.User user, [FromQuery] string roleName = null)
         {
             if (user == null || !ModelState.IsValid)
                 return new ApiResponse<IUser>(ApiResponseCode.BadRequest); //return BadRequest();
             try
             {
-                await _userService.RegisterAsync(user);
+                roleName ??= "User";
+                var role = new Role { RoleName = roleName };
+                await _userService.RegisterAsync(user, role);
                 return new ApiResponse<IUser>(ApiResponseCode.OK, user); //Ok(user);
             }
             catch (Exception e)
@@ -96,13 +98,15 @@ namespace UCLDreamTeam.User.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-        public async Task<ApiResponse<IUser>> UpdateProfile([FromBody] Domain.Models.User user)
+        public async Task<ApiResponse<IUser>> UpdateProfile([FromBody] Domain.Models.User user, [FromQuery] string roleName = null)
         {
             if (user == null || await _userService.GetUserFromIdAsync(user.Id) != null || !ModelState.IsValid)
                 return new ApiResponse<IUser>(ApiResponseCode.BadRequest); //return BadRequest();
             try
             {
-                await _userService.Update(user);
+                roleName ??= "User";
+                var role = new Role { RoleName = roleName };
+                await _userService.Update(user, role);
                 return new ApiResponse<IUser>(ApiResponseCode.OK, user); //Ok(user);
             }
             catch (Exception e)

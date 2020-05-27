@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using UCLDreamTeam.User.Application.Interfaces;
 using UCLDreamTeam.User.Domain.Commands;
 using UCLDreamTeam.User.Domain.Interface;
+using UCLDreamTeam.User.Domain.Models;
 
 namespace UCLDreamTeam.User.Application.Services
 {
@@ -18,15 +19,15 @@ namespace UCLDreamTeam.User.Application.Services
             _eventBus = eventBus;
         }
 
-        public async Task RegisterAsync(Domain.Models.User userToRegister)
+        public async Task RegisterAsync(Domain.Models.User userToRegister, Role userRole = null)
         {
-            await _eventBus.SendCommand(new RegisterUserCommand(userToRegister));
+            await _eventBus.SendCommand(new RegisterUserCommand(userToRegister, userRole));
         }
 
-        public async Task<Domain.Models.User> Update(Domain.Models.User userData)
+        public async Task<Domain.Models.User> Update(Domain.Models.User userData, Role userRole = null)
         {
             await _eventBus.SendCommand(new UpdateUserCommand(userData,
-                await _userRepository.GetUserAsync(userData.Id)));
+                await _userRepository.GetUserAsync(userData.Id), userRole));
             return userData;
         }
 

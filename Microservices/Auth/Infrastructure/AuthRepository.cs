@@ -16,7 +16,7 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure
             _authContext = authContext;
         }
 
-        public async Task Create(AuthUser user)
+        public async Task Create(AuthUser user, Role role)
         {
             _authContext.Add(user);
             await _authContext.SaveChangesAsync();

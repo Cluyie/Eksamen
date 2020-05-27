@@ -21,8 +21,8 @@ namespace XamarinFormsApp.View
 
         private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            var content = e.Item as Resource;
-            Navigation.PushAsync(new BookingRessourcePage(content.Reservations));
+            var resource = e.Item as Resource;
+            Navigation.PushAsync(new BookingRessourcePage(resource.Id));
         }
     }
 }

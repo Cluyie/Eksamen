@@ -70,6 +70,8 @@ namespace UCLDreamTeam.Ticket.Api
             app.Subscribe<MessageSentEvent, MessageSentEventHandler>();
             app.Subscribe<MessageSeenEvent, MessageSeenEventHandler>();
             app.Subscribe<TicketCreatedEvent, TicketCreatedEventHandler>();
+            app.Subscribe<UserCreatedEvent, UserCreatedEventHandler>();
+            app.Subscribe<UserDeletedEvent, UserDeletedEventHandler>();
         }
     }
 }
