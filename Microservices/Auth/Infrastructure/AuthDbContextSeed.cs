@@ -25,11 +25,11 @@ namespace UCLDreamTeam.User.Data.Context
                         RoleId = Guid.NewGuid(),
                         RoleName = "User"
                     },
-                    //new Role
-                    //{
-                    //    RoleId = Guid.NewGuid(),
-                    //    RoleName = "Admin"
-                    //},
+                    new Role
+                    {
+                        RoleId = Guid.NewGuid(),
+                        RoleName = "Admin"
+                    },
                 };
             bool dbContainsSeededUsers = !seedingRoles.Any(sR => context.Roles.Any(r => r.RoleName == sR.RoleName));
             if (!context.Roles.Any() || (configuration.GetValue<bool>("SeedDatabase") && dbContainsSeededUsers)) //Configuration["Jwt:Issuer"]

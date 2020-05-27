@@ -14,21 +14,21 @@ namespace UCLDreamTeam.User.Data.Context
         {
             var seedingUsers = new List<Domain.Models.User>
                 {
-                    //new Domain.Models.User
-                    //{
-                    //    Id = Guid.NewGuid(),
-                    //    FirstName = "admin",
-                    //    LastName = "Adminsen",
-                    //    Email = "admin@ucl.dk",
-                    //    UserName = "Admin",
-                    //    NormalizedUserName = "ADMIN",
-                    //    Password = "P@ssw0rd",
-                    //    Address = "Boulevarden 25",
-                    //    City = "Vejle",
-                    //    ZipCode = 7100,
-                    //    Country = "Denmark"
-                        
-                    //},
+                    new Domain.Models.User
+                    {
+                        Id = Guid.NewGuid(),
+                        FirstName = "admin",
+                        LastName = "Adminsen",
+                        Email = "admin@ucl.dk",
+                        UserName = "Admin",
+                        NormalizedUserName = "ADMIN",
+                        Password = "P@ssw0rd",
+                        Address = "Boulevarden 25",
+                        City = "Vejle",
+                        ZipCode = 7100,
+                        Country = "Denmark"
+
+                    },
                     new Domain.Models.User
                     {
                         Id = Guid.NewGuid(),
