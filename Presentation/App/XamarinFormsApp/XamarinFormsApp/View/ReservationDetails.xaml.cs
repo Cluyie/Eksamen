@@ -26,7 +26,7 @@ namespace XamarinFormsApp.View
         }
         private void SuportButton_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new QueuePage());
+            Navigation.PushAsync(new QueuePage(_listItem.Id));
         }
         private async void DeleteButton_Clicked(object sender, EventArgs e)
         {
