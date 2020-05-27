@@ -1,5 +1,5 @@
 {
-  "ReRoutes": [
+  "Routes": [
     {
       "DownstreamPathTemplate": "/TicketService/Ticket?ticketId={ticketId}",
       "DownstreamScheme": "http",

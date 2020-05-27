@@ -161,6 +161,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UCLDreamTeam.Mail.Data", "M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UCLDreamTeam.Mail.Application", "Microservices\MailService\UCLDreamTeam.Mail.Application\UCLDreamTeam.Mail.Application.csproj", "{5552FF67-F7E3-433E-A9C1-4F2D84F97792}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{730E257B-1EEB-403B-B2FE-25DDCE75ED11}"
+	ProjectSection(SolutionItems) = preProject
+		sharedSettings.json = sharedSettings.json
+	EndProjectSection
+	ProjectSection(FolderGlobals) = preProject
+		C_5_4udv_4Skole_4UCLDreamTeam_4sharedSettings_1json__JsonSchema = http://json-schema.org/draft-04/schema
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

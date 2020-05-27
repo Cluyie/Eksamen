@@ -12,7 +12,7 @@
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "Resource.Api": {
+    "User.Api": {
       "commandName": "Project",
       "launchUrl": "swagger/index.html",
       "environmentVariables": {
