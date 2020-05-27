@@ -28,6 +28,14 @@ namespace UCLDreamTeam.Reservation.Data.Repository
             return await _dbContext.Reservations.Include(r => r.Timeslot).FirstOrDefaultAsync(r => r.Id == id);
         }
 
+        public async Task<IEnumerable<Domain.Models.Reservation>> GetByUserIdAsync(Guid id)
+        {
+            return await _dbContext.Reservations
+                .Include(r => r.Timeslot)
+                .Where(r => r.UserId == id)
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<Domain.Models.Reservation>> GetByResourceId(Guid resourceId)
         {
             return await _dbContext.Reservations
