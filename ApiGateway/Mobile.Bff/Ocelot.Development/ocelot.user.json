@@ -1,5 +1,5 @@
 {
-  "Routes": [
+  "ReRoutes": [
     {
       "DownstreamPathTemplate": "/User",
       "DownstreamScheme": "http",

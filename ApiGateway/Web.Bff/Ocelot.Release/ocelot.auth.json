@@ -1,5 +1,5 @@
 {
-  "Routes": [
+  "ReRoutes": [
     {
       "DownstreamPathTemplate": "/AuthService/Auth/Login",
       "DownstreamScheme": "http",
