@@ -25,7 +25,7 @@ namespace XamarinFormsApp
             var token = ApiClientProxy.ReadAnswer<ApiResponse<string>>(response).Value;
             authService.Login(token);
 
-            MainPage = new NavigationPage(new ResourceView());
+            MainPage = new NavigationPage(new MainPage());
 
             //MainPage = new NavigationPage(new MainPage());
         }

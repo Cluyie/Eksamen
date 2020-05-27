@@ -88,6 +88,28 @@ namespace UCLDreamTeam.Reservation.Api.Controllers
             }
         }
 
+        [HttpGet("User/{userId}")]
+        public async Task<ApiResponse<IEnumerable<Domain.Models.Reservation>>> GetByUserId(Guid userId)
+        {
+            if (userId == Guid.Empty)
+                return new ApiResponse<IEnumerable<Domain.Models.Reservation>>(ApiResponseCode.BadRequest,
+                    null); //return BadRequest();
+            try
+            {
+                var reservation = await _reservationService.GetByUserIdAsync(userId);
+                if (reservation == null)
+                    return new ApiResponse<IEnumerable<Domain.Models.Reservation>>(ApiResponseCode.NotFound,
+                        null); //return NotFound();
+                return new ApiResponse<IEnumerable<Domain.Models.Reservation>>(ApiResponseCode.OK,
+                    reservation); //return Ok(reservation);
+            }
+            catch (Exception e)
+            {
+                return new ApiResponse<IEnumerable<Domain.Models.Reservation>>(ApiResponseCode.ServiceUnavailable,
+                    null); //return StatusCode(503, e.Message);
+            }
+        }
+
         [HttpPost]
         public async Task<ApiResponse<Domain.Models.Reservation>> CreateReservation(
             [FromBody] Domain.Models.Reservation reservation)

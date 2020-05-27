@@ -42,8 +42,8 @@ namespace XamarinFormsApp.ViewModel
             
 
             
-            /*var user = (User) Application.Current.Properties["UserData"]*/;
-            var user = _proxy.Get<User>("User");
+            var user = (User) Application.Current.Properties["UserData"];
+            //var user = _proxy.Get<User>("User");
             var response = _proxy.Get<ApiResponse<List<Reservation<ReserveTime>>>>($"Reservation/User/{user.Id}");
             if (response?.Code == ApiResponseCode.OK)
             {
