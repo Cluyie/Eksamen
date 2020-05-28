@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 using Autofac;
 using AutoMapper;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
@@ -29,30 +30,36 @@ namespace XamarinFormsApp.ViewModel
         public async Task<bool> Register()
         {
             var registerResponse = await _proxy.PostAsync(@"User", _mapper.Map<Register>(this));
-            if (registerResponse.IsSuccessStatusCode)
+
+            if (!registerResponse.IsSuccessStatusCode) return false;
+
+            var registerResult = await registerResponse.Content.ReadAsAsync<ApiResponse<User>>();
+
+            if (registerResult.Code != ApiResponseCode.OK)
             {
-                var loginResponse = await _proxy.PostAsync(@"Auth/Login", new Login
-                {
-                    UsernameOrEmail = Username,
-                    Password = Password
-                });
-                if(loginResponse.IsSuccessStatusCode)
-                {
-                    var loginToken = await loginResponse.Content.ReadAsStringAsync();
-                    _authService.Login(loginToken);
-                    return true;
-                }
-                else
-                {
-                    ErrorMessage = "Noget gik galt. Fejl: " + loginResponse.StatusCode.ToString();
-                    return false;
-                }
+                  ErrorMessage = "Noget gik galt. Fejl: " + registerResult.Code.ToString();
             }
             else
             {
-                ErrorMessage = "Noget gik galt. Fejl: " + registerResponse.StatusCode.ToString();
-                return false;
+                  var loginResponse = await _proxy.PostAsync(@"Auth/Login", new Login
+                  {
+                      UsernameOrEmail = Username,
+                      Password = Password
+                  });
+                  if (!loginResponse.IsSuccessStatusCode)
+                  {
+                      ErrorMessage = "Noget gik galt. Fejl: " + loginResponse.StatusCode.ToString();
+                  }
+                  else
+                  {
+                      var loginResult = await loginResponse.Content.ReadAsAsync<ApiResponse<string>>();
+                      if (loginResult.Code != ApiResponseCode.OK) return false;
+                      _authService.Login(loginResult.Value);
+                      return true;
+                  }
             }
+
+            return false;
         }
 
         #region Constructor
