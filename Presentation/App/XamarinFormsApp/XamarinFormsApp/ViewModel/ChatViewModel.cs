@@ -20,6 +20,7 @@ namespace XamarinFormsApp.ViewModel
         public string TextToSend { get; set; }
         public ICommand OnSendCommand { get; set; }
 
+
         private readonly string _groupId;
         private readonly HubConnection _hubConnection;
         private readonly Guid _userId;

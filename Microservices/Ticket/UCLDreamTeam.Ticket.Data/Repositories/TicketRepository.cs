@@ -22,7 +22,9 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
 
         public async Task<Domain.Models.Ticket> GetByIdAsync(Guid id)
         {
-            return await _ticketDbContext.Tickets.Include(t => t.Messages)
+            return await _ticketDbContext.Tickets
+                .Include(t => t.Messages)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(r => r.Id == id);
         }
 
@@ -30,6 +32,7 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
         {
             var user = await _ticketDbContext.Users
                 .Include(u => u.UserTickets)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Id == id);
             var userTickets = user?.UserTickets;
 
