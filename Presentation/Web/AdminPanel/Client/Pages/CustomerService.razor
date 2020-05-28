@@ -40,176 +40,176 @@
 
 @code
 { private HubConnection _chatHubConnection;
-            private HubConnection _queueHubConnection;
-            private User CurrentUser;
-            public List<TicketDTO> TicketDTOs { get; set; }
-            public TicketDTO ActiveTicketDTO { get; set; }
-            public int QueueCount { get; set; }
+  private HubConnection _queueHubConnection;
+  private User CurrentUser;
+  public List<TicketDTO> TicketDTOs { get; set; }
+  public TicketDTO ActiveTicketDTO { get; set; }
+  public int QueueCount { get; set; }
 
-            protected override async Task OnInitializedAsync()
-            {
-                CurrentUser = await AuthService.GetCurrentUser();
-                #region SignalR ChatHub Methods
+  protected override async Task OnInitializedAsync()
+  {
+      CurrentUser = await AuthService.GetCurrentUser();
+      #region SignalR ChatHub Methods
 
-                _chatHubConnection = new HubConnectionBuilder()
-          .WithUrl("http://localhost:5017/ChatHub")
-          .Build();
+      _chatHubConnection = new HubConnectionBuilder()
+.WithUrl("http://localhost:5017/ChatHub")
+.Build();
 
-                _queueHubConnection = new HubConnectionBuilder()
-            .WithUrl("http://localhost:5017/QueueHub")
-            .Build();
+      _queueHubConnection = new HubConnectionBuilder()
+  .WithUrl("http://localhost:5017/QueueHub")
+  .Build();
 
-                _chatHubConnection.On<Message>("SendMessageToGroup", (message) =>
-                {
-                    TicketDTOs.Find(x => x.Ticket.Id == message.TicketId).Ticket.Messages.Add(message);
-                    SetActiveTicket();
-                });
-                #endregion
+      _chatHubConnection.On<Message>("SendMessageToGroup", (message) =>
+      {
+          TicketDTOs.Find(x => x.Ticket.Id == message.TicketId).Ticket.Messages.Add(message);
+          SetActiveTicket();
+      });
+      #endregion
 
-                #region SignalR QueueHub Methods
-
-
-
-                _queueHubConnection.On<Guid>("ReceiveTaskId", async (ticketId) =>
-                {
-                    if (ticketId != null)
-                    {
-                        TicketDTOs = new List<TicketDTO>();
-                        var ticket = await TicketService.GetByIdAsync(ticketId);
+      #region SignalR QueueHub Methods
 
 
 
-                  // Ticket velkomsbesked, skal refactores
+      _queueHubConnection.On<Guid>("ReceiveTaskId", async (ticketId) =>
+      {
+          if (ticketId != null)
+          {
+              TicketDTOs = new List<TicketDTO>();
+              var ticket = await TicketService.GetByIdAsync(ticketId);
 
-                  ticket.Messages.Add(new Message
-                        {
-                            Id = new Guid(),
-                            TicketId = ticket.Id,
-                            Text = "Hej du snakker med OLE :D, hvad kan jeg hjælpe med?",
-                            UserId = CurrentUser.Id,
-                            Seen = false,
-                            TimeStamp = DateTime.Now
-                        });
 
-                        TicketDTOs.Add(new TicketDTO { Ticket = ticket });
-                    }
-              //try
-              //{
-              //    Reservation reservation = new Reservation();
-              //    Console.WriteLine("Dette er en ticket " + ticket.Id.ToString());
 
-              //    if (ticket.ReservationId.HasValue)
-              //    {
-              //        reservation = await ReservationService.GetFromResourceById(ticket.ReservationId ?? Guid.NewGuid());
-              //    }
+              // Ticket velkomsbesked, skal refactores
 
-              //    TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation?.ResourceId ?? Guid.Empty) ?? null });
+              ticket.Messages.Add(new Message
+              {
+                  Id = new Guid(),
+                  TicketId = ticket.Id,
+                  Text = "Hej du snakker med OLE :D, hvad kan jeg hjælpe med?",
+                  UserId = CurrentUser.Id,
+                  Seen = false,
+                  TimeStamp = DateTime.Now
+              });
 
-              //}
-              //catch (Exception)
-              //{
-              //    TicketDTOs.Add(new TicketDTO { Ticket = ticket });
-              //}
+              TicketDTOs.Add(new TicketDTO { Ticket = ticket });
+          }
+          //try
+          //{
+          //    Reservation reservation = new Reservation();
+          //    Console.WriteLine("Dette er en ticket " + ticket.Id.ToString());
 
-              Console.WriteLine(TicketDTOs.Count());
+          //    if (ticket.ReservationId.HasValue)
+          //    {
+          //        reservation = await ReservationService.GetFromResourceById(ticket.ReservationId ?? Guid.NewGuid());
+          //    }
 
-                    SetActiveTicket();
-                });
+          //    TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation?.ResourceId ?? Guid.Empty) ?? null });
 
-                _queueHubConnection.On<int>("ReceiveQueueCount", (queueCount) =>
-                {
-                    QueueCount = queueCount;
-                    StateHasChanged();
-                });
+          //}
+          //catch (Exception)
+          //{
+          //    TicketDTOs.Add(new TicketDTO { Ticket = ticket });
+          //}
 
-                #endregion
+          Console.WriteLine(TicketDTOs.Count());
 
-                await _queueHubConnection.StartAsync();
-                await _chatHubConnection.StartAsync();
+          SetActiveTicket();
+      });
 
-                InitializeTicket(Guid.Empty.ToString());
+      _queueHubConnection.On<int>("ReceiveQueueCount", (queueCount) =>
+      {
+          QueueCount = queueCount;
+          StateHasChanged();
+      });
 
-                await GetQueueCount();
-            }
+      #endregion
 
-            #region SignalR ChatHub Methods
-            async Task JoinGroup(string groupId) =>
-                await _chatHubConnection.SendAsync("JoinGroup", groupId);
+      await _queueHubConnection.StartAsync();
+      await _chatHubConnection.StartAsync();
 
-            Task SendMessageToGroup(Message message) =>
-                _chatHubConnection.SendAsync("SendMessageToGroup", message);
+      //InitializeTicket(Guid.NewGuid().ToString());
 
-            public bool IsChatConnected =>
-                _chatHubConnection.State == HubConnectionState.Connected;
-            #endregion
+      await GetQueueCount();
+  }
 
-            #region SignalR QueueHub Methods
+  #region SignalR ChatHub Methods
+  async Task JoinGroup(string groupId) =>
+      await _chatHubConnection.SendAsync("JoinGroup", groupId);
 
-            async Task GetNextCustomer(string groupId)
-            {
-                if (_queueHubConnection.State == HubConnectionState.Connected)
-                {
-                    await _queueHubConnection.SendAsync("GetNextCustomer", groupId);
-                    await JoinGroup(groupId);
-                    InitializeTicket(groupId);
-                }
-                else
-                {
-                    await JsRuntime.InvokeAsync<object>("Alert", "An error has occured. Please try again.");
-                }
+  Task SendMessageToGroup(Message message) =>
+      _chatHubConnection.SendAsync("SendMessageToGroup", message, ActiveTicketDTO.GroupId.ToString());
 
-            }
+  public bool IsChatConnected =>
+      _chatHubConnection.State == HubConnectionState.Connected;
+  #endregion
 
-            async Task GetQueueCount() => await _queueHubConnection.SendAsync("GetQueueCount");
+  #region SignalR QueueHub Methods
 
-            public bool IsQueueConnected =>
-                _queueHubConnection.State == HubConnectionState.Connected;
+  async Task GetNextCustomer(string groupId)
+  {
+      if (_queueHubConnection.State == HubConnectionState.Connected)
+      {
+          await _queueHubConnection.SendAsync("GetNextCustomer", groupId);
+          await JoinGroup(groupId);
+          InitializeTicket(groupId);
+      }
+      else
+      {
+          await JsRuntime.InvokeAsync<object>("Alert", "An error has occured. Please try again.");
+      }
 
-            #endregion
+  }
 
-            void UpdateTicket(TicketDTO ticketDTO)
-            {
-                TicketDTOs.First(x => x.Ticket.Active == true).Ticket.Active = null;
-                TicketDTOs.First(x => x.Ticket.Id == ticketDTO.Ticket.Id).Ticket.Active = true;
-                ActiveTicketDTO = ticketDTO;
-            }
+  async Task GetQueueCount() => await _queueHubConnection.SendAsync("GetQueueCount");
 
-            async void InitializeTicket(string groupId)
-            {
-                var result = await TicketService.GetByUserIdAsync(CurrentUser?.Id ?? Guid.Empty);
+  public bool IsQueueConnected =>
+      _queueHubConnection.State == HubConnectionState.Connected;
 
-                if (result != null)
-                {
-                    foreach (var ticket in result)
-                    {
-                        Reservation reservation = new Reservation();
+  #endregion
 
-                        if (ticket.ReservationId.HasValue)
-                        {
-                            reservation = await ReservationService.GetFromId(ticket.Id);
-                        }
+  void UpdateTicket(TicketDTO ticketDTO)
+  {
+      (TicketDTOs ??= new List<TicketDTO>()).First(x => x.Ticket.Active == true).Ticket.Active = null;
+      TicketDTOs.First(x => x.Ticket.Id == ticketDTO.Ticket.Id).Ticket.Active = true;
+      ActiveTicketDTO = ticketDTO;
+  }
 
-                        (TicketDTOs ??= new List<TicketDTO>()).Add(new TicketDTO { GroupId = Guid.Parse(groupId), Ticket = ticket, Reservation = reservation, Resource = await ResourceService.GetFromId(reservation?.ResourceId ?? Guid.Empty) });
-                    }
+  async void InitializeTicket(string groupId)
+  {
+      var result = await TicketService.GetByUserIdAsync(CurrentUser?.Id ?? Guid.Empty);
 
-                    SetActiveTicket();
-                }
-            }
+      if (result != null)
+      {
+          foreach (var ticket in result)
+          {
+              Reservation reservation = new Reservation();
 
-            private void SetActiveTicket()
-            {
-                TicketDTOs = TicketDTOs.OrderByDescending(x => x.Ticket.Messages.Min(s => s.TimeStamp)).ToList();
-                TicketDTOs.First().Ticket.Active = true;
-                ActiveTicketDTO = TicketDTOs.First(x => x.Ticket.Active ?? false);
-                StateHasChanged();
-            }
+              if (ticket.ReservationId.HasValue)
+              {
+                  reservation = await ReservationService.GetFromId(ticket.Id);
+              }
 
-            private async void UpdateStatus(Status status, bool sendChatLog = false)
-            {
-                if (sendChatLog && status == Status.Closed)
-                {
-                    await MailService.SendChatLog(ActiveTicketDTO);
-                }
-                ActiveTicketDTO.Ticket.Status = status;
-                await TicketService.UpdateTicket(ActiveTicketDTO.Ticket);
-            } }
+              (TicketDTOs ??= new List<TicketDTO>()).Add(new TicketDTO { GroupId = Guid.Parse(groupId), Ticket = ticket, Reservation = reservation, Resource = await ResourceService.GetFromId(reservation?.ResourceId ?? Guid.Empty) });
+          }
+
+          SetActiveTicket();
+      }
+  }
+
+  private void SetActiveTicket()
+  {
+      TicketDTOs = TicketDTOs.OrderByDescending(x => x.Ticket?.Messages?.Min(s => s?.TimeStamp))?.ToList();
+      TicketDTOs.First().Ticket.Active = true;
+      ActiveTicketDTO = TicketDTOs.First(x => x.Ticket?.Active ?? false);
+      StateHasChanged();
+  }
+
+  private async void UpdateStatus(Status status, bool sendChatLog = false)
+  {
+      if (sendChatLog && status == Status.Closed)
+      {
+          await MailService.SendChatLog(ActiveTicketDTO);
+      }
+      ActiveTicketDTO.Ticket.Status = status;
+      await TicketService.UpdateTicket(ActiveTicketDTO.Ticket);
+  } }

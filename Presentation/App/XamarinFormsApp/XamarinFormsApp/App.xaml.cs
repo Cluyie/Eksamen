@@ -22,14 +22,21 @@ namespace XamarinFormsApp
             var authService = AutofacHelper.Container.Resolve<AuthService>();
             var api = AutofacHelper.Container.Resolve<ApiClientProxy>();
             var response = api.Post("Auth/Login", new Login { UsernameOrEmail = "test", Password = "P@ssw0rd" });
-            var token = ApiClientProxy.ReadAnswer<ApiResponse<string>>(response).Value;
-            authService.Login(token);
+            var result = ApiClientProxy.ReadAnswer<ApiResponse<string>>(response);
+            if (result.Code == ApiResponseCode.OK)
+            {
+                authService.Login(result.Value);
+                MainPage = new NavigationPage(new ResourceView());
+            }
+            else
+            {
+                MainPage = new NavigationPage(new MainPage());
 
-            MainPage = new NavigationPage(new ResourceView());
+            }
 
             //MainPage = new NavigationPage(new MainPage());
-        }
-        protected override void OnStart()
+    }
+    protected override void OnStart()
         {
             //DependencyService.Get<HttpClient>().BaseAddress = new Uri("http://10.0.2.2:5000/Auth/");
         }
