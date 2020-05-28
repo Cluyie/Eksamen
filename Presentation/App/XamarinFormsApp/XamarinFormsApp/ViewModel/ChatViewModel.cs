@@ -20,6 +20,7 @@ namespace XamarinFormsApp.ViewModel
         public string TextToSend { get; set; }
         public ICommand OnSendCommand { get; set; }
 
+        public string _tickedId { get; set; }
         private readonly string _groupId;
         private readonly HubConnection _hubConnection;
         private readonly Guid _userId;
@@ -27,9 +28,8 @@ namespace XamarinFormsApp.ViewModel
         public ChatViewModel(string groupId, string ticketId)
         {
             _groupId = groupId;
+            _tickedId = "Ticket nr: \n" + ticketId;
             _userId = (Application.Current.Properties["UserData"] as User).Id;
-
-            Messages.Add(new Message() { Text = "Hej, du snakker med Maria fra kundeservice. Hvad kan jeg hjælpe med?" });
 
             _hubConnection = new HubConnectionBuilder().WithUrl($"{Properties.Resources.SignalRBaseAddress}ChatHub")
     .Build();
@@ -63,7 +63,6 @@ namespace XamarinFormsApp.ViewModel
                 }
             });
         }
-
 
         public async Task Stop()
         {
