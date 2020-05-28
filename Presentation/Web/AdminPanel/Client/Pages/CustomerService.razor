@@ -174,7 +174,7 @@
                     reservation = await ReservationService.GetFromId(ticket.Id);
                 }
 
-                TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation.ResourceId) ?? null });
+                TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation, Resource = await ResourceService.GetFromId(reservation?.ResourceId ?? Guid.Empty) });
             }
 
             Console.WriteLine(TicketDTOs);

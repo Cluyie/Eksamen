@@ -39,6 +39,8 @@ namespace UCLDreamTeam.Ticket.Api
             services.AddTransient<MessageSentEventHandler>();
             services.AddTransient<MessageSeenEventHandler>();
             services.AddTransient<TicketCreatedEventHandler>();
+            services.AddTransient<UserCreatedEventHandler>();
+            services.AddTransient<UserDeletedEventHandler>();
 
             services.AddTransient<ITicketRepository, TicketRepository>();
             services.AddTransient<ITicketService, TicketService>();

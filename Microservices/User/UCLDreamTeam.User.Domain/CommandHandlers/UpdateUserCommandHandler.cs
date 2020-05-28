@@ -39,7 +39,7 @@ namespace UCLDreamTeam.User.Domain.CommandHandlers
 
                 await _userRepository.UpdateUserAsync(request.InputUser, dbUser);
 
-                _eventBus.PublishEvent(new UserUpdatedEvent(dbUser));
+                _eventBus.PublishEvent(new UserUpdatedEvent(dbUser, request.Role));
                 return true;
             }
             catch (Exception e)

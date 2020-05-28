@@ -18,16 +18,16 @@ namespace XamarinFormsApp
 
             AutofacHelper.Initialize();
 
-            //TODO remove in future
-            var authService = AutofacHelper.Container.Resolve<AuthService>();
-            var api = AutofacHelper.Container.Resolve<ApiClientProxy>();
-            var response = api.Post("Auth/Login", new Login { UsernameOrEmail = "Admin", Password = "P@ssw0rd" });
-            var token = ApiClientProxy.ReadAnswer<ApiResponse<string>>(response).Value;
-            authService.Login(token);
+            ////TODO remove in future
+            //var authService = AutofacHelper.Container.Resolve<AuthService>();
+            //var api = AutofacHelper.Container.Resolve<ApiClientProxy>();
+            //var response = api.Post("Auth/Login", new Login { UsernameOrEmail = "Admin", Password = "P@ssw0rd" });
+            //var token = ApiClientProxy.ReadAnswer<ApiResponse<string>>(response).Value;
+            //authService.Login(token);
 
-            MainPage = new NavigationPage(new ResourceView());
+            //MainPage = new NavigationPage(new ResourceView());
 
-            //MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new MainPage());
         }
         protected override void OnStart()
         {

@@ -10,7 +10,7 @@ namespace UCLDreamTeam.Auth.Api.IntegrationEvents.Events
         public UpdateUserCredentialsDTO User { get; set; }
         public RoleDTO Role { get; set; }
 
-        public UserUpdatedEvent(UpdateUserCredentialsDTO user, RoleDTO role)
+        public UserUpdatedEvent(UpdateUserCredentialsDTO user, RoleDTO role = null)
         {
             User = user;
             Role = role ?? new RoleDTO { RoleName = "User" };
