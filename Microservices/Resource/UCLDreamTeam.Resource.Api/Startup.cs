@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,7 +15,7 @@ using UCLDreamTeam.Resource.Data.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography;
-
+using UCLDreamTeam.Resource.Domain.Interfaces;
 namespace UCLDreamTeam.Resource.Api
 {
     public class Startup
@@ -40,20 +40,32 @@ namespace UCLDreamTeam.Resource.Api
             provider.FromXmlString(xmlKey);
             var key = new RsaSecurityKey(provider);
 
-            services.AddDbContext<ResourceContext>(options =>
+            if (Configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
-                options.UseSqlServer(Configuration.GetConnectionString("ResourceDbConnection"));
-            });
+                services.AddDbContext<ResourceContext>(options =>
+                {
+                    options.UseInMemoryDatabase("ResourceDb");
+                });
+            }
+            else
+            {
+                services.AddDbContext<ResourceContext>(options =>
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("ResourceDbConnection"));
+                });
+            }
+
+            //services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
             services.AddMediatR(typeof(Startup));
             services.AddRabbitMq();
 
-            services.AddScoped<ResourceService>();
+            services.AddScoped<IResourceService, ResourceService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Resource MicroService", Version = "v1"});
-                
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Resource MicroService", Version = "v1" });
+
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = @"JWT Authorization header using the Bearer scheme.
@@ -108,7 +120,7 @@ namespace UCLDreamTeam.Resource.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
+
 
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 

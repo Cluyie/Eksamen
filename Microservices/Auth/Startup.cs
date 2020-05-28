@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,6 +25,7 @@ using MediatR;
 using UCLDreamTeam.Auth.Api.IntegrationEvents.Events;
 using UCLDreamTeam.Auth.Api.IntegrationEvents.EventHandlers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UCLDreamTeam.Auth.Api
 {
@@ -50,10 +51,21 @@ namespace UCLDreamTeam.Auth.Api
             services.AddControllers();
             services.AddScoped<AuthService>();
             services.AddScoped<HashService>();
-            services.AddDbContext<AuthContext>(options =>
+            if (Configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
-                options.UseSqlServer(Configuration.GetConnectionString("AuthDbConnection"));
-            });
+                services.AddDbContext<AuthContext>(options =>
+                {
+                    options.UseInMemoryDatabase("AuthDb");
+                });
+            }
+            else
+            {
+                services.AddDbContext<AuthContext>(options =>
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("AuthDbConnection"));
+                });
+            }
+
             services.AddScoped<AuthContext>();
             services.AddScoped<AuthRepository>();
             services.AddMediatR(typeof(Startup));
@@ -148,7 +160,7 @@ namespace UCLDreamTeam.Auth.Api
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
-            CreateRoles(serviceProvider);
+            //CreateRoles(serviceProvider);
         }
 
         private void CreateRoles(IServiceProvider serviceProvider)

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text.Json.Serialization;
 using MediatR;
@@ -67,10 +67,20 @@ namespace UCLDreamTeam.Mail.Api
                     };
                 });
 
-            services.AddDbContext<MailDbContext>(options =>
+            if (Configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
-                options.UseSqlServer(Configuration.GetConnectionString("MailDbConnection"));
-            });
+                services.AddDbContext<MailDbContext>(options =>
+                {
+                    options.UseInMemoryDatabase("MailDb");
+                });
+            }
+            else
+            {
+                services.AddDbContext<MailDbContext>(options =>
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("MailDbConnection"));
+                });
+            }
 
 
             services.AddSwaggerGen(c =>

@@ -88,5 +88,17 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
             ticket.Status = status;
             await _ticketDbContext.SaveChangesAsync();
         }
+
+        public async Task AddUserAsync(User user)
+        {
+            await _ticketDbContext.Users.AddAsync(user);
+            await _ticketDbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteUserAsync(User user)
+        {
+            _ticketDbContext.Users.Remove(user);
+            await _ticketDbContext.SaveChangesAsync();
+        }
     }
 }

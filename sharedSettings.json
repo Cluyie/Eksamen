@@ -1,0 +1,6 @@
+﻿{
+  "UseInMemoryDatabase": true,
+  "Jwt": {
+    "Issuer": "UCLDreamTeam"
+  }
+}
