@@ -29,7 +29,7 @@ namespace XamarinFormsApp.View
             BindingContext = page = proxy.Get<ApiResponse<BookRessourceViewModel>>($"Resource/Guid={Id}").Value;
             page.Reservations = proxy.Get<ApiResponse<List<Reservation<ReserveTime>>>>($"Reservation/GetByResourceId/{Id}").Value;
             page.reftesh = Refresh;
-            //_reservationId = page.Reservations.
+            //_reservationId = page.Reservations
         }
 
         private void PaintSurface(object sender, SKPaintSurfaceEventArgs e)
@@ -126,7 +126,7 @@ namespace XamarinFormsApp.View
 
         private void SupportButtonClicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new QueuePage(_reservationId));
+            Navigation.PushAsync(new QueuePage(/*_reservationId*/));
         }
     }
 }

@@ -10,6 +10,7 @@ using XamarinFormsApp.Helpers;
 using XamarinFormsApp.Model;
 using Profile = AutoMapper.Profile;
 using System;
+using System.Threading;
 
 namespace XamarinFormsApp.ViewModel
 {
@@ -23,32 +24,34 @@ namespace XamarinFormsApp.ViewModel
         private readonly HubConnection _hubConnection;
         private readonly Guid _userId;
 
-        public ChatViewModel(string groupId)
+        public ChatViewModel(string groupId, string ticketId)
         {
             _groupId = groupId;
             _userId = (Application.Current.Properties["UserData"] as User).Id;
 
-            _hubConnection = new HubConnectionBuilder().WithUrl($"{Properties.Resources.SignalRBaseAddress}ChatHub")
-                .Build();
-            Connect();
-
-
             Messages.Add(new Message() { Text = "Hej, du snakker med Maria fra kundeservice. Hvad kan jeg hjælpe med?" });
 
-            _hubConnection.On<Message>("SendMessageToRoom", message => {
-                if(message.UserId != _userId)
+            _hubConnection = new HubConnectionBuilder().WithUrl($"{Properties.Resources.SignalRBaseAddress}ChatHub")
+    .Build();
+
+            _hubConnection.On<Message>("SendMessageToRoom", message =>
+            {
+                if (message.UserId != _userId)
                     Messages.Add(message);
             });
 
+            Connect();
+
             OnSendCommand = new Command(() =>
             {
-                if (!string.IsNullOrEmpty(TextToSend))
-                {
+                //if (!string.IsNullOrEmpty(TextToSend))
+                //{
                     Message message = new Message()
                     {
                         Id = Guid.NewGuid(),
                         Text = TextToSend,
                         UserId = _userId,
+                        TicketId = Guid.Parse(ticketId),
                         TimeStamp = DateTime.Now,
                         Seen = false
                     };
@@ -56,10 +59,11 @@ namespace XamarinFormsApp.ViewModel
                     Messages.Add(message);
                     TextToSend = string.Empty;
 
-                    _hubConnection.SendAsync("SendMessageToRoom", message, _groupId).Wait();
-                }
+                    _hubConnection.SendAsync("SendMessageToGroup", message, _groupId).Wait();
+                //}
             });
         }
+
 
         public async Task Stop()
         {

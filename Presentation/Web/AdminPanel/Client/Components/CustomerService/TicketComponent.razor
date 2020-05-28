@@ -1,19 +1,19 @@
 ﻿<div class="d-flex">
-<div class="discussion @(Active ? "message-active" : "")">
-    <div class="desc-contact">
-        <p class="name">@Name</p>
-        <p class="message">@Message</p>
+    <div class="discussion @(Active ? "message-active" : "")">
+        <div class="desc-contact">
+            <p class="name">@Name</p>
+            <p class="message">@Message</p>
+        </div>
+        <div class="timer">@TimeStamp</div>
+        @if (New)
+        {
+            <span class="badge badge-info ml-1">New</span>
+        }
     </div>
-    <div class="timer">@TimeStamp</div>
-    @if (New)
+    @if (Active)
     {
-    <span class="badge badge-info ml-1">New</span>
+        <div class="active-bar"></div>
     }
-</div>
-@if (Active)
-{
-    <div class="active-bar"></div>
-}
 </div>
 
 @code

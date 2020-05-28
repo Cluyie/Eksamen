@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XamarinFormsApp.Model;
 using XamarinFormsApp.ViewModel;
@@ -22,7 +23,7 @@ namespace XamarinFormsApp.View
         private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var content = e.Item as Resource;
-            Navigation.PushAsync(new BookingRessourcePage(content.Reservations));
+            Navigation.PushAsync(new BookingRessourcePage(content.Id));
         }
     }
 }

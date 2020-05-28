@@ -17,9 +17,9 @@ namespace XamarinFormsApp.View
 
             BindingContext = viewModel;
 
-            viewModel.ReceivedGroupId += (id) =>
+            viewModel.ReceivedGroupId += (id, ticketId) =>
             {
-                Navigation.PushAsync(new ChatPage(id));
+                Navigation.PushAsync(new ChatPage(id, ticketId));
             };
         }
 

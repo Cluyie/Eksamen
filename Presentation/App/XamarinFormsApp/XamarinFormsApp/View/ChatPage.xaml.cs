@@ -10,10 +10,10 @@ namespace XamarinFormsApp.View
     {
         private readonly ChatViewModel _viewModel;
 
-        public ChatPage(string groupId)
+        public ChatPage(string groupId, string ticketId)
         {
             InitializeComponent();
-            _viewModel = new ChatViewModel(groupId);
+            _viewModel = new ChatViewModel(groupId, ticketId);
             BindingContext = _viewModel;
         }
         private async void OnExitButtonClicked(object sender, EventArgs e)
