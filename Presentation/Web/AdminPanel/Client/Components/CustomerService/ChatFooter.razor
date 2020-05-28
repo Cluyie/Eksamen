@@ -1,6 +1,6 @@
 ﻿@using AdminPanel.Client.Models
 <div class="footer-chat">
-    <InputTextArea class="write-message" placeholder="Type your message here" @bind-Value="Text"></InputTextArea>
+    <input type="text" class="write-message" placeholder="Type your message here" @bind="Text"></input>
     <div class="send clickable" @onclick="@SendClick">
         <i class="fas fa-paper-plane"></i>
     </div>
