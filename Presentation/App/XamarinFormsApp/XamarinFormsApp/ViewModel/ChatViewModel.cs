@@ -34,7 +34,7 @@ namespace XamarinFormsApp.ViewModel
             _hubConnection = new HubConnectionBuilder().WithUrl($"{Properties.Resources.SignalRBaseAddress}ChatHub")
     .Build();
 
-            _hubConnection.On<Message>("SendMessageToRoom", message =>
+            _hubConnection.On<Message>("SendMessageToGroup", message =>
             {
                 if (message.UserId != _userId)
                     Messages.Add(message);
@@ -44,9 +44,9 @@ namespace XamarinFormsApp.ViewModel
 
             OnSendCommand = new Command(() =>
             {
-                //if (!string.IsNullOrEmpty(TextToSend))
-                //{
-                    Message message = new Message()
+            if (!string.IsNullOrEmpty(TextToSend))
+            {
+                Message message = new Message()
                     {
                         Id = Guid.NewGuid(),
                         Text = TextToSend,
@@ -60,7 +60,7 @@ namespace XamarinFormsApp.ViewModel
                     TextToSend = string.Empty;
 
                     _hubConnection.SendAsync("SendMessageToGroup", message, _groupId).Wait();
-                //}
+                }
             });
         }
 
