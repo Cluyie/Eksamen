@@ -6,23 +6,23 @@
 <section class="chat">
     <ChatHeader TicketDTO=@TicketDTO UpdateStatus="@UpdateStatus" />
     <div class="messages-chat">
-        @if (TicketDTO.Ticket.Messages != null) { 
-        @for (int i = 0; i < TicketDTO.Ticket.Messages.Count; i++)
+        @if (TicketDTO.Ticket.Messages != null)
         {
-            <MessageComponent Text=@TicketDTO.Ticket.Messages[i].Text Response=@(TicketDTO.Ticket.Messages[i].UserId != ActiveUser)/> //Change to Active User ID
-        }
-        }
+            @for (int i = 0; i < TicketDTO.Ticket.Messages.Count; i++)
+            {
+                <MessageComponent Text=@TicketDTO.Ticket.Messages[i].Text Response=@(TicketDTO.Ticket.Messages[i].UserId == ActiveUser) />//Change to Active User ID
+            }}
     </div>
-    <ChatFooter />
+    <ChatFooter SendMessage="@(async (text) => await SendMessage.InvokeAsync(new Message{ Id = Guid.NewGuid(), Text = text, TicketId = TicketDTO.Ticket.Id, UserId = ActiveUser, TimeStamp = DateTime.Now }))" />
 </section>
 
 @code
-{
+{ 
     [Parameter] public TicketDTO TicketDTO { get; set; }
     [Parameter] public Guid ActiveUser { get; set; }
 
-    [Parameter] public EventCallback<Status> UpdateStatus { get; set; }
-}
+    [Parameter] public EventCallback<Message> SendMessage { get; set; }
+    [Parameter] public EventCallback<Status> UpdateStatus { get; set; } }
 
 <style>
     .chat {
@@ -31,9 +31,9 @@
         display: flex;
         flex-direction: column;
     }
-    
-    .chat .messages-chat {
-        padding: 25px 35px;
-        overflow-y: auto;
-    }
+
+        .chat .messages-chat {
+            padding: 25px 35px;
+            overflow-y: auto;
+        }
 </style>
