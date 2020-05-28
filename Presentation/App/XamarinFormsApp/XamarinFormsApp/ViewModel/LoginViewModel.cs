@@ -24,7 +24,7 @@ namespace XamarinFormsApp.ViewModel
         {
             var response = await _proxy.PostAsync(@"Auth/Login", _mapper.Map<Login>(this));
             var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<string>>(response);
-            if (response.IsSuccessStatusCode && result?.Code != null)
+            if (response.IsSuccessStatusCode && result?.Code == ApiResponseCode.OK && result.Value != null)
             {
                 //Gemmer user token
                 _authService.Login(result.Value);

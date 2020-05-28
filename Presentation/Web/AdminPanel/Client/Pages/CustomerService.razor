@@ -180,11 +180,9 @@
                     reservation = await ReservationService.GetFromId(ticket.Id);
                 }
 
-                TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation.ResourceId) ?? null });
+                (TicketDTOs ??= new List<TicketDTO>()).Add(new TicketDTO { Ticket = ticket, Reservation = reservation, Resource = await ResourceService.GetFromId(reservation?.ResourceId ?? Guid.Empty) });
             }
-
-            Console.WriteLine(TicketDTOs);
-
+            
             SetActiveTicket();
         }
     }
@@ -193,7 +191,7 @@
     {
         //TicketDTOs = TicketDTOs.OrderByDescending(x => x.Ticket.Messages.Min(s => s.TimeStamp)).ToList();
         //TicketDTOs.First().Ticket.Active = true;
-        ActiveTicketDTO = TicketDTOs.First(x => (bool)x.Ticket.Active);
+        ActiveTicketDTO = TicketDTOs.First(x => x.Ticket.Active ?? false);
         StateHasChanged();
     }
 
