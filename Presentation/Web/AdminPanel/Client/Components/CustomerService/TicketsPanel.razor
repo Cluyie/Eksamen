@@ -12,8 +12,8 @@
             <TicketComponent Name=@ticketDTO.Ticket.Name
                              Active=@(ticketDTO.Ticket.Active ?? false)
                              New=@(ticketDTO.Ticket.Messages?.Any(x => x.Seen == false) ?? false)
-                             Message=@ticketDTO.Ticket.Messages?.First().Text
-                             TimeStamp=@ticketDTO.Ticket.Messages?.First().TimeStamp.ToString() />
+                             Message=@ticketDTO.Ticket?.Messages?.First().Text
+                             TimeStamp=@ticketDTO.Ticket?.Messages?.First().TimeStamp.ToString() />
         </div>
     }
 </section>

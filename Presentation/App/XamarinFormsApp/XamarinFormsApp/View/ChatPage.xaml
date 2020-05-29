@@ -7,8 +7,14 @@
              xmlns:local="clr-namespace:XamarinFormsApp.Helpers"
              xmlns:partials="clr-namespace:XamarinFormsApp.View.Partials"
              mc:Ignorable="d"
-             Title="Ticket nr: xxx"
              x:Class="XamarinFormsApp.View.ChatPage">
+    <NavigationPage.TitleView>
+        <Label Text="{Binding _tickedId}" 
+               FontSize="14" 
+               TextColor="White" />
+    </NavigationPage.TitleView>
+    
+    
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Afslut"
                      Clicked="OnExitButtonClicked"/>
@@ -42,3 +48,7 @@
                                    x:Name="chatInput"/>
     </Grid>
 </ContentPage>
+<!--<Style TargetType="{x:Type Title}">
+    <Setter Property="FontFamily"
+        Value="Cambria" />
+</Style>-->
