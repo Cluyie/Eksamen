@@ -3,6 +3,8 @@ UCL 4. Semester Dreamteam Repository
 [Dokumentation](https://docs.google.com/document/d/1LsvcOnyi4bbdBS5vJB79S8oc9nSKq3CvjDTdlnTwY4k/edit?usp=sharing)
 
 ## Startup
+MicroService indstillinger: [sharedSettings.json](sharedSettings.json)  
+Disse indstillinger bruges i alle MicroServices. Lige nu er det kun "UseInMemoryDatabase" der bliver brugt til at vælge in memory database eller vores fælles database.
 
 For at køre programmet i Visual Studio 2019 anbefaler vi at hente udvidelsen "SwitchStartupProject for VS 2019": https://www.vsixgallery.com/extension/399c17d5-6a98-44e4-938e-6d0f1f804076
 
