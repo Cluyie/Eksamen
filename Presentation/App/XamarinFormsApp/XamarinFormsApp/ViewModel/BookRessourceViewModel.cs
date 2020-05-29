@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Autofac;
 using Microsoft.AspNetCore.SignalR.Client;
 using SkiaSharp;
@@ -65,7 +66,7 @@ namespace XamarinFormsApp.ViewModel
 
                     foreach (var timeslot in resource.TimeSlots)
                     {
-                        if (TimeSlots.Find(r => r.Id == timeslot.Id) != null)
+                        if (TimeSlots.FirstOrDefault(r => r.Id == timeslot.Id) != null)
                         {
                             TimeSlots[TimeSlots.FindIndex(r => r.Id == timeslot.Id)] = timeslot;
                             reftesh();
@@ -137,9 +138,12 @@ namespace XamarinFormsApp.ViewModel
             var availablesFound = new List<IAvailableTime>();
             foreach (IAvailableTime Available in TimeSlots)
             {
-                if (Available.Recurring)
+                if (!Available.Recurring)
                 {
-                    if (date.DayOfYear == Available.From.DayOfYear) availablesFound.Add(Available);
+                    if (date.DayOfYear == Available.From.DayOfYear)
+                    {
+                        availablesFound.Add(Available);
+                    }
                 }
                 else if (Available.From.DayOfWeek == date.DayOfWeek)
                 {

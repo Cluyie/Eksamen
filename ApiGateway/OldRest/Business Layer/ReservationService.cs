@@ -54,19 +54,16 @@ namespace Business_Layer
             //Finds all the valid timeslots of the resource. The duration of the reservation must be equal to, or fit into an avaliable timeslot.
             resourceToAddTo.TimeSlots.ForEach(delegate(AvailableTime time)
             {
-                if (time.Available)
+                if (time.Recurring|| time.From.Date == reservation.Timeslot.FromDate.Date)
                 {
-                    if (time.Recurring == null || time.From.Date == reservation.Timeslot.FromDate.Date)
-                    {
-                        if (time.From <= reservation.Timeslot.FromDate && time.To >= reservation.Timeslot.ToDate)
-                            validTimes.Add(time);
-                    }
-                    else if ((DayOfWeek)((time.Recurring + 1) % 7) == reservation.Timeslot.FromDate.DayOfWeek &&
-                             time.From.TimeOfDay <= reservation.Timeslot.FromDate.TimeOfDay &&
-                             time.To.TimeOfDay >= reservation.Timeslot.ToDate.TimeOfDay)
-                    {
+                    if (time.From <= reservation.Timeslot.FromDate && time.To >= reservation.Timeslot.ToDate)
                         validTimes.Add(time);
-                    }
+                }
+                else if (time.From.DayOfWeek == reservation.Timeslot.FromDate.DayOfWeek &&
+                            time.From.TimeOfDay <= reservation.Timeslot.FromDate.TimeOfDay &&
+                            time.To.TimeOfDay >= reservation.Timeslot.ToDate.TimeOfDay)
+                {
+                    validTimes.Add(time);
                 }
             });
 

@@ -24,6 +24,7 @@ namespace XamarinFormsApp.View
             InitializeComponent();
             var proxy = AutofacHelper.Container.Resolve<ApiClientProxy>();
             BindingContext = page = proxy.Get<ApiResponse<BookRessourceViewModel>>($"Resource/Guid={Id}").Value;
+            Console.WriteLine(page.TimeSlots[0].Id);
             page.Reservations = proxy.Get<ApiResponse<List<Reservation<ReserveTime>>>>($"Reservation/Resource/{Id}").Value;
             page.reftesh = Refresh;
         }
