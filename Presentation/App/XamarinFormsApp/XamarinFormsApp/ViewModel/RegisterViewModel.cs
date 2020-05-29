@@ -11,7 +11,6 @@ using XamarinFormsApp.Model;
 using Profile = AutoMapper.Profile;
 
 namespace XamarinFormsApp.ViewModel
-{
     public class RegisterViewModel : Profile
     {
         public string Username { get; set; }
@@ -23,7 +22,6 @@ namespace XamarinFormsApp.ViewModel
         public string LastName { get; set; }
 
         public string ErrorMessage { get; set; }
-
 
         /// <summary>
         ///     Tries to register, returns a bool containing the result
