@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace AdminPanel.Client
 {
@@ -59,7 +60,13 @@ namespace AdminPanel.Client
             var services = scope.ServiceProvider;
             var authService = services.GetRequiredService<IAuthService>();
             authService.Logout();
+
+            var httpContext = services.GetRequiredService<ILocalStorageService>();
+            await httpContext.ClearAsync();
+
             await host.RunAsync();
+
+
         }
     }
 }

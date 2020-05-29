@@ -78,7 +78,7 @@ namespace UCLDreamTeam.Mail.Api
             {
                 services.AddDbContext<MailDbContext>(options =>
                 {
-                    options.UseSqlServer(Configuration.GetConnectionString("MailDbConnection"));
+                    options.UseSqlServer(Configuration.GetConnectionString("ConnectionString") + Configuration.GetConnectionString("MailDbConnection"));
                 });
             }
 

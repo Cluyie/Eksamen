@@ -1,6 +1,9 @@
 ﻿{
   "UseInMemoryDatabase": false,
+  "ConnectionStrings": {
+    "ConnectionString": "Server=tcp:ucldreamteam.database.windows.net,1433;User Id=lara2;Password=Hejmeddig19;"
+  },
   "Jwt": {
-    "Issuer": "UCLDreamTeam"
+      "Issuer": "UCLDreamTeam"
+    }
   }
-}

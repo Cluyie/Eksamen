@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using Microsoft.AspNetCore.Identity;
+using UCLToolBox;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using XamarinFormsApp.ViewModel;
@@ -19,10 +22,11 @@ namespace XamarinFormsApp.View
 
         private async void RegisterButton_Clicked(object sender, EventArgs e)
         {
-            if (await _registerViewModel.Register())
+            var result = await _registerViewModel.Register();
+            if (result == IdentityResult.Success)
                 await Navigation.PushAsync(new HomePage());
             else
-                await DisplayAlert("Alert", _registerViewModel.ErrorMessage, "OK");
+                await DisplayAlert("Alert", result.Errors.SelectMany(e => e.Description).ToSingularString(), "OK");
         }
     }
 }

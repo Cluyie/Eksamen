@@ -1,7 +1,9 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Autofac;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
 using UCLToolBox;
 using XamarinFormsApp.Helpers;
@@ -27,39 +29,63 @@ namespace XamarinFormsApp.ViewModel
         ///     Tries to register, returns a bool containing the result
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> Register()
+        public async Task<IdentityResult> Register()
         {
+            List<IdentityError> errors = new List<IdentityError>();
+            IdentityResult result = new IdentityResult();
+
             var registerResponse = await _proxy.PostAsync(@"User", _mapper.Map<Register>(this));
 
-            if (!registerResponse.IsSuccessStatusCode) return false;
-
-            var registerResult = await registerResponse.Content.ReadAsAsync<ApiResponse<User>>();
-
-            if (registerResult.Code != ApiResponseCode.OK)
+            if (registerResponse.IsSuccessStatusCode)
             {
-                  ErrorMessage = "Noget gik galt. Fejl: " + registerResult.Code.ToString();
+                var registerResult = await registerResponse.Content.ReadAsAsync<ApiResponse<User>>();
+
+                if (registerResult.Code == ApiResponseCode.OK)
+                {
+                    var loginResponse = await _proxy.PostAsync(@"Auth/Login", new Login
+                    {
+                        UsernameOrEmail = Username,
+                        Password = Password
+                    });
+                    if (loginResponse.IsSuccessStatusCode)
+                    {
+                      var loginResult = await loginResponse.Content.ReadAsAsync<ApiResponse<string>>();
+                      if (loginResult.Code == ApiResponseCode.OK)
+                          _authService.Login(loginResult.Value);
+                      else
+                        errors.Add(new IdentityError
+                        {
+                            Code = loginResult.Code.ToString() /*"Request failed"*/,
+                            Description = loginResult.Value
+                        });
+                    }
+                    else
+                    {
+                      errors.Add(new IdentityError
+                      {
+                          Code = loginResponse.StatusCode.ToString() /*"Request failed"*/,
+                          Description = loginResponse.ReasonPhrase
+                      });
+                    }
+                }
+                else
+                {
+                    errors.Add(new IdentityError
+                    {
+                        Code = registerResponse.StatusCode.ToString() /*"Request failed"*/,
+                        Description = registerResponse.ReasonPhrase
+                    });
+                }
             }
             else
             {
-                  var loginResponse = await _proxy.PostAsync(@"Auth/Login", new Login
-                  {
-                      UsernameOrEmail = Username,
-                      Password = Password
-                  });
-                  if (!loginResponse.IsSuccessStatusCode)
-                  {
-                      ErrorMessage = "Noget gik galt. Fejl: " + loginResponse.StatusCode.ToString();
-                  }
-                  else
-                  {
-                      var loginResult = await loginResponse.Content.ReadAsAsync<ApiResponse<string>>();
-                      if (loginResult.Code != ApiResponseCode.OK) return false;
-                      _authService.Login(loginResult.Value);
-                      return true;
-                  }
+                errors.Add(new IdentityError
+                {
+                    Code = registerResponse.StatusCode.ToString() /*"Request failed"*/,
+                    Description = registerResponse.ReasonPhrase
+                });
             }
-
-            return false;
+            return errors.Count != 0 ? IdentityResult.Failed(errors.ToArray()) : IdentityResult.Success;
         }
 
         #region Constructor
@@ -75,6 +101,6 @@ namespace XamarinFormsApp.ViewModel
             _authService = AutofacHelper.Container.Resolve<AuthService>();
         }
 
-        #endregion
+      #endregion
     }
 }
