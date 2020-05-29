@@ -28,7 +28,7 @@ namespace UCLDreamTeam.User.Data.Respositories
         {
             try
             {
-                if (!_userDbContext.Users.Any(u => u.UserName.Contains(user.UserName) || u.Email.Contains((u.Email))))
+                if (!_userDbContext.Users.Any(u => u.UserName.Contains(user.UserName) || !u.Email.Contains((u.Email))))
                 {
                     user.NormalizedUserName = user.UserName.ToUpperInvariant();
                     await _userDbContext.Users.AddAsync(user);

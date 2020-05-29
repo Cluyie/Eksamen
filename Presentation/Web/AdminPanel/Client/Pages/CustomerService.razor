@@ -24,7 +24,10 @@
         <TicketsPanel UpdateTicket="UpdateTicket" GetNextCustomer="@(() => GetNextCustomer(Guid.NewGuid().ToString()))" TicketDTOs=@(TicketDTOs ?? new List<TicketDTO>()) QueueCount=QueueCount />
         @if (TicketDTOs != null)
         {
-            <ChatPanel TicketDTO=@ActiveTicketDTO UpdateStatus="@((Status status) => UpdateStatus(status))" SendMessage="SendMessageToGroup" ActiveUser="CurrentUser.Id" />
+            <ChatPanel TicketDTO=@ActiveTicketDTO 
+                       UpdateStatus="@((Status status) => UpdateStatus(status))" 
+                       SendMessage="SendMessageToGroup" 
+                       ActiveUser="CurrentUser.Id" />
         }
         else
         {
