@@ -29,7 +29,7 @@ namespace UCLDreamTeam.Auth.Api.Infrastructure
             AuthUser authUser = await _authContext.AuthUsers
               .Include(u => u.UserRoles)
               .ThenInclude(u => u.Role)
-              .FirstOrDefaultAsync(u => u.UserName.Contains(userNameOrEmail) || u.Email.Contains(userNameOrEmail));
+              .FirstOrDefaultAsync(u => EF.Functions.Like(u.UserName,userNameOrEmail) || EF.Functions.Like(u.Email, userNameOrEmail));
             return authUser;
         }
 

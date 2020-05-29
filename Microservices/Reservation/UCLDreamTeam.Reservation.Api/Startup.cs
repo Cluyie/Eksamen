@@ -74,7 +74,7 @@ namespace UCLDreamTeam.Reservation.Api
             {
                 services.AddDbContext<ReservationDbContext>(options =>
                 {
-                    options.UseSqlServer(Configuration.GetConnectionString("ReservationDbConnection"));
+                    options.UseSqlServer(Configuration.GetConnectionString("ConnectionString") + Configuration.GetConnectionString("ReservationDbConnection"));
                 });
             }
 

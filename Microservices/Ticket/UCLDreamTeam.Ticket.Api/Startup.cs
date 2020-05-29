@@ -33,7 +33,7 @@ namespace UCLDreamTeam.Ticket.Api
             {
                 services.AddDbContext<TicketDbContext>(options =>
                 {
-                    options.UseSqlServer(Configuration.GetConnectionString("TicketDbConnection"));
+                    options.UseSqlServer(Configuration.GetConnectionString("ConnectionString") + Configuration.GetConnectionString("TicketDbConnection"));
                 });
             }
             base.ConfigureServices(services);

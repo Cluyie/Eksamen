@@ -62,7 +62,7 @@ namespace UCLDreamTeam.Auth.Api
             {
                 services.AddDbContext<AuthContext>(options =>
                 {
-                    options.UseSqlServer(Configuration.GetConnectionString("AuthDbConnection"));
+                    options.UseSqlServer(Configuration.GetConnectionString("ConnectionString") + Configuration.GetConnectionString("AuthDbConnection"));
                 });
             }
 

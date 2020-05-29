@@ -65,7 +65,8 @@ namespace XamarinFormsApp.ViewModel
             if (response?.Code != ApiResponseCode.OK) ErrorMessage = _proxy.GenerateErrorMessage(response);
 
             var resourceViewModel = new ResourceViewModel();
-            foreach (var item in response.Value) resourceViewModel.Resources.Add(item);
+            foreach (var item in response?.Value ?? new List<Resource>()) 
+              resourceViewModel.Resources.Add(item);
 
             return resourceViewModel;
         }

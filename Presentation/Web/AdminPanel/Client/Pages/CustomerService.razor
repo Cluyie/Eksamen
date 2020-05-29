@@ -38,7 +38,8 @@
 </div>
 
 @code
-{ private HubConnection _chatHubConnection;
+{ 
+    private HubConnection _chatHubConnection;
     private HubConnection _queueHubConnection;
     private User CurrentUser;
     public List<TicketDTO> TicketDTOs { get; set; }
@@ -61,7 +62,7 @@
 
         _chatHubConnection.On<Message>("SendMessageToGroup", (message) =>
         {
-            TicketDTOs.Find(x => x.Ticket.Id == message.TicketId).Ticket.Messages.Add(message);
+            (TicketDTOs.Find(x => x.Ticket.Id == message.TicketId).Ticket.Messages ??= new List<Message>()).Add(message);
 
             SetActiveTicket();
         });
@@ -72,7 +73,7 @@
 
         _queueHubConnection.On<Guid>("ReceiveTaskId", async (ticketId) =>
         {
-            if (ticketId != null)
+            if (ticketId != null && ticketId != Guid.Empty)
             {
                 TicketDTOs = new List<TicketDTO>();
                 var ticket = await TicketService.GetByIdAsync(ticketId);
@@ -128,7 +129,7 @@
 
     async Task GetNextCustomer(string groupId)
     {
-        if (_queueHubConnection.State == HubConnectionState.Connected)
+        if (IsChatConnected)
         {
             await _queueHubConnection.SendAsync("GetNextCustomer", groupId);
             await JoinGroup(groupId);
@@ -166,7 +167,7 @@
             {
                 Reservation reservation = new Reservation();
 
-                if (ticket.ReservationId.HasValue)
+                if (ticket?.ReservationId.HasValue ?? false)
                 {
                     reservation = await ReservationService.GetFromId(ticket.Id);
                 }
@@ -180,9 +181,13 @@
 
     private void SetActiveTicket()
     {
-        TicketDTOs = TicketDTOs.OrderByDescending(x => x.Ticket?.Messages?.Min(s => s?.TimeStamp))?.ToList();
-        TicketDTOs.First().Ticket.Active = true;
-        ActiveTicketDTO = TicketDTOs.First(x => x.Ticket?.Active ?? false);
+        TicketDTOs = (TicketDTOs ?? new List<TicketDTO>()).OrderByDescending(x => x.Ticket?.Messages?.Min(s => s?.TimeStamp))?.ToList();
+        var ticket = TicketDTOs.First()?.Ticket;
+        if (ticket != null)
+        {
+            ticket.Active = true;
+            ActiveTicketDTO = TicketDTOs.First(x => x.Ticket?.Active ?? false);
+        }
         StateHasChanged();
     }
 

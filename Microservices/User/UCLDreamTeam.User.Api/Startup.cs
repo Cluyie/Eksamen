@@ -81,7 +81,7 @@ namespace UCLDreamTeam.User.Api
             {
                 services.AddDbContext<UserDbContext>(options =>
                 {
-                    options.UseSqlServer(Configuration.GetConnectionString("UserDbConnection"));
+                    options.UseSqlServer(Configuration.GetConnectionString("ConnectionString") + Configuration.GetConnectionString("UserDbConnection"));
                 });
             }
 
