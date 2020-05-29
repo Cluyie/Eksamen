@@ -11,7 +11,7 @@ namespace XamarinFormsApp.ViewModel
 {
     public class LoginViewModel : Profile
     {
-        public string UsernameOrEmail { get; set; } = "admin";
+        public string UsernameOrEmail { get; set; } = "test";
         public string Password { get; set; } = "P@ssw0rd";
 
         public string ErrorMessage { get; private set; }

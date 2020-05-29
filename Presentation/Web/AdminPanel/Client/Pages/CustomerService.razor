@@ -61,7 +61,8 @@
 
         _chatHubConnection.On<Message>("SendMessageToGroup", (message) =>
         {
-            TicketDTOs.Find(x => x.Ticket.Id == message.TicketId).Ticket.Messages.Add(message);
+            if (!message.Text.StartsWith("Hej, du snakker med ")) // Skrevet af Christoffer
+                TicketDTOs.Find(x => x.Ticket.Id == message.TicketId).Ticket.Messages.Add(message);
 
             SetActiveTicket();
         });
@@ -87,7 +88,7 @@
                     TimeStamp = DateTime.Now
                 };
 
-                //ticket.Messages.Add(greetingsMessage);
+                ticket.Messages.Add(greetingsMessage);
 
                 TicketDTOs.Add(new TicketDTO { Ticket = ticket });
 
