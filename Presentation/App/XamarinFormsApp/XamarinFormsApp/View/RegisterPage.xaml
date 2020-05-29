@@ -22,6 +22,8 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0"
@@ -58,21 +60,10 @@
                 <Label Grid.Row="3"
                        Grid.Column="0"
                        VerticalTextAlignment="Center"
-                       Text="Bekræft email"
-                       FontSize="Body"
-                       HorizontalOptions="Start" />
-                <Entry Grid.Row="3"
-                       Grid.Column="1"
-                       x:Name="confirmEmail"
-                       Placeholder="Indtast email"
-                       FontSize="Body" />
-                <Label Grid.Row="4"
-                       Grid.Column="0"
-                       VerticalTextAlignment="Center"
                        Text="Kodeord"
                        FontSize="Body"
                        HorizontalOptions="Start" />
-                <Entry Grid.Row="4"
+                <Entry Grid.Row="3"
                        Grid.Column="1"
                        x:Name="password"
                        Placeholder="Indtast kodeord"
@@ -82,37 +73,26 @@
                 <Label Grid.Row="5"
                        Grid.Column="0"
                        VerticalTextAlignment="Center"
-                       Text="Bekræft kodeord"
-                       FontSize="Body"
-                       HorizontalOptions="Start" />
-                <Entry Grid.Row="5" Grid.Column="1"
-                       x:Name="confirmPassword"
-                       Placeholder="Indtast kodeord"
-                       FontSize="Body"
-                       IsPassword="True" />
-                <Label Grid.Row="6"
-                       Grid.Column="0"
-                       VerticalTextAlignment="Center"
                        Text="Fornavn"
                        FontSize="Body"
                        HorizontalOptions="Start" />
-                <Entry Grid.Row="6" Grid.Column="1"
+                <Entry Grid.Row="5" Grid.Column="1"
                        x:Name="firstName"
                        Placeholder="Indtast fornavn"
                        FontSize="Body"
                        Text="{Binding FirstName}" />
-                <Label Grid.Row="7"
+                <Label Grid.Row="6"
                        Grid.Column="0"
                        VerticalTextAlignment="Center"
                        Text="Efternavn"
                        FontSize="Body"
                        HorizontalOptions="Start" />
-                <Entry Grid.Row="7" Grid.Column="1"
+                <Entry Grid.Row="6" Grid.Column="1"
                        x:Name="lastName"
                        Placeholder="Indtast efternavn"
                        FontSize="Body"
                        Text="{Binding LastName}" />
-                <Button Grid.Row="8"
+                <Button Grid.Row="7"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
                         CornerRadius="10"

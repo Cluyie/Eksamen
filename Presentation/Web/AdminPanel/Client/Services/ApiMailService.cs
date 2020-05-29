@@ -18,7 +18,16 @@ namespace AdminPanel.Client.Services
 
         public async Task SendChatLog(TicketDTO ticketDTO)
         {
-            await _client.PostAsync<List<Message>>("Mail/SendChatLog", ticketDTO);
+            try
+            {
+                Console.WriteLine($"Ticket nr. {ticketDTO?.Ticket?.Id} mail send");
+            }
+            catch (Exception e)
+            {
+                await _client.PostAsync<List<Message>>("Mail/SendChatLog", ticketDTO);
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

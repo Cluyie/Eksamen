@@ -87,6 +87,7 @@ namespace UCLDreamTeam.Ticket.Api.Controller
                 var result = await _ticketService.GetByIdAsync(ticket.Id);
                 if (result == null)
                     return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.NotFound); //return NotFound();
+                result = ticket;
                 await _ticketService.UpdateAsync(ticket);
                 return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.OK, result); //return Ok(ticket);
             }

@@ -70,11 +70,11 @@ namespace UCLDreamTeam.User.Data.Respositories
                 }
 
                 // Update the inputUser
-                if (!string.IsNullOrWhiteSpace(inputUser.Password) &&
-                    inputUser.Password != dbUser.Password)
+                if (!string.IsNullOrWhiteSpace(inputUser.PasswordHash) &&
+                    inputUser.PasswordHash != dbUser.PasswordHash)
                 {
                     //If the password is unchanged or empty, this does not update the password
-                    dbUser.Password = inputUser.Password;
+                    dbUser.PasswordHash = inputUser.PasswordHash;
                 }
                 // Automapper is configured to only overwrite the fields that are not null
                 _mapper.Map(inputUser, dbUser);

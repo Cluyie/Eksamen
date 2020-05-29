@@ -19,12 +19,12 @@ namespace UCLDreamTeam.User.Data.Context
                         new Domain.Models.User
                         {
                             Id = Guid.NewGuid(),
-                            FirstName = "admin",
-                            LastName = "Adminsen",
-                            Email = "admin@ucl.dk",
+                            FirstName = "Lars",
+                            LastName = "Admin",
+                            Email = "admin@admin.com",
                             UserName = "Admin",
                             NormalizedUserName = "ADMIN",
-                            Password = "P@ssw0rd",
+                            PasswordHash = "P@ssw0rd",
                             Address = "Boulevarden 25",
                             City = "Vejle",
                             ZipCode = 7100,
@@ -37,12 +37,12 @@ namespace UCLDreamTeam.User.Data.Context
                         new Domain.Models.User
                         {
                             Id = Guid.NewGuid(),
-                            FirstName = "Customer",
-                            LastName = "Support",
+                            FirstName = "Lene",
+                            LastName = "Nørrebro",
                             Email = "CustomerSupport@ucl.dk",
                             UserName = "CustomerSupport",
                             NormalizedUserName = "CUSTOMERSUPPORT",
-                            Password = "P@ssw0rd",
+                            PasswordHash = "P@ssw0rd",
                             Address = "Boulevarden 25",
                             City = "Vejle",
                             ZipCode = 7100,
@@ -54,19 +54,35 @@ namespace UCLDreamTeam.User.Data.Context
                         new Domain.Models.User
                         {
                             Id = Guid.NewGuid(),
+                            FirstName = "Magnus",
+                            LastName = "Hansen",
+                            Email = "test@gmail.com",
+                            UserName = "test",
+                            NormalizedUserName = "TEST",
+                            PasswordHash = "P@ssw0rd",
+                            Address = "Test",
+                            City = "Test",
+                            ZipCode = 7100,
+                            Country = "Denmark"
+                        },
+                        new Role{ RoleId = Guid.Empty, RoleName = "User" }
+                    },
+                    {
+                        new Domain.Models.User
+                        {
+                            Id = Guid.NewGuid(),
                             FirstName = "Lasse",
                             LastName = "Rasch",
                             Email = "mail@r-coding.dk",
                             UserName = "lara2",
                             NormalizedUserName = "LARA2",
-                            Password = "P@ssw0rd",
+                            PasswordHash = "P@ssw0rd",
                             Address = "Boulevarden 25",
                             City = "Vejle",
                             ZipCode = 7100,
                             Country = "Denmark"
                         },
                         new Role{ RoleId = Guid.Empty, RoleName = "User" }
-
                     }
                 };
             var dbContainsSeededUsers = !seedingUsers.Any(sR => context.Users.Any(r => r.FirstName == sR.Key.FirstName));

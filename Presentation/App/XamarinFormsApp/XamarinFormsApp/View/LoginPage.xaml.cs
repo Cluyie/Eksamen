@@ -22,7 +22,7 @@ namespace XamarinFormsApp.View
 
         private async void OnLoginButtonClicked(object sender, EventArgs e)
         {
-            //if (!string.IsNullOrWhiteSpace(Register.Username) && !string.IsNullOrWhiteSpace(Register.Password))
+            //if (!string.IsNullOrWhiteSpace(Register.Username) && !string.IsNullOrWhiteSpace(Register.PasswordHash))
             //{
             //    //send mig til login api
             //    //await Navigation.PushAsync(/*hjem eller bruger*/);

@@ -18,6 +18,6 @@ namespace UCLDreamTeam.Ticket.Domain.Models
         [NotMapped] public string LastName { get; set; }
         [NotMapped] public string UserName { get; set; }
         [NotMapped] public int? ZipCode { get; set; }
-        [NotMapped] public string Password { get; set; }
+        [NotMapped] public string PasswordHash { get; set; }
     }
 }

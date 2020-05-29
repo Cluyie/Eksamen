@@ -161,7 +161,7 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
                     //Makes sure that new timeslots that is not in db has no ID because of Auto Assignment
                     Resource.TimeSlots.ForEach(newTimeSlot =>
                     {
-                        if(resourceToUpdate.TimeSlots.FirstOrDefault(x => x.Id == newTimeSlot.Id) == null)
+                        if(ResourceToUpdate.TimeSlots.FirstOrDefault(x => x.Id == newTimeSlot.Id) == null)
                             newTimeSlot.Id = Guid.Empty;
                     });
                     ResourceToUpdate.TimeSlots = Resource.TimeSlots;

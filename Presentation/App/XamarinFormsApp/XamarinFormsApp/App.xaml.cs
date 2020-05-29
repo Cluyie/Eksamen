@@ -21,7 +21,7 @@ namespace XamarinFormsApp
             ////TODO remove in future
             //var authService = AutofacHelper.Container.Resolve<AuthService>();
             //var api = AutofacHelper.Container.Resolve<ApiClientProxy>();
-            //var response = api.Post("Auth/Login", new Login { UsernameOrEmail = "test", Password = "P@ssw0rd" });
+            //var response = api.Post("Auth/Login", new Login { UsernameOrEmail = "test", PasswordHash = "P@ssw0rd" });
             //var result = ApiClientProxy.ReadAnswer<ApiResponse<string>>(response);
             //if (result.Code == ApiResponseCode.OK)
             //{

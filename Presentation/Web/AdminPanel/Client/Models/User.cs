@@ -17,6 +17,6 @@ namespace AdminPanel.Client.Models
         public string LastName { get; set; }
         public string UserName { get; set; }
         public int? ZipCode { get; set; }
-        public string Password { get; set; }
+        public string PasswordHash { get; set; }
     }
 }

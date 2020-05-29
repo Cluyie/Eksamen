@@ -80,7 +80,7 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
 
         public async Task UpdateAsync(Domain.Models.Ticket ticket)
         {
-            _ticketDbContext.Tickets.Update(ticket);
+            //_ticketDbContext.Tickets.Update(ticket);
             await _ticketDbContext.SaveChangesAsync();
         }
 

@@ -11,13 +11,12 @@ using XamarinFormsApp.Model;
 using Profile = AutoMapper.Profile;
 
 namespace XamarinFormsApp.ViewModel
+{
     public class RegisterViewModel : Profile
     {
         public string Username { get; set; }
         public string Email { get; set; }
-        public string ConfirmEmail { get; set; }
-        public string Password { get; set; }
-        public string ConfirmPassword { get; set; }
+        public string PasswordHash { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
@@ -31,8 +30,8 @@ namespace XamarinFormsApp.ViewModel
         {
             List<IdentityError> errors = new List<IdentityError>();
             IdentityResult result = new IdentityResult();
-
-            var registerResponse = await _proxy.PostAsync(@"User", _mapper.Map<Register>(this));
+            var register = _mapper.Map<Register>(this);
+            var registerResponse = await _proxy.PostAsync(@"User", register);
 
             if (registerResponse.IsSuccessStatusCode)
             {
@@ -43,7 +42,7 @@ namespace XamarinFormsApp.ViewModel
                     var loginResponse = await _proxy.PostAsync(@"Auth/Login", new Login
                     {
                         UsernameOrEmail = Username,
-                        Password = Password
+                        Password = PasswordHash
                     });
                     if (loginResponse.IsSuccessStatusCode)
                     {

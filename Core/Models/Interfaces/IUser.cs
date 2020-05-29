@@ -20,6 +20,6 @@ namespace UCLDreamTeam.SharedInterfaces.Interfaces
 
         int? ZipCode { get; set; }
         [NotMapped]
-        string Password { get; set; }
+        string PasswordHash { get; set; }
     }
 }

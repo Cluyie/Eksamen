@@ -59,11 +59,12 @@ namespace AdminPanel.Client
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
             var authService = services.GetRequiredService<IAuthService>();
-            authService.Logout();
+            //authService.Logout(); todo remove
 
-            var httpContext = services.GetRequiredService<ILocalStorageService>();
-            await httpContext.ClearAsync();
-
+            var syncLocalStorageService = services.GetRequiredService<ISyncLocalStorageService>();
+            syncLocalStorageService.Clear();
+            var localStorageService = services.GetRequiredService<ILocalStorageService>();
+            await localStorageService.ClearAsync();
             await host.RunAsync();
 
 
