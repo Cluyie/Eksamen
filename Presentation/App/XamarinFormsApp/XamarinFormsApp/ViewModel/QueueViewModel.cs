@@ -1,12 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Autofac;
 using Microsoft.AspNetCore.SignalR.Client;
-using UCLDreamTeam.SharedInterfaces.Interfaces;
 using UCLToolBox;
 using XamarinFormsApp.Helpers;
 using XamarinFormsApp.Model;
@@ -32,10 +29,10 @@ namespace XamarinFormsApp.ViewModel
             }
         }
 
-        public event Action<string> ReceivedGroupId;
+        public event Action<string, string> ReceivedGroupId;
 
         private readonly ApiClientProxy _proxy;
-        private Guid _ticketId;
+        private string _ticketId;
 
         private HubConnection _hubConnection;
 
@@ -48,7 +45,7 @@ namespace XamarinFormsApp.ViewModel
                 Id = Guid.NewGuid(),
                 Active = true,
                 Name = (Application.Current.Properties["UserData"] as User).UserName,
-                ReservationId = reservationId,
+                ReservationId = reservationId ?? Guid.Empty,
                 Status = UCLDreamTeam.SharedInterfaces.Status.Active,
             };
 
@@ -65,7 +62,7 @@ namespace XamarinFormsApp.ViewModel
 
             HttpResponseMessage response = proxy.Post("Ticket", ticket);
 
-            _ticketId = ticket.Id;
+            _ticketId = ticket.Id.ToString();
 
             _hubConnection = new HubConnectionBuilder().WithUrl($"{Properties.Resources.SignalRBaseAddress}QueueHub")
                 .Build();
@@ -75,7 +72,7 @@ namespace XamarinFormsApp.ViewModel
             // Done waiting in queue
             _hubConnection.On<string>("ReceiveGroupId", id =>
             {
-                ReceivedGroupId?.Invoke(id);
+                ReceivedGroupId?.Invoke(id, _ticketId);
             });
 
             // Your index in the queue

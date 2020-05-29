@@ -28,10 +28,20 @@ namespace UCLDreamTeam.User.Data.Respositories
         {
             try
             {
-                user.NormalizedUserName = user.UserName.ToUpperInvariant();
-                await _userDbContext.Users.AddAsync(user);
-                await _userDbContext.SaveChangesAsync();
-                return IdentityResult.Success;
+                if (!_userDbContext.Users.Any(u => u.UserName.Contains(user.UserName) || u.Email.Contains((u.Email))))
+                {
+                    user.NormalizedUserName = user.UserName.ToUpperInvariant();
+                    await _userDbContext.Users.AddAsync(user);
+                    await _userDbContext.SaveChangesAsync();
+                    return IdentityResult.Success;
+                }
+                else
+                {
+                    return IdentityResult.Failed(new IdentityError
+                    {
+                      Description = "Identical user"
+                    });
+                }
             }
             catch (Exception e)
             {

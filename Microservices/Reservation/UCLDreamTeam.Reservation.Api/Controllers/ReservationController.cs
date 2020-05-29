@@ -10,7 +10,7 @@ using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.Reservation.Api.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("[Controller]")]
     public class ReservationController : ControllerBase
@@ -66,7 +66,7 @@ namespace UCLDreamTeam.Reservation.Api.Controllers
             }
         }
 
-        [HttpGet("Resource/{resourceId}")]
+        [HttpGet("GetByResourceId/{resourceId}")]
         public async Task<ApiResponse<IEnumerable<Domain.Models.Reservation>>> GetByResourceId(Guid resourceId)
         {
             if (resourceId == Guid.Empty)

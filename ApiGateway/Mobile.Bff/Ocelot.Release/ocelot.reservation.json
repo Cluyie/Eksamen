@@ -25,7 +25,7 @@
       "UpstreamHttpMethod": [ "Get", "Delete" ]
     },
     {
-      "DownstreamPathTemplate": "ReservationService/Resource/{id}",
+      "DownstreamPathTemplate": "/GetByResourceId/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -33,7 +33,7 @@
           "Port": 1337
         }
       ],
-      "UpstreamPathTemplate": "/Resource/{id}",
+      "UpstreamPathTemplate": "/GetByResourceId/{id}",
       "UpstreamHttpMethod": [ "Get" ]
     }
   ]

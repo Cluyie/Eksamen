@@ -17,15 +17,15 @@ namespace XamarinFormsApp.View
 
             BindingContext = viewModel;
 
-            viewModel.ReceivedGroupId += (id) =>
+            viewModel.ReceivedGroupId += (id, ticketId) =>
             {
-                Navigation.PushAsync(new ChatPage(id));
+                Navigation.PushAsync(new ChatPage(id, ticketId));
             };
         }
 
         private void CancelButton_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new MainPage());
+            Navigation.PopAsync();
         }
     }
 }

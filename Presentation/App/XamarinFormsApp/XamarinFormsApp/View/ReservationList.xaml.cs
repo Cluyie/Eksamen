@@ -16,25 +16,18 @@ namespace XamarinFormsApp.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ReservationList : ContentPage
     {
-        
+
         private readonly ReservationListViewModel _reservationListViewModel;
 
         public ReservationList()
         {
             InitializeComponent();
-            var reservationListViewModel = new ReservationListViewModel();           
+            var reservationListViewModel = new ReservationListViewModel();
             _reservationListViewModel = reservationListViewModel.initialize();
             BindingContext = _reservationListViewModel ??= reservationListViewModel;
-          
-            
         }
 
-
-
-
-
-
-         void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var content = e.Item as ReservationListItem;
             Navigation.PushAsync(new ReservationDetails(content));

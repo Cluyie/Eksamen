@@ -9,5 +9,6 @@ namespace AdminPanel.Client.Services
     public interface IReservationService
     {
         Task<Reservation> GetFromId(Guid id);
+        Task<Reservation> GetFromResourceById(Guid id);
     }
 }

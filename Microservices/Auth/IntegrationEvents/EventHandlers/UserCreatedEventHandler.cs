@@ -22,7 +22,7 @@ namespace UCLDreamTeam.Auth.Api.IntegrationEvents.EventHandlers
             _hashService = hashService;
         }
 
-        async Task IEventHandler<UserCreatedEvent>.Handle(UserCreatedEvent @event)
+        public async Task Handle(UserCreatedEvent @event)
         {
             CreateUserCredentialsDTO userIn = @event.User;
             string salt = _hashService.GenerateSalt();

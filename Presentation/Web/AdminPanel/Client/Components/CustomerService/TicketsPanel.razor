@@ -9,12 +9,11 @@
     @foreach (TicketDTO ticketDTO in TicketDTOs)
     {
         <div @onclick="@(() => UpdateTicket.InvokeAsync(ticketDTO))">
-            <TicketComponent
-                Name=@ticketDTO.Ticket.Name
-                Message=@ticketDTO.Ticket.Messages.First().Text
-                TimeStamp=@ticketDTO.Ticket.Messages.First().TimeStamp.ToString()
-                Active=@(ticketDTO.Ticket.Active ?? false)
-                New=@(ticketDTO.Ticket.Messages.Any(x => x.Seen == false))/>
+            <TicketComponent Name=@ticketDTO.Ticket.Name
+                             Active=@(ticketDTO.Ticket.Active ?? false)
+                             New=@(ticketDTO.Ticket.Messages?.Any(x => x.Seen == false) ?? false)
+                             Message=@ticketDTO.Ticket?.Messages?.First().Text
+                             TimeStamp=@ticketDTO.Ticket?.Messages?.First().TimeStamp.ToString() />
         </div>
     }
 </section>
@@ -24,7 +23,6 @@
     [Parameter] public List<TicketDTO> TicketDTOs { get; set; }
     [Parameter] public int QueueCount { get; set; }
     [Parameter] public EventCallback<TicketDTO> UpdateTicket { get; set; }
-
     [Parameter] public EventCallback GetNextCustomer { get; set; }
 }
 
@@ -36,5 +34,4 @@
         overflow-y: auto;
         display: inline-block;
     }
-
 </style>

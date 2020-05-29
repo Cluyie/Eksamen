@@ -22,7 +22,9 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
 
         public async Task<Domain.Models.Ticket> GetByIdAsync(Guid id)
         {
-            return await _ticketDbContext.Tickets.Include(t => t.Messages)
+            return await _ticketDbContext.Tickets
+                .Include(t => t.Messages)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(r => r.Id == id);
         }
 
@@ -30,6 +32,7 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
         {
             var user = await _ticketDbContext.Users
                 .Include(u => u.UserTickets)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Id == id);
             var userTickets = user?.UserTickets;
 
@@ -57,9 +60,9 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
 
         public async Task AddMessageAsync(Message message)
         {
-            var ticket = await _ticketDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == message.TicketId);
-            ticket.Messages.Add(message);
-            await _ticketDbContext.SaveChangesAsync();
+            //var ticket = await _ticketDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == message.TicketId);
+            //ticket.Messages.Add(message);
+            //await _ticketDbContext.SaveChangesAsync();
         }
 
         public async Task MessageSeen(Guid messageId, bool seen)
@@ -86,6 +89,18 @@ namespace UCLDreamTeam.Ticket.Data.Repositories
         {
             var ticket = await _ticketDbContext.Tickets.FirstOrDefaultAsync(t => t.Id == id);
             ticket.Status = status;
+            await _ticketDbContext.SaveChangesAsync();
+        }
+
+        public async Task AddUserAsync(User user)
+        {
+            await _ticketDbContext.Users.AddAsync(user);
+            await _ticketDbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteUserAsync(User user)
+        {
+            _ticketDbContext.Users.Remove(user);
             await _ticketDbContext.SaveChangesAsync();
         }
     }
