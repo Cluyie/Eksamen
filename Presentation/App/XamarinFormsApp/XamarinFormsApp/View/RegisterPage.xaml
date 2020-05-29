@@ -78,7 +78,7 @@
                        Placeholder="Indtast kodeord"
                        FontSize="Body"
                        IsPassword="True"
-                       Text="{Binding Password}" />
+                       Text="{Binding PasswordHash}" />
                 <Label Grid.Row="5"
                        Grid.Column="0"
                        VerticalTextAlignment="Center"
