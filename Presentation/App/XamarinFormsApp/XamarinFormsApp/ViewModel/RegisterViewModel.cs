@@ -46,23 +46,23 @@ namespace XamarinFormsApp.ViewModel
                     });
                     if (loginResponse.IsSuccessStatusCode)
                     {
-                      var loginResult = await loginResponse.Content.ReadAsAsync<ApiResponse<string>>();
-                      if (loginResult.Code == ApiResponseCode.OK)
-                          _authService.Login(loginResult.Value);
-                      else
-                        errors.Add(new IdentityError
-                        {
-                            Code = loginResult.Code.ToString() /*"Request failed"*/,
-                            Description = loginResult.Value
-                        });
+                        var loginResult = await loginResponse.Content.ReadAsAsync<ApiResponse<string>>();
+                        if (loginResult.Code == ApiResponseCode.OK)
+                            _authService.Login(loginResult.Value);
+                        else
+                          errors.Add(new IdentityError
+                          {
+                              Code = loginResult.Code.ToString() /*"Request failed"*/,
+                              Description = loginResult.Value
+                          });
                     }
                     else
                     {
-                      errors.Add(new IdentityError
-                      {
-                          Code = loginResponse.StatusCode.ToString() /*"Request failed"*/,
-                          Description = loginResponse.ReasonPhrase
-                      });
+                        errors.Add(new IdentityError
+                        {
+                            Code = loginResponse.StatusCode.ToString() /*"Request failed"*/,
+                            Description = loginResponse.ReasonPhrase
+                        });
                     }
                 }
                 else
@@ -82,7 +82,15 @@ namespace XamarinFormsApp.ViewModel
                     Description = registerResponse.ReasonPhrase
                 });
             }
-            return errors.Count != 0 ? IdentityResult.Failed(errors.ToArray()) : IdentityResult.Success;
+
+            if (errors.Count == 0)
+            {
+                return IdentityResult.Success;
+            }
+            else
+            {
+                return IdentityResult.Failed(errors.ToArray());
+            }
         }
 
         #region Constructor

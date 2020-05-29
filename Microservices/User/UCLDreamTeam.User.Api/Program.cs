@@ -34,7 +34,8 @@ namespace UCLDreamTeam.User.Api
 
                     var context = services.GetRequiredService<UserDbContext>();
 
-                    if (context.Database.IsSqlServer()) context.Database.Migrate();
+                    if (context.Database.IsSqlServer()) 
+                      await context.Database.MigrateAsync();
 
                     var configuration = services.GetRequiredService<IConfiguration>();
 
