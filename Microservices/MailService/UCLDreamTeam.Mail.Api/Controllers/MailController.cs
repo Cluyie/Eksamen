@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
+using UCLDreamTeam.Mail.Api.Models;
 using UCLDreamTeam.Mail.Application.Interfaces;
 using UCLDreamTeam.Mail.Domain.Models;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
@@ -31,32 +32,32 @@ namespace UCLDreamTeam.Mail.Api.Controllers
 
         [HttpPost("[action]")]
         [Authorize]
-        public async Task<IActionResult> SendReservationNotification([FromBody] Reservation reservation, Template template)
+        public async Task<ApiResponse<Reservation>> SendReservationNotification([FromBody] Reservation reservation, Template template)
         {
             try
             {
                 await _mailService.SendMail(reservation, template);
-                return Ok(reservation);
+                return new ApiResponse<Reservation>(ApiResponseCode.OK, reservation);//Ok(reservation);
             }
             catch (Exception e)
             {
-                return StatusCode(503, e.Message);
+                return new ApiResponse<Reservation>(ApiResponseCode.InternalServerError) { Exception = e };
             }
 
         }
 
         [HttpPost("[action]")]
         [Authorize]
-        public async Task<IActionResult> SendChatLog([FromBody] TicketDTO ticketDTO)
+        public async Task<ApiResponse<string>> SendChatLog([FromBody] TicketDTO ticketDTO)
         {
             try
             {
                 await _mailService.SendChatLog(ticketDTO);
-                return Ok();
+                return new ApiResponse<string>(ApiResponseCode.OK, null);//Ok();
             }
             catch (Exception e)
             {
-                return StatusCode(503, e.Message);
+                return new ApiResponse<string>(ApiResponseCode.InternalServerError) { Exception = e };
             }
 
         }

@@ -22,7 +22,7 @@ namespace UCLDreamTeam.Auth.Api.IntegrationEvents.EventHandlers
             _hashService = hashService;
         }
 
-        async Task IEventHandler<UserCreatedEvent>.Handle(UserCreatedEvent @event)
+        public async Task Handle(UserCreatedEvent @event)
         {
             CreateUserCredentialsDTO userIn = @event.User;
             string salt = _hashService.GenerateSalt();
@@ -32,10 +32,11 @@ namespace UCLDreamTeam.Auth.Api.IntegrationEvents.EventHandlers
                 UserName = userIn.UserName,
                 Email = userIn.Email,
                 PasswordSalt = salt,
-                PasswordHash = _hashService.GenerateHash(userIn.PasswordHash, salt)
+                PasswordHash = _hashService.GenerateHash(userIn.Password, salt)
             };
+            Role role = new Role { RoleName = @event.Role.RoleName };
 
-            await _authRepository.Create(userToCreate);
+            await _authRepository.Create(userToCreate, role);
 
             await Task.CompletedTask;
         }

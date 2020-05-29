@@ -84,7 +84,7 @@ namespace RabbitMQ.Bus.Bus
         private async void Consumer_Received(object sender, BasicDeliverEventArgs @event)
         {
             var eventName = @event.Exchange;
-            var message = Encoding.UTF8.GetString(@event.Body);
+            var message = Encoding.UTF8.GetString(@event.Body.ToArray());
 
             try
             {

@@ -11,10 +11,12 @@ namespace UCLDreamTeam.Auth.Api.IntegrationEvents.Events
     public class UserCreatedEvent : Event
     {
         public CreateUserCredentialsDTO User { get; set; }
+        public RoleDTO Role { get; set; }
 
-        public UserCreatedEvent(CreateUserCredentialsDTO user)
+        public UserCreatedEvent(CreateUserCredentialsDTO user, RoleDTO role = null)
         {
             User = user;
+            Role = role ?? new RoleDTO { RoleName = "User" };
         }
     }
 }

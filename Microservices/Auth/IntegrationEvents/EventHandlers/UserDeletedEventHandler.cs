@@ -18,7 +18,7 @@ namespace UCLDreamTeam.Auth.Api.IntegrationEvents.EventHandlers
             _authRepository = authRepository;
         }
 
-        async Task IEventHandler<UserDeletedEvent>.Handle(UserDeletedEvent @event)
+        public async Task Handle(UserDeletedEvent @event)
         {
             AuthUser user = await _authRepository.GetUserFromId(@event.User.Id);
 

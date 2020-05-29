@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
+using AdminPanel.Client.Models;
 
 namespace AdminPanel.Client.Services
 {
@@ -19,6 +21,13 @@ namespace AdminPanel.Client.Services
             _authStateProvider = (CustomAuthStateProvider)authStateProvider;
             _credentialsKeeper = credentialsKeeper;
             _client = client;
+            
+        }
+
+        public async Task<User> GetCurrentUser()
+        {
+            ApiResponseDTO<User> response = await _client.GetAsync<User>("User");
+            return response.Value;
         }
 
         public async Task<bool> Login(LoginDTO loginDTO)

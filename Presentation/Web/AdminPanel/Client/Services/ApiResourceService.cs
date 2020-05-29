@@ -36,6 +36,8 @@ namespace AdminPanel.Client.Services
         {
             var response = await _client.GetAsync<ResourceDTO>("Resource/guid=" + id.ToString());
 
+            Console.WriteLine(id);
+
             return response.Value;
         }
 

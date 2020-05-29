@@ -18,9 +18,9 @@ namespace SignalR_Microservice.Hubs
             _messageLogging = messageLogging;
         }
 
-        public async Task SendMessageToGroup(Message message, string roomName)
+        public async Task SendMessageToGroup(Message message, string groupId)
         {
-            await Clients.Group(roomName).SendAsync("SendMessageToGroup", message.Text);
+            await Clients.Group(groupId).SendAsync("SendMessageToGroup", message);
             await _messageLogging.SendMessageAsync(message);
         }
 

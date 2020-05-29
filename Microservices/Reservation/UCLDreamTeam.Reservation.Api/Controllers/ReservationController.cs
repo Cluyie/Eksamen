@@ -10,7 +10,7 @@ using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.Reservation.Api.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("[Controller]")]
     public class ReservationController : ControllerBase
@@ -66,7 +66,7 @@ namespace UCLDreamTeam.Reservation.Api.Controllers
             }
         }
 
-        [HttpGet("Resource/{resourceId}")]
+        [HttpGet("GetByResourceId/{resourceId}")]
         public async Task<ApiResponse<IEnumerable<Domain.Models.Reservation>>> GetByResourceId(Guid resourceId)
         {
             if (resourceId == Guid.Empty)
@@ -75,6 +75,28 @@ namespace UCLDreamTeam.Reservation.Api.Controllers
             try
             {
                 var reservation = await _reservationService.GetByResourceId(resourceId);
+                if (reservation == null)
+                    return new ApiResponse<IEnumerable<Domain.Models.Reservation>>(ApiResponseCode.NotFound,
+                        null); //return NotFound();
+                return new ApiResponse<IEnumerable<Domain.Models.Reservation>>(ApiResponseCode.OK,
+                    reservation); //return Ok(reservation);
+            }
+            catch (Exception e)
+            {
+                return new ApiResponse<IEnumerable<Domain.Models.Reservation>>(ApiResponseCode.ServiceUnavailable,
+                    null); //return StatusCode(503, e.Message);
+            }
+        }
+
+        [HttpGet("User/{userId}")]
+        public async Task<ApiResponse<IEnumerable<Domain.Models.Reservation>>> GetByUserId(Guid userId)
+        {
+            if (userId == Guid.Empty)
+                return new ApiResponse<IEnumerable<Domain.Models.Reservation>>(ApiResponseCode.BadRequest,
+                    null); //return BadRequest();
+            try
+            {
+                var reservation = await _reservationService.GetByUserIdAsync(userId);
                 if (reservation == null)
                     return new ApiResponse<IEnumerable<Domain.Models.Reservation>>(ApiResponseCode.NotFound,
                         null); //return NotFound();

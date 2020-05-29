@@ -19,10 +19,9 @@ namespace AdminPanel.Client.Services
                     new TimeslotDTO
                     {
                         Id = Guid.NewGuid(),
-                        Available = true,
                         From = new DateTime(2020, 1, 1, 1, 1, 1),
                         To = new DateTime(2020, 1, 1, 2, 2, 2),
-                        Recurring = 1
+                        Recurring = true
                     }
                 }
             },
@@ -35,18 +34,16 @@ namespace AdminPanel.Client.Services
                     new TimeslotDTO
                     {
                         Id = Guid.NewGuid(),
-                        Available = true,
                         From = new DateTime(2020, 1, 1, 1, 1, 1),
                         To = new DateTime(2020, 1, 1, 2, 2, 2),
-                        Recurring = 1
+                        Recurring = true
                     },
                     new TimeslotDTO
                     {
                         Id = Guid.NewGuid(),
-                        Available = true,
                         From = new DateTime(2020, 1, 1, 3, 1, 1),
                         To = new DateTime(2020, 1, 1, 4, 2, 2),
-                        Recurring = 1
+                        Recurring = true
                     }
                 }
             },
@@ -59,10 +56,9 @@ namespace AdminPanel.Client.Services
                     new TimeslotDTO
                     {
                         Id = Guid.NewGuid(),
-                        Available = true,
                         From = new DateTime(2020, 1, 1, 1, 1, 1),
                         To = new DateTime(2020, 1, 1, 2, 2, 2),
-                        Recurring = 1
+                        Recurring = true
                     }
                 }
             }

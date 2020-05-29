@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="XamarinFormsApp.View.ReservationDetails"
+             Title="Detaljer">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Reservations Id:"              
+                FontAttributes="Bold" />
+            <Label Text="{Binding Id}" />
+            <Label Text="Resource:"             
+                FontAttributes="Bold" />
+            <Label Text="{Binding Name}"/>
+            <Label Text="Resource Id:"              
+                FontAttributes="Bold" />
+            <Label Text="{Binding ResourceId}" />
+            <Label Text="Beskrivelse:"             
+                FontAttributes="Bold" />
+            <Label Text="{Binding Description}"/>
+            <Label Text="Reserveret fra:"             
+                FontAttributes="Bold" />
+            <Label Text="{Binding From}"/>
+            <Label Text="Reserveret til:"             
+                FontAttributes="Bold" />
+            <Label Text="{Binding To}"/>
+            <Button Text="Suport" 
+                    CornerRadius="10" 
+                    FontSize="Large" 
+                    Clicked="SuportButton_Clicked"/>
+            <Button Text="Slet Reservation" 
+                    CornerRadius="10" 
+                    FontSize="Large" 
+                    Clicked="DeleteButton_Clicked"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Cryptography;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -63,10 +63,20 @@ namespace UCLDreamTeam.Reservation.Api
                     };
                 });
 
-            services.AddDbContext<ReservationDbContext>(options =>
+            if (Configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
-                options.UseSqlServer(Configuration.GetConnectionString("ReservationDbConnection"));
-            });
+                services.AddDbContext<ReservationDbContext>(options =>
+                {
+                    options.UseInMemoryDatabase("ReservationDb");
+                });
+            }
+            else
+            {
+                services.AddDbContext<ReservationDbContext>(options =>
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("ConnectionString") + Configuration.GetConnectionString("ReservationDbConnection"));
+                });
+            }
 
             services.AddSwaggerGen(c =>
             {

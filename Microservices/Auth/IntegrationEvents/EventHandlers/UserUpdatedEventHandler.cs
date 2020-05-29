@@ -20,7 +20,7 @@ namespace UCLDreamTeam.Auth.Api.IntegrationEvents.EventHandlers
             _authRepository = authRepository;
         }
 
-        async Task IEventHandler<UserUpdatedEvent>.Handle(UserUpdatedEvent @event)
+        public async Task Handle(UserUpdatedEvent @event)
         {
             UpdateUserCredentialsDTO userIn = @event.User;
             AuthUser userToUpdate = await _authRepository.GetUserFromId(userIn.Id);
@@ -30,7 +30,9 @@ namespace UCLDreamTeam.Auth.Api.IntegrationEvents.EventHandlers
 
             userToUpdate.PasswordHash = _hashService.GenerateHash(userToUpdate.PasswordHash, userToUpdate.PasswordSalt);
 
-            await _authRepository.UpdateUser(userToUpdate);
+            Role role = new Role {RoleName = @event.Role.RoleName};
+
+            await _authRepository.UpdateUser(userToUpdate, role);
 
             await Task.CompletedTask;
         }

@@ -28,7 +28,7 @@ namespace UCLDreamTeam.User.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-        public async Task<ActionResult<IUser>> GetProfile()
+        public async Task<ApiResponse<IUser>> GetProfile()
         {
             try
             {
@@ -39,15 +39,15 @@ namespace UCLDreamTeam.User.Api.Controllers
 
                     if (userProfile != null)
                     {
-                        return Ok(userProfile);
+                        return new ApiResponse<IUser>(ApiResponseCode.OK, userProfile);
                     }
                 }
 
-                return NotFound();
+                return new ApiResponse<IUser>(ApiResponseCode.NotFound);
             }
             catch (Exception e)
             {
-                return StatusCode(503, e.Message);
+                return new ApiResponse<IUser>(ApiResponseCode.InternalServerError) {Exception = e};
             }
         }
 
@@ -56,19 +56,19 @@ namespace UCLDreamTeam.User.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-        public async Task<ActionResult<IUser>> GetById(Guid id)
+        public async Task<ApiResponse<IUser>> GetById(Guid id)
         {
-            if (id == Guid.Empty) return BadRequest();
+            if (id == Guid.Empty) return new ApiResponse<IUser>(ApiResponseCode.BadRequest);
             try
             {
                 var user = await _userService.GetUserFromIdAsync(id);
                 if (user != null)
-                    return Ok(user);
-                return NotFound(user);
+                    return new ApiResponse<IUser>(ApiResponseCode.OK, user);
+                return new ApiResponse<IUser>(ApiResponseCode.NotFound, user);
             }
             catch (Exception e)
             {
-                return StatusCode(503, e.Message);
+                return new ApiResponse<IUser>(ApiResponseCode.InternalServerError);
             }
         }
 
@@ -76,18 +76,20 @@ namespace UCLDreamTeam.User.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-        public async Task<IActionResult> RegisterProfile([FromBody] Domain.Models.User user)
+        public async Task<ApiResponse<IUser>> RegisterProfile([FromBody] Domain.Models.User user, [FromQuery] string roleName = null)
         {
             if (user == null || !ModelState.IsValid)
-                return BadRequest();
+                return new ApiResponse<IUser>(ApiResponseCode.BadRequest); //return BadRequest();
             try
             {
-                await _userService.RegisterAsync(user);
-                return Ok(user);
+                roleName ??= "User";
+                var role = new Role { RoleName = roleName };
+                await _userService.RegisterAsync(user, role);
+                return new ApiResponse<IUser>(ApiResponseCode.OK, user); //Ok(user);
             }
             catch (Exception e)
             {
-                return StatusCode(503, e.Message);
+                return new ApiResponse<IUser>(ApiResponseCode.InternalServerError) {Exception = e}; //StatusCode(503, e.Message);
             }
         }
 
@@ -96,18 +98,20 @@ namespace UCLDreamTeam.User.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-        public async Task<IActionResult> UpdateProfile([FromBody] Domain.Models.User user)
+        public async Task<ApiResponse<IUser>> UpdateProfile([FromBody] Domain.Models.User user, [FromQuery] string roleName = null)
         {
             if (user == null || await _userService.GetUserFromIdAsync(user.Id) != null || !ModelState.IsValid)
-                return BadRequest();
+                return new ApiResponse<IUser>(ApiResponseCode.BadRequest); //return BadRequest();
             try
             {
-                await _userService.Update(user);
-                return Ok(user);
+                roleName ??= "User";
+                var role = new Role { RoleName = roleName };
+                await _userService.Update(user, role);
+                return new ApiResponse<IUser>(ApiResponseCode.OK, user); //Ok(user);
             }
             catch (Exception e)
             {
-                return StatusCode(503, e.Message);
+                return new ApiResponse<IUser>(ApiResponseCode.InternalServerError) {Exception = e}; //StatusCode(503, e.Message);
             }
         }
 
@@ -116,17 +120,17 @@ namespace UCLDreamTeam.User.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-        public async Task<IActionResult> DeleteById(Guid id)
+        public async Task<ApiResponse<IUser>> DeleteById(Guid id)
         {
-            if (id == Guid.Empty) return BadRequest();
+            if (id == Guid.Empty) return new ApiResponse<IUser>(ApiResponseCode.BadRequest); //return BadRequest();
             try
             {
                 await _userService.DeleteUserFromIdAsync(id);
-                return Ok(id);
+                return new ApiResponse<IUser>(ApiResponseCode.OK); //Ok(null);
             }
             catch (Exception e)
             {
-                return StatusCode(503, e.Message);
+                return new ApiResponse<IUser>(ApiResponseCode.InternalServerError) {Exception = e}; //StatusCode(503, e.Message);
             }
         }
     }

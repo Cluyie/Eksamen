@@ -23,7 +23,7 @@ namespace AdminPanel.Client.Services
 
         public async Task<IEnumerable<Ticket>> GetByUserIdAsync(Guid userId)
         {
-            var response = await _client.GetAsync<IEnumerable<Ticket>>($"Ticket/User/{userId.ToString()}");
+            var response = await _client.GetAsync<IEnumerable<Ticket>>($"Ticket/User?userId={userId.ToString()}");
             
             return response.Value;
         }

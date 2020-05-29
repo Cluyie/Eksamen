@@ -11,8 +11,8 @@ namespace XamarinFormsApp.ViewModel
 {
     public class LoginViewModel : Profile
     {
-        public string UsernameOrEmail { get; set; }
-        public string Password { get; set; }
+        public string UsernameOrEmail { get; set; } = "test";
+        public string Password { get; set; } = "P@ssw0rd";
 
         public string ErrorMessage { get; private set; }
 
@@ -24,12 +24,19 @@ namespace XamarinFormsApp.ViewModel
         {
             var response = await _proxy.PostAsync(@"Auth/Login", _mapper.Map<Login>(this));
             var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<string>>(response);
-            if (response.IsSuccessStatusCode && result?.Code == ApiResponseCode.OK)
+            if (response.IsSuccessStatusCode && result?.Code == ApiResponseCode.OK && result.Value != null)
+            {
                 //Gemmer user token
                 _authService.Login(result.Value);
+
+                return true;
+            }
             else
-                ErrorMessage = _proxy.GenerateErrorMessage(result, response);
-            return result?.Code == ApiResponseCode.OK;
+            {
+                ErrorMessage = "Noget gik galt. Fejl: " + response.StatusCode.ToString();
+
+                return false;
+            }
         }
 
         #region Constructor

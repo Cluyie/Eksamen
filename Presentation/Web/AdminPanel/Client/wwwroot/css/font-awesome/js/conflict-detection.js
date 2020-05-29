@@ -931,7 +931,7 @@
             nodesFound: nodesFound
           });
         } else {
-          console.info('Whoops! We hit an error:', e);
+          console.info('Whoops! We hit an error:') {Exception = e};
           console.info('Here\'s what we\'d found up until that error:');
           setDoneResults({
             nodesTested: nodesTested,

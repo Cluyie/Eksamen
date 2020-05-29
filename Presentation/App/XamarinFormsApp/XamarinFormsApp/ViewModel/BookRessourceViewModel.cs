@@ -14,7 +14,7 @@ using Profile = AutoMapper.Profile;
 
 namespace XamarinFormsApp.ViewModel
 {
-    public class BookRessourceViewModel : Profile, IResource<Reservation<ReserveTime>, ReserveTime, AvailableTime>
+    public class BookRessourceViewModel : Profile, IResource<Reservation, ReserveTime, AvailableTime>
     {
         public delegate void Reftesh(DayOfWeek? day = null);
 
@@ -37,17 +37,17 @@ namespace XamarinFormsApp.ViewModel
             _hubConnectionResource.StartAsync();
 
             //SignalR Client methods for Reservation
-            _hubConnectionRerservation.On<Reservation<ReserveTime>>("CreateReservation", reservation =>
+            _hubConnectionRerservation.On<Reservation>("CreateReservation", reservation =>
             {
                 Reservations.Add(reservation);
                 reftesh(reservation.Timeslot.FromDate.DayOfWeek);
             });
-            _hubConnectionRerservation.On<Reservation<ReserveTime>>("UpdateReservation", reservation =>
+            _hubConnectionRerservation.On<Reservation>("UpdateReservation", reservation =>
             {
                 Reservations[Reservations.FindIndex(r => r.Id == reservation.Id)] = reservation;
                 reftesh();
             });
-            _hubConnectionRerservation.On<Reservation<ReserveTime>>("DeleteReservation", reservation =>
+            _hubConnectionRerservation.On<Reservation>("DeleteReservation", reservation =>
             {
                 Reservations.RemoveAt(Reservations.FindIndex(re => reservation.Id == re.Id));
                 reftesh(reservation.Timeslot.FromDate.DayOfWeek);
@@ -92,13 +92,13 @@ namespace XamarinFormsApp.ViewModel
         public string Name { get; set; }
         public string Description { get; set; }
         public List<AvailableTime> TimeSlots { get; set; }
-        public List<Reservation<ReserveTime>> Reservations { get; set; }
+        public List<Reservation> Reservations { get; set; }
 
         public void Reserver()
         {
             if (Application.Current.Properties.ContainsKey("UserData"))
             {
-                var user = (User) Application.Current.Properties["UserData"];
+                var user = (User)Application.Current.Properties["UserData"];
                 var Resevation = GetCorrentSelected();
                 var availables = FindAllAvailableTime(Resevation.FromDate);
                 var valid = false;
@@ -109,8 +109,6 @@ namespace XamarinFormsApp.ViewModel
                         valid = true;
                         break;
                     }
-
-                if (!valid) return;
                 var Resvertions = FindAllReservationer(Resevation.FromDate);
                 foreach (IReservation<IReserveTime> resv in Resvertions)
                 {
@@ -122,9 +120,12 @@ namespace XamarinFormsApp.ViewModel
                     }
                 }
 
-                if (!valid) return;
-                IReservation<IReserveTime> res = new Reservation<IReserveTime>
-                    {UserId = user.Id, Timeslot = Resevation, ResourceId = Id};
+                if (!valid)
+                {
+                    return;
+                }
+                IReservation<ReserveTime> res = new Reservation
+                { UserId = user.Id, Timeslot = Resevation, ResourceId = Id };
                 var responseMessage = proxy.Post("Reservation", res);
                 if (responseMessage.IsSuccessStatusCode) _hubConnectionRerservation.SendAsync("CreateReservation", res);
                 //Reservations.Add(res);
@@ -136,12 +137,8 @@ namespace XamarinFormsApp.ViewModel
             var availablesFound = new List<IAvailableTime>();
             foreach (IAvailableTime Available in TimeSlots)
             {
-                if (!Available.Available) continue;
-                if (Available.Recurring == null)
-                {
-                    if (date.DayOfYear == Available.From.DayOfYear) availablesFound.Add(Available);
-                }
-                else if ((DayOfWeek) ((Available.Recurring + 1) % 7) == date.DayOfWeek)
+                if (date.DayOfYear == Available.From.DayOfYear) availablesFound.Add(Available);
+                else if (Available.From.DayOfWeek == date.DayOfWeek)
                 {
                     availablesFound.Add(Available);
                 }
@@ -177,12 +174,12 @@ namespace XamarinFormsApp.ViewModel
         public void DrawDay(SKCanvas canvas, int wtidth, int height, DateTime date)
         {
             var FoundRes = FindAllReservationer(date);
-            IUser user = new User {Id = Guid.Empty};
+            IUser user = new User { Id = Guid.Empty };
             if (Application.Current.Properties.ContainsKey("UserData"))
-                user = (User) Application.Current.Properties["UserData"];
+                user = Application.Current.Properties["UserData"] as User;
             if (date.DayOfYear == Date.DayOfYear && date.Year == Date.Year)
-                FoundRes.Add(new Reservation<ReserveTime>
-                    {Id = Guid.Empty, UserId = user.Id, Timeslot = GetCorrentSelected(), ResourceId = Id});
+                FoundRes.Add(new Reservation
+                { Id = Guid.Empty, UserId = user.Id, Timeslot = GetCorrentSelected(), ResourceId = Id });
             drawBookning.DrawDay(canvas, wtidth, height, FindAllAvailableTime(date), FoundRes, user.Id);
         }
     }

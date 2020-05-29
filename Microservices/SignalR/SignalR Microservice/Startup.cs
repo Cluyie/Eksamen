@@ -40,6 +40,9 @@ namespace SignalR_Microservice
             services.AddTransient<ReservationCreatedEventHandler>();
             services.AddTransient<ReservationCanceledEventHandler>();
             services.AddTransient<ReservationUpdatedEventHandler>();
+            services.AddTransient<ResourceCreatedEventHandler>();
+            services.AddTransient<ResourceDeletedEventHandler>();
+            services.AddTransient<ResourceUpdatedEventHandler>();
 
             //SignalR Handlers
             services.AddTransient<IRequestHandler<CreateSentMessageCommand, bool>, CreateSentMessageCommandHandler>();
@@ -90,6 +93,9 @@ namespace SignalR_Microservice
             app.Subscribe<ReservationCreatedEvent, ReservationCreatedEventHandler>();
             app.Subscribe<ReservationCanceledEvent, ReservationCanceledEventHandler>();
             app.Subscribe<ReservationUpdatedEvent, ReservationUpdatedEventHandler>();
+            app.Subscribe<ResourceCreatedEvent, ResourceCreatedEventHandler>();
+            app.Subscribe<ResourceDeletedEvent,ResourceDeletedEventHandler>();
+            app.Subscribe<ResourceUpdatedEvent, ResourceUpdatedEventHandler>();
         }
     }
 }

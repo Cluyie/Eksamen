@@ -16,13 +16,18 @@
 @inject IResourceService ResourceService
 @inject ITicketService TicketService
 @inject IMailService MailService
+@inject IAuthService AuthService
+@inject IJSRuntime JsRuntime
 
 <div class="container-fluid">
     <div class="row h-100">
         <TicketsPanel UpdateTicket="UpdateTicket" GetNextCustomer="@(() => GetNextCustomer(Guid.NewGuid().ToString()))" TicketDTOs=@(TicketDTOs ?? new List<TicketDTO>()) QueueCount=QueueCount />
         @if (TicketDTOs != null)
         {
-            <ChatPanel TicketDTO=@ActiveTicketDTO UpdateStatus="@((Status status) => UpdateStatus(status))" />
+            <ChatPanel TicketDTO=@ActiveTicketDTO 
+                       UpdateStatus="@((Status status) => UpdateStatus(status))" 
+                       SendMessage="SendMessageToGroup" 
+                       ActiveUser="CurrentUser.Id" />
         }
         else
         {
@@ -35,229 +40,62 @@
     </div>
 </div>
 
-
 @code
-{
+{ 
     private HubConnection _chatHubConnection;
     private HubConnection _queueHubConnection;
+    private User CurrentUser;
     public List<TicketDTO> TicketDTOs { get; set; }
-    //public List<TicketDTO> TicketDTOs { get; set; } = new List<TicketDTO>
-    //{
-    //    new TicketDTO
-    //    {
-    //        Ticket = new Ticket
-    //        {
-    //            Id = Guid.NewGuid(),
-    //            Name = "Megan Leib",
-    //            Messages = new List<Message>
-    //            {
-    //                new Message
-    //                {
-    //                    Text = "Hi, how are you ?",
-    //                    TimeStamp = DateTime.Now.AddMinutes(-5),
-    //                    Seen = false
-    //                },
-    //                new Message
-    //                {
-    //                    Text = "What are you doing tonight ? Want to go take a drink ?",
-    //                    TimeStamp = DateTime.Now.AddMinutes(-4),
-    //                    Seen = true
-    //                },
-    //                new Message
-    //                {
-    //                    Text = "Hey Megan ! It's been a while 😃",
-    //                    TimeStamp = DateTime.Now.AddMinutes(-3),
-    //                    Seen = true
-    //                },
-    //                new Message
-    //                {
-    //                    Text = "When can we meet ?",
-    //                    TimeStamp = DateTime.Now.AddMinutes(-2),
-    //                    Seen = true
-    //                },
-    //                new Message
-    //                {
-    //                    Text = "9 pm at the bar if possible 😳",
-    //                    TimeStamp = DateTime.Now.AddMinutes(-1),
-    //                    Seen = true
-    //                },
-    //            },
-    //            Status = Status.Active
-    //        },
-    //        Resource = new DTOs.ResourceDTO
-    //        {
-    //            Name = "Test Resource"
-    //        },
-    //        Reservation = new Reservation
-    //        {
-    //            Timeslot = new ReserveTime
-    //            {
-    //                FromDate = DateTime.Now.AddHours(-12),
-    //                ToDate = DateTime.Now.AddHours(-6)
-    //            }
-    //        }
-    //    },
-    //    new TicketDTO
-    //    {
-    //        Ticket = new Ticket
-    //        {
-    //            Id = Guid.NewGuid(),
-    //            Name = "Dave Corlew",
-    //            Messages = new List<Message>
-    //            {
-    //                new Message
-    //                {
-    //                    Text = "Let's meet for a coffee or something today ?",
-    //                    TimeStamp = DateTime.Now.AddHours(-6),
-    //                    Seen = true
-    //                }
-    //            },
-    //            Status = Status.Active
-    //        },
-    //    },
-    //    new TicketDTO
-    //    {
-    //        Ticket = new Ticket
-    //        {
-    //            Id = Guid.NewGuid(),
-    //            Name = "Jerome Seiber",
-    //            Messages = new List<Message>
-    //            {
-    //                new Message
-    //                {
-    //                    Text = "I've sent you the annual report",
-    //                    TimeStamp = DateTime.Now.AddHours(-12),
-    //                    Seen = true
-    //                }
-    //            },
-    //            Status = Status.Waiting
-    //        },
-    //    },
-    //    new TicketDTO
-    //    {
-    //        Ticket = new Ticket
-    //        {
-    //            Id = Guid.NewGuid(),
-    //            Name = "Thomas Dbtn",
-    //            Messages = new List<Message>
-    //            {
-    //                new Message
-    //                {
-    //                    Text = "See you tomorrow ! 🙂",
-    //                    TimeStamp = DateTime.Now.AddDays(-1),
-    //                    Seen = true
-    //                }
-    //            },
-    //            Status = Status.Active
-    //        },
-    //    },
-    //    new TicketDTO
-    //    {
-    //        Ticket = new Ticket
-    //        {
-    //            Id = Guid.NewGuid(),
-    //            Name = "Elsie Amador",
-    //            Messages = new List<Message>
-    //            {
-    //                new Message
-    //                {
-    //                    Text = "What the f**k is going on ?",
-    //                    TimeStamp = DateTime.Now.AddDays(-2),
-    //                    Seen = true
-    //                }
-    //            },
-    //            Status = Status.Waiting
-    //        },
-    //    },
-    //    new TicketDTO
-    //    {
-    //        Ticket = new Ticket
-    //        {
-    //            Id = Guid.NewGuid(),
-    //            Name = "Billy Southard",
-    //            Messages = new List<Message>
-    //            {
-    //                new Message
-    //                {
-    //                    Text = "Ahahah 😂",
-    //                    TimeStamp = DateTime.Now.AddDays(-3),
-    //                    Seen = true
-    //                }
-    //            },
-    //            Status = Status.Active
-    //        },
-    //    },
-    //    new TicketDTO
-    //    {
-    //        Ticket = new Ticket
-    //        {
-    //            Id = Guid.NewGuid(),
-    //            Name = "Paul Walker",
-    //            Messages = new List<Message>
-    //            {
-    //                new Message
-    //                {
-    //                    Text = "You can't see me",
-    //                    TimeStamp = DateTime.Now.AddDays(-7),
-    //                    Seen = true
-    //                }
-    //            },
-    //            Status = Status.Waiting
-    //        },
-    //    }
-    //};
     public TicketDTO ActiveTicketDTO { get; set; }
+    private string _groupId { get; set; }
     public int QueueCount { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        CurrentUser = await AuthService.GetCurrentUser();
         #region SignalR ChatHub Methods
-        //_chatHubConnection = new HubConnectionBuilder()
-        //.WithUrl("http://81.27.216.103/SignalR/ChatHub")
-        //.Build();
 
         _chatHubConnection = new HubConnectionBuilder()
-.WithUrl("http://localhost:5017/ChatHub")
-.Build();
-
-        await _chatHubConnection.StartAsync();
-
-        _chatHubConnection.On<Message>("SendMessageToGroup", (message) =>
-        {
-            TicketDTOs.Find(x => x.Ticket.Id == message.TicketId).Ticket.Messages.Add(message);
-        });
-        #endregion
-
-        #region SignalR QueueHub Methods
+  .WithUrl("http://localhost:5017/ChatHub")
+  .Build();
 
         _queueHubConnection = new HubConnectionBuilder()
     .WithUrl("http://localhost:5017/QueueHub")
     .Build();
 
-        //        _queueHubConnection = new HubConnectionBuilder()
-        //.WithUrl("http://81.27.216.103/SignalR/QueueHub")
-        //.Build();
+        _chatHubConnection.On<Message>("SendMessageToGroup", (message) =>
+        {
+            (TicketDTOs.Find(x => x.Ticket.Id == message.TicketId).Ticket.Messages ??= new List<Message>()).Add(message);
 
-        await _queueHubConnection.StartAsync();
+            SetActiveTicket();
+        });
+        #endregion
+
+        #region SignalR QueueHub Methods
+
 
         _queueHubConnection.On<Guid>("ReceiveTaskId", async (ticketId) =>
         {
-            var ticket = await TicketService.GetByIdAsync(ticketId);
-            try
+            if (ticketId != null && ticketId != Guid.Empty)
             {
-                Reservation reservation = new Reservation();
+                TicketDTOs = new List<TicketDTO>();
+                var ticket = await TicketService.GetByIdAsync(ticketId);
 
-                if (ticket.ReservationId.HasValue)
+                var greetingsMessage = new Message
                 {
-                    reservation = await ReservationService.GetFromId(ticket.Id);
-                }
+                    Id = new Guid(),
+                    TicketId = ticket.Id,
+                    Text = "Hej, du snakker med " + CurrentUser.FirstName + ". Hvad kan jeg hjælpe med?",
+                    UserId = CurrentUser.Id,
+                    Seen = false,
+                    TimeStamp = DateTime.Now
+                };
 
-                TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation.ResourceId) ?? null });
+                ticket.Messages.Add(greetingsMessage);
 
-            }
-            catch (Exception)
-            {
                 TicketDTOs.Add(new TicketDTO { Ticket = ticket });
+
+                await SendMessageToGroup(greetingsMessage);
             }
 
             SetActiveTicket();
@@ -271,7 +109,11 @@
 
         #endregion
 
-        InitializeTicket();
+        await _queueHubConnection.StartAsync();
+        await _chatHubConnection.StartAsync();
+
+        //InitializeTicket(Guid.NewGuid().ToString());
+
         await GetQueueCount();
     }
 
@@ -280,7 +122,7 @@
         await _chatHubConnection.SendAsync("JoinGroup", groupId);
 
     Task SendMessageToGroup(Message message) =>
-        _chatHubConnection.SendAsync("SendMessageToGroup", message);
+        _chatHubConnection.SendAsync("SendMessageToGroup", message, _groupId);
 
     public bool IsChatConnected =>
         _chatHubConnection.State == HubConnectionState.Connected;
@@ -290,8 +132,18 @@
 
     async Task GetNextCustomer(string groupId)
     {
-        await _queueHubConnection.SendAsync("GetNextCustomer", groupId);
-        await JoinGroup(groupId);
+        if (IsChatConnected)
+        {
+            await _queueHubConnection.SendAsync("GetNextCustomer", groupId);
+            await JoinGroup(groupId);
+            _groupId = groupId;
+            InitializeTicket(groupId);
+        }
+        else
+        {
+            await JsRuntime.InvokeAsync<object>("Alert", "An error has occured. Please try again.");
+        }
+
     }
 
     async Task GetQueueCount() => await _queueHubConnection.SendAsync("GetQueueCount");
@@ -303,35 +155,42 @@
 
     void UpdateTicket(TicketDTO ticketDTO)
     {
-        TicketDTOs.First(x => x.Ticket.Active == true).Ticket.Active = null;
+        (TicketDTOs ??= new List<TicketDTO>()).First(x => x.Ticket.Active == true).Ticket.Active = null;
         TicketDTOs.First(x => x.Ticket.Id == ticketDTO.Ticket.Id).Ticket.Active = true;
         ActiveTicketDTO = ticketDTO;
     }
 
-    async void InitializeTicket()
+    async void InitializeTicket(string groupId)
     {
-        //var result = await TicketService.GetByUserIdAsync(Guid.NewGuid());
+        var result = await TicketService.GetByUserIdAsync(CurrentUser?.Id ?? Guid.Empty);
 
-        //foreach (var ticket in result)
-        //{
-        //    Reservation reservation = new Reservation();
+        if (result != null)
+        {
+            foreach (var ticket in result)
+            {
+                Reservation reservation = new Reservation();
 
-        //    if (ticket.ReservationId.HasValue)
-        //    {
-        //        reservation = await ReservationService.GetFromId(ticket.Id);
-        //    }
+                if (ticket?.ReservationId.HasValue ?? false)
+                {
+                    reservation = await ReservationService.GetFromId(ticket.Id);
+                }
 
-        //    TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation.ResourceId) ?? null });
-        //}
+                (TicketDTOs ??= new List<TicketDTO>()).Add(new TicketDTO { GroupId = Guid.Parse(groupId), Ticket = ticket, Reservation = reservation, Resource = await ResourceService.GetFromId(reservation?.ResourceId ?? Guid.Empty) });
+            }
 
-        //SetActiveTicket();
+            SetActiveTicket();
+        }
     }
 
     private void SetActiveTicket()
     {
-        TicketDTOs = TicketDTOs.OrderByDescending(x => x.Ticket.Messages.Min(s => s.TimeStamp)).ToList();
-        TicketDTOs.First().Ticket.Active = true;
-        ActiveTicketDTO = TicketDTOs.First(x => (bool)x.Ticket.Active);
+        TicketDTOs = (TicketDTOs ?? new List<TicketDTO>()).OrderByDescending(x => x.Ticket?.Messages?.Min(s => s?.TimeStamp))?.ToList();
+        var ticket = TicketDTOs.First()?.Ticket;
+        if (ticket != null)
+        {
+            ticket.Active = true;
+            ActiveTicketDTO = TicketDTOs.First(x => x.Ticket?.Active ?? false);
+        }
         StateHasChanged();
     }
 
@@ -343,5 +202,4 @@
         }
         ActiveTicketDTO.Ticket.Status = status;
         await TicketService.UpdateTicket(ActiveTicketDTO.Ticket);
-    }
-}
+    } }

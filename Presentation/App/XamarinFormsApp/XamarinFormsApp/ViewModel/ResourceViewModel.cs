@@ -26,7 +26,8 @@ namespace XamarinFormsApp.ViewModel
             _proxy = AutofacHelper.Container.Resolve<ApiClientProxy>();
 
             Resources = new ObservableCollection<Resource>();
-            _hubConnection = new HubConnectionBuilder().WithUrl($"{Properties.Resources.SignalRBaseAddress}ResourceHub")
+            _hubConnection = new HubConnectionBuilder()
+                .WithUrl($"{Properties.Resources.SignalRBaseAddress}ResourceHub")
                 .Build();
             Connect();
 
@@ -64,7 +65,8 @@ namespace XamarinFormsApp.ViewModel
             if (response?.Code != ApiResponseCode.OK) ErrorMessage = _proxy.GenerateErrorMessage(response);
 
             var resourceViewModel = new ResourceViewModel();
-            foreach (var item in response.Value) resourceViewModel.Resources.Add(item);
+            foreach (var item in response?.Value ?? new List<Resource>()) 
+              resourceViewModel.Resources.Add(item);
 
             return resourceViewModel;
         }

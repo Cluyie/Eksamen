@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace AdminPanel.Client
 {
@@ -30,7 +31,7 @@ namespace AdminPanel.Client
 
             // Add local storage
             builder.Services.AddBlazoredLocalStorage();
-
+            
             //The same as "builder.Services.AddBlazoredLocalStorage();" but as singleton scope so it works with other singleton scopes
             builder.Services.AddSingleton<ILocalStorageService, LocalStorageService>();
             builder.Services.AddSingleton<ISyncLocalStorageService, LocalStorageService>();
@@ -40,6 +41,7 @@ namespace AdminPanel.Client
             builder.Services.AddSingleton<ApiClient>();
 
             // Real services
+            
             builder.Services.AddSingleton<IAuthService, ApiAuthService>();
             builder.Services.AddSingleton<IResourceService, ApiResourceService>();
             builder.Services.AddSingleton<IReservationService, ReservationService>();
@@ -52,7 +54,19 @@ namespace AdminPanel.Client
 
             builder.Services.AddSingleton(new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            await builder.Build().RunAsync();
+
+            var host = builder.Build();
+            using var scope = host.Services.CreateScope();
+            var services = scope.ServiceProvider;
+            var authService = services.GetRequiredService<IAuthService>();
+            authService.Logout();
+
+            var httpContext = services.GetRequiredService<ILocalStorageService>();
+            await httpContext.ClearAsync();
+
+            await host.RunAsync();
+
+
         }
     }
 }

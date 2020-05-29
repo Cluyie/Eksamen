@@ -31,13 +31,12 @@ namespace UCLDreamTeam.Ticket.Api.Controller
             {
                 var ticket = await _ticketService.GetByIdAsync(ticketId);
                 if (ticket == null)
-                    return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.NotFound, null); //return NotFound();
+                    return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.NotFound); //return NotFound();
                 return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.OK, ticket); //return Ok(ticket);
             }
             catch (Exception e)
             {
-                return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.ServiceUnavailable,
-                    null); //return StatusCode(503, e.Message);
+                return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.ServiceUnavailable) { Exception = e }; //return StatusCode(503, e.Message);
             }
         }
 
@@ -49,18 +48,16 @@ namespace UCLDreamTeam.Ticket.Api.Controller
             {
                 var result = await _ticketService.GetByUserIdAsync(userId);
                 if (result == null)
-                    return new ApiResponse<IEnumerable<Domain.Models.Ticket>>(ApiResponseCode.BadRequest,
-                        null); //return BadRequest();
+                    return new ApiResponse<IEnumerable<Domain.Models.Ticket>>(ApiResponseCode.BadRequest); //return BadRequest();
                 if (!result.Any())
-                    return new ApiResponse<IEnumerable<Domain.Models.Ticket>>(ApiResponseCode.NotFound,
-                        null); //return NotFound();
-                return new ApiResponse<IEnumerable<Domain.Models.Ticket>>(ApiResponseCode.OK,
-                    result); //return Ok(ticket);
+                {
+                    return new ApiResponse<IEnumerable<Domain.Models.Ticket>>(ApiResponseCode.NotFound); //return NotFound();
+                }
+                return new ApiResponse<IEnumerable<Domain.Models.Ticket>>(ApiResponseCode.OK, result); //return Ok(ticket);
             }
             catch (Exception e)
             {
-                return new ApiResponse<IEnumerable<Domain.Models.Ticket>>(ApiResponseCode.ServiceUnavailable,
-                    null); //return StatusCode(503, e.Message);
+                return new ApiResponse<IEnumerable<Domain.Models.Ticket>>(ApiResponseCode.ServiceUnavailable) { Exception = e }; //return StatusCode(503, e.Message);
             }
         }
 
@@ -71,16 +68,13 @@ namespace UCLDreamTeam.Ticket.Api.Controller
             try
             {
                 if (ticket == null)
-                    return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.BadRequest,
-                        null); //return BadRequest();
+                    return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.BadRequest); //return BadRequest();
                 await _ticketService.AddAsync(ticket);
-                return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.OK,
-                    ticket); //return Ok(ticket);
+                return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.OK, ticket); //return Ok(ticket);
             }
             catch (Exception e)
             {
-                return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.ServiceUnavailable,
-                    null); //return StatusCode(503, e.Message);
+                return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.ServiceUnavailable) { Exception = e }; //return StatusCode(503, e.Message);
             }
         }
 
@@ -92,14 +86,13 @@ namespace UCLDreamTeam.Ticket.Api.Controller
             {
                 var result = await _ticketService.GetByIdAsync(ticket.Id);
                 if (result == null)
-                    return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.NotFound, null); //return NotFound();
+                    return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.NotFound); //return NotFound();
                 await _ticketService.UpdateAsync(ticket);
                 return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.OK, result); //return Ok(ticket);
             }
             catch (Exception e)
             {
-                return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.ServiceUnavailable,
-                    null); //return StatusCode(503, e.Message);
+                return new ApiResponse<Domain.Models.Ticket>(ApiResponseCode.ServiceUnavailable) { Exception = e }; //return StatusCode(503, e.Message);
             }
         }
     }

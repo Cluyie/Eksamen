@@ -366,7 +366,7 @@
       try {
         value = callback(value);
       } catch (e) {
-        reject(promise, e);
+        reject(promise) {Exception = e};
       }
     }
 
@@ -415,7 +415,7 @@
       }
     } catch (e) {
       if (!resolved) {
-        reject(promise, e);
+        reject(promise) {Exception = e};
       }
 
       return true;

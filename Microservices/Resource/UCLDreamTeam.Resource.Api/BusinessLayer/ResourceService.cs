@@ -4,17 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Bus.Bus.Interfaces;
-using UCLDreamTeam.Resource.Api.Models;
 using UCLDreamTeam.Resource.Data.Context;
+using UCLDreamTeam.Resource.Domain.Interfaces;
 using UCLDreamTeam.Resource.Domain.Models;
 using UCLDreamTeam.Resource.Domain.RabbitMQEvents;
 
 namespace UCLDreamTeam.Resource.Api.BusinessLayer
 {
-    public class ResourceService
+    public class ResourceService : IResourceService
     {
         private ResourceContext _applicationContext;
-        IEventBus _eventBus { get; set; }
+        private IEventBus _eventBus;
         public ResourceService(ResourceContext applicationContext, IEventBus eventBus)
         {
             _applicationContext = applicationContext;
@@ -22,27 +22,27 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
         }
 
         #region Create
-        //Creates a resource
-        public ApiResponse<Domain.Models.Resource> Create(Domain.Models.Resource resource)
+        //Creates a Resource
+        public ApiResponse<Domain.Models.Resource> Create(Domain.Models.Resource Resource)
         {
             bool invalidDate = false;
 
             try
             {
-                if (resource == null)
+                if (Resource == null)
                 {
                     return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.NoContent, null);
                 }
 
-                foreach (var timeslot in resource.TimeSlots)
+                foreach (var timeslot in Resource.TimeSlots)
                 {
                     timeslot.Id = Guid.NewGuid();
                 }
 
                 //Checks that the timeslots do not overlap.
-                resource.TimeSlots.ForEach(delegate (AvailableTime outerTime)
+                Resource.TimeSlots.ForEach(delegate (AvailableTime outerTime)
                 {
-                    resource.TimeSlots.ForEach(delegate (AvailableTime innerTime)
+                    Resource.TimeSlots.ForEach(delegate (AvailableTime innerTime)
                     {
                         if (!(((outerTime.From <= innerTime.From) && (outerTime.To <= innerTime.From)) ||
                         ((outerTime.From >= innerTime.To) && (outerTime.To >= innerTime.To))))
@@ -57,18 +57,18 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
 
                 if (!invalidDate)
                 {
-                    _applicationContext.Add(resource);
+                    _applicationContext.Add(Resource);
                     _applicationContext.SaveChanges();
 
-                    _eventBus.PublishEvent(new ResourceCreatedEvent(resource));
-                    return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.OK, resource);
+                    _eventBus.PublishEvent(new ResourceCreatedEvent(Resource));
+                    return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.OK, Resource);
                 }
                 else
                 {
                     return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.NotModified, null);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.InternalServerError, null);
             }
@@ -76,14 +76,14 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
 
         #endregion
         #region Get
-        //Get all resources
+        //Get all Resources
         public ApiResponse<List<Domain.Models.Resource>> Get()
         {
             try
             {   //Returns a list of Resources, with all of its children
                 return new ApiResponse<List<UCLDreamTeam.Resource.Domain.Models.Resource>>
                     (ApiResponseCode.OK, _applicationContext.Resources
-                    .Include(resource => resource.TimeSlots)
+                    .Include(Resource => Resource.TimeSlots)
                     .ToList());
             }
             catch (Exception)
@@ -92,25 +92,25 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
             }
         }
 
-        //Get a specific resource from a GUID
+        //Get a specific Resource from a GUID
         public ApiResponse<Domain.Models.Resource> Get(Guid guid)
         {
-            Domain.Models.Resource resourceToReturn = new Domain.Models.Resource();
+            Domain.Models.Resource ResourceToReturn = new Domain.Models.Resource();
 
             try
             {
-                //Gets a resource with all of its children
-               resourceToReturn = _applicationContext.Resources
-                    .Include(resource => resource.TimeSlots)
-                    .SingleOrDefault(resource => resource.Id == guid);
+                //Gets a Resource with all of its children
+               ResourceToReturn = _applicationContext.Resources
+                    .Include(Resource => Resource.TimeSlots)
+                    .SingleOrDefault(Resource => Resource.Id == guid);
 
-                if (resourceToReturn == null)
+                if (ResourceToReturn == null)
                 {
                     return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.NoContent, null);
                 }
                 else
                 {
-                    return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.OK, resourceToReturn);
+                    return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.OK, ResourceToReturn);
                 }
             }
             catch (Exception)
@@ -120,27 +120,27 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
         }
         #endregion
         #region Update
-        //Update a resource
+        //Update a Resource
         //Should ignore reservations when being updated
-        public async Task<ApiResponse<Domain.Models.Resource>> Update(Domain.Models.Resource resource)
+        public async Task<ApiResponse<Domain.Models.Resource>> Update(Domain.Models.Resource Resource)
         {
-            Domain.Models.Resource resourceToUpdate = new Domain.Models.Resource();
+            Domain.Models.Resource ResourceToUpdate = new Domain.Models.Resource();
 
             bool invalidDate = false;
 
             try
             {
-                resourceToUpdate = _applicationContext.Resources.Include(r => r.TimeSlots).SingleOrDefault(r => r.Id == resource.Id);
+                ResourceToUpdate = _applicationContext.Resources.Include(r => r.TimeSlots).SingleOrDefault(r => r.Id == Resource.Id);
 
-                if (resourceToUpdate == null)
+                if (ResourceToUpdate == null)
                 {
                     return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.NoContent, null);
                 }
 
                 //Checks that the timeslots do not overlap. Also makes sure that he id is not the same, if the times do match.
-                resource.TimeSlots.ForEach(delegate (AvailableTime newTimeSlot)
+                Resource.TimeSlots.ForEach(delegate (AvailableTime newTimeSlot)
                 {
-                    resourceToUpdate.TimeSlots.ForEach(delegate (AvailableTime existingTimeSlot)
+                    ResourceToUpdate.TimeSlots.ForEach(delegate (AvailableTime existingTimeSlot)
                     {
                         if (!(((newTimeSlot.From <= existingTimeSlot.From) && (newTimeSlot.To <= existingTimeSlot.From)) ||
                         ((newTimeSlot.From >= existingTimeSlot.To) && (newTimeSlot.To >= existingTimeSlot.To))))
@@ -155,23 +155,23 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
 
                 if (!invalidDate)
                 {
-                    resourceToUpdate.Name = resource.Name;
-                    resourceToUpdate.Description = resource.Description;
+                    ResourceToUpdate.Name = Resource.Name;
+                    ResourceToUpdate.Description = Resource.Description;
 
                     //Makes sure that new timeslots that is not in db has no ID because of Auto Assignment
-                    resource.TimeSlots.ForEach(newTimeSlot =>
+                    Resource.TimeSlots.ForEach(newTimeSlot =>
                     {
                         if(resourceToUpdate.TimeSlots.FirstOrDefault(x => x.Id == newTimeSlot.Id) == null)
                             newTimeSlot.Id = Guid.Empty;
                     });
-                    resourceToUpdate.TimeSlots = resource.TimeSlots;
+                    ResourceToUpdate.TimeSlots = Resource.TimeSlots;
 
-                    Domain.Models.Resource OldResourece = await _applicationContext.Resources.FirstOrDefaultAsync(x => x.Id == resourceToUpdate.Id);
-                    _applicationContext.Resources.Update(resourceToUpdate);
+                    Domain.Models.Resource OldResourece = await _applicationContext.Resources.FirstOrDefaultAsync(x => x.Id == ResourceToUpdate.Id);
+                    _applicationContext.Resources.Update(ResourceToUpdate);
                     _applicationContext.SaveChanges();
-                    _eventBus.PublishEvent(new ResourceUpdatedEvent(resourceToUpdate));
+                    _eventBus.PublishEvent(new ResourceUpdatedEvent(ResourceToUpdate));
 
-                    return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.OK, resourceToUpdate);
+                    return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.OK, ResourceToUpdate);
                 }
                 else
                 {
@@ -185,31 +185,31 @@ namespace UCLDreamTeam.Resource.Api.BusinessLayer
         }
         #endregion
         #region Delete
-        //Delete a resource
+        //Delete a Resource
         public async Task<ApiResponse<Domain.Models.Resource>> Delete(Guid guid)
         {
-            Domain.Models.Resource resourceToDelete = new Domain.Models.Resource();
+            Domain.Models.Resource ResourceToDelete = new Domain.Models.Resource();
 
             try
             {
-                //Gets the resource to be deleted. All children are tracked as well, so that they are also deleted.
-                resourceToDelete = _applicationContext.Resources
-                    .Include(resource => resource.TimeSlots)
-                    .SingleOrDefault(resource => resource.Id == guid);
+                //Gets the Resource to be deleted. All children are tracked as well, so that they are also deleted.
+                ResourceToDelete = _applicationContext.Resources
+                    .Include(Resource => Resource.TimeSlots)
+                    .SingleOrDefault(Resource => Resource.Id == guid);
 
-                if (resourceToDelete == null)
+                if (ResourceToDelete == null)
                 {
                     return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.NoContent, null);
                 }
                 else
                 {
-                    var resource = await _applicationContext.Resources.FirstOrDefaultAsync(x => x.Id == resourceToDelete.Id);
+                    var Resource = await _applicationContext.Resources.FirstOrDefaultAsync(x => x.Id == ResourceToDelete.Id);
                     //This will cascade delete.
-                    _applicationContext.Resources.Remove(resourceToDelete);
+                    _applicationContext.Resources.Remove(ResourceToDelete);
                     
                     _applicationContext.SaveChanges();
 
-                    _eventBus.PublishEvent(new ResourceDeletedEvent(resource));
+                    _eventBus.PublishEvent(new ResourceDeletedEvent(Resource));
                     return new ApiResponse<Domain.Models.Resource>(ApiResponseCode.OK, null);
                 }
             }

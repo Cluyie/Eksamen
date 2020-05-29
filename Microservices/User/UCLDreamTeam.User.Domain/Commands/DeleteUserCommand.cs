@@ -1,4 +1,5 @@
 ﻿using RabbitMQ.Bus.Commands;
+using UCLDreamTeam.User.Domain.Models;
 
 namespace UCLDreamTeam.User.Domain.Commands
 {

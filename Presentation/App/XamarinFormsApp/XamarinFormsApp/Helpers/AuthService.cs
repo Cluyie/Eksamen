@@ -15,15 +15,15 @@ namespace XamarinFormsApp.Helpers
 
         public void Login(string token)
         {
-            _proxy.httpClient.DefaultRequestHeaders.Clear();
-            _proxy.httpClient.DefaultRequestHeaders.Add("Authorization", token);
+            _proxy.HttpClient.DefaultRequestHeaders.Clear();
+            _proxy.HttpClient.DefaultRequestHeaders.Add("Authorization", token);
             Application.Current.Properties["Authorization"] = token;
             UpdateUser();
         }
 
         public void UpdateUser(User user = null)
         {
-            user ??= _proxy.Get<ApiResponse<User>>("User").Value;
+            user = _proxy.Get<ApiResponse<User>>("User").Value;
             Application.Current.Properties["UserData"] = user;
         }
     }

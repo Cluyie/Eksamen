@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
 
 namespace UCLDreamTeam.Ticket.Domain.Models
 {
-    public class UserTicket
+    public class UserTicket : IUserTicket
     {
         public Guid UserId { get; set; }
 
