@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using AdminPanel.Client.DTOs;
+using AdminPanel.Client.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 
 namespace AdminPanel.Client.Services
@@ -15,6 +17,10 @@ namespace AdminPanel.Client.Services
             _authStateProvider = (CustomAuthStateProvider) authStateProvider;
             _credentialsKeeper = credentialsKeeper;
         }
+        public async Task<User> GetCurrentUser()
+        {
+            return new User();
+        }
 
         public void Logout()
         {
@@ -29,5 +35,6 @@ namespace AdminPanel.Client.Services
 
             return true;
         }
+
     }
 }

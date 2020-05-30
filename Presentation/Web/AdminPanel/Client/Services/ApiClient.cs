@@ -61,11 +61,11 @@ namespace AdminPanel.Client.Services
         {
             SetTokenHeader();
             string s = JsonSerializer.Serialize(data);
-            Console.WriteLine(s);
+            Console.WriteLine(_httpClient.BaseAddress);
             var httpContent = new StringContent(s, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync(WrapUrl(url), httpContent);
-
+            Console.WriteLine(response.StatusCode);
             using (var responseContent = await response.Content.ReadAsStreamAsync())
             {
                 return await JsonSerializer.DeserializeAsync<ApiResponseDTO<T>>(responseContent, _jsonOptions);

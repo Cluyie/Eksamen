@@ -15,6 +15,7 @@
 @inject IReservationService ReservationService
 @inject IResourceService ResourceService
 @inject IMailService MailService
+@inject IAuthService LanchService
 @*Todo: Reamake Ticekt Panel*@
 <div class="container-fluid">
     <div class="row h-100">
@@ -32,8 +33,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        TicketDTOs = (await TicketService.GetByUserIdAsync(Guid.Empty)).ToList();
-        TicketDTOs.FirstOrDefault();
+        TicketDTOs = (await TicketService.GetByUserIdAsync((await LanchService.GetCurrentUser()).Id)).ToList();
+        
     }
 
     async void InitializeTicket()
