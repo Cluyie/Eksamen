@@ -13,7 +13,7 @@ namespace AdminPanel.Client.Services
 {
     public class ApiClient
     {
-        private readonly HttpClient _httpClient;
+        public HttpClient _httpClient;
         private readonly AuthCredentialsKeeper _credentialsKeeper;
 
         //private const string BASE_URL = "http://81.27.216.103/MobileBff/";
@@ -38,7 +38,7 @@ namespace AdminPanel.Client.Services
             SetTokenHeader();
 
             var response = await _httpClient.GetAsync(WrapUrl(url));
-
+            Console.WriteLine(await response.Content.ReadAsStringAsync());
             using (var responseContent = await response.Content.ReadAsStreamAsync())
             {
                 return await JsonSerializer.DeserializeAsync<ApiResponseDTO<T>>(responseContent, _jsonOptions);
@@ -86,12 +86,12 @@ namespace AdminPanel.Client.Services
             }
         }
 
-        private string WrapUrl(string url)
+        public string WrapUrl(string url)
         {
             return BASE_URL + url.TrimStart('/');
         }
 
-        private void SetTokenHeader()
+        public void SetTokenHeader()
         {
             if (_tokenHeaderIsSet && !_credentialsKeeper.HasCredentials())
             {

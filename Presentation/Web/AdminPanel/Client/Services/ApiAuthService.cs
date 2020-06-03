@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
 using AdminPanel.Client.Models;
+using UCLDreamTeam.SharedInterfaces.Interfaces;
+using Microsoft.AspNetCore.Components;
 
 namespace AdminPanel.Client.Services
 {
@@ -29,7 +31,8 @@ namespace AdminPanel.Client.Services
             {
                 return User;
             }
-            User = ((await _client.GetAsync<User>("User")).Value);
+            _client.SetTokenHeader();
+            User = await _client._httpClient.GetJsonAsync<User>(_client.WrapUrl("User"));
             return User;
         }
 
@@ -37,7 +40,7 @@ namespace AdminPanel.Client.Services
         {
             ApiResponseDTO<string> response = await _client.PostAsync<string>("Auth/Login", loginDTO);
             Console.WriteLine(response.ToString());
-            if(response.Code != 200)
+            if((int)response.Code != 200)
             {
                 return false;
             }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AdminPanel.Client.Models;
+using System.Linq;
 
 namespace AdminPanel.Client.Services
 {
@@ -16,15 +17,15 @@ namespace AdminPanel.Client.Services
 
         public async Task<Ticket> GetByIdAsync(Guid id)
         {
-            var response = await _client.GetAsync<Ticket>($"/Ticket?ticketId={id.ToString()}");
+            var response = await _client.GetAsync<Ticket>($"/Ticket?ticketId={id}");
            
             return response.Value;
         }
 
-        public async Task<IEnumerable<Ticket>> GetByUserIdAsync(Guid userId)
+        public async Task<List<Ticket>> GetByUserIdAsync(Guid userId)
         {
-            var response = await _client.GetAsync<IEnumerable<Ticket>>($"Ticket/User/{userId.ToString()}");
-            
+            var response = await _client.GetAsync<List<Ticket>>($"Ticket/User?userId={userId}");
+            Console.WriteLine(response.Value == null);
             return response.Value;
         }
 

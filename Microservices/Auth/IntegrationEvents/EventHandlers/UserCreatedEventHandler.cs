@@ -26,21 +26,22 @@ namespace UCLDreamTeam.Auth.Api.IntegrationEvents.EventHandlers
 
 
         public async Task action(IUser Obj)
-        {
-            CreateUserCredentialsDTO userIn = (CreateUserCredentialsDTO)Obj;
-            string salt = _hashService.GenerateSalt();
-            AuthUser userToCreate = new AuthUser
-            {
-                Id = userIn.Id,
-                UserName = userIn.UserName,
-                Email = userIn.Email,
-                PasswordSalt = salt,
-                PasswordHash = _hashService.GenerateHash(userIn.PasswordHash, salt)
-            };
+        { 
+                CreateUserCredentialsDTO userIn = (CreateUserCredentialsDTO)Obj;
+                string salt = _hashService.GenerateSalt();
+                AuthUser userToCreate = new AuthUser
+                {
+                    Id = userIn.Id,
+                    UserName = userIn.UserName,
+                    Email = userIn.Email,
+                    PasswordSalt = salt,
+                    PasswordHash = _hashService.GenerateHash(userIn.PasswordHash, salt)
+                };
 
-            await _authRepository.Create(userToCreate);
+                await _authRepository.Create(userToCreate);
 
-            await Task.CompletedTask;
+                await Task.CompletedTask;
+
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿@layout CleanLayout
 @page "/Chat"
-@attribute [Authorize(Roles = "admin, customerservice")]
+@attribute [Authorize]
 @using System
 @using System.Collections.Generic
 @using AdminPanel.Client.Components.CustomerService
@@ -14,7 +14,6 @@
 @inject ITicketService TicketService
 @inject IReservationService ReservationService
 @inject IResourceService ResourceService
-@inject IMailService MailService
 @inject IAuthService LanchService
 @*Todo: Reamake Ticekt Panel*@
 <div class="container-fluid">
@@ -33,7 +32,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        TicketDTOs = (await TicketService.GetByUserIdAsync((await LanchService.GetCurrentUser()).Id)).ToList();
+        var test = await TicketService.GetByUserIdAsync((await LanchService.GetCurrentUser()).Id);
+        Console.WriteLine(test);
         
     }
 
@@ -63,14 +63,4 @@
     //    ActiveTicketDTO = TicketDTOs.First(x => (bool)x.Ticket.Active);
     //    StateHasChanged();
     //}
-
-    private async void UpdateStatus(Status status, bool sendChatLog = false)
-    {
-        if (sendChatLog && status == Status.Closed)
-        {
-            await MailService.SendChatLog(ActiveTicketDTO);
-        }
-        ActiveTicketDTO.Ticket.Status = status;
-        await TicketService.UpdateTicket(ActiveTicketDTO.Ticket);
-    }
 }

@@ -10,7 +10,7 @@ namespace AdminPanel.Client.Services
     public interface ITicketService
     {
         Task<Ticket> GetByIdAsync(Guid id);
-        Task<IEnumerable<Ticket>> GetByUserIdAsync(Guid userId);
+        Task<List<Ticket>> GetByUserIdAsync(Guid userId);
         Task UpdateTicket(Ticket ticket);
     }
 }

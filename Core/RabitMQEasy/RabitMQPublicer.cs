@@ -73,7 +73,7 @@ namespace RabitMQEasy
             }
         }
 
-        public byte[] Serlicere<T>(T Object)
+        private byte[] Serlicere<T>(T Object)
         {
             var message = JsonSerializer.Serialize(Object);
             var body = Encoding.UTF8.GetBytes(message);
