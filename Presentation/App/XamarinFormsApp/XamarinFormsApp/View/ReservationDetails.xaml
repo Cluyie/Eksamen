@@ -26,7 +26,7 @@
             <Label Text="Reserveret til:"             
                 FontAttributes="Bold" />
             <Label Text="{Binding To}"/>
-            <Button Text="Suport" 
+            <Button Text="Support" 
                     CornerRadius="10" 
                     FontSize="Large" 
                     Clicked="SuportButton_Clicked"/>
