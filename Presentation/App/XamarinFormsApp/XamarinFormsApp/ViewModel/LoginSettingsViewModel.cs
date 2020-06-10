@@ -3,6 +3,7 @@ using Autofac;
 using AutoMapper;
 using UCLDreamTeam.SharedInterfaces.Interfaces;
 using UCLToolBox;
+using Xamarin.Forms;
 using XamarinFormsApp.Helpers;
 using XamarinFormsApp.Model;
 using Profile = AutoMapper.Profile;
@@ -20,6 +21,7 @@ namespace XamarinFormsApp.ViewModel
         {
             var profile = _mapper.Map<LoginSettings>(this);
             var user = _mapper.Map<User>(profile);
+            user.Id = ((User)Application.Current.Properties["UserData"]).Id;
             var response = await _proxy.PutAsync(@"User/UpdateProfile", user);
             var result = await ApiClientProxy.ReadAnswerAsync<ApiResponse<User>>(response);
             if (response.IsSuccessStatusCode && result?.Code == ApiResponseCode.OK)

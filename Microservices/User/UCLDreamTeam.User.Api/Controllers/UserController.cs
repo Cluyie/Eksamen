@@ -100,7 +100,7 @@ namespace UCLDreamTeam.User.Api.Controllers
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         public async Task<ApiResponse<IUser>> UpdateProfile([FromBody] Domain.Models.User user, [FromQuery] string roleName = null)
         {
-            if (user == null || await _userService.GetUserFromIdAsync(user.Id) != null || !ModelState.IsValid)
+            if (user == null || await _userService.GetUserFromIdAsync(user.Id) == null || !ModelState.IsValid)
                 return new ApiResponse<IUser>(ApiResponseCode.BadRequest); //return BadRequest();
             try
             {

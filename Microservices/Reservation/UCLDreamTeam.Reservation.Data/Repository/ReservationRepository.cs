@@ -58,7 +58,9 @@ namespace UCLDreamTeam.Reservation.Data.Repository
 
         public async Task CancelById(Guid id)
         {
-            await _dbContext.Reservations.Where(r => r.Id == id).DeleteAsync();
+            var reservation = await _dbContext.Reservations
+              .FirstOrDefaultAsync(r => r.Id == id);
+            _dbContext.Reservations.Remove(reservation);
             await _dbContext.SaveChangesAsync();
         }
     }

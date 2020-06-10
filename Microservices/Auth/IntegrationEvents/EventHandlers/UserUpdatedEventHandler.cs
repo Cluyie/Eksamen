@@ -25,14 +25,18 @@ namespace UCLDreamTeam.Auth.Api.IntegrationEvents.EventHandlers
             UpdateUserCredentialsDTO userIn = @event.User;
             AuthUser userToUpdate = await _authRepository.GetUserFromId(userIn.Id);
 
-            userToUpdate.UserName = userIn.UserName;
-            userToUpdate.Email = userIn.Email;
+            if (userToUpdate != null)
+            {
+              userToUpdate.UserName = userIn.UserName;
+              userToUpdate.Email = userIn.Email;
 
-            userToUpdate.PasswordHash = _hashService.GenerateHash(userToUpdate.PasswordHash, userToUpdate.PasswordSalt);
+              userToUpdate.PasswordHash =
+                _hashService.GenerateHash(userToUpdate.PasswordHash, userToUpdate.PasswordSalt);
 
-            Role role = new Role {RoleName = @event.Role.RoleName};
+              Role role = new Role {RoleName = @event.Role.RoleName};
 
-            await _authRepository.UpdateUser(userToUpdate, role);
+              await _authRepository.UpdateUser(userToUpdate, role);
+            }
 
             await Task.CompletedTask;
         }
