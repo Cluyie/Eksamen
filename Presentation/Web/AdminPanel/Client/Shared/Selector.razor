@@ -1,0 +1,17 @@
+﻿<div @onclick="ElememtClick">
+    @Body
+</div>
+
+@code {
+    [Parameter]
+    public object ReturnValue { get; set; }
+    [Parameter]
+    public RenderFragment Body { get; set; }
+    [Parameter]
+    public Action<object> Action { get; set; }
+
+    private void ElememtClick()
+    {
+        Action(ReturnValue);
+    }
+}

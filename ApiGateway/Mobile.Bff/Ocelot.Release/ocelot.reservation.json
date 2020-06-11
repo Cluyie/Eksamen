@@ -1,24 +1,24 @@
 {
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/ReservationService/Reservation",
+      "DownstreamPathTemplate": "/Reservation",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 1337
+          "Port": 5011
         }
       ],
       "UpstreamPathTemplate": "/Reservation",
       "UpstreamHttpMethod": [ "Get", "Post" ]
     },
     {
-      "DownstreamPathTemplate": "/ReservationService/Reservation/{id}",
+      "DownstreamPathTemplate": "/Reservation/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 1337
+          "Port": 5011
         }
       ],
       "UpstreamPathTemplate": "/Reservation/{id}",

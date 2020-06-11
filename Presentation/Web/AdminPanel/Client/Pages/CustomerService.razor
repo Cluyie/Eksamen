@@ -18,49 +18,55 @@
 @*Todo: Reamake Ticekt Panel*@
 <div class="container-fluid">
     <div class="row h-100">
-        
+        <section class="discussion">
+            <TicketHeader GetNextCustomer="GetNextInQue" QueueCount="QueueCount"></TicketHeader>
+            @foreach (Ticket ticket in TicketDTOs)
+            {
+                <div class="border border-secondary">
+                    <Selector ReturnValue="ticket" Action="x => ActiveTicketDTO.Ticket = x as Ticket">
+                        <div class="d-flex">
+                            <div class="discussion @(ticket.Status == Status.Active ? "message-active" : "")">
+                                <div class="desc-contact">
+                                    <p class="name">@ticket.Name</p>
+                                    <p class="message">@ticket.Messages</p>
+                                </div>
+                            </div>
+                            @if (ticket.Status == Status.Active)
+                            {
+                                <div class="active-bar"></div>
+                            }
+                        </div>
+                    </Selector>
+                </div>
+            }
+        </section>
+        <style>
+            .discussions {
+                width: 35%;
+                max-height: 100vh;
+                box-shadow: 0px 8px 10px rgba(0,0,0,0.20);
+                overflow-y: auto;
+                display: inline-block;
+            }
+        </style>
     </div>
 </div>
-
 
 @code
 {
     private HubConnection SuportHubConection;
-    public List<Ticket> TicketDTOs { get; set; }
+    public List<Ticket> TicketDTOs { get; set; } = new List<Ticket>();
     public TicketDTO ActiveTicketDTO { get; set; }
     public int QueueCount { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        var test = await TicketService.GetByUserIdAsync((await LanchService.GetCurrentUser()).Id);
-        Console.WriteLine(test);
-        
-    }
+        TicketDTOs = await TicketService.GetByUserIdAsync((await LanchService.GetCurrentUser()).Id);
 
-    async void InitializeTicket()
+    }
+    private void GetNextInQue()
     {
-        //var result = await TicketService.GetByUserIdAsync(Guid.NewGuid());
-
-        //foreach (var ticket in result)
-        //{
-        //    Reservation reservation = new Reservation();
-
-        //    if (ticket.ReservationId.HasValue)
-        //    {
-        //        reservation = await ReservationService.GetFromId(ticket.Id);
-        //    }
-
-        //    TicketDTOs.Add(new TicketDTO { Ticket = ticket, Reservation = reservation ?? null, Resource = await ResourceService.GetFromId(reservation.ResourceId) ?? null });
-        //}
-
-        //SetActiveTicket();
+        TicketDTOs.Add(new Ticket() { Description = "Dette er en tset", Id = Guid.NewGuid(), Messages = new List<Message>(), Name = "Test", Status = Status.Active, ResourceId = Guid.Empty });
+        Console.WriteLine(TicketDTOs.Count);
     }
-
-    //private void SetActiveTicket()
-    //{
-    //    TicketDTOs = TicketDTOs.OrderByDescending(x => x.Ticket.Messages.Min(s => s.TimeStamp)).ToList();
-    //    TicketDTOs.First().Ticket.Active = true;
-    //    ActiveTicketDTO = TicketDTOs.First(x => (bool)x.Ticket.Active);
-    //    StateHasChanged();
-    //}
 }

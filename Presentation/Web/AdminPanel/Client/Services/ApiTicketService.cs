@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AdminPanel.Client.Models;
 using System.Linq;
+using AdminPanel.Client.DTOs;
 
 namespace AdminPanel.Client.Services
 {
@@ -25,8 +26,7 @@ namespace AdminPanel.Client.Services
         public async Task<List<Ticket>> GetByUserIdAsync(Guid userId)
         {
             var response = await _client.GetAsync<List<Ticket>>($"Ticket/User?userId={userId}");
-            Console.WriteLine(response.Value == null);
-            return response.Value;
+            return response.Value ?? new List<Ticket>();
         }
 
         public async Task UpdateTicket(Ticket ticket)

@@ -1,12 +1,12 @@
 {
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/AuthService/Auth/Login",
+      "DownstreamPathTemplate": "/Auth/Login",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 1337
+          "Port": 5003
         }
       ],
       "UpstreamPathTemplate": "/Auth/Login",

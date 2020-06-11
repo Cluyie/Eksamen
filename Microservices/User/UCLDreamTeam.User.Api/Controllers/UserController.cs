@@ -29,7 +29,7 @@ namespace UCLDreamTeam.User.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         public async Task<ActionResult<IUser>> GetProfile()
-        {
+            {
             try
             {
                 var userName = User.FindFirstValue("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
